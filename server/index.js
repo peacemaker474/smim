@@ -1,13 +1,15 @@
-const { sequelize } = require("./models/index");
+import './db.js';
+import './models/Bookmark.js';
+import './models/Comment.js';
+import './models/Like.js';
+import './models/Post.js';
+import './models/Tag.js';
+import './models/User.js';
+import app from './server.js';
 
+const PORT = 4000;
 
+const handleListening = () =>
+  console.log(`✅ server Listening on port http://localhost:${PORT} 🚀`);
 
-// 실제 작업 시 force -> false 로 바꾸기 현재 아무런 데이터 없어서 강제로 업데이트(true)
-sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+app.listen(PORT, handleListening);
