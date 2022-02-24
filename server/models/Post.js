@@ -4,12 +4,13 @@ import mongoose from 'mongoose';
 const postSchema = new mongoose.Schema({
   title: String,
   textContent: String,
-  agetags: [{ type: String }],
+  targetAge: Number,
+  tagData: [{ type: String }],
   meta: {
     views: { type: Number, default: 0, required: true },
   },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
-  writer_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+  // comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
+  // writer_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   createAt: { type: Date, required: true, default: Date.now },
 });
 
