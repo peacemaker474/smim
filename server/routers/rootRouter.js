@@ -1,7 +1,8 @@
 import express from 'express';
+import { postSignup } from "../controllers/userController.js";
 
-export const rootRouter = express.Router();
+const rootRouter = express.Router();
 
-rootRouter.get('/', (req, res) => {
-  return res.send('home');
-});
+rootRouter.post("/signup", postSignup);
+
+export default rootRouter;
