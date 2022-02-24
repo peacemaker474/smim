@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tagAdd, tagDelete } from '../../redux/post/action';
 import DelBtn from '../../asset/icon/icon-del.svg';
 
+
 const HashContainer = styled.div`
   height: 40px;
   margin-top: 30px;
@@ -37,6 +38,7 @@ const HashItem = styled.div`
   cursor: pointer;
 `;
 
+
 const HashWrapBox = styled.div`
   height: 30px;
   display: flex;
@@ -66,6 +68,7 @@ function PostTag() {
   const dispatch = useDispatch();
   const hashtagArr = useSelector((state) => state.postReducer.hashArr);
 
+
   const handleEnter = (e) => {
     if (e.keyCode === 188 && e.target.value !== '') {
       const tagText = e.target.value.split(',')[0];
@@ -77,6 +80,7 @@ function PostTag() {
   const handleTextWrite = (e) => {
     setText(e.target.value);
   };
+
 
   const handleTagFocusOut = () => {
     // input text reset
@@ -91,6 +95,7 @@ function PostTag() {
     <HashContainer palette='yellow'>
       <HashWrapBox>
         {hashtagArr.map((el, idx) => (
+
           <HashItem key={idx + el}>
             <span>{el}</span>
             <HashDelBtn type='button' onClick={() => handleHashDel(el)}></HashDelBtn>
