@@ -1,10 +1,11 @@
-import React, {  useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
-import { useDispatch ,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tagAdd, tagDelete } from '../../redux/post/action';
+import DelBtn from '../../asset/icon/icon-del.svg';
 
-const HashDivrap = styled.div`
+const HashContainer = styled.div`
   height: 40px;
   margin-top: 30px;
   color: rgb(52, 58, 64);
@@ -17,88 +18,95 @@ const HashDivrap = styled.div`
     ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
   border-radius: 3px;
   padding: 2px 2px 2px 2px;
-
-  .HashWrapOuter {
-    height: 30px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .HashWrapInner {
-    margin-top:1px;
-    height: 30px;
-    background: ${theme.color['yellow']};
-    border-radius: 56px;
-    padding: 5px;
-    color: ${theme.color['navy']};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 15px;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-
-  .HashInput {
-    width: auto;
-    display: inline-flex;
-    outline: none;
-    cursor: text;
-    line-height: 2rem;
-    min-width: 8rem;
-    border: none;
-  }
 `;
 
+const HashItem = styled.div`
+  margin-top: 1px;
+  width: auto;
+  height: 30px;
+  background: ${theme.color['yellow']};
+  border-radius: 56px;
+  padding: 5px;
+  color: ${theme.color['navy']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 15px;
+  margin-right: 5px;
+  cursor: pointer;
+`;
+
+const HashWrapBox = styled.div`
+  height: 30px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const HashInput = styled.input`
+  display: inline-flex;
+  outline: none;
+  cursor: text;
+  line-height: 2rem;
+  min-width: 20rem;
+  border: none;
+`;
+
+const HashDelBtn = styled.button`
+  width: 8px;
+  height: 8px;
+  background: url(${DelBtn});
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
 
 function PostTag() {
-
+  const [text, setText] = useState('');
   const dispatch = useDispatch();
-  const hashtag = useSelector((state) => state.postReducer.hashtag);
   const hashtagArr = useSelector((state) => state.postReducer.hashArr);
-  console.log(hashtag, hashtagArr);
 
-  const onKeyUp = useCallback(
-    (e) => {
-      const $HashWrapOuter = document.querySelector('.HashWrapOuter');
-      const $HashWrapInner = document.createElement('div');
-      $HashWrapInner.className = 'HashWrapInner';
-      /* 태그를 클릭 이벤트 관련 로직 */
-      $HashWrapInner.addEventListener('click', () => {
-        $HashWrapOuter?.removeChild($HashWrapInner);
-        console.log($HashWrapInner.innerHTML);
-        // setHashArr(hashArr.filter((hashtag) => hashtag));
-      });
+  const handleEnter = (e) => {
+    if (e.keyCode === 188 && e.target.value !== '') {
+      const tagText = e.target.value.split(',')[0];
+      dispatch(tagAdd(tagText));
+      setText('');
+    }
+  };
 
-      /* enter 키 코드 :13 */
-      if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        console.log('Enter Key 입력됨!', e.target.value);
-        $HashWrapInner.innerHTML = '#' + e.target.value;
-        $HashWrapOuter?.appendChild($HashWrapInner);
-        dispatch(tagDelete())
-      }
-    },
-    [hashtag, hashtagArr]
-  );
+  const handleTextWrite = (e) => {
+    setText(e.target.value);
+  };
 
-  const onChangeHashtag = (e) => {
-    dispatch(tagAdd(e.target.value))
-  }
+  const handleTagFocusOut = () => {
+    // input text reset
+    setText('');
+  };
+
+  const handleHashDel = (hashtag) => {
+    dispatch(tagDelete(hashtag));
+  };
 
   return (
-    <HashDivrap palette='yellow'>
-      <div className='HashWrapOuter'></div>
-      <input
-        className='HashInput'
+    <HashContainer palette='yellow'>
+      <HashWrapBox>
+        {hashtagArr.map((el, idx) => (
+          <HashItem key={idx + el}>
+            <span>{el}</span>
+            <HashDelBtn type='button' onClick={() => handleHashDel(el)}></HashDelBtn>
+          </HashItem>
+        ))}
+      </HashWrapBox>
+      <HashInput
         type='text'
-        value={hashtag}
-        onChange={onChangeHashtag}
-        onKeyUp={onKeyUp}
-        placeholder='해시태그 입력'
+        placeholder='해시태그를 입력해주시고 콤마로 구분해주세요'
+        onKeyUp={handleEnter}
+        onChange={handleTextWrite}
+        onBlur={handleTagFocusOut}
+        value={text}
       />
-    </HashDivrap>
+    </HashContainer>
   );
 }
 
-export default PostTag
+export default PostTag;
