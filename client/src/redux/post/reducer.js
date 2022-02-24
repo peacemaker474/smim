@@ -1,22 +1,24 @@
-import { TITLE_ADD, TARGETAGE_ADD, TAG_ADD, TAG_DELETE } from './type';
-
+import { TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD, TAG_ADD, TAG_DELETE } from './type';
 
 const initialState = {
-	title: "",
-	targetAge: 0,
-	hashtag: "",
-	hashArr: []
+  title: '',
+  targetAge: 0,
+  hashArr: [],
+  content: '',
 };
 
-
 export default function postReducer(state = initialState, action) {
-	switch (action.type) {
+  switch (action.type) {
     case TITLE_ADD:
       return {
         ...state,
         title: action.payload.title,
-			};
-		
+      };
+    case CONTENT_ADD:
+      return {
+        ...state,
+        content: action.payload.content,
+      };
     case TARGETAGE_ADD:
       return {
         ...state,
@@ -25,13 +27,13 @@ export default function postReducer(state = initialState, action) {
     case TAG_ADD:
       return {
         ...state,
-        hashtag: action.payload.hashtag,
-        hashArr: [...state.hashArr, state.hashtag]
+        hashArr: [...state.hashArr, action.payload.hashtag],
       };
+
     case TAG_DELETE:
       return {
         ...state,
-        hashtag: action.payload.hashtag
+        hashArr: [...state.hashArr].filter((el) => el !== action.payload.hashtag),
       };
     default:
       return state;
