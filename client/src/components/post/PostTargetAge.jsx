@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { targetAgeAdd } from '../../redux/post/action';
@@ -7,7 +7,6 @@ import { targetAgeAdd } from '../../redux/post/action';
 const TargetWrap = styled.div`
   margin-top: 30px;
 `;
-
 
 const TargetAgeInput = styled.select`
   width: 250px;
@@ -20,19 +19,18 @@ const TargetAgeInput = styled.select`
   }
 `;
 
-
 function PostTargetAge() {
+  const dispatch = useDispatch(); // dispatch 사용하기 위한 준비
+  const targetAge = useSelector((state) => state.postReducer.targetAge);
 
-    const dispatch = useDispatch();
-    const targetAge = useSelector((state) => state.postReducer.targetAge);
+  const titleHandler = (e) => {
+    // store에 있는 state 바꾸는 함수 설정
+    dispatch(targetAgeAdd(e.target.value));
+  };
 
-    const titleHandler = (e) => {
-      dispatch(targetAgeAdd(e.target.value));
-    };
-  
-    console.log(targetAge);
+  console.log(targetAge); // store에 접근하여 state 가져오기
 
-	return (
+  return (
     <TargetWrap>
       <TargetAgeInput palette='yellow' onChange={titleHandler}>
         <option value='' selected>
@@ -49,4 +47,4 @@ function PostTargetAge() {
   );
 }
 
-export default PostTargetAge
+export default PostTargetAge;

@@ -1,5 +1,4 @@
-import { TAG_ADD, TAG_DELETE, TITLE_ADD, TARGETAGE_ADD,  } from './type';
-
+import { TAG_ADD, TAG_DELETE, TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD } from './type';
 
 export const titleAdd = (title) => {
   return {
@@ -10,6 +9,14 @@ export const titleAdd = (title) => {
   };
 };
 
+export const contentAdd = (content) => {
+  return {
+    type: CONTENT_ADD,
+    payload: {
+      content: content,
+    },
+  };
+};
 
 export const targetAgeAdd = (targetAge) => {
   return {
@@ -20,7 +27,6 @@ export const targetAgeAdd = (targetAge) => {
   };
 };
 
-
 export const tagAdd = (hashtag) => {
   return {
     type: TAG_ADD,
@@ -30,11 +36,11 @@ export const tagAdd = (hashtag) => {
   };
 };
 
-export const tagDelete = () => {
+export const tagDelete = (hashtag) => {
   return {
     type: TAG_DELETE,
     payload: {
-      hashtag: '',
+      hashtag: hashtag,
     },
   };
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginOpen } from '../../redux/toggle/action';
@@ -33,9 +33,9 @@ const NavLogo = styled.div`
 
 const NavTitle = styled(Link)`
   font-size: 28px;
-  color: ${({theme}) => theme.color.yellow};
+  color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
-  @media screen and (max-width: 320px){
+  @media screen and (max-width: 320px) {
     font-size: 20px;
   }
 `;
@@ -50,7 +50,7 @@ const NavLists = styled.ul`
   @media screen and (max-width: 1065px) {
     grid-template-columns: 80px 80px 80px 80px 80px 80px 150px;
   }
-  @media ${({theme}) => theme.device.ipad} {
+  @media ${({ theme }) => theme.device.ipad} {
     display: none;
   }
 `;
@@ -62,56 +62,69 @@ const NavList = styled.li`
 const ListLink = styled(Link)`
   font-size: 17px;
   text-decoration: none;
-  color: ${({theme}) => theme.color.gray};
+  color: ${({ theme }) => theme.color.gray};
   &:hover {
     font-weight: bold;
   }
   padding-bottom: 5px;
-  font-weight: ${({current}) => current ? `bold` : `none`};
-  border-bottom: 2px solid ${({current, theme}) => current ? `${theme.color.lightGray}` : "transparent"};
+  font-weight: ${({ current }) => (current ? `bold` : `none`)};
+  border-bottom: 2px solid
+    ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
 `;
 
 const SignLink = styled.span`
   font-size: 18px;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   font-weight: bold;
   cursor: pointer;
 `;
 
-function NavBar () {
-  const {pathname} = useLocation(null);
+function NavBar() {
+  const { pathname } = useLocation(null);
   const menuToggled = useSelector((state) => state.toggleReducer.menuToggled);
   const loginToggled = useSelector((state) => state.toggleReducer.loginToggled);
   const dispatch = useDispatch();
   const handleLoginModal = () => {
     dispatch(loginOpen());
-  }
+  };
 
   return (
     <>
       <NavContainer>
         <NavBox>
           <NavLogo>
-            <NavTitle to="/"> 스며들다 </NavTitle>
+            <NavTitle to='/'> 스며들다 </NavTitle>
           </NavLogo>
           <NavLists>
             <NavList>
-              <ListLink to="/post/view/generation10" current={pathname === "/post/view/generation10"}> 10대에게 </ListLink>
+              <ListLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
+                10대에게
+              </ListLink>
             </NavList>
             <NavList>
-              <ListLink to="/post/view/generation20" current={pathname === "/post/view/generation20"}> 20대에게 </ListLink>
+              <ListLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
+                20대에게
+              </ListLink>
             </NavList>
             <NavList>
-              <ListLink to="/post/view/generation30" current={pathname === "/post/view/generation30"}> 30대에게 </ListLink>
+              <ListLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
+                30대에게
+              </ListLink>
             </NavList>
             <NavList>
-              <ListLink to="/post/view/generation40" current={pathname === "/post/view/generation40"}> 40대에게 </ListLink>
+              <ListLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
+                40대에게
+              </ListLink>
             </NavList>
             <NavList>
-              <ListLink to="/post/view/generation50" current={pathname === "/post/view/generation50"}> 50대에게 </ListLink>
+              <ListLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
+                50대에게
+              </ListLink>
             </NavList>
             <NavList>
-              <ListLink to="/post/view/generation60" current={pathname === "/post/view/generation60"}> 60대에게 </ListLink>
+              <ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
+                60대에게
+              </ListLink>
             </NavList>
             <NavList>
               <SignLink onClick={handleLoginModal}> 로그인/회원가입 </SignLink>
