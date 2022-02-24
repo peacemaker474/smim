@@ -36,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
     background : none;
   }
   
+  input,select{
+    outline : none;
+  }
 `;
 
 export default GlobalStyle;

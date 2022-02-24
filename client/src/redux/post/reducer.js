@@ -4,6 +4,7 @@ const initialState = {
   title: '',
   targetAge: 0,
   hashArr: [],
+  content: '',
 };
 
 export default function postReducer(state = initialState, action) {

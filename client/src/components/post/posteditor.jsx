@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
@@ -12,7 +12,6 @@ const PostEditorWrap = styled.div`
 
 function Posteditor() {
   const dispatch = useDispatch();
-  const content = useSelector((state) => state.postReducer.content);
 
   const modules = {
     toolbar: [
@@ -24,8 +23,6 @@ function Posteditor() {
       ['clean'],
     ],
   };
-
-  console.log(content);
 
   return (
     <PostEditorWrap>

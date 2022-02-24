@@ -33,9 +33,7 @@ function PostTargetAge() {
   return (
     <TargetWrap>
       <TargetAgeInput palette='yellow' onChange={titleHandler}>
-        <option value='' selected>
-          질문하고 싶은 연령층을 선택해주세요.
-        </option>
+        <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
         <option value='30'>30대에게</option>
