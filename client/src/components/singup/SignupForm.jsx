@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {ColorBtn} from '../../styles/common/buttons';
 import {ValidCheck} from '../../styles/common/validtext';
+import { useRef } from 'react';
+import { signUp } from '../../network/signup/http';
 
 const SignupFormBox = styled.form`
   width: 60%;
@@ -55,22 +57,39 @@ const SignupValid = styled(ValidCheck)`
 `;
 
 function SignupForm () {
+  const userId = useRef(null);
+  const userEmail = useRef(null);
+  const userName = useRef(null);
+  const userBirthday = useRef(null);
+  const userPw = useRef(null);
+
+  const handleSignupClick = () => {
+    let body = {
+      user_id: userId.current.value,
+      user_email: userEmail.current.value,
+      user_name: userName.current.value,
+      user_birthday: userBirthday.current.value,
+      user_password: userPw.current.value,
+    }
+    signUp(body);
+  };
+
   return (
-    <SignupFormBox>
-      <Input type="text" placeholder='아이디' />
+    <SignupFormBox method='POST'>
+      <Input type="text" placeholder='아이디' ref={userId} />
       <SignupValid> 이미 사용중이거나 탈퇴한 아이디입니다. </SignupValid>
-      <Input type="email" placeholder='이메일' />
+      <Input type="email" placeholder='이메일' ref={userEmail} />
       <SignupValid> 이미 사용중이거나 탈퇴한 이메일입니다. </SignupValid>
-      <Input type="text" placeholder='닉네임' />
+      <Input type="text" placeholder='닉네임' ref={userName} />
       <SignupValid> 이미 사용중인 닉네임입니다. </SignupValid>
-      <Input type="text" placeholder='생년월일'/>
-      <Input type="password" placeholder="비밀번호" />
+      <Input type="text" placeholder='생년월일' ref={userBirthday} required/>
+      <Input type="password" placeholder="비밀번호" ref={userPw} />
       <SignupValid> 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요. </SignupValid>
       <Input type="password" placeholder='비밀번호 확인' />
       <SignupValid> 비밀번호가 일치하지 않습니다. </SignupValid>
       <BtnBox>
         <CancelBtn>취소</CancelBtn>
-        <SignupBtn>회원가입</SignupBtn>
+        <SignupBtn type="button" onClick={handleSignupClick}>회원가입</SignupBtn>
       </BtnBox>
     </SignupFormBox>
   );
