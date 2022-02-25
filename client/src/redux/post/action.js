@@ -1,4 +1,4 @@
-import { TAG_ADD, TAG_DELETE, TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD } from './type';
+import { TAG_ADD, TAG_DELETE, TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD, POST_RESET } from './type';
 
 export const titleAdd = (title) => {
   return {
@@ -42,5 +42,11 @@ export const tagDelete = (hashtag) => {
     payload: {
       hashtag: hashtag,
     },
+  };
+};
+
+export const postReset = () => {
+  return {
+    type: POST_RESET,
   };
 };
