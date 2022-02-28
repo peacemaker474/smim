@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  nickname: { type: String, required: true, unique: true },
-  imageUrl: String,
   name: { type: String, required: true },
-  birthdate: { type: Date, required: true },
+  email: { type: String, required: true, unique: true },
+  nickname: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  imageUrl: String,
+  birthdate: { type: Date, default: Date.now, required: true },
+  birthday: { type: Number, required: true },
   state: Boolean, // 탈퇴유무
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
 });
