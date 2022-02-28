@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Tag = styled.span`
   display: inline-block;
   width: 38px;
-  height: 15px;
+  height: 18px;
   border-radius: 8px;
   color: #183347;
   background: ${({ palette, theme }) => theme.tagColor[palette]};

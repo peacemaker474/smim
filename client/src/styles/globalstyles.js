@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
+  ${reset}
   body {
     width: 100vw;
     margin: 0;
@@ -38,6 +40,9 @@ const GlobalStyle = createGlobalStyle`
   
   input,select{
     outline : none;
+  }
+  a{
+    text-decoration : none;
   }
 `;
 
