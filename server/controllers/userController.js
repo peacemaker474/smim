@@ -5,8 +5,7 @@ export const getSignup = (req, res) => {
 }
 
 export const getCheckId = (req, res) => {
-  const {name} = req.query;
-  console.log(name);
+  const { name } = req.query;
   User.findOne({name})
     .then((data) => {
       if (data) {
@@ -18,14 +17,35 @@ export const getCheckId = (req, res) => {
     .catch((err) => console.log(err));
 }
 
+export const getCheckEmail = (req, res) => {
+  const {email} = req.query;
+  User.findOne({email})
+    .then((data) => {
+      if(data) {
+        return res.json({ success: false, message: "이미 사용중이거나 탈퇴한 이메일입니다."});
+      } else {
+        return res.json({ success: true, message: "사용이 가능한 이메일입니다."});
+      }
+    })
+    .catch((err) => console.log(err));
+}
+
+export const getCheckName = (req, res) => {
+  const {nickname} = req.query;
+  User.findOne({nickname})
+    .then((data) => {
+      if(data) {
+        return res.json({ success: false, message: "이미 사용중인 닉네임입니다."});
+      } else {
+        return res.json({ success: true, message: "사용이 가능한 닉네임입니다."});
+      }
+    }).catch((err) => console.log(err));
+}
+
 export const postSignup = async (req, res) => {
   const {name, email, nickname, birthday, password, password2} = req.body;
-  const exists = await User.exists({$or: [{name}, {email}]});
   if (password !== password2) {
     return res.json({ success: false, message: "비밀번호가 서로 다릅니다."});
-  }
-  if (exists) {
-    return res.json({ success: false, message: "아이디와 이메일이 이미 존재합니다."});
   }
   try {
     await User.create({
