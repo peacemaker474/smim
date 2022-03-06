@@ -10,6 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', rootRouter);
-app.use('/posts', postRouter);
+app.use('/post', postRouter);
 
 export default app;

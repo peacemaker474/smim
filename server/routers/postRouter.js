@@ -1,6 +1,14 @@
 import express from 'express';
-import { postUpload } from '../controllers/postController.js';
+import {
+  postCreate,
+  putEdit,
+  deletePost,
+  getPostDetail,
+  getPostList,
+} from '../controllers/postController.js';
 
 export const postRouter = express.Router();
 
-postRouter.post('/create', postUpload);
+postRouter.get('/target', getPostList);
+postRouter.post('/create', postCreate);
+postRouter.route('/:id').get(getPostDetail).put(putEdit).delete(deletePost);
