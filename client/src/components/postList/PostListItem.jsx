@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Tag } from '../../styles/common/tag';
+import Heart from '../../asset/icon/icon-heart-fill.svg';
 
 const PostItem = styled.div`
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 20px;
-  height: 232px;
   padding: 31px 21px;
   position: relative;
 `;
@@ -20,13 +20,14 @@ const PostTitle = styled.h2`
   font-size: 15px;
   font-weight: 700;
   line-height: 20px;
-  margin-bottom: 27px;
+  margin-bottom: 21px;
 `;
 const PostEtcDiv = styled.div`
   margin-bottom: 20px;
 `;
 const PostTagDiv = styled.div`
   display: flex;
+  margin-bottom: 12px;
 `;
 const TagItem = styled(Tag)`
   background-color: ${({ theme, color }) => theme.tagColor[color]};
@@ -34,12 +35,33 @@ const TagItem = styled(Tag)`
     margin-left: 5px;
   }
 `;
-const PostLikeDiv = styled.div``;
+const PostLikeDiv = styled.div`
+  display: flex;
+  margin-bottom: 22px;
+`;
+
+const LikeSpan = styled.span`
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  &::before {
+    width: 16px;
+    height: 16px;
+    background: url(${Heart});
+    display: block;
+    content: '';
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 4px;
+  }
+`;
+
 const PostText = styled.p`
   font-size: 11px;
   font-weight: 700;
   line-height: 14px;
-  margin-bottom: 19px;
+  margin-bottom: 14px;
   color: ${({ theme }) => theme.color.black};
 `;
 
@@ -49,7 +71,7 @@ const PostDate = styled.span`
   line-height: 12px;
   color: ${({ theme }) => theme.color.darkGray};
   position: absolute;
-  bottom: 18px;
+  bottom: 23px;
   right: 18px;
 `;
 
@@ -69,9 +91,11 @@ function PostListItem() {
             <TagItem color='purple'>가족</TagItem>
             <TagItem color='salmon'>HAPPY</TagItem>
           </PostTagDiv>
-          <PostLikeDiv></PostLikeDiv>
         </PostEtcDiv>
         <PostText>60대 아버지의 환갑잔치 선물은 뭐가 좋을까요? ...</PostText>
+        <PostLikeDiv>
+          <LikeSpan>226</LikeSpan>
+        </PostLikeDiv>
         <PostDate>22년 2월 13일</PostDate>
       </PostAnchor>
     </PostItem>

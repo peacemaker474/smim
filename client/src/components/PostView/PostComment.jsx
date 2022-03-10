@@ -5,7 +5,6 @@ import CommentItemBox from './CommentItemBox';
 
 const CommentContainer = styled.div`
   width: 794px;
-  height: 59px;
   margin: 0 auto;
 `;
 
