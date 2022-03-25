@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Intro from './pages/Intro';
 import MainPage from './pages/MainPage';
 import SignupPage from './pages/SignupPage';
@@ -8,7 +9,6 @@ import PostUploadPage from './pages/PostUploadPage';
 import MyPage from './pages/MyPage';
 import LoadingPage from './pages/LoadingPage';
 import NotFound from './pages/NotFound';
-import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/common/NavBar';
 import WriteBtn from './components/common/WriteBtn';
 
