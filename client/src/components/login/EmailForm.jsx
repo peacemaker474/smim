@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ValidCheck } from '../../styles/common/validtext';
 import { ColorBtn } from '../../styles/common/buttons';
 import { useDispatch } from 'react-redux';
 import { loginClose } from '../../redux/toggle/action';
+import { checkLogin } from '../../network/login/http';
 
 export const FormBox = styled.form`
   width: 100%;
@@ -73,20 +74,34 @@ const LoginValid = styled(ValidCheck)`
 `;
 
 function EmailForm () {
+  const userId = useRef(null);
+  const userPw = useRef(null);
+
   const dispatch = useDispatch();
 
   const handleLoginClose = () => {
     dispatch(loginClose());
   }
+
+  const handleLogin = (evt) => {
+    evt.preventDefault();
+
+    let body = {
+      name: userId.current.value,
+      password: userPw.current.value,
+    }
+
+    checkLogin(body);
+  }
   return (
-    <FormBox>
-      <Label> 이메일 </Label>
-      <Input type="email" placeholder='아이디를 입력하세요.'/>
+    <FormBox method='POST'>
+      <Label> 아이디 </Label>
+      <Input type="text" placeholder='아이디를 입력하세요.' ref={userId} />
       <LoginValid> 아이디를 다시 확인해주세요. </LoginValid>
       <Label> 비밀번호 </Label>
-      <Input type="password" placeholder='비밀번호를 입력하세요.'/>
+      <Input type="password" placeholder='비밀번호를 입력하세요.' ref={userPw} />
       <LoginValid> 비밀번호가 올바르지 않습니다. </LoginValid>
-      <LoginBtn> 로그인 </LoginBtn>
+      <LoginBtn onClick={handleLogin}> 로그인 </LoginBtn>
       <SignBox>
         <SignText> 아직 회원이 아니신가요? </SignText>
         <SignLink to="/signup" onClick={handleLoginClose}> 회원가입 </SignLink>

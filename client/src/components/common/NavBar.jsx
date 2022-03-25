@@ -16,6 +16,7 @@ const NavContainer = styled.nav`
   left: 0%;
   background-color: white;
   box-shadow: rgb(0 0 0 / 50%) 0 -3px 16px 1px;
+  z-index: 2;
 `;
 
 const NavBox = styled.div`

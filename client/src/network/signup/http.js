@@ -3,7 +3,7 @@ import axios from 'axios';
 const http = "http://localhost:4000";
 
 export const checkId = (data) => {
-  return axios.get(`${http}/signup/id-check?name=${data}`).then((res) => {
+  return axios.get(`${http}/signup/id-check?userId=${data}`).then((res) => {
     return res;
   });
 };
