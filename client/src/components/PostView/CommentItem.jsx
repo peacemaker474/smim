@@ -6,7 +6,7 @@ import heartFill from '../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../asset/icon/icon-heart-line.svg';
 
 const CommentItemBox = styled.div`
-  margin-bottom: 26px;
+  margin-bottom: 15px;
   display: flex;
   position: relative;
   margin-left: ${(props) => (props.extend === 'reply' ? '49px' : '0')};
@@ -28,13 +28,14 @@ const CommentDropDownBtn = styled.button`
 `;
 
 const CommentContent = styled.div`
-  width: 100%;
+  width: 709px;
 `;
 
 const CommentText = styled.p`
   width: 100%;
   margin: 0;
   margin-bottom: 12px;
+  line-height: 23px;
 `;
 
 const CommentEtc = styled.div`
@@ -61,6 +62,16 @@ const CommentLike = styled.button`
   background-size: contain;
 `;
 
+const CommentEditInput = styled.input`
+  width: 709px;
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.lightGray};
+`;
+
+const CommentStrongName = styled.strong`
+  font-weight: 600;
+`;
+
 const commentData = {
   userName: '도기석',
 };
@@ -69,6 +80,7 @@ export default function CommentItem({ handleReplyClick, extend }) {
   const dropDownRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [like, setLike] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const btnRef = useRef();
 
@@ -105,20 +117,26 @@ export default function CommentItem({ handleReplyClick, extend }) {
       <CommentItemBox extend={extend}>
         <ProfileImg />
         <CommentContent>
-          <CommentText>
-            <strong>도기석</strong> 아버지에게 드릴 선물을 고민하고
-            있습니다.닝러니ㅏㅇ러ㅣㄴ아ㅓ린아ㅓ린아ㅓ린아ㅓ린아ㅓ리ㅏㄴ어리ㅏㄴ어리ㅐㅈ댜ㅓ개ㅑㅈ덕;ㅣㅏ젇기;ㅏㅈ덕;ㅣㅏㅈ덜;ㅣㅏㅈ덜;ㅣ
-          </CommentText>
-          <CommentEtc>
-            <CommentDate>2일</CommentDate>
-            <CommentReBtn onClick={handleTextWrite}>답글 달기</CommentReBtn>
-            <CommentLike onClick={handleLikeBtnClick} like={like} />
-          </CommentEtc>
+          {isEditing ? (
+            <CommentEditInput></CommentEditInput>
+          ) : (
+            <>
+              <CommentText>
+                <CommentStrongName>도기석</CommentStrongName> 안녕하세요 오늘은 비도오고 그래서 짧고
+                좋은 글귀를 모아왔어요 사랑이야기 이별이야기 힘들때 위로되는 글귀등등 여러가지
+                준비해왔어요 공감되고 힘이되는 글이 많으면 좋겠어요 이런 감성 글귀들은 새벽에 읽어야
+                되게 감동이 증폭되는거 같아요
+              </CommentText>
+              <CommentEtc>
+                <CommentDate>2일</CommentDate>
+                <CommentReBtn onClick={handleTextWrite}>답글 달기</CommentReBtn>
+                <CommentLike onClick={handleLikeBtnClick} like={like} />
+              </CommentEtc>
+            </>
+          )}
         </CommentContent>
         <CommentDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
-          {isVisible && (
-            <CommentDropDown ref={dropDownRef} handleDropDownShow={handleDropDownShow} />
-          )}
+          {isVisible && <CommentDropDown ref={dropDownRef} setIsEditing={setIsEditing} />}
         </CommentDropDownBtn>
       </CommentItemBox>
     </>

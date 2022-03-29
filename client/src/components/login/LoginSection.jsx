@@ -11,6 +11,7 @@ const LoginContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
 `;
 
 const LoginOverlay = styled.div`
@@ -20,7 +21,6 @@ const LoginOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
 `;
 
 const LoginBox = styled.section`
@@ -29,21 +29,20 @@ const LoginBox = styled.section`
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 2;
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 5px;
 `;
 
-function LoginSection () {
+function LoginSection() {
   const dispatch = useDispatch();
   const handleLoginClose = () => {
     dispatch(loginClose());
-  }
+  };
 
   return (
     <LoginContainer>
-      <LoginOverlay onClick={handleLoginClose}/>
+      <LoginOverlay onClick={handleLoginClose} />
       <LoginBox>
         <LoginHeader />
         <LoginForm />

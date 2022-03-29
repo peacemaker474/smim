@@ -15,6 +15,7 @@ const PostViewH2 = styled.h1`
   line-height: 19px;
   color: ${({ theme }) => theme.color.black};
   margin: 0 auto;
+  margin-bottom: 20px;
 `;
 
 export default function PostViewPage() {
