@@ -8,19 +8,9 @@ const PostViewContainer = styled.div`
   padding-top: 70px;
 `;
 
-const PostViewH2 = styled.h1`
-  width: 794px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  color: ${({ theme }) => theme.color.black};
-  margin: 0 auto;
-`;
-
 export default function PostViewPage() {
   return (
     <PostViewContainer>
-      <PostViewH2>20대에게</PostViewH2>
       <PostPost />
       <PostComment />
     </PostViewContainer>
