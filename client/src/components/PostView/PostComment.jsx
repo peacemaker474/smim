@@ -7,6 +7,7 @@ const CommentContainer = styled.div`
   width: 794px;
   // height: 59px;
   margin: 20px auto;
+`;
 
 const CommentH2 = styled.h2`
   font-size: 18px;

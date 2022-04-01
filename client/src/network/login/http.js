@@ -9,6 +9,7 @@ export const checkLogin = (data) => {
       Authorization: getCookie("users"),
     }
   }).then((res) => {
+    console.log(res);
     setCookie("users", res.data.accessToken);
   });
 };

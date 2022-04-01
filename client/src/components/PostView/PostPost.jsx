@@ -4,7 +4,16 @@ import { Tag } from '../../styles/common/tag';
 
 const PostBox = styled.div`
   width: 794px;
-  margin: 0 auto;
+  margin: 0 auto 32px;
+`;
+
+const PostViewH2 = styled.h1`
+  width: 794px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  color: ${({ theme }) => theme.color.black};
+  margin: 0 auto 12px;
 `;
 
 const PostTitle = styled.h3`
@@ -19,8 +28,9 @@ const PostHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 28px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+  padding-bottom: 17px;
+  border-bottom: 1px ${({ theme }) => theme.color.lightGray} solid;
+  margin-bottom: 30px;
 `;
 
 const PostAuthor = styled.h4`
@@ -32,8 +42,8 @@ const PostAuthor = styled.h4`
   &::before {
     display: block;
     content: '';
-    width: 30px;
-    height: 30px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: #25a0fc;
     margin-right: 14px;
@@ -45,10 +55,7 @@ const PostDate = styled.span`
   color: ${({ theme }) => theme.color.gray};
 `;
 
-const PostBody = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
-  padding-bottom: 48px;
-`;
+const PostBody = styled.div``;
 
 const PostContent = styled.div`
   width: 794px;
@@ -59,17 +66,28 @@ const PostPara = styled.div`
   font-size: 15px;
   font-weight: 500;
   line-height: 23px;
-  padding: 0 33px;
+  margin-bottom: 60px;
 `;
 
 const PostTagBox = styled.div`
   display: flex;
 `;
 
-const PostTag = styled(Tag)`
-  & + & {
-    margin-left: 10px;
+const TagItem = styled(Tag)`
+  background-color: ${({ theme, color }) => theme.tagColor[color]};
+  & + span {
+    margin-left: 5px;
   }
+`;
+
+const PostLikeBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+`;
+
+const PostLikeSpan = styled.span`
+  margin-right: 12px;
 `;
 
 export default function PostPost() {
@@ -101,8 +119,8 @@ export default function PostPost() {
           </PostPara>
         </PostContent>
         <PostTagBox>
-          <PostTag palette='blue'>선물</PostTag>
-          <PostTag palette='yellow'>가족</PostTag>
+          <TagItem color='blue'>선물</TagItem>
+          <TagItem color='yellow'>가족</TagItem>
         </PostTagBox>
         <PostLikeBox>
           <PostLikeSpan>좋아요</PostLikeSpan>
