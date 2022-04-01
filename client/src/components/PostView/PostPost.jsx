@@ -4,16 +4,7 @@ import { Tag } from '../../styles/common/tag';
 
 const PostBox = styled.div`
   width: 794px;
-  margin: 0 auto 32px;
-`;
-
-const PostViewH2 = styled.h1`
-  width: 794px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  color: ${({ theme }) => theme.color.black};
-  margin: 0 auto 12px;
+  margin: 0 auto;
 `;
 
 const PostTitle = styled.h3`
@@ -21,15 +12,15 @@ const PostTitle = styled.h3`
   font-weight: 600;
   margin-bottom: 68px;
   color: ${({ theme }) => theme.color.black};
+  margin-bottom: 56px;
 `;
 
 const PostHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 17px;
-  border-bottom: 1px ${({ theme }) => theme.color.lightGray} solid;
-  margin-bottom: 30px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
 `;
 
 const PostAuthor = styled.h4`
@@ -41,8 +32,8 @@ const PostAuthor = styled.h4`
   &::before {
     display: block;
     content: '';
-    width: 42px;
-    height: 42px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: #25a0fc;
     margin-right: 14px;
@@ -54,33 +45,31 @@ const PostDate = styled.span`
   color: ${({ theme }) => theme.color.gray};
 `;
 
-const PostBody = styled.div``;
+const PostBody = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+  padding-bottom: 48px;
+`;
+
+const PostContent = styled.div`
+  width: 794px;
+  padding: 48px 0;
+`;
+
 const PostPara = styled.div`
   font-size: 15px;
   font-weight: 500;
   line-height: 23px;
-  margin-bottom: 60px;
+  padding: 0 33px;
 `;
 
 const PostTagBox = styled.div`
   display: flex;
 `;
 
-const TagItem = styled(Tag)`
-  background-color: ${({ theme, color }) => theme.tagColor[color]};
-  & + span {
-    margin-left: 5px;
+const PostTag = styled(Tag)`
+  & + & {
+    margin-left: 10px;
   }
-`;
-
-const PostLikeBox = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 40px 0;
-`;
-
-const PostLikeSpan = styled.span`
-  margin-right: 12px;
 `;
 
 export default function PostPost() {
@@ -93,31 +82,27 @@ export default function PostPost() {
         <PostDate>2022년 1월 9일</PostDate>
       </PostHead>
       <PostBody>
-        <PostPara>
-          홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
-          <br />
-          <br />
-          겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해? 스웨덴에 와 본 적 있니? 언젠가
-          홍콩에 가보고 싶어.
-          <br />
-          어떤 외국어를 할 수 잇어? 답장 기다릴게! 홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야.
-          <br />
-          <br />
-          나는 스톡홀름에 사는 17살 학생이야. 겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해?
-          <br />
-          스웨덴에 와 본 적 있니?
-          <br />
-          언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장 기다릴게!
-          <br />
-          홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
-          겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해?
-          <br />
-          스웨덴에 와 본 적 있니? 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장
-          기다릴게!
-        </PostPara>
+        <PostContent>
+          <PostPara>
+            홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
+            <br />
+            겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해? 스웨덴에 와 본 적 있니?
+            <br />
+            <br /> 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장 기다릴게! 홍콩에 있는
+            친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
+            <br />
+            <br />
+            겹치는 관심사가 너무 많아서 깜짝 놀랐어!
+            <br />
+            여행 좋아해? 스웨덴에 와 본 적 있니? 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할수 잇어?
+            답장 기다릴게! 홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는
+            17살 학생이야. 겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해? 스웨덴에 와 본 적
+            있니? 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장 기다릴게!
+          </PostPara>
+        </PostContent>
         <PostTagBox>
-          <TagItem color='blue'>선물</TagItem>
-          <TagItem color='yellow'>가족</TagItem>
+          <PostTag palette='blue'>선물</PostTag>
+          <PostTag palette='yellow'>가족</PostTag>
         </PostTagBox>
         <PostLikeBox>
           <PostLikeSpan>좋아요</PostLikeSpan>

@@ -8,6 +8,16 @@ const PostViewContainer = styled.div`
   padding-top: 70px;
 `;
 
+const PostViewH2 = styled.h1`
+  width: 794px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  color: ${({ theme }) => theme.color.black};
+  margin: 0 auto;
+  margin-bottom: 20px;
+`;
+
 export default function PostViewPage() {
   return (
     <PostViewContainer>

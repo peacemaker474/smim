@@ -1,17 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function DropDown({ handleDropDownShow }, ref) {
+function DropDown({ setIsEditing }, ref) {
   const handleCommentEdit = (e) => {
     e.preventDefault();
-    console.log('edit');
-    // handleDropDownShow();
+    setIsEditing(true);
   };
   const handleCommentDel = (e) => {
     e.preventDefault();
-
-    console.log('del');
-    // handleDropDownShow();
   };
   return (
     <DropDownContainer ref={ref}>
@@ -51,6 +47,7 @@ const DropDownBtn = styled.button`
   font-size: 16px;
   font-weight: 500;
   width: 100%;
+  border: 1px solid #ffffff;
   &:hover {
     border: 1px solid #000000;
     color: #000000;
