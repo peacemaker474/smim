@@ -1,5 +1,4 @@
 import User from '../models/User.js';
-import axios from 'axios';
 
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const GOOGLE_AUTH_REDIRECT_URL = 'http://localhost:4000/login/google/callback';
@@ -10,8 +9,8 @@ export const getSignup = (req, res) => {
 };
 
 export const getCheckId = (req, res) => {
-  const { name } = req.query;
-  User.findOne({ name })
+  const { userId } = req.query;
+  User.findOne({ userId })
     .then((data) => {
       if (data) {
         return res.json({ success: false, message: '이미 사용중이거나 탈퇴한 아이디입니다.' });
@@ -49,13 +48,13 @@ export const getCheckName = (req, res) => {
 };
 
 export const postSignup = async (req, res) => {
-  const { name, email, nickname, birthday, password, password2 } = req.body;
+  const { userId, email, nickname, birthday, password, password2 } = req.body;
   if (password !== password2) {
     return res.json({ success: false, message: '비밀번호가 서로 다릅니다.' });
   }
   try {
     await User.create({
-      name,
+      userId,
       email,
       nickname,
       birthday,

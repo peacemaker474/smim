@@ -15,7 +15,6 @@ export const postLogin = async (req, res) => {
     console.log("비밀번호");
     return res.json({ success: false, message: "비밀번호가 일치하지 않습니다." });
   }
-
   const token = createToken(user._id);
   console.log("성공");
   return res.status(201).json({
