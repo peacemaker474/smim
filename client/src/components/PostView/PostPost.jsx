@@ -10,6 +10,7 @@ const PostBox = styled.div`
 const PostTitle = styled.h3`
   font-size: 32px;
   font-weight: 600;
+  margin-bottom: 68px;
   color: ${({ theme }) => theme.color.black};
   margin-bottom: 56px;
 `;
@@ -53,6 +54,7 @@ const PostContent = styled.div`
   width: 794px;
   padding: 48px 0;
 `;
+
 const PostPara = styled.div`
   font-size: 15px;
   font-weight: 500;
@@ -73,6 +75,7 @@ const PostTag = styled(Tag)`
 export default function PostPost() {
   return (
     <PostBox>
+      <PostViewH2>20대에게</PostViewH2>
       <PostTitle>고민있습니다</PostTitle>
       <PostHead>
         <PostAuthor>User1</PostAuthor>
@@ -101,6 +104,10 @@ export default function PostPost() {
           <PostTag palette='blue'>선물</PostTag>
           <PostTag palette='yellow'>가족</PostTag>
         </PostTagBox>
+        <PostLikeBox>
+          <PostLikeSpan>좋아요</PostLikeSpan>
+          <PostLikeSpan>즐겨찾기</PostLikeSpan>
+        </PostLikeBox>
       </PostBody>
     </PostBox>
   );

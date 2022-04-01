@@ -29,10 +29,9 @@ const CommentDropDownBtn = styled.button`
 
 const CommentContent = styled.div`
   width: 709px;
-`;
 
-const CommentText = styled.p`
-  width: 100%;
+const CommentText = styled.span`
+  display: block;
   margin: 0;
   margin-bottom: 12px;
   line-height: 23px;

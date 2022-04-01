@@ -10,7 +10,14 @@ const PostListMain = styled.main`
 
 const PostListContainer = styled.div`
   margin: 53px auto 0;
+  padding: 70px 0;
   width: 707px;
+`;
+
+const PostListHeading = styled.h2`
+  font-size: 32px;
+  margin-bottom: 90px;
+  text-align: center;
 `;
 
 const PostListHead = styled.div`
@@ -21,7 +28,21 @@ const PostListHead = styled.div`
   align-items: center;
 `;
 
+const SortDiv = styled.div`
+  height: 35px;
+  display: flex;
+`;
+
+const SortSelect = styled.select`
+  border: 2px solid ${({ theme }) => theme.color.yellow};
+  border-radius: 3px;
+`;
+
 const SearchDiv = styled.div`
+  display: flex;
+`;
+
+const SearchBox = styled.div`
   width: 245px;
   height: 33px;
   border: 2px solid ${({ theme }) => theme.color.yellow};
@@ -30,6 +51,10 @@ const SearchDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
+`;
+
+const SearchSelect = styled(SortSelect)`
+  margin-right: 6px;
 `;
 
 const SearchInput = styled.input`
@@ -45,16 +70,6 @@ const SearchBtn = styled.button`
   background-size: contain;
   background-repeat: no-repeat;
   background-postion: center;
-`;
-
-const SortDiv = styled.div`
-  height: 35px;
-  display: flex;
-`;
-
-const SortSelect = styled.select`
-  border: 2px solid ${({ theme }) => theme.color.yellow};
-  border-radius: 3px;
 `;
 
 // const SortBtn = styled.button`
@@ -84,12 +99,19 @@ export default function PostsPage() {
 
   return (
     <PostListMain>
-      {age}대 게시판 목록입니다.
       <PostListContainer>
+        <PostListHeading>{age}대 질문리스트</PostListHeading>
         <PostListHead>
           <SearchDiv>
-            <SearchInput />
-            <SearchBtn />
+            <SearchSelect name='sort'>
+              <option value=''>제목</option>
+              <option value=''>태그</option>
+              <option value=''>내용</option>
+            </SearchSelect>
+            <SearchBox>
+              <SearchInput />
+              <SearchBtn />
+            </SearchBox>
           </SearchDiv>
           <SortDiv>
             <SortSelect name='sort'>

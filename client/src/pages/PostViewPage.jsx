@@ -21,7 +21,6 @@ const PostViewH2 = styled.h1`
 export default function PostViewPage() {
   return (
     <PostViewContainer>
-      <PostViewH2>20대에게</PostViewH2>
       <PostPost />
       <PostComment />
     </PostViewContainer>
