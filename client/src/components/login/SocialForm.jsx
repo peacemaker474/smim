@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { FormBox } from './EmailForm';
 
 const SocialFormBox = styled(FormBox)`
@@ -11,13 +10,13 @@ const SocialFormBox = styled(FormBox)`
   flex-direction: row;
   border: none;
   margin: 0 auto;
-  border-top: 1px solid rgba(12, 12, 12, .3);
+  border-top: 1px solid rgba(12, 12, 12, 0.3);
 `;
 
-const KaKaoLink = styled(Link)`
+const KaKaoLink = styled.a`
   width: 60px;
   height: 60px;
-  background-color: ${({theme}) => theme.color.yellow};
+  background-color: ${({ theme }) => theme.color.yellow};
   text-align: center;
   line-height: 60px;
   font-size: 20px;
@@ -36,11 +35,11 @@ const GoogleLink = styled(KaKaoLink)`
   border: 1px solid black;
 `;
 
-function SocialForm () {
+function SocialForm() {
   return (
     <SocialFormBox>
-      <KaKaoLink to="/"> KaKao </KaKaoLink>
-      <GoogleLink to="/"> Google </GoogleLink>
+      <KaKaoLink href='http://localhost:4000/login/kakao'> KaKao </KaKaoLink>
+      <GoogleLink href='http://localhost:4000/login/google'>Google</GoogleLink>
     </SocialFormBox>
   );
 }
