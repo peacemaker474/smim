@@ -71,6 +71,8 @@ function SignupForm () {
         password: inputs.password,
         password2: inputs.check,
       };
+      
+      console.log(body);
 
       signUp(body).then((res) => {
         if(res.data.success) {
