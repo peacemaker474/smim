@@ -14,7 +14,6 @@ function SignupBirth ({inputs, setInputs}) {
   const [birth, setBirth] = useState({
     yy: "",
     mm: "",
-    dd: "",
   });
 
   const handleBirthYear = (evt) => {
@@ -40,7 +39,6 @@ function SignupBirth ({inputs, setInputs}) {
   }
 
   const handleBirthDay = (evt) => {
-    const name = evt.target.name;
     const month = parseInt(birth.mm);
     let day = parseInt(evt.target.value);
 
@@ -52,13 +50,10 @@ function SignupBirth ({inputs, setInputs}) {
     }
     if (day < 10) {
       setMessage({ ...message, dd: ""});
-      setBirth({ ...birth, [name]: `0${evt.target.value}`});
+      setInputs({ ...inputs, birthday: birth.yy + birth.mm + `0${evt.target.value}`});
     } else {
       setMessage({ ...message, dd: ""});
-      setBirth({ ...birth, [name]: evt.target.value});
-    }
-    if (birth.yy !== "" && birth.mm !== "" && birth.dd !== "") {
-      setInputs({ ...inputs, birthday: birth.yy + birth.mm + birth.dd});
+      setInputs({ ...inputs, birthday: birth.yy + birth.mm + evt.target.value});
     }
   }
 

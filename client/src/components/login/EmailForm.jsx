@@ -74,7 +74,7 @@ const LoginValid = styled(ValidCheck)`
 `;
 
 function EmailForm () {
-  const userId = useRef(null);
+  const userName = useRef(null);
   const userPw = useRef(null);
 
   const dispatch = useDispatch();
@@ -87,16 +87,15 @@ function EmailForm () {
     evt.preventDefault();
 
     let body = {
-      name: userId.current.value,
+      userId: userName.current.value,
       password: userPw.current.value,
     }
-
     checkLogin(body);
   }
   return (
     <FormBox method='POST'>
       <Label> 아이디 </Label>
-      <Input type="text" placeholder='아이디를 입력하세요.' ref={userId} />
+      <Input type="text" placeholder='아이디를 입력하세요.' ref={userName} />
       <LoginValid> 아이디를 다시 확인해주세요. </LoginValid>
       <Label> 비밀번호 </Label>
       <Input type="password" placeholder='비밀번호를 입력하세요.' ref={userPw} />
