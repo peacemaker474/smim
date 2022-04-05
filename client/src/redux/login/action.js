@@ -13,7 +13,6 @@ export const loginUser = (data) => (dispatch) => {
     })
     .then((response) => response.data)
     .then((res) => {
-      console.log(res);
       setCookie("users", res.accessToken);
       dispatch({
         type: LOGIN_USER,
