@@ -28,3 +28,15 @@ export const ColorBtn = styled.button`
     cursor: pointer;
   }
 `;
+
+export const LoginBtn = styled(ColorBtn)`
+  width: 120px;
+  height: 30px;
+  background-color: #FFC306;
+  font-weight: bold;
+  align-self: flex-end;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 0 20px 10px 0;
+`;
