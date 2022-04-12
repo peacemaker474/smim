@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginOpen } from '../../redux/toggle/action';
 import Toggle from './Toggle';
 import LoginSection from '../login/LoginSection';
 import MobileNavBar from './MobileNavBar';
+import { logoutUser } from '../../redux/login/action';
 
 const NavContainer = styled.nav`
   width: 100vw;
@@ -84,10 +85,18 @@ function NavBar() {
   const { pathname } = useLocation(null);
   const menuToggled = useSelector((state) => state.toggleReducer.menuToggled);
   const loginToggled = useSelector((state) => state.toggleReducer.loginToggled);
+  const loginState = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLoginModal = () => {
     dispatch(loginOpen());
   };
+
+  const handleLogoutClick = () => {
+    dispatch(logoutUser());
+    navigate('/');
+  }
 
   return (
     <>
@@ -127,9 +136,19 @@ function NavBar() {
                 60대에게
               </ListLink>
             </NavList>
+            {!loginState.isLogin ? 
             <NavList>
               <SignLink onClick={handleLoginModal}> 로그인/회원가입 </SignLink>
-            </NavList>
+            </NavList> :
+            <>
+              <NavList>
+                <SignLink to='/my'> 마이페이지 </SignLink>
+              </NavList>
+              <NavList>
+                <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
+              </NavList>
+            </>
+            }
           </NavLists>
           <Toggle />
         </NavBox>

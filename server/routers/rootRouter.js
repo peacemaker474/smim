@@ -6,7 +6,7 @@ import {
   postSignup,
   getGoogleAuth,
   getGoogleCallback,
-} from '../controllers/userController.js';
+} from '../controllers/signupController.js';
 
 const rootRouter = express.Router();
 

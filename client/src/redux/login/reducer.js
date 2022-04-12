@@ -16,6 +16,9 @@ export default function loginReducer(state = {}, action) {
         ...state,
         isLogin: false,
         message: '',
+        id: "",
+        name: "",
+        email: "",
       };
     case SET_MESSAGE:
       return {
