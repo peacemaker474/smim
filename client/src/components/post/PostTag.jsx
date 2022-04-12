@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
-import { useDispatch, useSelector } from 'react-redux';
-import { tagAdd, tagDelete } from '../../redux/post/action';
 import DelBtn from '../../asset/icon/icon-del.svg';
-
 
 const HashContainer = styled.div`
   height: 40px;
@@ -38,7 +35,6 @@ const HashItem = styled.div`
   cursor: pointer;
 `;
 
-
 const HashWrapBox = styled.div`
   height: 30px;
   display: flex;
@@ -63,16 +59,15 @@ const HashDelBtn = styled.button`
   background-repeat: no-repeat;
 `;
 
-function PostTag() {
+function PostTag({ saveData, postData }) {
   const [text, setText] = useState('');
-  const dispatch = useDispatch();
-  const hashtagArr = useSelector((state) => state.postReducer.hashArr);
-
 
   const handleEnter = (e) => {
     if (e.keyCode === 188 && e.target.value !== '') {
       const tagText = e.target.value.split(',')[0];
-      dispatch(tagAdd(tagText));
+      if (!postData.tag.includes(tagText)) {
+        saveData('tag', [...postData.tag, tagText]);
+      }
       setText('');
     }
   };
@@ -81,21 +76,20 @@ function PostTag() {
     setText(e.target.value);
   };
 
-
   const handleTagFocusOut = () => {
     // input text reset
     setText('');
   };
 
   const handleHashDel = (hashtag) => {
-    dispatch(tagDelete(hashtag));
+    const arr = postData.tag.filter((data) => data !== hashtag);
+    saveData('tag', arr);
   };
 
   return (
     <HashContainer palette='yellow'>
       <HashWrapBox>
-        {hashtagArr.map((el, idx) => (
-
+        {postData.tag.map((el, idx) => (
           <HashItem key={idx + el}>
             <span>{el}</span>
             <HashDelBtn type='button' onClick={() => handleHashDel(el)}></HashDelBtn>

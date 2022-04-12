@@ -4,12 +4,14 @@ import Post from '../models/Post.js';
 // 게시물 생성
 export const postCreate = async (req, res) => {
   const { title, tagArray, textContent, targetAge } = req.body;
+  console.log(req.body);
   try {
     await Post.create({
       title,
       tagArray,
       textContent,
       targetAge,
+      owner: req.body.user.user_id,
     });
 
     return res.json({
