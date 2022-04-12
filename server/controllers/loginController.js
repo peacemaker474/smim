@@ -25,3 +25,7 @@ export const postLogin = async (req, res) => {
     message: "",
   })
 }
+
+export const getLogout = (req, res) => {
+  return res.status(201).json({ success: true });
+}

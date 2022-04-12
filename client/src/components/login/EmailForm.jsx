@@ -61,8 +61,9 @@ function EmailForm () {
       password: userPw,
     }
     dispatch(loginUser(body));
-    dispatch(loginClose());
   }
+
+  console.log(message);
   return (
     <FormBox method='POST'>
       <LoginId 
@@ -71,7 +72,7 @@ function EmailForm () {
       <LoginPw
         handlePwChange={handlePwChange}
       />
-      {message !== "" && <LoginValid validLogin={message}> {message} </LoginValid>}
+      {message !== undefined && <LoginValid validLogin={message}> {message} </LoginValid>}
       <LoginBtn onClick={handleLogin}> 로그인 </LoginBtn>
       <SignupLink
         handleLoginClose={handleLoginClose}

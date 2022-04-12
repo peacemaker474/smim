@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {menuClose} from '../../redux/toggle/action';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux';
+import { menuClose } from '../../redux/toggle/action';
+import { logoutUser } from '../../redux/login/action';
 
 const MobileNavBox = styled.section`
   width: 45vw;
@@ -106,17 +107,24 @@ const MobileSignUp = styled(Link)`
 `;
 
 function MobileNavBar () {
-  const [test, setTest] = useState(true);
+  const loginState = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleToggle = () => {
     dispatch(menuClose());
-    setTest(!test);
   }
+
+  const handleLogoutClick = () => {
+    dispatch(logoutUser());
+    dispatch(menuClose());
+    navigate('/');
+  }
+
   return (
     <MobileNavBox>
         <MobileLists>
           <MobileList>
-            {test ? (
+            {!loginState.isLogin ? (
               <MobileSignBox>
                 <MobileSignIn onClick={handleToggle}> 로그인 하기 </MobileSignIn>
                 <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
@@ -144,6 +152,11 @@ function MobileNavBar () {
           <MobileList>
             <MobileLink to="/post/view/generation60"> 60대에게 </MobileLink>
           </MobileList>
+          {!loginState.isLogin && 
+            <MobileList>
+              <MobileLink to="/" onClick={handleLogoutClick}> 로그아웃 </MobileLink>
+            </MobileList>
+          }
         </MobileLists>
     </MobileNavBox>
   );
