@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
 import { useNavigate } from 'react-router-dom';
 import { postUpload } from '../network/post/http';
-import { postReset } from '../redux/post/action';
+import { getCookie } from '../utils/cookie';
 
 const PostCreateContainer = styled.div`
   width: 1200px;
@@ -34,45 +33,52 @@ export default function PostUploadPage() {
   const { pathname } = useLocation();
   const pathArrItem = pathname.split('/')[2];
   const [isVisible, setIsVisible] = useState(false);
+  const [postData, setPostData] = useState({ age: '10', tag: [] });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const postData = useSelector((state) => state.postReducer);
+
+  const saveData = (name, data) => {
+    setPostData({ ...postData, [name]: data });
+  };
 
   const showModal = () => {
     setIsVisible(!isVisible);
   };
 
-  const handleUpload = async (data) => {
-    // user_id, title, tag[],content
-    // content, hashArr, targetAge, title
+  const handleUpload = async () => {
+    const tkn = getCookie();
     postUpload(
       {
-        title: data.title,
-        content: data.content,
-        tag: data.hashArr,
-        targetAge: data.targetAge,
+        title: postData.title,
+        content: postData.content,
+        tag: postData.tag,
+        targetAge: postData.targetAge,
       },
       {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
         },
       }
     )
       .then((res) => {
         console.log(res.data);
-        dispatch(postReset());
         navigate('/');
       })
       .catch((err) => console.log(err));
   };
-  console.log(handleUpload, postData);
 
   return (
     <>
-      {isVisible ? <Modal showModal={showModal}>게시물을 등록하시겠습니까?</Modal> : false}
+      {isVisible ? (
+        <Modal showModal={showModal} actionfunc={handleUpload}>
+          게시물을 등록하시겠습니까?
+        </Modal>
+      ) : (
+        false
+      )}
       <PostCreateContainer>
         <PostHeader>{pathArrItem === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
-        <PostForm formState={pathArrItem}></PostForm>
+        <PostForm formState={pathArrItem} saveData={saveData} postData={postData}></PostForm>
         <PostBottomBtn formState={pathArrItem} showModal={showModal} isVisible={isVisible} />
       </PostCreateContainer>
     </>
