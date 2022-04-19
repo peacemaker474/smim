@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ColorBtn } from '../../styles/common/buttons';
 import { postReset } from '../../redux/post/action';
 
@@ -23,8 +23,10 @@ const BtnDiv = styled.div`
     width: 180px;
   }
 `;
-function PostBottomBtn({ postData, postReset, formState, showModal }) {
+function PostBottomBtn({ formState, showModal }) {
   const navigate = useNavigate();
+  const postData = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
 
   const handelBtnClick = (data) => {
     if (data.title === '') {
@@ -47,7 +49,7 @@ function PostBottomBtn({ postData, postReset, formState, showModal }) {
                 width={'5rem'}
                 palette={'yellow'}
                 onClick={() => {
-                  postReset();
+                  dispatch(postReset());
                   navigate('/');
                 }}
               >
@@ -97,13 +99,13 @@ function PostBottomBtn({ postData, postReset, formState, showModal }) {
   );
 }
 
-const mapStateToProps = ({ postCreator }) => {
-  return {
-    postData: postCreator,
-  };
-};
-const mapDispatchToProps = {
-  postReset,
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     postData: state.postReducer,
+//   };
+// };
+// const mapDispatchToProps = {
+//   postReset,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostBottomBtn);
+export default PostBottomBtn;

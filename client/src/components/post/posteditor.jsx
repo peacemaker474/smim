@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { contentAdd } from '../../redux/post/action';
 
 const PostEditorWrap = styled.div`
@@ -10,8 +10,9 @@ const PostEditorWrap = styled.div`
   height: 400px;
 `;
 
-function Posteditor({ contentAdd }) {
+function Posteditor() {
   const [para, setPara] = useState('');
+  const dispatch = useDispatch();
 
   const modules = {
     toolbar: [
@@ -25,7 +26,7 @@ function Posteditor({ contentAdd }) {
   };
 
   return (
-    <PostEditorWrap onBlur={() => contentAdd(para)}>
+    <PostEditorWrap onBlur={() => dispatch(contentAdd(para))}>
       <ReactQuill
         modules={modules}
         style={{ height: '85%', marginBottom: '6%' }}
@@ -37,14 +38,14 @@ function Posteditor({ contentAdd }) {
   );
 }
 
-const mapStateToProps = ({ postCreator }) => {
-  return {
-    content: postCreator.content,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     content: state.postReducer.content,
+//   };
+// };
 
-const mapDispatchToProps = {
-  contentAdd: (content) => contentAdd(content),
-};
+// const mapDispatchToProps = {
+//   contentAdd: (content) => contentAdd(content),
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posteditor);
+export default Posteditor;

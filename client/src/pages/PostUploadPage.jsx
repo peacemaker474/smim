@@ -85,9 +85,9 @@ function PostUploadPage({ postData }) {
   );
 }
 
-const mapStateToProps = ({ postCreator }) => {
+const mapStateToProps = (state) => {
   return {
-    postData: postCreator,
+    postData: state.postReducer,
   };
 };
 

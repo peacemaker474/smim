@@ -15,7 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   loginReducer,
   toggleReducer,
-  postCreator: postReducer,
+  postReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
