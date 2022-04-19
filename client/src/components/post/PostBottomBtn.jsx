@@ -25,8 +25,8 @@ const BtnDiv = styled.div`
 `;
 function PostBottomBtn({ formState, showModal }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const postData = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
 
   const handelBtnClick = (data) => {
     if (data.title === '') {
@@ -98,5 +98,14 @@ function PostBottomBtn({ formState, showModal }) {
     </>
   );
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     postData: state.postReducer,
+//   };
+// };
+// const mapDispatchToProps = {
+//   postReset,
+// };
 
 export default PostBottomBtn;

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
-import { useNavigate } from 'react-router-dom';
 import { postUpload } from '../network/post/http';
-import { getCookie } from '../utils/cookie';
+// import { postReset } from '../redux/post/action';
 
 const PostCreateContainer = styled.div`
   width: 1200px;
@@ -29,18 +31,16 @@ const PostHeader = styled.h2`
     left: 150px;
   }
 `;
-export default function PostUploadPage() {
+function PostUploadPage({ postData }) {
   const { pathname } = useLocation();
+
   const pathArrItem = pathname.split('/')[2];
   const [isVisible, setIsVisible] = useState(false);
-  const [postData, setPostData] = useState({ age: '10', tag: [] });
+
   const navigate = useNavigate();
 
-  const saveData = (name, data) => {
-    setPostData({ ...postData, [name]: data });
-  };
-
   const showModal = () => {
+    console.log('showing');
     setIsVisible(!isVisible);
   };
 
@@ -50,7 +50,7 @@ export default function PostUploadPage() {
       {
         title: postData.title,
         content: postData.content,
-        tag: postData.tag,
+        tag: postData.hashtag,
         targetAge: postData.targetAge,
       },
       {
@@ -78,9 +78,21 @@ export default function PostUploadPage() {
       )}
       <PostCreateContainer>
         <PostHeader>{pathArrItem === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
-        <PostForm formState={pathArrItem} saveData={saveData} postData={postData}></PostForm>
+        <PostForm />
         <PostBottomBtn formState={pathArrItem} showModal={showModal} isVisible={isVisible} />
       </PostCreateContainer>
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    postData: state.postReducer,
+  };
+};
+
+const mapDispatchToProps = {
+  // postReset,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostUploadPage);

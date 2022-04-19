@@ -4,7 +4,7 @@ export const titleAdd = (title) => {
   return {
     type: TITLE_ADD,
     payload: {
-      title: title,
+      title,
     },
   };
 };
@@ -27,20 +27,20 @@ export const targetAgeAdd = (targetAge) => {
   };
 };
 
-export const tagAdd = (hashtag) => {
+export const tagAdd = (tag) => {
   return {
     type: TAG_ADD,
     payload: {
-      hashtag: hashtag,
+      tag,
     },
   };
 };
 
-export const tagDelete = (hashtag) => {
+export const tagDelete = (tag) => {
   return {
     type: TAG_DELETE,
     payload: {
-      hashtag: hashtag,
+      tag,
     },
   };
 };
