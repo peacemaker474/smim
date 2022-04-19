@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { titleAdd } from '../../redux/post/action';
 
 // PostTitle onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
 const TitleWrap = styled.div`
@@ -17,18 +19,33 @@ const TitleInput = styled.input`
   }
 `;
 
-function PostTitle({ saveData }) {
+function PostTitle({ titleAdd }) {
   const titleInput = useRef();
 
-  const titleHandler = () => {
-    saveData('title', titleInput.current.value);
-  };
+  // const titleHandler = () => {
+  //   saveData('title', titleInput.current.value);
+  // };
   // ref 대신 value={title}을 쓰는 이유
   return (
     <TitleWrap>
-      <TitleInput placeholder='제목' palette='yellow' onBlur={titleHandler} ref={titleInput} />
+      <TitleInput
+        placeholder='제목'
+        palette='yellow'
+        onBlur={() => titleAdd(titleInput.current.value)}
+        ref={titleInput}
+      />
     </TitleWrap>
   );
 }
 
-export default PostTitle;
+const mapStateToProps = ({ postCreator }) => {
+  return {
+    title: postCreator.title,
+  };
+};
+
+const mapDispatchToProps = {
+  titleAdd: (title) => titleAdd(title),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostTitle);

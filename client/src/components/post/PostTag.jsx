@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import DelBtn from '../../asset/icon/icon-del.svg';
+import { connect } from 'react-redux';
+import { tagAdd, tagDelete } from '../../redux/post/action';
 
 const HashContainer = styled.div`
   height: 40px;
@@ -59,14 +61,14 @@ const HashDelBtn = styled.button`
   background-repeat: no-repeat;
 `;
 
-function PostTag({ saveData, postData }) {
+function PostTag({ hashtag, tagAdd, tagDelete }) {
   const [text, setText] = useState('');
 
   const handleEnter = (e) => {
     if (e.keyCode === 188 && e.target.value !== '') {
-      const tagText = e.target.value.split(',')[0];
-      if (!postData.tag.includes(tagText)) {
-        saveData('tag', [...postData.tag, tagText]);
+      const tagText = text.split(',')[0];
+      if (!hashtag.includes(tagText)) {
+        tagAdd(tagText);
       }
       setText('');
     }
@@ -81,18 +83,13 @@ function PostTag({ saveData, postData }) {
     setText('');
   };
 
-  const handleHashDel = (hashtag) => {
-    const arr = postData.tag.filter((data) => data !== hashtag);
-    saveData('tag', arr);
-  };
-
   return (
     <HashContainer palette='yellow'>
       <HashWrapBox>
-        {postData.tag.map((el, idx) => (
+        {hashtag.map((el, idx) => (
           <HashItem key={idx + el}>
             <span>{el}</span>
-            <HashDelBtn type='button' onClick={() => handleHashDel(el)}></HashDelBtn>
+            <HashDelBtn type='button' onClick={() => tagDelete(el)}></HashDelBtn>
           </HashItem>
         ))}
       </HashWrapBox>
@@ -108,4 +105,15 @@ function PostTag({ saveData, postData }) {
   );
 }
 
-export default PostTag;
+const mapStateToProps = ({ postCreator }) => {
+  return {
+    hashtag: postCreator.hashtag,
+  };
+};
+
+const mapDispatchToProps = {
+  tagAdd: (tag) => tagAdd(tag),
+  tagDelete: (tag) => tagDelete(tag),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostTag);

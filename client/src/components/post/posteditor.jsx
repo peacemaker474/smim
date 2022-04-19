@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { contentAdd } from '../../redux/post/action';
 
 const PostEditorWrap = styled.div`
   margin-top: 30px;
   height: 400px;
 `;
 
-function Posteditor({ saveData }) {
-  const contentHandler = (content) => {
-    saveData('content', content);
-  };
+function Posteditor({ contentAdd }) {
+  const [para, setPara] = useState('');
 
   const modules = {
     toolbar: [
@@ -25,14 +25,26 @@ function Posteditor({ saveData }) {
   };
 
   return (
-    <PostEditorWrap>
+    <PostEditorWrap onBlur={() => contentAdd(para)}>
       <ReactQuill
         modules={modules}
         style={{ height: '85%', marginBottom: '6%' }}
-        onChange={contentHandler}
+        onChange={(value) => {
+          setPara(value);
+        }}
       />
     </PostEditorWrap>
   );
 }
 
-export default Posteditor;
+const mapStateToProps = ({ postCreator }) => {
+  return {
+    content: postCreator.content,
+  };
+};
+
+const mapDispatchToProps = {
+  contentAdd: (content) => contentAdd(content),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posteditor);

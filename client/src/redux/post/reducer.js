@@ -3,7 +3,7 @@ import { TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD, TAG_ADD, TAG_DELETE, POST_RESET 
 const initialState = {
   title: '',
   targetAge: 0,
-  hashArr: [],
+  hashtag: [],
   content: '',
 };
 
@@ -27,21 +27,21 @@ export default function postReducer(state = initialState, action) {
     case TAG_ADD:
       return {
         ...state,
-        hashArr: [...state.hashArr, action.payload.hashtag],
+        hashtag: [...state.hashtag, action.payload.tag],
       };
     case TAG_DELETE:
       return {
         ...state,
-        hashArr: [...state.hashArr].filter((el) => el !== action.payload.hashtag),
+        hashtag: state.hashtag.filter((el) => el !== action.payload.tag),
       };
     case POST_RESET:
       return {
         title: '',
         targetAge: 0,
-        hashArr: [],
+        hashtag: [],
         content: '',
       };
     default:
-      return state;
+      return { ...state };
   }
 }
