@@ -29,3 +29,13 @@ export const BirthMonth = styled.select`
   box-sizing: border-box;
   border-radius: 5px;
 `;
+
+export const MyInfoInput = styled.input`
+  width: 90%;
+  height: 100%;
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 5px;
+  padding-left: 15px;
+  box-sizing: border-box;
+`;
