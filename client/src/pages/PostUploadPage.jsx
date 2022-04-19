@@ -45,12 +45,13 @@ export default function PostUploadPage() {
   };
 
   const handleUpload = async () => {
-    const tkn = getCookie();
+    const tkn = getCookie('users');
+
     postUpload(
       {
         title: postData.title,
         content: postData.content,
-        tag: postData.tag,
+        tag: postData.hashtag,
         targetAge: postData.targetAge,
       },
       {
