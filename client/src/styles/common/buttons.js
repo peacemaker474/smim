@@ -40,3 +40,12 @@ export const LoginBtn = styled(ColorBtn)`
   font-size: 16px;
   margin: 0 20px 10px 0;
 `;
+
+export const UpdateBtn = styled(ColorBtn)`
+  width: 100px;
+  height: 90%;
+  background-color: orange;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+`;

@@ -4,13 +4,13 @@ import Posteditor from './posteditor';
 import PostTitle from './PostTitle';
 import PostTag from './PostTag';
 
-function PostForm({ saveData, postData }) {
+function PostForm() {
   return (
     <form id='upload'>
-      <PostTitle saveData={saveData} />
-      <PostTargetAge saveData={saveData} />
-      <PostTag saveData={saveData} postData={postData} />
-      <Posteditor saveData={saveData} />
+      <PostTitle />
+      <PostTargetAge />
+      <PostTag />
+      <Posteditor />
     </form>
   );
 }

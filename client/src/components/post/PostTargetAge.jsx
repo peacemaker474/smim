@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { targetAgeAdd } from '../../redux/post/action';
 
 // PostTargetAge가 onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
 const TargetWrap = styled.div`
@@ -17,15 +19,13 @@ const TargetAgeInput = styled.select`
   }
 `;
 
-function PostTargetAge({ saveData }) {
-  const titleHandler = (e) => {
-    saveData('targetAge', e.target.value);
-    // store에 있는 state 바꾸는 함수 설정
-  };
+function PostTargetAge() {
+  // const { targetAge } = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
 
   return (
     <TargetWrap>
-      <TargetAgeInput palette='yellow' onChange={titleHandler}>
+      <TargetAgeInput palette='yellow' onChange={(e) => dispatch(targetAgeAdd(e.target.value))}>
         <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
@@ -37,5 +37,15 @@ function PostTargetAge({ saveData }) {
     </TargetWrap>
   );
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     targetAge: state.postReducer.targetAge,
+//   };
+// };
+
+// const mapDispatchToProps = {
+//   targetAgeAdd: (targetAge) => targetAgeAdd(targetAge),
+// };
 
 export default PostTargetAge;

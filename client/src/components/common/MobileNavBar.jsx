@@ -152,7 +152,7 @@ function MobileNavBar () {
           <MobileList>
             <MobileLink to="/post/view/generation60"> 60대에게 </MobileLink>
           </MobileList>
-          {!loginState.isLogin && 
+          {loginState.isLogin && 
             <MobileList>
               <MobileLink to="/" onClick={handleLogoutClick}> 로그아웃 </MobileLink>
             </MobileList>
