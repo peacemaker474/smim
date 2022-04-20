@@ -1,22 +1,22 @@
 import Post from '../models/Post.js';
+import User from '../models/User.js';
 // import Tag from '../models/Tag.js';
 
 // 게시물 생성
 export const postCreate = async (req, res) => {
-  const { title, tagArray, textContent, targetAge } = req.body;
+  const { title, content, tag, targetAge } = req.body;
   console.log(req.body);
   try {
     await Post.create({
       title,
-      tagArray,
-      textContent,
+      tagArray: tag,
+      textContent: content,
       targetAge,
       owner: req.body.user.user_id,
     });
 
     return res.json({
       success: true,
-      post_id: '1111',
       message: '새로운 게시글 작성이 완료되었습니다.',
     });
   } catch (error) {
@@ -29,7 +29,6 @@ export const postCreate = async (req, res) => {
 export const putEdit = async (req, res) => {
   const { id } = req.params;
   // const { title, tagArray, textContent, targetAge } = req.body;
-  // console.log(title, tagArray, textContent, targetAge);
   const postData = await Post.exists({ _id: id });
   if (postData) {
     await Post.findByIdAndUpdate(id, { title: req.body.title });
@@ -53,6 +52,7 @@ export const getPostDetail = async (req, res) => {
 export const getPostList = async (req, res) => {
   const { age } = req.query;
   const postList = await Post.find({ age });
+  console.log(postList);
   res.json(postList);
 };
 
@@ -60,11 +60,44 @@ export const getPostList = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.params;
   const postData = await Post.exists({ _id: id });
-  if (postData) {
-    await Post.findByIdAndUpdate(id, { being: false });
-    return res.json({ result: 'success' });
+
+  if (!postData) {
+    return res.status(400);
   }
-  return res.json(id);
+
+  await Post.findByIdAndUpdate(id, { being: false });
+  return res.json({ result: 'success' });
+};
+
+export const getPostView = async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById({ _id: id });
+  if (!post) {
+    return res.json('not found');
+  }
+
+  post.meta.views += 1;
+  await post.save();
+  return res.json('succes');
+};
+
+export const getPostLike = async (req, res) => {
+  const { id } = req.params;
+  const { user_id } = req.body.user;
+  const post = await Post.findById({ _id: id });
+  const user = await User.findById({ _id: user_id });
+  console.log(user);
+  if (!post) {
+    return res.json('not found');
+  }
+  post.meta.likes += 1;
+  await post.save();
+
+  user.likes.push(id);
+  await user.save();
+
+  return res.json('succes');
 };
 
 // export const tagUpload = async (req, res) => {

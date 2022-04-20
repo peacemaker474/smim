@@ -8,6 +8,7 @@ const postSchema = new mongoose.Schema({
   tagArray: [{ type: String }],
   meta: {
     views: { type: Number, default: 0, required: true },
+    likes: { type: Number, default: 0, required: true },
   },
   // comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
   createAt: { type: Date, required: true, default: Date.now },
