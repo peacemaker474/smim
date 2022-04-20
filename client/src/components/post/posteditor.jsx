@@ -25,8 +25,12 @@ function Posteditor() {
     ],
   };
 
+  const handleFormBlur = () => {
+    dispatch(contentAdd(para));
+  };
+
   return (
-    <PostEditorWrap onBlur={() => dispatch(contentAdd(para))}>
+    <PostEditorWrap onBlur={handleFormBlur}>
       <ReactQuill
         modules={modules}
         style={{ height: '85%', marginBottom: '6%' }}
@@ -37,15 +41,5 @@ function Posteditor() {
     </PostEditorWrap>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     content: state.postReducer.content,
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   contentAdd: (content) => contentAdd(content),
-// };
 
 export default Posteditor;
