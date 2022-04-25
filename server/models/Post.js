@@ -2,16 +2,17 @@
 import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
-  title: String,
-  textContent: String,
-  targetAge: Number,
-  tagArray: [{ type: String }],
+  title: { type: String, required: true },
+  textContent: { type: String, required: true },
+  targetAge: { type: Number, required: true },
+  tagArray: [{ type: String, required: true }],
   meta: {
     views: { type: Number, default: 0, required: true },
+    likes: { type: Number, default: 0, required: true },
   },
   // comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
   createAt: { type: Date, required: true, default: Date.now },
-  updateAt: { type: Date },
+  updateAt: { type: Date, default: Date.now, required: true },
   being: { type: Boolean, default: true }, // 게시글의 삭제 유무
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
 });

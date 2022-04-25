@@ -10,6 +10,9 @@ export const createToken = (userId) => {
 };
 
 export const verifyToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.json({ result: 'access token이 없습니다.' });
+  }
   const token = req.headers.authorization.split('Bearer ')[1];
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     req.body.user = decoded;
