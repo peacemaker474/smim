@@ -28,7 +28,7 @@ function PostBottomBtn({ formState, showModal }) {
   const postData = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
 
-  const handelBtnClick = (data) => {
+  const handleFormCheck = (data) => {
     if (data.title === '') {
       console.log('제목을 입력해주세요');
     } else if (data.targetAge === 0) {
@@ -39,20 +39,24 @@ function PostBottomBtn({ formState, showModal }) {
       showModal();
     }
   };
+
+  const handleFormCancle = () => {
+    dispatch(postReset());
+    navigate('/');
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleFormCheck(postData);
+  };
+
   return (
     <>
       <BtnWrap>
         <BtnDiv>
           {formState === 'create' ? (
             <>
-              <ColorBtn
-                width={'5rem'}
-                palette={'yellow'}
-                onClick={() => {
-                  dispatch(postReset());
-                  navigate('/');
-                }}
-              >
+              <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
                 작성 취소
               </ColorBtn>
               <ColorBtn
@@ -60,23 +64,14 @@ function PostBottomBtn({ formState, showModal }) {
                 palette={'yellow'}
                 type='button'
                 form='upload'
-                onClick={(e) => {
-                  e.preventDefault();
-                  handelBtnClick(postData);
-                }}
+                onClick={handleFormSubmit}
               >
                 게시물 등록
               </ColorBtn>
             </>
           ) : (
             <>
-              <ColorBtn
-                width={'5rem'}
-                palette={'yellow'}
-                onClick={() => {
-                  navigate('/');
-                }}
-              >
+              <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
                 수정 취소
               </ColorBtn>
               <ColorBtn
@@ -84,10 +79,7 @@ function PostBottomBtn({ formState, showModal }) {
                 palette={'yellow'}
                 type='button'
                 form='upload'
-                onClick={(e) => {
-                  e.preventDefault();
-                  handelBtnClick(postData);
-                }}
+                onClick={handleFormSubmit}
               >
                 재등록
               </ColorBtn>
@@ -98,14 +90,5 @@ function PostBottomBtn({ formState, showModal }) {
     </>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     postData: state.postReducer,
-//   };
-// };
-// const mapDispatchToProps = {
-//   postReset,
-// };
 
 export default PostBottomBtn;

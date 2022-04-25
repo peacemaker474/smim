@@ -20,21 +20,17 @@ const TitleInput = styled.input`
 `;
 
 function PostTitle() {
-  // const postData = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
   const titleInput = useRef();
+
+  const handleInputBlur = () => {
+    dispatch(titleAdd(titleInput.current.value));
+  };
 
   // ref 대신 value={title}을 쓰는 이유
   return (
     <TitleWrap>
-      <TitleInput
-        placeholder='제목'
-        palette='yellow'
-        onBlur={() => {
-          dispatch(titleAdd(titleInput.current.value));
-        }}
-        ref={titleInput}
-      />
+      <TitleInput placeholder='제목' palette='yellow' onBlur={handleInputBlur} ref={titleInput} />
     </TitleWrap>
   );
 }

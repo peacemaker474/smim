@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
 import { postUpload } from '../network/post/http';
-// import { postReset } from '../redux/post/action';
+import { postReset } from '../redux/post/action';
 
 const PostCreateContainer = styled.div`
   width: 1200px;
@@ -31,22 +30,21 @@ const PostHeader = styled.h2`
     left: 150px;
   }
 `;
-function PostUploadPage({ postData }) {
+function PostUploadPage() {
   const { pathname } = useLocation();
-
-  const pathArrItem = pathname.split('/')[2];
   const [isVisible, setIsVisible] = useState(false);
-
+  const postData = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const pathArrItem = pathname.split('/')[2];
 
   const showModal = () => {
-    console.log('showing');
     setIsVisible(!isVisible);
   };
 
-  const handleUpload = async () => {
-    const tkn = getCookie('users');
 
+  const handleRequest = async () => {
+    const tkn = getCookie('users');
     postUpload(
       {
         title: postData.title,
@@ -63,6 +61,7 @@ function PostUploadPage({ postData }) {
     )
       .then((res) => {
         console.log(res.data);
+        dispatch(postReset());
         navigate('/');
       })
       .catch((err) => console.log(err));
@@ -71,7 +70,7 @@ function PostUploadPage({ postData }) {
   return (
     <>
       {isVisible ? (
-        <Modal showModal={showModal} actionfunc={handleUpload}>
+        <Modal showModal={showModal} actionfunc={handleRequest}>
           게시물을 등록하시겠습니까?
         </Modal>
       ) : (
@@ -86,14 +85,4 @@ function PostUploadPage({ postData }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    postData: state.postReducer,
-  };
-};
-
-const mapDispatchToProps = {
-  // postReset,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostUploadPage);
+export default PostUploadPage;
