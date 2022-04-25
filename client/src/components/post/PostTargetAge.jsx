@@ -20,12 +20,15 @@ const TargetAgeInput = styled.select`
 `;
 
 function PostTargetAge() {
-  // const { targetAge } = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
+
+  const handleAgeClick = (e) => {
+    dispatch(targetAgeAdd(e.target.value));
+  };
 
   return (
     <TargetWrap>
-      <TargetAgeInput palette='yellow' onChange={(e) => dispatch(targetAgeAdd(e.target.value))}>
+      <TargetAgeInput palette='yellow' onChange={handleAgeClick}>
         <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
@@ -37,15 +40,5 @@ function PostTargetAge() {
     </TargetWrap>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     targetAge: state.postReducer.targetAge,
-//   };
-// };
-
-// const mapDispatchToProps = {
-//   targetAgeAdd: (targetAge) => targetAgeAdd(targetAge),
-// };
 
 export default PostTargetAge;

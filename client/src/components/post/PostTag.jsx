@@ -66,7 +66,7 @@ function PostTag() {
   const { hashtag } = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
 
-  const handleEnter = (e) => {
+  const handleKeyUp = (e) => {
     if (e.keyCode === 188 && e.target.value !== '') {
       const tagText = text.split(',')[0];
       if (!hashtag.includes(tagText)) {
@@ -85,20 +85,24 @@ function PostTag() {
     setText('');
   };
 
+  const handleDeleteBtnClick = (el) => {
+    dispatch(tagDelete(el));
+  };
+
   return (
     <HashContainer palette='yellow'>
       <HashWrapBox>
         {hashtag.map((el, idx) => (
           <HashItem key={idx + el}>
             <span>{el}</span>
-            <HashDelBtn type='button' onClick={() => dispatch(tagDelete(el))}></HashDelBtn>
+            <HashDelBtn type='button' onClick={() => handleDeleteBtnClick(el)}></HashDelBtn>
           </HashItem>
         ))}
       </HashWrapBox>
       <HashInput
         type='text'
         placeholder='해시태그를 입력해주시고 콤마로 구분해주세요'
-        onKeyUp={handleEnter}
+        onKeyUp={handleKeyUp}
         onChange={handleTextWrite}
         onBlur={handleTagFocusOut}
         value={text}
