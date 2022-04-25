@@ -1,9 +1,9 @@
 import React from 'react';
 import { MyInfoInput } from '../../../styles/common/input';
 
-function EmailInput ({test, handleChangeInput}) {
+function EmailInput ({userEmail, handleChangeInput}) {
   return (
-    <MyInfoInput name="email" type="email" placeholder='이메일' value={test.email} onChange={handleChangeInput}/>
+    <MyInfoInput name="email" type="email" placeholder='이메일' value={userEmail} onChange={handleChangeInput}/>
   );
 }
 
