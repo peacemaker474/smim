@@ -142,7 +142,7 @@ function NavBar() {
             </NavList> :
             <>
               <NavList>
-                <SignLink to='/my'> 마이페이지 </SignLink>
+                <ListLink to='/my'> 마이페이지 </ListLink>
               </NavList>
               <NavList>
                 <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>

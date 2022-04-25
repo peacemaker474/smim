@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
+import { myWriteLists, myFavoriteLists } from '../../../network/mypage/http';
 
 const Lists = styled.ul`
   width: 90%;
@@ -29,6 +30,14 @@ const MyLink = styled(Link)`
 
 function ProfileLists () {
   const { pathname } = useLocation(null);
+  
+  const handleWriteLists = () => {
+    myWriteLists();
+  }
+
+  const handleFavoriteLists = () => {
+    myFavoriteLists();
+  }
 
   return (
     <Lists>
@@ -36,10 +45,10 @@ function ProfileLists () {
         <MyLink to="/my" current={pathname === '/my'}> 내 정보 수정 </MyLink>
       </List>
       <List>
-        <MyLink to="/my/writeLists" current={pathname === '/my/writeLists'}> 작성한 글 목록 </MyLink>
+        <MyLink to="/my/writeLists" current={pathname === '/my/writeLists'} onClick={handleWriteLists}> 작성한 글 목록 </MyLink>
       </List>
       <List>
-        <MyLink to="/my/favoriteLists" current={pathname === '/my/favoriteLists'}> 즐겨찾기한 글 목록 </MyLink>
+        <MyLink to="/my/favoriteLists" current={pathname === '/my/favoriteLists'} onClick={handleFavoriteLists}> 즐겨찾기한 글 목록 </MyLink>
       </List>
     </Lists>
   );

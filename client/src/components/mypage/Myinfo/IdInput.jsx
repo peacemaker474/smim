@@ -1,9 +1,9 @@
 import React from 'react';
 import { MyInfoInput } from '../../../styles/common/input';
 
-function IdInput ({test}) {
+function IdInput ({userId}) {
   return (
-    <MyInfoInput type="text" placeholder="아이디" value={test.id}/>
+    <MyInfoInput type="text" placeholder="아이디" value={userId}/>
   );
 }
 
