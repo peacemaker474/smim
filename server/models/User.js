@@ -14,10 +14,12 @@ const userSchema = new mongoose.Schema({
   likes: [{ type: String }],
 });
 
-userSchema.pre('save', async function () {
-  console.log('Users password:', this.password);
-  this.password = await bcrypt.hash(this.password, 5);
-  console.log('Hashed password', this.password);
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    console.log('Users password:', this.password);
+    this.password = await bcrypt.hash(this.password, 5);
+    console.log('Hashed password', this.password);
+  }
 });
 
 const User = mongoose.model('User', userSchema);
