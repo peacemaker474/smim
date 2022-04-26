@@ -49,7 +49,7 @@ function PostUploadPage() {
       {
         title: postData.title,
         content: postData.content,
-        tag: postData.hashtag,
+        hashtag: postData.hashtag,
         targetAge: postData.targetAge,
       },
       {
