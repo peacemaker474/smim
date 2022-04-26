@@ -4,18 +4,19 @@ import User from '../models/User.js';
 
 // 게시물 생성(Post Create)
 export const postCreate = async (req, res) => {
-  const { title, content, tag, targetAge } = req.body;
-  console.log(req.body);
+  const { title, content, hashtag, targetAge } = req.body;
+  const { user_id } = req.body.user;
 
+  const user = await User.findById({ _id: user_id });
   if (!title) {
     return res.json({
       success: false,
       message: 'title이 undefined입니다.',
     });
-  } else if (!tag) {
+  } else if (!hashtag) {
     return res.json({
       success: false,
-      message: 'tag가 undefined입니다.',
+      message: 'hashtag가 undefined입니다.',
     });
   } else if (!content) {
     return res.json({
@@ -36,29 +37,73 @@ export const postCreate = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   } else {
-    await Post.create({
+    const post = await Post.create({
       title,
-      tagArray: tag,
-      textContent: content,
+      hashtag,
+      content,
       targetAge,
       owner: req.body.user.user_id,
     });
+    user.posts.push(post._id);
+    await user.save();
     return res.json({
       success: true,
       message: '새로운 게시글 작성이 완료되었습니다.',
     });
   }
 };
-// 게시물 수정
+// 게시물 수정(Post Edit)
 export const putEdit = async (req, res) => {
   const { id } = req.params;
-  // const { title, tagArray, textContent, targetAge } = req.body;
-  const postData = await Post.exists({ _id: id });
-  if (postData) {
-    await Post.findByIdAndUpdate(id, { title: req.body.title });
-    return res.json({ result: 'success' });
+  const { title, content, hashtag, targetAge } = req.body;
+
+  try {
+    const exist = await Post.exists({ _id: id, being: true });
+    if (!exist) {
+      return res.json({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    if (!title) {
+      return res.json({
+        success: false,
+        message: 'title이 undefined입니다.',
+      });
+    } else if (!hashtag) {
+      return res.json({
+        success: false,
+        message: 'hashtag가 undefined입니다.',
+      });
+    } else if (!content) {
+      return res.json({
+        success: false,
+        message: 'content가 undefined입니다.',
+      });
+    } else if (
+      !(
+        targetAge === '10' ||
+        targetAge === '20' ||
+        targetAge === '30' ||
+        targetAge === '40' ||
+        targetAge === '50'
+      )
+    ) {
+      return res.json({
+        success: false,
+        message: '해당 연령대는 존재하지 않습니다',
+      });
+    } else {
+      await Post.findByIdAndUpdate(id, { ...req.body });
+      return res.json({
+        success: true,
+        message: '게시글 수정이 완료되었습니다.',
+      });
+    }
+  } catch {
+    console.log('put edit controller error');
   }
-  return res.json(id);
 };
 
 // 게시물 보기(Post Detail Read)
@@ -86,7 +131,7 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  const postList = await Post.find({ age });
+  const postList = await Post.find({ age, being: true });
   res.json(postList);
 };
 
