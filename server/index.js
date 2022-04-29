@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import './db.js';
-import './models/Bookmark.js';
 import './models/Comment.js';
 import './models/Like.js';
 import './models/Post.js';

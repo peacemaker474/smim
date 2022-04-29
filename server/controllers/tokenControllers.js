@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -9,16 +10,23 @@ export const createToken = (userId) => {
   return token;
 };
 
-export const verifyToken = (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.json({ result: 'access token이 없습니다.' });
   }
   const token = req.headers.authorization.split('Bearer ')[1];
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    req.body.user = decoded;
+
+  jwt.verify(token, SECRET_KEY, async (err, decoded) => {
     if (err) return res.status(500).json({ result: err });
-    else next();
-    // console.log(decoded);
-    // return res.json({ message: '유효한 토큰입니다.' });
+
+    if (!decoded) {
+      console.log(exist);
+      return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
+    }
+
+    req.body.user = decoded.user_id;
+    next();
   });
+
+  // return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
 }; // jwt token decoding
