@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { myWriteLists, myFavoriteLists } from '../../../network/mypage/http';
+import { useSelector } from 'react-redux';
 
 const Lists = styled.ul`
   width: 90%;
@@ -29,14 +30,15 @@ const MyLink = styled(Link)`
 `;
 
 function ProfileLists () {
+  const { id } = useSelector((state) => state.loginReducer);
   const { pathname } = useLocation(null);
   
   const handleWriteLists = () => {
-    myWriteLists();
+    myWriteLists(id);
   }
 
   const handleFavoriteLists = () => {
-    myFavoriteLists();
+    myFavoriteLists(id);
   }
 
   return (
