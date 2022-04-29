@@ -5,8 +5,7 @@ import User from '../models/User.js';
 // 게시물 생성(Post Create)
 export const postCreate = async (req, res) => {
   const { title, content, hashtag, targetAge } = req.body;
-  const { user_id } = req.body.user;
-
+  const { user: user_id } = req.body;
   const user = await User.findById({ _id: user_id });
   if (!title) {
     return res.json({
@@ -42,7 +41,7 @@ export const postCreate = async (req, res) => {
       hashtag,
       content,
       targetAge,
-      owner: req.body.user.user_id,
+      owner: user_id,
     });
     user.posts.push(post._id);
     await user.save();
@@ -109,16 +108,26 @@ export const putEdit = async (req, res) => {
 // 게시물 보기(Post Detail Read)
 export const getPostDetail = async (req, res) => {
   const { id } = req.params;
-  const exist = await Post.exists({ _id: id, being: true });
-  if (!exist) {
-    return res.json({
-      success: false,
-      message: '존재하지 않거나 삭제된 게시물입니다.',
-    });
-  }
 
-  const postData = await Post.findById(id);
-  return res.json(postData);
+  try {
+    const postData = await Post.findById(id);
+
+    if (!postData) {
+      return res.json({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+    // console.log({ ...postData._doc });
+    const user = await User.findById(String(postData.owner));
+
+    return res.json({
+      ...postData._doc,
+      owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+    });
+  } catch {
+    console.log('get post detail error');
+  }
 };
 
 // 나이별 게시물 보기(Post List Read)
@@ -132,13 +141,32 @@ export const getPostList = async (req, res) => {
     });
   }
   const postList = await Post.find({ age, being: true });
-  res.json(postList);
+  // const userList = await Promise.all(
+  //   postList.map((el) => {
+  //     const user = User.findById(el.owner);
+  //     return user;
+  //   })
+  // );
+
+  return res.json(postList);
+
+  // const postData = await Promise.all(
+  //   postList.map((el) => {
+  //     const user = User.findById(String(el.owner));
+  //     console.log(user);
+  //     return {
+  //       ...el._doc,
+  //       owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+  //     };
+  // })
+  // );
+  // res.json(postData);
 };
 
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
-  const { user_id } = req.body.user; // user id
+  const { user: user_id } = req.body; // user id
   const postData = await Post.find({ _id: id, owner: user_id, being: true });
 
   if (postData.length === 0) {
@@ -175,7 +203,7 @@ export const getPostView = async (req, res) => {
 // 게시물 좋아요
 export const getPostLike = async (req, res) => {
   const { id } = req.params;
-  const { user_id } = req.body.user;
+  const { user: user_id } = req.body;
   const post = await Post.findOne({ _id: id, being: true });
   const user = await User.findById({ _id: user_id });
 
@@ -201,7 +229,7 @@ export const getPostLike = async (req, res) => {
 // 게시물 좋아요 취소
 export const getPostUnlike = async (req, res) => {
   const { id } = req.params;
-  const { user_id } = req.body.user;
+  const { user: user_id } = req.body;
   const post = await Post.findOne({ _id: id, being: true });
   const user = await User.findById({ _id: user_id });
 
