@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
   createAt: { type: Date, required: true, default: Date.now },
   updateAt: { type: Date, default: Date.now, required: true },
   being: { type: Boolean, default: true }, // 게시글의 삭제 유무
-  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+  owner: { type: String, required: true },
 });
 
 const Post = mongoose.model('Post', postSchema);
