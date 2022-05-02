@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Tag } from '../../styles/common/tag';
+import { postDetailRead } from '../../network/post/http';
+import { getCookie } from '../../utils/cookie';
 
 const PostBox = styled.div`
   width: 794px;
@@ -91,36 +94,51 @@ const PostLikeSpan = styled.span`
 `;
 
 export default function PostPost() {
+  const location = useLocation();
+  const tkn = getCookie('users');
+  const [postDetail, setPostDetail] = useState({
+    targetAge: '',
+    content: '',
+    title: '',
+    owner: { nickname: '', _id: '' },
+    createAt: '',
+    hashtag: [],
+  });
+  const id = location.pathname.split('view/')[1];
+
+  useEffect(async () => {
+    try {
+      const response = await postDetailRead(id, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+      setPostDetail(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   return (
     <PostBox>
-      <PostViewH2>20대에게</PostViewH2>
-      <PostTitle>고민있습니다</PostTitle>
+      <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
+      <PostTitle>{postDetail.title}</PostTitle>
       <PostHead>
-        <PostAuthor>User1</PostAuthor>
-        <PostDate>2022년 1월 9일</PostDate>
+        <PostAuthor>{postDetail.owner.nickname}</PostAuthor>
+        <PostDate>{postDetail.createAt}</PostDate>
       </PostHead>
       <PostBody>
         <PostContent>
-          <PostPara>
-            홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
-            <br />
-            겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해? 스웨덴에 와 본 적 있니?
-            <br />
-            <br /> 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장 기다릴게! 홍콩에 있는
-            친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는 17살 학생이야.
-            <br />
-            <br />
-            겹치는 관심사가 너무 많아서 깜짝 놀랐어!
-            <br />
-            여행 좋아해? 스웨덴에 와 본 적 있니? 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할수 잇어?
-            답장 기다릴게! 홍콩에 있는 친구 안녕! 여기서 처음 써보는 편지야. 나는 스톡홀름에 사는
-            17살 학생이야. 겹치는 관심사가 너무 많아서 깜짝 놀랐어! 여행 좋아해? 스웨덴에 와 본 적
-            있니? 언젠가 홍콩에 가보고 싶어. 어떤 외국어를 할 수 잇어? 답장 기다릴게!
-          </PostPara>
+          <PostPara>{postDetail.content}</PostPara>
         </PostContent>
         <PostTagBox>
-          <TagItem color='blue'>선물</TagItem>
-          <TagItem color='yellow'>가족</TagItem>
+          {(postDetail.hashtag || []).map((el, idx) => (
+            <TagItem color='yellow' key={idx}>
+              {el}
+            </TagItem>
+          ))}
         </PostTagBox>
         <PostLikeBox>
           <PostLikeSpan>좋아요</PostLikeSpan>

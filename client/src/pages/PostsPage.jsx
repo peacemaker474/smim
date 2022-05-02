@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PostListItem from '../components/postList/PostListItem';
 import Search from '../asset/icon/icon-search-line.svg';
+import { postListRead } from '../network/post/http';
+import { getCookie } from '../utils/cookie';
 
 const PostListMain = styled.main`
   margin-top: 10vh;
@@ -72,18 +74,6 @@ const SearchBtn = styled.button`
   background-postion: center;
 `;
 
-// const SortBtn = styled.button`
-//   width: 46px;
-//   height: 35px;
-//   background: ${({ theme }) => theme.color.yellow};
-//   color: #ffffff;
-//   border-radius: 3px;
-//   font-size: 9px;
-//   font-weight: 700;
-//   line-height: 12px;
-//   margin-left: 7px;
-// `;
-
 const PostListBody = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -96,6 +86,24 @@ export default function PostsPage() {
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const age = query.get('age');
+  const tkn = getCookie('users');
+  const [postArray, setPostArray] = useState();
+
+  useEffect(async () => {
+    try {
+      const response = await postListRead(age, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+      setPostArray(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [age]);
+
+  console.log(postArray);
 
   return (
     <PostListMain>
@@ -123,13 +131,9 @@ export default function PostsPage() {
           </SortDiv>
         </PostListHead>
         <PostListBody>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
-          <PostListItem></PostListItem>
+          {(postArray || []).map((el) => (
+            <PostListItem postData={el} key={el.id}></PostListItem>
+          ))}
         </PostListBody>
       </PostListContainer>
     </PostListMain>

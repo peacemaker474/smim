@@ -75,28 +75,31 @@ const PostDate = styled.span`
   right: 18px;
 `;
 
-function PostListItem() {
+function PostListItem({ postData }) {
+  const { meta, content, createAt, hashtag, title, _id } = postData;
   const navigate = useNavigate();
   const handleAnchorClick = () => {
-    navigate('/posts/view/20');
+    navigate(`/posts/view/${_id}`);
   };
 
   return (
     <PostItem>
       <PostAnchor onClick={handleAnchorClick}>
-        <PostTitle>아버지에게 드릴 선물을 고민하고 있습니다.</PostTitle>
+        <PostTitle>{title}</PostTitle>
         <PostEtcDiv>
           <PostTagDiv>
-            <TagItem color='yellow'>선물</TagItem>
-            <TagItem color='purple'>가족</TagItem>
-            <TagItem color='salmon'>HAPPY</TagItem>
+            {(hashtag || []).map((el, idx) => (
+              <TagItem color='yellow' key={idx}>
+                {el}
+              </TagItem>
+            ))}
           </PostTagDiv>
         </PostEtcDiv>
-        <PostText>60대 아버지의 환갑잔치 선물은 뭐가 좋을까요? ...</PostText>
+        <PostText>{content}</PostText>
         <PostLikeDiv>
-          <LikeSpan>226</LikeSpan>
+          <LikeSpan>{meta.likes}</LikeSpan>
         </PostLikeDiv>
-        <PostDate>22년 2월 13일</PostDate>
+        <PostDate>{createAt}</PostDate>
       </PostAnchor>
     </PostItem>
   );
