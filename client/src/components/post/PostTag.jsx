@@ -67,7 +67,7 @@ function PostTag() {
   const dispatch = useDispatch();
 
   const handleKeyUp = (e) => {
-    if (e.keyCode === 188 && e.target.value !== '') {
+    if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
       const tagText = text.split(',')[0];
       if (!hashtag.includes(tagText)) {
         dispatch(tagAdd(tagText));
