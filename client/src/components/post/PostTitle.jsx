@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { titleAdd } from '../../redux/post/action';
+import { resetCheck } from '../../redux/postForm/action';
 
 // PostTitle onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
 const TitleWrap = styled.div`
@@ -22,6 +23,12 @@ const TitleInput = styled.input`
 function PostTitle() {
   const dispatch = useDispatch();
   const titleInput = useRef();
+  const postCheck = useSelector((state) => state.postFormReducer);
+
+  if (postCheck.title) {
+    titleInput.current && titleInput.current.focus();
+    dispatch(resetCheck());
+  }
 
   const handleInputBlur = () => {
     dispatch(titleAdd(titleInput.current.value));

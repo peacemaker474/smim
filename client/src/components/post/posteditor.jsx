@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetCheck } from '../../redux/postForm/action';
 import { contentAdd } from '../../redux/post/action';
 
 const PostEditorWrap = styled.div`
@@ -13,6 +14,13 @@ const PostEditorWrap = styled.div`
 function Posteditor() {
   const [para, setPara] = useState('');
   const dispatch = useDispatch();
+  const contentInput = useRef();
+  const postCheck = useSelector((state) => state.postFormReducer);
+
+  if (postCheck.content) {
+    contentInput.current && contentInput.current.focus();
+    dispatch(resetCheck());
+  }
 
   const modules = {
     toolbar: [
@@ -37,6 +45,7 @@ function Posteditor() {
         onChange={(value) => {
           setPara(value);
         }}
+        ref={contentInput}
       />
     </PostEditorWrap>
   );
