@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -38,10 +38,13 @@ function PostUploadPage() {
   const navigate = useNavigate();
   const pathArrItem = pathname.split('/')[2];
 
+  useEffect(() => {
+    dispatch(postReset());
+  }, []);
+
   const showModal = () => {
     setIsVisible(!isVisible);
   };
-
 
   const handleRequest = async () => {
     const tkn = getCookie('users');

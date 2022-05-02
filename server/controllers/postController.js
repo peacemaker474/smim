@@ -133,6 +133,7 @@ export const getPostDetail = async (req, res) => {
 // 나이별 게시물 보기(Post List Read)
 export const getPostList = async (req, res) => {
   const { age } = req.query;
+  console.log(age);
 
   if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
     return res.json({
@@ -140,7 +141,8 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  const postList = await Post.find({ age, being: true });
+  const postList = await Post.find({ targetAge: age, being: true });
+  console.log(postList);
   // const userList = await Promise.all(
   //   postList.map((el) => {
   //     const user = User.findById(el.owner);
