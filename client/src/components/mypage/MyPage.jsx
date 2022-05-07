@@ -5,6 +5,7 @@ import MyInfo from './MyInfo';
 import MyProfile from './MyProfile';
 import WriteLists from './MyProfile/WriteLists';
 import FavoriteLists from './MyProfile/FavoriteLists';
+import PwChange from './MyProfile/PwChange';
 
 const Wrapper = styled.section`
   display: flex;
@@ -23,6 +24,7 @@ function MyPage () {
         <Route path="/" element={ <MyInfo /> } />
         <Route path="writeLists" element={ <WriteLists /> } />
         <Route path="favoriteLists" element={ <FavoriteLists /> } />
+        <Route path="changepw" element={ <PwChange /> } />
       </Routes>
     </Wrapper>
   )

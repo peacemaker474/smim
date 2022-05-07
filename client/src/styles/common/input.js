@@ -31,8 +31,8 @@ export const BirthMonth = styled.select`
 `;
 
 export const MyInfoInput = styled.input`
-  width: 90%;
-  height: 100%;
+  width: 100%;
+  height: 50%;
   border: 1px solid black;
   font-size: 18px;
   border-radius: 5px;

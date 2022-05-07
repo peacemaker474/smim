@@ -43,9 +43,30 @@ export const LoginBtn = styled(ColorBtn)`
 
 export const UpdateBtn = styled(ColorBtn)`
   width: 100px;
-  height: 90%;
+  height: 50px;
   background-color: orange;
   font-size: 18px;
   border: none;
   border-radius: 5px;
+`;
+
+export const ChangePwBtn = styled(ColorBtn)`
+  width: 70%;
+  height: 50px;
+  background-color: orange;
+  font-size: 18px;
+  &:hover {
+    font-weight: bold;
+  }
+`; 
+
+export const CancelBtn = styled(ColorBtn)`
+  width: 70%;
+  height: 50px;
+  background-color: white;
+  font-size: 18px;
+  color: black;
+  &:hover {
+    font-weight: bold;
+  }
 `;
