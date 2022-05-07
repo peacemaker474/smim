@@ -82,6 +82,8 @@ function PostListItem({ postData }) {
     navigate(`/posts/view/${_id}`);
   };
 
+  const date = new Date(createAt);
+
   return (
     <PostItem>
       <PostAnchor onClick={handleAnchorClick}>
@@ -99,7 +101,7 @@ function PostListItem({ postData }) {
         <PostLikeDiv>
           <LikeSpan>{meta.likes}</LikeSpan>
         </PostLikeDiv>
-        <PostDate>{createAt}</PostDate>
+        <PostDate>{date.toLocaleDateString()}</PostDate>
       </PostAnchor>
     </PostItem>
   );

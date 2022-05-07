@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Tag } from '../../styles/common/tag';
 import { postDetailRead } from '../../network/post/http';
 import { getCookie } from '../../utils/cookie';
+import heartFill from '../../asset/icon/icon-heart-fill.svg';
 
 const PostBox = styled.div`
   width: 794px;
@@ -90,7 +91,32 @@ const PostLikeBox = styled.div`
 `;
 
 const PostLikeSpan = styled.span`
+  display: flex;
   margin-right: 12px;
+  cursor: pointer;
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    background: url(${heartFill});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+`;
+
+const PostBookmarkSpan = styled.span`
+  margin-right: 12px;
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
 `;
 
 export default function PostPost() {
@@ -121,13 +147,15 @@ export default function PostPost() {
     }
   }, []);
 
+  const date = new Date(postDetail.createAt);
+
   return (
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
       <PostHead>
         <PostAuthor>{postDetail.owner.nickname}</PostAuthor>
-        <PostDate>{postDetail.createAt}</PostDate>
+        <PostDate>{date.toLocaleDateString()}</PostDate>
       </PostHead>
       <PostBody>
         <PostContent>
@@ -142,7 +170,7 @@ export default function PostPost() {
         </PostTagBox>
         <PostLikeBox>
           <PostLikeSpan>좋아요</PostLikeSpan>
-          <PostLikeSpan>즐겨찾기</PostLikeSpan>
+          <PostBookmarkSpan>즐겨찾기</PostBookmarkSpan>
         </PostLikeBox>
       </PostBody>
     </PostBox>
