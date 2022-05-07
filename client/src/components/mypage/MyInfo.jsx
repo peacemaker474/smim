@@ -1,57 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import NameInput from './Myinfo/NameInput';
-import PwInput from './Myinfo/PwInput';
 import IdInput from './Myinfo/IdInput';
 import EmailInput from './Myinfo/EmailInput';
 import { UpdateBtn } from '../../styles/common/buttons';
 
-const InfoLists = styled.ul`
+const InfoForm = styled.form`
   width: 70%;
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-`;
-
-const InfoList = styled.li`
-  width: 70%;
-  height: 10%;
-  display: flex;
-  align-items: center;
-  gap: 50px;
+  gap: 25px;
 `;
 
 function MyInfo () {
   const user = useSelector((state) => state.loginReducer);
+  const [userInfo, setUserInfo] = useState({
+    id: user.id,
+    nickname: user.name,
+    email: user.email,
+  });
+  
+  const [myMessage, setMyMessage] = useState({
+    id: "",
+    nickname: "",
+  });
+
+  const [success, setSuccess] = useState({
+    id: false,
+    nickname: false,
+  })
 
   const handleChangeInput = (evt) => {
     const name = evt.target.name;
-    console.log(name);
+    setUserInfo({ ...userInfo, [name]: evt.target.value});
   };
 
+  const handleUpdateInfo = (evt) => {
+    evt.preventDefault();
+  }
+
   return (
-    <InfoLists>
-      <InfoList>
-        <IdInput userId={user.id}/>
-        <UpdateBtn> 수정 </UpdateBtn>
-      </InfoList>
-      <InfoList>
-        <NameInput userName={user.name} />
-        <UpdateBtn> 수정 </UpdateBtn>
-      </InfoList>
-      <InfoList>
-        <PwInput />
-        <UpdateBtn> 수정 </UpdateBtn>
-      </InfoList>
-      <InfoList>
-        <EmailInput userEmail={user.email} handleChangeInput={handleChangeInput}/>
-        <UpdateBtn> 수정 </UpdateBtn>
-      </InfoList>
-    </InfoLists>
+    <InfoForm>
+      <IdInput
+        userId={userInfo.id}
+        handleChangeInput={handleChangeInput}
+        myMessage={myMessage}
+        setMyMessage={setMyMessage}
+        success={success}
+        setSuccess={setSuccess}
+      />
+      <NameInput
+        userName={userInfo.nickname}
+        handleChangeInput={handleChangeInput}
+        myMessage={myMessage}
+        setMyMessage={setMyMessage}
+        success={success}
+        setSuccess={setSuccess}
+      />
+      <EmailInput 
+        userEmail={userInfo.email}
+      />
+      <UpdateBtn onClick={handleUpdateInfo}> 수정 </UpdateBtn>
+    </InfoForm>
   )
 }
 

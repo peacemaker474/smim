@@ -47,6 +47,9 @@ function ProfileLists () {
         <MyLink to="/my" current={pathname === '/my'}> 내 정보 수정 </MyLink>
       </List>
       <List>
+        <MyLink to="/my/changepw" current={pathname === '/my/changepw'}> 비밀번호 변경 </MyLink>
+      </List>
+      <List>
         <MyLink to="/my/writeLists" current={pathname === '/my/writeLists'} onClick={handleWriteLists}> 작성한 글 목록 </MyLink>
       </List>
       <List>

@@ -13,3 +13,22 @@ export const myFavoriteLists = (data) => {
     return res.data;
   });
 }
+
+export const checkMyId = (data) => {
+  return axios.get(`${http}/my/id-check?userId=${data}`).then((res) => {
+    return res;
+  })
+};
+
+export const checkMyName = (data) => {
+  return axios.get(`${http}/my/name-check?userName=${data}`).then((res) => {
+    return res;
+  })
+};
+
+export const putPassword = (data) => {
+  return axios
+    .put(`${http}/my/changepw`, data)
+    .then((res) => res.data)
+    .catch((err) => err);
+};

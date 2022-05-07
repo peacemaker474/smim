@@ -15,3 +15,8 @@ export const LoginValid = styled(ValidCheck)`
   padding-right: 20px;
   margin-top: 5px;
 `;
+
+export const MyPageValid = styled(ValidCheck)`
+  font-size: 12px;
+  margin: 0;
+`;

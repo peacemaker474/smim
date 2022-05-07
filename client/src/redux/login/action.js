@@ -34,4 +34,4 @@ export const logoutUser = () => (dispatch) => {
 
 export const setMessage = () => (dispatch) => {
   dispatch({ type: SET_MESSAGE });
-}
+};
