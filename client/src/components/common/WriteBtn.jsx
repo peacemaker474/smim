@@ -12,6 +12,7 @@ const BtnDiv = styled.div`
   border: 4px solid ${({ theme }) => theme.color.yellow};
   cursor: pointer;
   background: #fff;
+  z-index: 2;
 `;
 
 const ImgDiv = styled.div`
