@@ -1,10 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import PostLike from './PostLike';
 import { Tag } from '../../styles/common/tag';
 import { postDetailRead } from '../../network/post/http';
 import { getCookie } from '../../utils/cookie';
-import heartFill from '../../asset/icon/icon-heart-fill.svg';
+
+export default function PostPost() {
+  const location = useLocation();
+  const tkn = getCookie('users');
+  const [postDetail, setPostDetail] = useState({
+    targetAge: '',
+    content: '',
+    title: '',
+    owner: { nickname: '', _id: '' },
+    createAt: '',
+    hashtag: [],
+    meta: { likes: 0 },
+  });
+  const id = location.pathname.split('view/')[1];
+
+  useEffect(async () => {
+    try {
+      const response = await postDetailRead(id, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+      setPostDetail(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [id]);
+
+  const date = new Date(postDetail.createAt);
+
+  return (
+    <PostBox>
+      <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
+      <PostTitle>{postDetail.title}</PostTitle>
+      <PostHead>
+        <PostAuthor>{postDetail.owner.nickname}</PostAuthor>
+        <PostDate>{date.toLocaleDateString()}</PostDate>
+      </PostHead>
+      <PostBody>
+        <PostContent>
+          <PostPara>{postDetail.content}</PostPara>
+        </PostContent>
+        <PostTagBox>
+          {(postDetail.hashtag || []).map((el, idx) => (
+            <TagItem color='yellow' key={idx}>
+              {el}
+            </TagItem>
+          ))}
+        </PostTagBox>
+        <PostLikeBox>
+          <PostLike like={postDetail.meta.likes} />
+          <PostBookmarkSpan>즐겨찾기</PostBookmarkSpan>
+        </PostLikeBox>
+      </PostBody>
+    </PostBox>
+  );
+}
 
 const PostBox = styled.div`
   width: 794px;
@@ -90,24 +149,9 @@ const PostLikeBox = styled.div`
   margin: 40px 0;
 `;
 
-const PostLikeSpan = styled.span`
-  display: flex;
-  margin-right: 12px;
-  cursor: pointer;
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    display: block;
-    background: url(${heartFill});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-`;
-
 const PostBookmarkSpan = styled.span`
   margin-right: 12px;
+  display: flex;
   &::before {
     content: '';
     width: 20px;
@@ -118,61 +162,3 @@ const PostBookmarkSpan = styled.span`
     background-size: contain;
   }
 `;
-
-export default function PostPost() {
-  const location = useLocation();
-  const tkn = getCookie('users');
-  const [postDetail, setPostDetail] = useState({
-    targetAge: '',
-    content: '',
-    title: '',
-    owner: { nickname: '', _id: '' },
-    createAt: '',
-    hashtag: [],
-  });
-  const id = location.pathname.split('view/')[1];
-
-  useEffect(async () => {
-    try {
-      const response = await postDetailRead(id, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-      setPostDetail(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  const date = new Date(postDetail.createAt);
-
-  return (
-    <PostBox>
-      <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
-      <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead>
-        <PostAuthor>{postDetail.owner.nickname}</PostAuthor>
-        <PostDate>{date.toLocaleDateString()}</PostDate>
-      </PostHead>
-      <PostBody>
-        <PostContent>
-          <PostPara>{postDetail.content}</PostPara>
-        </PostContent>
-        <PostTagBox>
-          {(postDetail.hashtag || []).map((el, idx) => (
-            <TagItem color='yellow' key={idx}>
-              {el}
-            </TagItem>
-          ))}
-        </PostTagBox>
-        <PostLikeBox>
-          <PostLikeSpan>좋아요</PostLikeSpan>
-          <PostBookmarkSpan>즐겨찾기</PostBookmarkSpan>
-        </PostLikeBox>
-      </PostBody>
-    </PostBox>
-  );
-}

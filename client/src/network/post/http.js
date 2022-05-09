@@ -14,3 +14,7 @@ export const postListRead = (targetAge, header) => {
 export const postDetailRead = (id, header) => {
   return axios.get(`${http}/post/${id}`, header);
 };
+
+export const postLike = (id, header) => {
+  return axios.get(`${http}/post/${id}/like`, header);
+};
