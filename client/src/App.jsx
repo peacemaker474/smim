@@ -20,3 +20,5 @@ function App() {
 }
 
 export default App;
+
+// 추후에 Oauth로 로그인을 하였을 시에 유저 정보나 비밀번호 변경 페이지로 가지 못하도록 설정해야 된다.

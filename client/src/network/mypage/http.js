@@ -29,6 +29,8 @@ export const checkMyName = (data) => {
 export const putPassword = (data) => {
   return axios
     .put(`${http}/my/changepw`, data)
-    .then((res) => res.data)
+    .then(({data}) => {
+      if (!data.success) alert(data.message);
+    })
     .catch((err) => err);
 };

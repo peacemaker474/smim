@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import { myWriteLists, myFavoriteLists } from '../../../network/mypage/http';
 import { useSelector } from 'react-redux';
 
 const Lists = styled.ul`
@@ -30,30 +29,26 @@ const MyLink = styled(Link)`
 `;
 
 function ProfileLists () {
-  const { id } = useSelector((state) => state.loginReducer);
+  const { social } = useSelector((state) => state.loginReducer);
   const { pathname } = useLocation(null);
-  
-  const handleWriteLists = () => {
-    myWriteLists(id);
-  }
-
-  const handleFavoriteLists = () => {
-    myFavoriteLists(id);
-  }
 
   return (
     <Lists>
+      {!social && 
+        <>
+          <List>
+            <MyLink to="/my" current={pathname === '/my'}> 내 정보 수정 </MyLink>
+          </List>
+          <List>
+            <MyLink to="/my/changepw" current={pathname === '/my/changepw'}> 비밀번호 변경 </MyLink>
+          </List>
+        </>
+      }
       <List>
-        <MyLink to="/my" current={pathname === '/my'}> 내 정보 수정 </MyLink>
+        <MyLink to="/my/writeLists" current={pathname === '/my/writeLists'}> 작성한 글 목록 </MyLink>
       </List>
       <List>
-        <MyLink to="/my/changepw" current={pathname === '/my/changepw'}> 비밀번호 변경 </MyLink>
-      </List>
-      <List>
-        <MyLink to="/my/writeLists" current={pathname === '/my/writeLists'} onClick={handleWriteLists}> 작성한 글 목록 </MyLink>
-      </List>
-      <List>
-        <MyLink to="/my/favoriteLists" current={pathname === '/my/favoriteLists'} onClick={handleFavoriteLists}> 즐겨찾기한 글 목록 </MyLink>
+        <MyLink to="/my/favoriteLists" current={pathname === '/my/favoriteLists'}> 즐겨찾기한 글 목록 </MyLink>
       </List>
     </Lists>
   );
