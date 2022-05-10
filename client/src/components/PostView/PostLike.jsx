@@ -2,34 +2,53 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import heartFill from '../../asset/icon/icon-heart-fill.svg';
-import { postLike } from '../../network/post/http';
+import heartLine from '../../asset/icon/icon-heart-line.svg';
+import { postLike, postUnlike } from '../../network/post/http';
 import { getCookie } from '../../utils/cookie';
 
 export default function PostLike({ like }) {
-  console.log(like);
-  const [likeVal, setLikeVal] = useState(like);
+  const [likeCheck, setLikeCheck] = useState(false);
   const location = useLocation();
   const tkn = getCookie('users');
   const id = location.pathname.split('view/')[1];
 
-  console.log(likeVal);
-
   const handleLikeClick = async () => {
-    try {
-      const response = await postLike(id, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-      console.log(response);
-      setLikeVal(likeVal + 1);
-    } catch (error) {
-      console.error(error);
+    if (likeCheck) {
+      try {
+        const response = await postUnlike(id, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        });
+        setLikeCheck(false);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        const response = await postLike(id, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        });
+        setLikeCheck(true);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
-  return <PostLikeSpan onClick={handleLikeClick}>{likeVal}</PostLikeSpan>;
+  console.log(like);
+
+  return (
+    <PostLikeSpan onClick={handleLikeClick} check={likeCheck}>
+      {like}
+    </PostLikeSpan>
+  );
 }
 
 const PostLikeSpan = styled.span`
@@ -41,7 +60,7 @@ const PostLikeSpan = styled.span`
     width: 20px;
     height: 20px;
     display: block;
-    background: url(${heartFill});
+    background: ${(props) => (props.check ? `url(${heartFill})` : `url(${heartLine})`)};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
