@@ -4,16 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { Tag } from '../../styles/common/tag';
 import Heart from '../../asset/icon/icon-heart-fill.svg';
 
-const PostItem = styled.div`
+const PostItem = styled.a`
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 20px;
   padding: 31px 21px;
   position: relative;
-`;
-
-const PostAnchor = styled.a`
   cursor: pointer;
 `;
+
+const PostAnchor = styled.div``;
 
 const PostTitle = styled.h2`
   color: ${({ theme }) => theme.color.black};
@@ -81,6 +80,8 @@ function PostListItem({ postData }) {
   const handleAnchorClick = () => {
     navigate(`/posts/view/${_id}`);
   };
+  // const text = new TextDecoder('UTF-8').decode(content);
+  console.log(typeof content);
 
   const date = new Date(createAt);
 

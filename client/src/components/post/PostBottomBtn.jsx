@@ -45,7 +45,7 @@ function PostBottomBtn({ formState, showModal }) {
 
   const handleFormCancle = () => {
     dispatch(postReset());
-    navigate('/');
+    navigate(-1);
   };
 
   const handleFormSubmit = (e) => {
