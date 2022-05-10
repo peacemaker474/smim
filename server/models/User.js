@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   posts: [{ type: String }], // 작성한 게시글
   likes: [{ type: String }], // 좋아요한 게시글
   bookmarks: [{ type: String }], // 즐겨찾기한 게시글
+  socialOnly: { type: Boolean, default: false },
 });
 
 userSchema.pre('save', async function (next) {

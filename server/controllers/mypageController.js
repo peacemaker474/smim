@@ -1,30 +1,13 @@
 import User from '../models/User.js';
 import Post from '../models/Post.js';
+import bcrypt from 'bcrypt';
+import { createToken } from './tokenControllers.js';
 
-// 추후에 응답에 대한 HTTP 상태 코드 넣을 것
+/*
 
-/* 
+// 유저 정보 수정 부분은 추후에 코드 수정이 필요
+// 서버 응답코드 넣어야 함
 
-// 마이 프로필 수정하는 부분 작성중
-
-export const postEditUser = async (req, res) => {
-  const { userId, nickname, email } = req.body;
-  const checkUser = await User.exists({
-    $or: [{userId}, {nickname}, {email}],
-  });
-  
-  if (checkUser) return res.send("이미 존재하는 ")
-
-  return res.redirect("/my");
-};
-
-export const postEditName = async (req, res) => {
-  const { nickname, _id } = req.body;
-  const checkName = await User.exists({nickname});
-  if (checkName) return res.send("이미 존재하는 닉네임입니다.");
-
-  const updateName = await User.findByIdAndUpdate(_id, { nickname }, {new: true}); 
-}
 
 */
 
@@ -56,4 +39,49 @@ export const getFavoriteLists = async (req, res) => {
   );
   
   return res.json({ success: true, favoriteLists});
+};
+
+export const putChangeUserInfo = async (req, res) => {
+  const { userId, nickname, email } = req.body;
+  const user = await User.findOne({email});
+  const checkId = await User.findOne({ userId });
+  const checkName = await User.findOne({ nickname });
+  if (checkId !== null) return res.json({ success: false, message: "이미 존재하는 아이디입니다."})
+  if (checkName !== null) return res.json({ success: false, message: "이미 존재하는 닉네임입니다."})
+  
+  const updateUser = await User.findByIdAndUpdate(user._id, {
+    userId,
+    nickname
+  }, {new: true});
+  const token = createToken(user._id);
+  
+  return res.json({
+    id: updateUser.userId,
+    name: updateUser.nickname,
+    email: updateUser.email,
+    accessToken: token,
+    success: true,
+    message: "성공적으로 정보를 변경하였습니다.",
+  })
+}
+
+export const putChangePassword = async (req, res) => {
+  const { userId, oldPassword, newPassword, newPassword2} = req.body;
+  const user = await User.findOne({userId});
+  const checkPassword = await bcrypt.compare(oldPassword, user.password);
+  if (!checkPassword) {
+    return res.json({
+      success: false,
+      message: "비밀번호를 다시 입력하세요.",
+    });
+  }
+  if (newPassword !== newPassword2) {
+    return res.json({
+      success: false,
+      message: "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.",
+    })
+  }
+  user.password = newPassword;
+  await user.save();
+  return res.send("성공적으로 비밀번호를 변경하였습니다.");
 };

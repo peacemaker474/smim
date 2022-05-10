@@ -15,9 +15,9 @@ const PwBox = styled.div`
 function PwInput ({handleChangeInput}) {
   return (
     <PwBox>
-      <MyInfoInput name="beforePw" type="password" placeholder="현재 비밀번호" onBlur={handleChangeInput} />
-      <MyInfoInput name="afterPw" type="password" placeholder='새 비밀번호' onBlur={handleChangeInput} />
-      <MyInfoInput name="afterPw2" type="password" placeholder='새 비밀번호 확인' onBlur={handleChangeInput} />
+      <MyInfoInput name="oldPassword" type="password" placeholder="현재 비밀번호" onBlur={handleChangeInput} />
+      <MyInfoInput name="newPassword" type="password" placeholder='새 비밀번호' onBlur={handleChangeInput} />
+      <MyInfoInput name="newPassword2" type="password" placeholder='새 비밀번호 확인' onBlur={handleChangeInput} />
     </PwBox>
   );
 }

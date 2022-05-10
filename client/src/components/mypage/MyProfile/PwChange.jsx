@@ -39,7 +39,7 @@ function PwChange () {
   const handleChangePw = (evt) => {
     evt.preventDefault();
 
-    if (!pwValidation(password.oldPassword) || !pwValidation(password.newPassword) || !pwValidation(password.newPassword2)) {
+    if (!pwValidation(password.oldPassword) && !pwValidation(password.newPassword)) {
       return alert("8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.");
     } else {
       let body = {

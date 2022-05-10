@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import NameInput from './Myinfo/NameInput';
 import IdInput from './Myinfo/IdInput';
 import EmailInput from './Myinfo/EmailInput';
 import { UpdateBtn } from '../../styles/common/buttons';
+import { updateUser } from '../../redux/login/action';
 
 const InfoForm = styled.form`
   width: 70%;
@@ -18,6 +19,7 @@ const InfoForm = styled.form`
 
 function MyInfo () {
   const user = useSelector((state) => state.loginReducer);
+  const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({
     id: user.id,
     nickname: user.name,
@@ -41,6 +43,18 @@ function MyInfo () {
 
   const handleUpdateInfo = (evt) => {
     evt.preventDefault();
+    const lastIdCheck = userInfo.id.indexOf("\b");
+    const lastNameCheck = userInfo.nickname.indexOf("\b");
+    if (lastIdCheck !== 0 && lastNameCheck !== 0) {
+      let body = {
+        userId: userInfo.id,
+        nickname: userInfo.nickname,
+        email: userInfo.email
+      };
+      console.log(body);
+  
+      dispatch(updateUser(body));
+    }
   }
 
   return (
