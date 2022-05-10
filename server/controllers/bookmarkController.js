@@ -26,6 +26,7 @@ export const postBookmark = async (req, res) => {
 
   try {
     const exist = await Post.exists({ _id: id, being: true });
+    const user = await User.findById({ _id: user_id });
 
     if (!exist) {
       return res.json({
@@ -33,8 +34,6 @@ export const postBookmark = async (req, res) => {
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
-
-    const user = await User.findById({ _id: user_id });
 
     const check = user.bookmarks.includes(id);
     if (check) {
@@ -50,14 +49,16 @@ export const postBookmark = async (req, res) => {
       message: '즐겨찾기 성공했습니다.',
     });
   } catch {
-    console.log('post bookmark error');
+    return res.json({
+      success: false,
+      message: '게시물의 아이디가 올바르지 않습니다.',
+    });
   }
 };
 
 export const deleteBookmark = async (req, res) => {
   const { id } = req.params;
   const { user: user_id } = req.body;
-  console.log(id);
 
   try {
     const exist = await Post.exists({ _id: id, being: true });
@@ -86,6 +87,9 @@ export const deleteBookmark = async (req, res) => {
       message: '즐겨찾기를 취소했습니다.',
     });
   } catch {
-    console.log('delete bookmark error');
+    return res.json({
+      success: false,
+      message: '게시물의 아이디가 올바르지 않습니다.',
+    });
   }
 };
