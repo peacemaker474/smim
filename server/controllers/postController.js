@@ -101,7 +101,10 @@ export const putEdit = async (req, res) => {
       });
     }
   } catch {
-    console.log('put edit controller error');
+    return res.json({
+      success: false,
+      message: '게시물의 아이디가 올바르지 않습니다.',
+    });
   }
 };
 
@@ -126,7 +129,10 @@ export const getPostDetail = async (req, res) => {
       owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
     });
   } catch {
-    console.log('get post detail error');
+    return res.json({
+      success: false,
+      message: '게시물의 아이디가 올바르지 않습니다.',
+    });
   }
 };
 
@@ -169,20 +175,27 @@ export const getPostList = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
   const { user: user_id } = req.body; // user id
-  const postData = await Post.find({ _id: id, owner: user_id, being: true });
+  try {
+    const postData = await Post.find({ _id: id, owner: user_id, being: true });
 
-  if (postData.length === 0) {
+    if (postData.length === 0) {
+      return res.json({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    await Post.findByIdAndUpdate(id, { being: false });
+    return res.json({
+      success: true,
+      message: '게시글 삭제가 완료되었습니다.',
+    });
+  } catch {
     return res.json({
       success: false,
-      message: '존재하지 않거나 삭제된 게시물입니다.',
+      message: '게시물의 아이디가 올바르지 않습니다.',
     });
   }
-
-  await Post.findByIdAndUpdate(id, { being: false });
-  return res.json({
-    success: true,
-    message: '게시글 삭제가 완료되었습니다.',
-  });
 };
 
 // 게시물 조회수
@@ -200,62 +213,4 @@ export const getPostView = async (req, res) => {
   post.meta.views += 1;
   await post.save();
   return res.json('succes');
-};
-
-// 게시물 좋아요
-export const getPostLike = async (req, res) => {
-  const { id } = req.params;
-  const { user: user_id } = req.body;
-  const post = await Post.findOne({ _id: id, being: true });
-  const user = await User.findById({ _id: user_id });
-
-  if (post.length === 0) {
-    return res.json({
-      success: false,
-      message: '존재하지 않거나 삭제된 게시물입니다.',
-    });
-  }
-
-  post.meta.likes += 1;
-  await post.save();
-
-  user.likes.push(id);
-  await user.save();
-
-  return res.json({
-    success: true,
-    message: '좋아요를 눌렀습니다.',
-  });
-};
-
-// 게시물 좋아요 취소
-export const getPostUnlike = async (req, res) => {
-  const { id } = req.params;
-  const { user: user_id } = req.body;
-  const post = await Post.findOne({ _id: id, being: true });
-  const user = await User.findById({ _id: user_id });
-
-  if (post.length === 0) {
-    return res.json({
-      success: false,
-      message: '존재하지 않거나 삭제된 게시물입니다.',
-    });
-  }
-
-  if (!user.likes.includes(id)) {
-    return res.json({
-      success: true,
-      message: '좋아요를 누르지 않은 게시물입니다.',
-    });
-  }
-
-  post.meta.likes -= 1;
-  await post.save();
-  user.likes.push(id);
-  await user.save();
-
-  return res.json({
-    success: true,
-    message: '좋아요를 취소했습니다.',
-  });
 };
