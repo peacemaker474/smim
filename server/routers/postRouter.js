@@ -6,9 +6,8 @@ import {
   getPostDetail,
   getPostList,
   getPostView,
-  getPostLike,
-  getPostUnlike,
 } from '../controllers/postController.js';
+import { getPostLike, getPostUnlike } from '../controllers/likeController';
 import { postBookmark, deleteBookmark, getBookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 
