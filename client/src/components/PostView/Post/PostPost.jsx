@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import PostLike from './PostLike';
 import { Tag } from '../../../styles/common/tag';
 import { postDetailRead } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 import PostHead from './PostHead';
-import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 
 export default function PostPost() {
   const location = useLocation();
@@ -17,6 +17,7 @@ export default function PostPost() {
     owner: { nickname: '', _id: '' },
     createAt: '',
     hashtag: [],
+    meta: { likes: 0, views: 0 },
   });
   const id = location.pathname.split('view/')[1];
 
@@ -28,8 +29,8 @@ export default function PostPost() {
           Authorization: `Bearer ${tkn}`,
         },
       });
-      setPostDetail(response.data);
       console.log(response.data);
+      setPostDetail(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +58,7 @@ export default function PostPost() {
           ))}
         </PostTagBox>
         <PostLikeBox>
-          <PostLikeSpan>좋아요</PostLikeSpan>
+          <PostLike like={postDetail.meta.likes} />
           <PostBookmarkSpan>즐겨찾기</PostBookmarkSpan>
         </PostLikeBox>
       </PostBody>
@@ -118,21 +119,21 @@ const PostLikeBox = styled.div`
   margin: 40px 0;
 `;
 
-const PostLikeSpan = styled.span`
-  display: flex;
-  margin-right: 12px;
-  cursor: pointer;
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    display: block;
-    background: url(${heartFill});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-`;
+// const PostLikeSpan = styled.span`
+//   display: flex;
+//   margin-right: 12px;
+//   cursor: pointer;
+//   &::before {
+//     content: '';
+//     width: 20px;
+//     height: 20px;
+//     display: block;
+//     background: url(${heartFill});
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     background-size: contain;
+//   }
+// `;
 
 const PostBookmarkSpan = styled.span`
   margin-right: 12px;
