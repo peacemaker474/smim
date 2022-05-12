@@ -10,6 +10,7 @@ export default function loginReducer(state = {}, action) {
         id: action.payload.id,
         name: action.payload.name,
         email: action.payload.email,
+        social: action.payload.social,
       };
     case LOGOUT_USER:
       return {
@@ -28,6 +29,7 @@ export default function loginReducer(state = {}, action) {
         id: action.payload.id,
         name: action.payload.name,
         email: action.payload.email,
+        social: action.payload.social,
       };
     case SET_MESSAGE:
       return {

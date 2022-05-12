@@ -6,6 +6,7 @@ import MyProfile from './MyProfile';
 import WriteLists from './MyProfile/WriteLists';
 import FavoriteLists from './MyProfile/FavoriteLists';
 import PwChange from './MyProfile/PwChange';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.section`
   display: flex;
@@ -17,13 +18,15 @@ const Wrapper = styled.section`
 `;
 
 function MyPage () {
+  const user = useSelector((state) => state.loginReducer);
+
   return (
     <Wrapper>
       <MyProfile />
       <Routes>
         <Route path="/" element={ <MyInfo /> } />
-        <Route path="writeLists" element={ <WriteLists /> } />
-        <Route path="favoriteLists" element={ <FavoriteLists /> } />
+        <Route path="writeLists" element={ <WriteLists userId={user.id}/> } />
+        <Route path="favoriteLists" element={ <FavoriteLists userId={user.id}/> } />
         <Route path="changepw" element={ <PwChange /> } />
       </Routes>
     </Wrapper>
