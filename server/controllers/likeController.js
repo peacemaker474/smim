@@ -1,5 +1,5 @@
 import Post from '../models/Post.js';
-import User from '../models/User.js';
+import Like from '../models/Like.js';
 
 // 게시물 좋아요
 export const getPostLike = async (req, res) => {
@@ -7,7 +7,7 @@ export const getPostLike = async (req, res) => {
   const { user: user_id } = req.body;
   try {
     const post = await Post.findOne({ _id: id, being: true });
-    const user = await User.findById({ _id: user_id });
+    const like = await Like.findOne({ post_id: post._id });
 
     if (!post) {
       return res.json({
@@ -16,7 +16,7 @@ export const getPostLike = async (req, res) => {
       });
     }
 
-    if (user.likes.includes(id)) {
+    if (like.user_array.includes(user_id)) {
       return res.json({
         success: false,
         message: '이미 좋아요한 게시물입니다.',
@@ -26,8 +26,8 @@ export const getPostLike = async (req, res) => {
     post.meta.likes += 1;
     await post.save();
 
-    user.likes.push(id);
-    await user.save();
+    like.user_array.push(user_id);
+    await like.save();
 
     return res.json({
       success: true,
@@ -45,10 +45,9 @@ export const getPostLike = async (req, res) => {
 export const getPostUnlike = async (req, res) => {
   const { id } = req.params;
   const { user: user_id } = req.body;
-
   try {
     const post = await Post.findOne({ _id: id, being: true });
-    const user = await User.findById({ _id: user_id });
+    const like = await Like.findOne({ post_id: post._id });
 
     if (!post) {
       return res.json({
@@ -57,7 +56,7 @@ export const getPostUnlike = async (req, res) => {
       });
     }
 
-    if (!user.likes.includes(id)) {
+    if (!like.user_array.includes(user_id)) {
       return res.json({
         success: true,
         message: '좋아요를 누르지 않은 게시물입니다.',
@@ -66,9 +65,9 @@ export const getPostUnlike = async (req, res) => {
 
     post.meta.likes -= 1;
     await post.save();
-    user.likes = user.likes.filter((el) => el !== id);
-    console.log(user.likes);
-    await user.save();
+    like.user_array = like.user_array.filter((el) => el !== user_id);
+
+    await like.save();
 
     return res.json({
       success: true,

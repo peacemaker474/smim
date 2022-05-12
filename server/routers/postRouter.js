@@ -25,6 +25,7 @@ postRouter
   .get(getPostDetail)
   .put(verifyToken, putEdit)
   .delete(verifyToken, deletePost);
+postRouter.route('/:id/detail').get(verifyToken, getPostDetail);
 postRouter.route('/:id/view').get(getPostView);
 postRouter.route('/:id/like').get(verifyToken, getPostLike);
 postRouter.route('/:id/unlike').get(verifyToken, getPostUnlike);
