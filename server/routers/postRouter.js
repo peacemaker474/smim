@@ -7,7 +7,7 @@ import {
   getPostList,
   getPostView,
 } from '../controllers/postController.js';
-import { getPostLike, getPostUnlike } from '../controllers/likeController';
+import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
 import { postBookmark, deleteBookmark, getBookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 
@@ -25,6 +25,7 @@ postRouter
   .get(getPostDetail)
   .put(verifyToken, putEdit)
   .delete(verifyToken, deletePost);
+postRouter.route('/:id/detail').get(verifyToken, getPostDetail);
 postRouter.route('/:id/view').get(getPostView);
 postRouter.route('/:id/like').get(verifyToken, getPostLike);
 postRouter.route('/:id/unlike').get(verifyToken, getPostUnlike);
