@@ -81,7 +81,6 @@ function PostListItem({ postData }) {
     navigate(`/posts/view/${_id}`);
   };
   // const text = new TextDecoder('UTF-8').decode(content);
-  console.log(typeof content);
 
   const date = new Date(createAt);
 

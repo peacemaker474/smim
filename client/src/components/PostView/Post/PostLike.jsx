@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import heartFill from '../../asset/icon/icon-heart-fill.svg';
-import heartLine from '../../asset/icon/icon-heart-line.svg';
-import { postLike, postUnlike } from '../../network/post/http';
-import { getCookie } from '../../utils/cookie';
+import { useSelector } from 'react-redux';
+import heartFill from '../../../asset/icon/icon-heart-fill.svg';
+import heartLine from '../../../asset/icon/icon-heart-line.svg';
+import { postLike, postUnlike } from '../../../network/post/http';
+import { getCookie } from '../../../utils/cookie';
 
 export default function PostLike({ like }) {
-  const [likeCheck, setLikeCheck] = useState(false);
+  const [likeCheck, setLikeCheck] = useState(true);
   const location = useLocation();
   const tkn = getCookie('users');
   const id = location.pathname.split('view/')[1];
+  const [likeValue, setLikeValue] = useState(like);
+  const loginState = useSelector((state) => state.loginReducer);
+
+  console.log(loginState);
+
+  useEffect(() => {
+    setLikeValue(like);
+  }, [like]);
 
   const handleLikeClick = async () => {
     if (likeCheck) {
+      // 좋아요 했을 때
       try {
         const response = await postUnlike(id, {
           headers: {
@@ -21,12 +31,16 @@ export default function PostLike({ like }) {
             Authorization: `Bearer ${tkn}`,
           },
         });
-        setLikeCheck(false);
-        console.log(response);
+        console.log(response.data.success);
+        // setLikeCheck(false);
+        // setLikeValue((prev) => prev - 1);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     } else {
+      // 좋아요 하지 않았을 때
+
       try {
         const response = await postLike(id, {
           headers: {
@@ -35,18 +49,17 @@ export default function PostLike({ like }) {
           },
         });
         setLikeCheck(true);
-        console.log(response);
+        setLikeValue((prev) => prev + 1);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  console.log(like);
-
   return (
     <PostLikeSpan onClick={handleLikeClick} check={likeCheck}>
-      {like}
+      {likeValue}
     </PostLikeSpan>
   );
 }
