@@ -8,8 +8,8 @@ export const getBookmark = async (req, res) => {
     const { bookmarks } = await User.findOne({ _id: user_id });
 
     const newBook = await Promise.all(
-      bookmarks.map((el) => {
-        const post = Post.findOne({ _id: el, being: true });
+      bookmarks.map(async (el) => {
+        const post = await Post.findOne({ _id: el, being: true });
         return post;
       })
     );
