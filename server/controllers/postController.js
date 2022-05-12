@@ -148,27 +148,18 @@ export const getPostList = async (req, res) => {
     });
   }
   const postList = await Post.find({ targetAge: age, being: true });
-  console.log(postList);
-  // const userList = await Promise.all(
-  //   postList.map((el) => {
-  //     const user = User.findById(el.owner);
-  //     return user;
-  //   })
-  // );
 
-  return res.json(postList);
+  const postDataList = await Promise.all(
+    postList.map(async (el) => {
+      const user = await User.findById(String(el.owner));
+      return {
+        ...el._doc,
+        owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+      };
+    })
+  );
 
-  // const postData = await Promise.all(
-  //   postList.map((el) => {
-  //     const user = User.findById(String(el.owner));
-  //     console.log(user);
-  //     return {
-  //       ...el._doc,
-  //       owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
-  //     };
-  // })
-  // );
-  // res.json(postData);
+  return res.json(postDataList);
 };
 
 // 게시물 삭제(Post List Delete)
