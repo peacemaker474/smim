@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { test } from './test';
 import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
+import { myFavoriteLists } from '../../../network/mypage/http';
 
 const Wrapper = styled.div`
   width: 50vw;
@@ -18,15 +18,23 @@ const WritePage = styled.p`
   font-size: 20px;
 `;
 
-function FavoriteLists () {
+function FavoriteLists ({ userId }) {
+  const [favoriteList, setFavoriteList] = useState();
+
+  useEffect(() => {
+    myFavoriteLists(userId).then((res) => {
+      setFavoriteList(res.favoriteLists)
+    })
+  })
+
   return (
     <Wrapper>
       <ListsUl>
-        {test.map(item => 
-          <Listli key={item.id}>
+        {favoriteList && favoriteList.map(item => 
+          <Listli key={item.createAt}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
-            <Writer> {item.writer} </Writer>
+            <Writer> {item.owner} </Writer>
         </Listli>
         )}
       </ListsUl>

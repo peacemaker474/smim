@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { test } from './test';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,7 +24,7 @@ function ProfileHeader () {
   return (
     <Wrapper>
       <WelcomeH2> 안녕하세요 {user.name}님 환영합니다. </WelcomeH2>
-      <MyWriteList> 작성한 글 {test.length}개 </MyWriteList>
+      <MyWriteList> 작성한 글 2개 </MyWriteList>
     </Wrapper>
   );
 }

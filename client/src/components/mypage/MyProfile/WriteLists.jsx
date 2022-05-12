@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { test } from './test';
 import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
+import { myWriteLists } from '../../../network/mypage/http';
 
 const Wrapper = styled.div`
   width: 50vw;
@@ -18,15 +18,23 @@ const WritePage = styled.p`
   font-size: 20px;
 `;
 
-function WriteLists () {
+function WriteLists ({userId}) {
+  const [writeList, setWriteList] = useState();
+
+  useEffect(() => {
+    myWriteLists(userId).then((res) => {
+      setWriteList(res.writeLists);
+    })
+  }, [userId]);
+
   return (
     <Wrapper>
       <ListsUl>
-        {test.map(item => 
-          <Listli key={item.id}>
+        {writeList && writeList.map(item => 
+          <Listli key={item.createAt}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
-            <Writer> {item.writer} </Writer>
+            <Writer> {item.owner} </Writer>
         </Listli>
         )}
       </ListsUl>
