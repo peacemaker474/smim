@@ -1,5 +1,6 @@
 import Post from '../models/Post.js';
 import User from '../models/User.js';
+import Like from '../models/Like.js';
 // import Tag from '../models/Tag.js';
 
 // 게시물 생성(Post Create)
@@ -43,6 +44,10 @@ export const postCreate = async (req, res) => {
       targetAge,
       owner: user_id,
     });
+    await Like.create({
+      post_id: post._id,
+    });
+
     user.posts.push(post._id);
     await user.save();
     return res.json({
@@ -111,7 +116,7 @@ export const putEdit = async (req, res) => {
 // 게시물 보기(Post Detail Read)
 export const getPostDetail = async (req, res) => {
   const { id } = req.params;
-
+  const { user: user_id } = req.body;
   try {
     const postData = await Post.findById(id);
 
@@ -121,17 +126,29 @@ export const getPostDetail = async (req, res) => {
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
-    // console.log({ ...postData._doc });
-    const user = await User.findById(String(postData.owner));
+
+    const owner = await User.findById(String(postData.owner));
+    const user = await User.findOne({ _id: user_id });
+    const like = await Like.findOne({ post_id: id });
+
+    if (!user) {
+      return res.json({
+        ...postData._doc,
+        owner: { _id: owner._id, nickname: owner.nickname, imageUrl: owner.imageUrl },
+      });
+    }
 
     return res.json({
       ...postData._doc,
-      owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+      bookmark: user.bookmarks.includes(id),
+      like: like.user_array.includes(user_id),
+      owner: { _id: owner._id, nickname: owner.nickname, imageUrl: owner.imageUrl },
     });
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
-      message: '게시물의 아이디가 올바르지 않습니다.',
+      message: '에러가 발생했습니다.',
     });
   }
 };
