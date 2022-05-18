@@ -1,6 +1,7 @@
 import React from 'react';
 import useDropDown from '../../../hooks/useDropDown';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { DropDownBtn } from '../../../styles/common/dropdown';
 import { PostDropDown } from './PostDropDown';
 
@@ -31,7 +32,6 @@ const PostAuthor = styled.h4`
 `;
 const PostDate = styled.span`
   font-size: 11px;
-  font-weight: 700;
   color: ${({ theme }) => theme.color.gray};
 `;
 
@@ -39,14 +39,18 @@ const PostDropDownBtn = styled(DropDownBtn)``;
 
 export default function PostHead({ author, date }) {
   const [isVisible, dropDownRef, btnRef, handleDropDownShow] = useDropDown();
+  const loginState = useSelector((state) => state.loginReducer);
+  const userId = loginState.userId;
 
   return (
     <PostHeadDiv>
       <PostAuthor>{author}</PostAuthor>
       <PostDate>{date.toLocaleDateString()}</PostDate>
-      <PostDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
-        {isVisible && <PostDropDown ref={dropDownRef} />}
-      </PostDropDownBtn>
+      {author === userId && (
+        <PostDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
+          {isVisible && <PostDropDown ref={dropDownRef} />}
+        </PostDropDownBtn>
+      )}
     </PostHeadDiv>
   );
 }
