@@ -57,11 +57,16 @@ const LikeSpan = styled.span`
 `;
 
 const PostText = styled.p`
+  height: 15px;
+  width: 148px;
   font-size: 11px;
   font-weight: 700;
   line-height: 14px;
   margin-bottom: 14px;
   color: ${({ theme }) => theme.color.black};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const PostDate = styled.span`
@@ -97,7 +102,7 @@ function PostListItem({ postData }) {
             ))}
           </PostTagDiv>
         </PostEtcDiv>
-        <PostText>{content}</PostText>
+        <PostText dangerouslySetInnerHTML={{ __html: content }} />
         <PostLikeDiv>
           <LikeSpan>{meta.likes}</LikeSpan>
         </PostLikeDiv>

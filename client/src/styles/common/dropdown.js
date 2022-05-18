@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import moreIcon from '../../asset/icon/icon-more.svg';
 
-export const DropDownBtn = styled.button`
+export const DropDownBtn = styled.span`
   width: ${({ width }) => width || '24px'};
   height: ${({ height }) => height || '24px'};
   background: url(${moreIcon});
   position: relative;
+  cursor: pointer;
   &::after {
     content: '';
     display: block;
