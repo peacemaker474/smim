@@ -2,22 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { DropDownBox, DropDownContainer, DropDownItemBtn } from '../../../styles/common/dropdown';
 
-function DropDown({ setIsEditing }, ref) {
+function DropDown(props, ref) {
   const handlePostEdit = (e) => {
     e.preventDefault();
-    console.log('신고');
+    console.log('수정');
   };
   const handlePostDel = (e) => {
     e.preventDefault();
-    console.log('북마크');
+    console.log('삭제');
   };
   return (
     <PostDropDownContainer ref={ref}>
       <PostDropDownBox>
-        <PostDropDownBtn onClick={handlePostEdit}>신고</PostDropDownBtn>
-        <PostDropDownBtn onClick={handlePostDel}>공유</PostDropDownBtn>
         <PostDropDownBtn onClick={handlePostDel}>삭제</PostDropDownBtn>
-        <PostDropDownBtn onClick={handlePostDel}>수정</PostDropDownBtn>
+        <PostDropDownBtn onClick={handlePostEdit}>수정</PostDropDownBtn>
       </PostDropDownBox>
     </PostDropDownContainer>
   );
