@@ -48,7 +48,7 @@ export default function PostPost() {
       <PostHead author={postDetail.owner.nickname} date={date} />
       <PostBody>
         <PostContent>
-          <PostPara>{postDetail.content}</PostPara>
+          <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
         </PostContent>
         <PostTagBox>
           {(postDetail.hashtag || []).map((el, idx) => (
