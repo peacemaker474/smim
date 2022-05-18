@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PostLike from './PostLike';
+import PostBookmark from './PostBookmark';
 import { Tag } from '../../../styles/common/tag';
 import { postDetailRead } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
@@ -17,24 +18,33 @@ export default function PostPost() {
     owner: { nickname: '', _id: '' },
     createAt: '',
     hashtag: [],
+    like: false,
+    bookmark: false,
     meta: { likes: 0, views: 0 },
   });
   const id = location.pathname.split('view/')[1];
 
   const fetchAPI = useCallback(async () => {
     try {
-      const response = await postDetailRead(id, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-      console.log(response.data);
-      setPostDetail(response.data);
+      if (tkn) {
+        const response = await postDetailRead(id, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        });
+        setPostDetail(response.data);
+      } else {
+        const response = await postDetailRead(id);
+        setPostDetail(response.data);
+      }
     } catch (error) {
       console.error(error);
     }
   }, [id, tkn]);
+
+  console.log(postDetail);
+
   useEffect(() => {
     fetchAPI();
   }, [fetchAPI]);
@@ -58,19 +68,17 @@ export default function PostPost() {
           ))}
         </PostTagBox>
         <PostLikeBox>
-          <PostLike like={postDetail.meta.likes} />
-          <PostBookmarkSpan>즐겨찾기</PostBookmarkSpan>
+          <PostLike quantity={postDetail.meta.likes} like={postDetail.like} />
+          <PostBookmark bookmark={postDetail.bookmark} />
         </PostLikeBox>
       </PostBody>
     </PostBox>
   );
 }
-
 const PostBox = styled.div`
   width: 794px;
   margin: 0 auto 32px;
 `;
-
 const PostViewH2 = styled.h1`
   width: 794px;
   font-size: 14px;
@@ -135,15 +143,15 @@ const PostLikeBox = styled.div`
 //   }
 // `;
 
-const PostBookmarkSpan = styled.span`
-  margin-right: 12px;
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    display: block;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-`;
+// const PostBookmarkSpan = styled.span`
+//   margin-right: 12px;
+//   &::before {
+//     content: '';
+//     width: 20px;
+//     height: 20px;
+//     display: block;
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     background-size: contain;
+//   }
+// `;
