@@ -17,6 +17,10 @@ export default function PostBookmark({ bookmark }) {
   }, [bookmark]);
 
   const handleBookmarkClick = async () => {
+    if (!tkn) {
+      return;
+    }
+
     if (BookmarkCheck) {
       // 북마크 했을 때
       try {

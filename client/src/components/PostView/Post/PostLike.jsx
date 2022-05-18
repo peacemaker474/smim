@@ -19,6 +19,10 @@ export default function PostLike({ quantity, like }) {
   }, [quantity, like]);
 
   const handleLikeClick = async () => {
+    if (!tkn) {
+      return;
+    }
+
     if (likeCheck) {
       // 좋아요 했을 때
       try {
