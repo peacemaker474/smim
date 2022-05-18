@@ -1,69 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import heartFill from '../../../asset/icon/icon-heart-fill.svg';
-import heartLine from '../../../asset/icon/icon-heart-line.svg';
-import { postLike, postUnlike } from '../../../network/post/http';
+import bookmarkFill from '../../../asset/icon/icon-bookmark-fill.svg';
+import bookmarkLine from '../../../asset/icon/icon-bookmark-line.svg';
+import { postBookmark, postUnbookmark } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 
-export default function PostLike({ quantity, like }) {
-  const [likeCheck, setLikeCheck] = useState(like);
+export default function PostBookmark({ bookmark }) {
+  const [BookmarkCheck, setBookmarkCheck] = useState(bookmark);
   const location = useLocation();
   const tkn = getCookie('users');
   const id = location.pathname.split('view/')[1];
-  const [likeValue, setLikeValue] = useState(quantity);
 
   useEffect(() => {
-    setLikeValue(quantity);
-    setLikeCheck(like);
-  }, [quantity, like]);
+    setBookmarkCheck(bookmark);
+  }, [bookmark]);
 
-  const handleLikeClick = async () => {
+  const handleBookmarkClick = async () => {
     if (!tkn) {
       return;
     }
 
-    if (likeCheck) {
-      // 좋아요 했을 때
+    if (BookmarkCheck) {
+      // 북마크 했을 때
       try {
-        await postUnlike(id, {
+        const response = await postUnbookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
-
-        setLikeCheck(false);
-        setLikeValue((prev) => prev - 1);
+        console.log(response);
+        setBookmarkCheck(false);
       } catch (error) {
         console.error(error);
       }
     } else {
-      // 좋아요 하지 않았을 때
+      // 북마크 하지 않았을 때
 
       try {
-        await postLike(id, {
+        const response = await postBookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
-        setLikeCheck(true);
-        setLikeValue((prev) => prev + 1);
+        console.log(response);
+        setBookmarkCheck(true);
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  return (
-    <PostLikeSpan onClick={handleLikeClick} check={likeCheck}>
-      {likeValue}
-    </PostLikeSpan>
-  );
+  return <PostBookmarkSpan onClick={handleBookmarkClick} check={BookmarkCheck} />;
 }
 
-const PostLikeSpan = styled.span`
+const PostBookmarkSpan = styled.span`
   display: flex;
   margin-right: 12px;
   cursor: pointer;
@@ -72,7 +65,7 @@ const PostLikeSpan = styled.span`
     width: 20px;
     height: 20px;
     display: block;
-    background: ${(props) => (props.check ? `url(${heartFill})` : `url(${heartLine})`)};
+    background: ${(props) => (props.check ? `url(${bookmarkFill})` : `url(${bookmarkLine})`)};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
