@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
+import { ListsUl, Listli, Title, ListContent } from '../../../styles/mypage/writeList';
 import { myWriteLists } from '../../../network/mypage/http';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 50vw;
@@ -20,6 +21,7 @@ const WritePage = styled.p`
 
 function WriteLists ({userId}) {
   const [writeList, setWriteList] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     myWriteLists(userId).then((res) => {
@@ -27,14 +29,19 @@ function WriteLists ({userId}) {
     })
   }, [userId]);
 
+  const handleMoveDetail = (evt) => {
+    const url = evt.currentTarget.id;
+    navigate(`/posts/view/${url}`);
+  }
+
+
   return (
     <Wrapper>
       <ListsUl>
         {writeList && writeList.map(item => 
-          <Listli key={item.createAt}>
+          <Listli key={item.createAt} id={item._id} onClick={handleMoveDetail}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
-            <Writer> {item.owner} </Writer>
         </Listli>
         )}
       </ListsUl>

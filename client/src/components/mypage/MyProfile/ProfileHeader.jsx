@@ -23,7 +23,7 @@ function ProfileHeader () {
 
   return (
     <Wrapper>
-      <WelcomeH2> 안녕하세요 {user.name}님 환영합니다. </WelcomeH2>
+      <WelcomeH2> {user.name}님 환영합니다. </WelcomeH2>
       <MyWriteList> 작성한 글 2개 </MyWriteList>
     </Wrapper>
   );

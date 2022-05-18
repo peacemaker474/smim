@@ -4,12 +4,13 @@ import ProfileHeader from './ProfileHeader';
 import ProfileImg from './ProfileImg';
 
 const ProfileBox = styled.div`
-  width: 100%;
+  width: 60%;
   height: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
+  margin: 0 auto;
 `;
 
 function ProfileSection () {

@@ -42,7 +42,10 @@ export const getFavoriteLists = async (req, res) => {
 };
 
 export const putChangeUserInfo = async (req, res) => {
-  const { userId, nickname, email } = req.body;
+  const { 
+    body: { userId, nickname, email},
+    file
+  } = req;
   const user = await User.findOne({email});
   const checkId = await User.findOne({ userId });
   const checkName = await User.findOne({ nickname });
@@ -51,7 +54,8 @@ export const putChangeUserInfo = async (req, res) => {
   
   const updateUser = await User.findByIdAndUpdate(user._id, {
     userId,
-    nickname
+    nickname,
+    imageUrl: file ? file.path : user.imageUrl,
   }, {new: true});
   const token = createToken(user._id);
   
@@ -61,6 +65,7 @@ export const putChangeUserInfo = async (req, res) => {
     email: updateUser.email,
     accessToken: token,
     success: true,
+    imageUrl: updateUser.imageUrl ? updateUser.imageUrl : "",
     message: "성공적으로 정보를 변경하였습니다.",
   })
 }

@@ -25,7 +25,7 @@ function MyPage () {
       <MyProfile />
       <Routes>
         <Route path="/" element={ <MyInfo /> } />
-        <Route path="writeLists" element={ <WriteLists userId={user.id}/> } />
+        <Route path="writeLists" element={ <WriteLists userId={user.id} /> } />
         <Route path="favoriteLists" element={ <FavoriteLists userId={user.id}/> } />
         <Route path="changepw" element={ <PwChange /> } />
       </Routes>

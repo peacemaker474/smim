@@ -7,13 +7,14 @@ import {
   getGoogleAuth,
   getGoogleCallback,
 } from '../controllers/signupController.js';
+import { userImgUpload } from '../middlewares.js';
 
 const rootRouter = express.Router();
 
 rootRouter.get('/signup/id-check', getCheckId);
 rootRouter.get('/signup/email-check', getCheckEmail);
 rootRouter.get('/signup/name-check', getCheckName);
-rootRouter.post('/signup', postSignup);
+rootRouter.post('/signup', userImgUpload.single("users"), postSignup);
 
 // google oauth
 rootRouter.get('/login/google', getGoogleAuth);

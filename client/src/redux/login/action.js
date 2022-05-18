@@ -17,7 +17,7 @@ export const loginUser = (data) => (dispatch) => {
       setCookie("users", res.accessToken);
       dispatch({
         type: LOGIN_USER,
-        payload: { id: res.id, name: res.name, email: res.email, success: res.success, message: res.message, social: res.social }
+        payload: { id: res.id, name: res.name, email: res.email, success: res.success, message: res.message, social: res.social, imgUrl: res.imageUrl }
       });
       if (res.success) dispatch(loginClose());
     });

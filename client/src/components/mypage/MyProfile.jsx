@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ProfileLists from './MyProfile/ProfileLists';
-import ProfileSection from './MyProfile/ProfileSection';
+// import ProfileSection from './MyProfile/ProfileSection';
 
 const Wrapper = styled.div`
   width: 30%;
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 function MyProfile () {
   return (
     <Wrapper>
-      <ProfileSection />
+      {/* <ProfileSection /> */}
       <ProfileLists />
     </Wrapper>
   )

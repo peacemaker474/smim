@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
 import { myFavoriteLists } from '../../../network/mypage/http';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 50vw;
@@ -20,18 +21,24 @@ const WritePage = styled.p`
 
 function FavoriteLists ({ userId }) {
   const [favoriteList, setFavoriteList] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     myFavoriteLists(userId).then((res) => {
       setFavoriteList(res.favoriteLists)
     })
-  })
+  }, [userId])
+
+  const handleMoveFavorite = (evt) => {
+    const url = evt.currentTarget.id;
+    navigate(`/posts/view/${url}`);
+  }
 
   return (
     <Wrapper>
       <ListsUl>
         {favoriteList && favoriteList.map(item => 
-          <Listli key={item.createAt}>
+          <Listli key={item.createAt} id={item._id} onClick={handleMoveFavorite}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
             <Writer> {item.owner} </Writer>
