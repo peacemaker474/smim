@@ -7,12 +7,15 @@ export const postUpload = (data, header) => {
 };
 
 export const postListRead = (targetAge, header) => {
-  console.log(targetAge);
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
 
-export const postDetailRead = (id, header) => {
-  return axios.get(`${http}/post/${id}`, header);
+export const postDetailRead = (id, header = undefined) => {
+  if (header) {
+    return axios.get(`${http}/post/${id}/detail`, header);
+  } else {
+    return axios.get(`${http}/post/${id}`);
+  }
 };
 
 export const postLike = (id, header) => {
@@ -21,4 +24,12 @@ export const postLike = (id, header) => {
 
 export const postUnlike = (id, header) => {
   return axios.get(`${http}/post/${id}/unlike`, header);
+};
+
+export const postBookmark = (id, header) => {
+  return axios.get(`${http}/post/${id}/bookmark`, header);
+};
+
+export const postUnbookmark = (id, header) => {
+  return axios.get(`${http}/post/${id}/unbookmark`, header);
 };
