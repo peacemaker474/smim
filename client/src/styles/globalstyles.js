@@ -11,6 +11,13 @@ const GlobalStyle = createGlobalStyle`
     cursor: default;
     -ms-overflow-style: none; 
     scrollbar-width: none;
+    /* font를 부드럽게 전환. 어두운 배경에서는 더 밝게 보이는 옵션 */
+    -webkit-font-smoothing: antialiased;
+    /* firefox 에서의 안티엘리어싱 */
+    -moz-osx-font-smoothing: grayscale;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   }
 
   body::-webkit-scrollbar {
@@ -41,9 +48,11 @@ const GlobalStyle = createGlobalStyle`
   input,select{
     outline : none;
   }
-  a{
-    text-decoration : none;
-  }
+  
+  a {
+  color: inherit;
+  text-decoration: none;
+}
 `;
 
 export default GlobalStyle;
