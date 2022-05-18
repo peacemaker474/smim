@@ -23,6 +23,7 @@ export const postLogin = async (req, res) => {
     social: user.socialOnly,
     accessToken: token,
     success: true,
+    imageUrl: user.imageUrl ? user.imageUrl : "",
     message: "",
   })
 }

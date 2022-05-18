@@ -9,6 +9,7 @@ export default function myPageReducer (state = {}, action) {
         id: action.payload.id,
         name: action.payload.name,
         email: action.payload.email,
+        imgUrl: action.payload.imgUrl,
       }
     default: 
       return state;

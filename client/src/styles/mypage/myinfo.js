@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const InfoBox = styled.div`
-  width: 60%;
+  width: 90%;
   height: 20%;
   display: flex;
   flex-direction: column;

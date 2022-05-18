@@ -15,9 +15,6 @@ const List = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
-  &:first-child {
-    margin-top: 10px;
-  }
 `;
 
 const MyLink = styled(Link)`

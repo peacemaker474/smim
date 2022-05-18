@@ -48,6 +48,8 @@ export const UpdateBtn = styled(ColorBtn)`
   font-size: 18px;
   border: none;
   border-radius: 5px;
+  margin-right: 20px;
+  align-self: flex-end;
 `;
 
 export const ChangePwBtn = styled(ColorBtn)`
