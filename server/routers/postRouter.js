@@ -16,16 +16,16 @@ export const postRouter = express.Router();
 postRouter.get('/target', getPostList);
 postRouter.post('/create', verifyToken, postCreate);
 postRouter.get('/bookmark', verifyToken, getBookmark);
-postRouter
-  .route('/bookmark/:id')
-  .post(verifyToken, postBookmark)
-  .delete(verifyToken, deleteBookmark);
+
 postRouter
   .route('/:id')
   .get(getPostDetail)
   .put(verifyToken, putEdit)
   .delete(verifyToken, deletePost);
+
 postRouter.route('/:id/detail').get(verifyToken, getPostDetail);
 postRouter.route('/:id/view').get(getPostView);
+postRouter.route('/:id/bookmark').get(verifyToken, postBookmark);
+postRouter.route('/:id/unbookmark').get(verifyToken, deleteBookmark);
 postRouter.route('/:id/like').get(verifyToken, getPostLike);
 postRouter.route('/:id/unlike').get(verifyToken, getPostUnlike);
