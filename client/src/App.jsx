@@ -9,11 +9,12 @@ import PrivateRoute from './routes/PrivateRoute';
 function App() {
   const user = useSelector((state) => state.loginReducer);
   const { pathname } = useLocation();
+  const pathCheck = pathname.split('/')[2];
 
   return (
     <>
       <NavBar />
-      {user.isLogin && pathname !== '/posts/create' && <WriteBtn />}
+      {user.isLogin && pathCheck !== 'create' && pathCheck !== 'edit' && <WriteBtn />}
       {user.isLogin ? <PublicRoute /> : <PrivateRoute />}
     </>
   );
