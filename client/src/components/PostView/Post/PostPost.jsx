@@ -43,8 +43,6 @@ export default function PostPost() {
     }
   }, [id, tkn]);
 
-  console.log(postDetail);
-
   useEffect(() => {
     fetchAPI();
   }, [fetchAPI]);
@@ -55,7 +53,7 @@ export default function PostPost() {
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead author={postDetail.owner.nickname} date={date} />
+      <PostHead author={postDetail.owner.nickname} date={date} postId={id} />
       <PostBody>
         <PostContent>
           <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
