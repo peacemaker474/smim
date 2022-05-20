@@ -1,4 +1,12 @@
-import { TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD, TAG_ADD, TAG_DELETE, POST_RESET } from './type';
+import {
+  TITLE_ADD,
+  CONTENT_ADD,
+  TARGETAGE_ADD,
+  TAG_ADD,
+  TOTAL_ADD,
+  TAG_DELETE,
+  POST_RESET,
+} from './type';
 
 const initialState = {
   title: '',
@@ -28,6 +36,15 @@ export default function postReducer(state = initialState, action) {
       return {
         ...state,
         hashtag: [...state.hashtag, action.payload.tag],
+      };
+
+    case TOTAL_ADD:
+      return {
+        ...state,
+        content: action.payload.content,
+        targetAge: action.payload.targetAge,
+        hashtag: [...action.payload.hashtag],
+        title: action.payload.title,
       };
     case TAG_DELETE:
       return {

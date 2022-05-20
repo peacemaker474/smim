@@ -1,4 +1,12 @@
-import { TAG_ADD, TAG_DELETE, TITLE_ADD, CONTENT_ADD, TARGETAGE_ADD, POST_RESET } from './type';
+import {
+  TAG_ADD,
+  TAG_DELETE,
+  TITLE_ADD,
+  CONTENT_ADD,
+  TARGETAGE_ADD,
+  POST_RESET,
+  TOTAL_ADD,
+} from './type';
 
 export const titleAdd = (title) => {
   return {
@@ -32,6 +40,18 @@ export const tagAdd = (tag) => {
     type: TAG_ADD,
     payload: {
       tag,
+    },
+  };
+};
+
+export const totalAdd = ({ title, targetAge, content, hashtag }) => {
+  return {
+    type: TOTAL_ADD,
+    payload: {
+      title,
+      targetAge,
+      content,
+      hashtag,
     },
   };
 };
