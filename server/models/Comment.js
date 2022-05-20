@@ -1,15 +1,13 @@
-'use strict';
 import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema({
   text: { type: String, required: true },
-  writer_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-  post_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post' },
+  writer_id: { type: String, required: true },
+  post_id: { type: String, required: true },
   createAt: { type: Date, required: true, default: Date.now },
-  parent: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  comment_count: Number,
-  like_count: Number,
-  complain_count: Number,
+  parent_id: { type: String },
+  like_count: { type: Number, required: true, default: 0 },
+  complain_count: { type: Number, required: true, default: 0 },
   state: { type: Boolean, required: true, default: true }, // 삭제유무
 });
 
