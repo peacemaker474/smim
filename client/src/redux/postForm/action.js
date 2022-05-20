@@ -4,7 +4,10 @@ export const titleCheck = () => {
   return {
     type: TITLE_CHECK,
     payload: {
-      titleInput: true,
+      title: true,
+      age: false,
+      hashtag: false,
+      content: false,
     },
   };
 };
@@ -12,7 +15,10 @@ export const ageCheck = () => {
   return {
     type: AGE_CHECK,
     payload: {
-      ageInput: true,
+      title: false,
+      age: true,
+      hashtag: false,
+      content: false,
     },
   };
 };
@@ -20,7 +26,10 @@ export const hashtagCheck = () => {
   return {
     type: HASHTAG_CHECK,
     payload: {
-      hashtagInput: true,
+      title: false,
+      age: false,
+      hashtag: true,
+      content: false,
     },
   };
 };
@@ -28,7 +37,10 @@ export const contentCheck = () => {
   return {
     type: CONTENT_CHECK,
     payload: {
-      contentInput: true,
+      title: false,
+      age: false,
+      hashtag: false,
+      content: true,
     },
   };
 };
@@ -36,6 +48,6 @@ export const contentCheck = () => {
 export const resetCheck = () => {
   return {
     type: RESET_CHECK,
-    payload: {},
+    payload: { title: false, age: false, hashtag: false, content: false },
   };
 };

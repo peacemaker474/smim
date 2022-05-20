@@ -1,7 +1,7 @@
 import React from 'react';
+import PostTitle from './PostTitle';
 import PostTargetAge from './PostTargetAge';
 import Posteditor from './posteditor';
-import PostTitle from './PostTitle';
 import PostTag from './PostTag';
 
 function PostForm() {

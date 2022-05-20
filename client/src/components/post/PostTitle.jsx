@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { titleAdd } from '../../redux/post/action';
@@ -22,22 +22,32 @@ const TitleInput = styled.input`
 
 function PostTitle() {
   const dispatch = useDispatch();
-  const titleInput = useRef();
+  const postData = useSelector((state) => state.postReducer);
   const postCheck = useSelector((state) => state.postFormReducer);
+  const titleInput = useRef();
 
-  if (postCheck.title) {
-    titleInput.current && titleInput.current.focus();
-    dispatch(resetCheck());
-  }
+  useEffect(() => {
+    if (postCheck.title) {
+      // when title state is false
+      titleInput.current && titleInput.current.focus();
+      dispatch(resetCheck);
+    }
+  }, [postCheck.title]);
 
-  const handleInputBlur = () => {
-    dispatch(titleAdd(titleInput.current.value));
+  const handleInputChange = (e) => {
+    dispatch(titleAdd(e.target.value));
   };
 
   // ref 대신 value={title}을 쓰는 이유
   return (
     <TitleWrap>
-      <TitleInput placeholder='제목' palette='yellow' onBlur={handleInputBlur} ref={titleInput} />
+      <TitleInput
+        placeholder='제목'
+        palette='yellow'
+        onChange={handleInputChange}
+        value={postData.title}
+        ref={titleInput}
+      />
     </TitleWrap>
   );
 }

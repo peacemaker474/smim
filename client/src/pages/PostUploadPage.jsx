@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { totalAdd } from '../redux/post/action';
 import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
 import { postUpload } from '../network/post/http';
 import { postReset } from '../redux/post/action';
+import { postDetailRead } from '../network/post/http';
+import { resetCheck } from '../redux/postForm/action';
 
 const PostCreateContainer = styled.div`
   width: 1200px;
@@ -34,13 +37,47 @@ function PostUploadPage() {
   const { pathname } = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const postData = useSelector((state) => state.postReducer);
+  // const postForm = useSelector((state) => state.postFormReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const pathArrItem = pathname.split('/')[2];
+  const pathArr = pathname.split('/');
+  const pathValue = pathArr[2];
+  const postId = pathArr[3];
+  const tkn = getCookie('users');
+
+  const fetchAPI = useCallback(async () => {
+    try {
+      const response = await postDetailRead(postId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+      const data = response.data;
+
+      dispatch(
+        totalAdd({
+          title: data.title,
+          targetAge: data.targetAge,
+          content: data.content,
+          hashtag: data.hashtag,
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }, [postId, tkn]);
+
+  console.log(postData);
 
   useEffect(() => {
-    dispatch(postReset());
-  }, []);
+    if (pathValue === 'edit') {
+      fetchAPI();
+    } else {
+      dispatch(postReset()); // post data reset
+    }
+    dispatch(resetCheck()); // post state reset - all false
+  }, [fetchAPI, pathValue]);
 
   const showModal = () => {
     setIsVisible(!isVisible);
@@ -80,9 +117,9 @@ function PostUploadPage() {
         false
       )}
       <PostCreateContainer>
-        <PostHeader>{pathArrItem === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
+        <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <PostForm />
-        <PostBottomBtn formState={pathArrItem} showModal={showModal} isVisible={isVisible} />
+        <PostBottomBtn formState={pathValue} showModal={showModal} isVisible={isVisible} />
       </PostCreateContainer>
     </>
   );

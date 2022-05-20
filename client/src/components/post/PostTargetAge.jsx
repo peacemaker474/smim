@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { targetAgeAdd } from '../../redux/post/action';
@@ -22,13 +22,18 @@ const TargetAgeInput = styled.select`
 
 function PostTargetAge() {
   const dispatch = useDispatch();
-  const ageInput = useRef();
+  const postData = useSelector((state) => state.postReducer);
   const postCheck = useSelector((state) => state.postFormReducer);
+  const ageInput = useRef();
 
-  if (postCheck.age) {
-    ageInput.current && ageInput.current.focus();
-    dispatch(resetCheck());
-  }
+  useEffect(() => {
+    if (postCheck.age) {
+      // when targetAge state is false
+      ageInput.current && ageInput.current.focus();
+      console.log('나이를 입력해주세요'); // refactoring - 나중에 css 처리해야함
+      dispatch(resetCheck());
+    }
+  }, [postCheck.age]);
 
   const handleAgeClick = (e) => {
     dispatch(targetAgeAdd(e.target.value));
@@ -36,7 +41,7 @@ function PostTargetAge() {
 
   return (
     <TargetWrap>
-      <TargetAgeInput palette='yellow' onChange={handleAgeClick}>
+      <TargetAgeInput palette='yellow' onChange={handleAgeClick} value={postData.targetAge}>
         <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
