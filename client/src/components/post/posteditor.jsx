@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
@@ -12,15 +12,19 @@ const PostEditorWrap = styled.div`
 `;
 
 function Posteditor() {
-  const [para, setPara] = useState('');
+  // const [para, setPara] = useState('');
   const dispatch = useDispatch();
   const contentInput = useRef();
   const postCheck = useSelector((state) => state.postFormReducer);
+  const postData = useSelector((state) => state.postReducer);
 
-  if (postCheck.content) {
-    contentInput.current && contentInput.current.focus();
-    dispatch(resetCheck());
-  }
+  useEffect(() => {
+    if (postCheck.content) {
+      // when content state is false
+      contentInput.current && contentInput.current.focus();
+      dispatch(resetCheck());
+    }
+  }, [postCheck.content]);
 
   const modules = {
     toolbar: [
@@ -52,21 +56,19 @@ function Posteditor() {
     'background',
   ];
 
-  const handleFormBlur = () => {
-    dispatch(contentAdd(para));
-  };
-
   return (
-    <PostEditorWrap onBlur={handleFormBlur}>
+    <PostEditorWrap>
       <ReactQuill
         style={{ height: '85%', marginBottom: '6%' }}
         modules={modules}
         formats={formats}
         theme='snow'
         onChange={(content, delta, source, editor) => {
-          setPara(editor.getHTML());
+          // setPara(editor.getHTML());
+          dispatch(contentAdd(editor.getHTML()));
         }}
         ref={contentInput}
+        value={postData.content}
       />
     </PostEditorWrap>
   );

@@ -11,38 +11,28 @@ export default function postFormReducer(state = initialState, action) {
   switch (action.type) {
     case TITLE_CHECK:
       return {
-        title: true,
-        age: false,
-        hashtag: false,
-        content: false,
+        ...state,
+        ...action.payload,
       };
     case AGE_CHECK:
       return {
-        title: false,
-        age: true,
-        hashtag: false,
-        content: false,
+        ...state,
+        ...action.payload,
       };
     case HASHTAG_CHECK:
       return {
-        title: false,
-        age: false,
-        hashtag: true,
-        content: false,
+        ...state,
+        ...action.payload,
       };
     case CONTENT_CHECK:
       return {
-        title: false,
-        age: false,
-        hashtag: false,
-        content: true,
+        ...action.payload,
       };
+
     case RESET_CHECK:
       return {
-        title: false,
-        age: false,
-        hashtag: false,
-        content: false,
+        ...state,
+        ...action.payload,
       };
     default:
       return state;

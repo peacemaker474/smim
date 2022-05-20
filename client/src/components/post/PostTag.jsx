@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import DelBtn from '../../asset/icon/icon-del.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagAdd, tagDelete } from '../../redux/post/action';
+import { resetCheck } from '../../redux/postForm/action';
 
 const HashContainer = styled.div`
   height: 40px;
@@ -64,7 +65,17 @@ const HashDelBtn = styled.button`
 function PostTag() {
   const [text, setText] = useState('');
   const { hashtag } = useSelector((state) => state.postReducer);
+  const postCheck = useSelector((state) => state.postFormReducer);
   const dispatch = useDispatch();
+  const tagInput = useRef();
+
+  useEffect(() => {
+    if (postCheck.hashtag) {
+      // when hashtag state is false
+      tagInput.current && tagInput.current.focus();
+      dispatch(resetCheck());
+    }
+  }, [postCheck.hashtag]);
 
   const handleKeyUp = (e) => {
     if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
@@ -106,6 +117,7 @@ function PostTag() {
         onChange={handleTextWrite}
         onBlur={handleTagFocusOut}
         value={text}
+        ref={tagInput}
       />
     </HashContainer>
   );

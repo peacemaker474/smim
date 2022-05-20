@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ColorBtn } from '../../styles/common/buttons';
 import { postReset } from '../../redux/post/action';
-import { contentCheck, titleCheck, ageCheck } from '../../redux/postForm/action';
+import {
+  contentCheck,
+  titleCheck,
+  ageCheck,
+  hashtagCheck,
+  resetCheck,
+} from '../../redux/postForm/action';
+
 const BtnWrap = styled.div`
   width: 100%;
   margin-top: 30px;
@@ -32,19 +39,24 @@ function PostBottomBtn({ formState, showModal }) {
     if (data.title === '') {
       console.log('제목을 입력해주세요');
       dispatch(titleCheck());
-    } else if (data.targetAge === 0) {
+    } else if (data.targetAge === '') {
       console.log('연령층을 선택해주세요');
       dispatch(ageCheck());
+    } else if (data.hashtag.length === 0) {
+      console.log('태그를 입력해주세요');
+      dispatch(hashtagCheck());
     } else if (data.content === '') {
       console.log('내용을 입력해주세요');
       dispatch(contentCheck());
     } else {
+      dispatch(resetCheck());
       showModal();
     }
   };
 
   const handleFormCancle = () => {
     dispatch(postReset());
+    dispatch(resetCheck());
     navigate(-1);
   };
 
