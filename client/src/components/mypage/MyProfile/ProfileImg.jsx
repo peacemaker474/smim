@@ -11,9 +11,9 @@ const MyImg = styled.img`
 
 function ProfileImg () {
   const user = useSelector((state) => state.loginReducer);
-  console.log(user);
+  
   return (
-    <MyImg src={"/" + user.imgUrl}/>
+    <MyImg src={"http://localhost:4000/" + user.imgUrl}/>
   );
 }
 
