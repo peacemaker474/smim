@@ -37,10 +37,10 @@ const PostDate = styled.span`
 
 const PostDropDownBtn = styled(DropDownBtn)``;
 
-export default function PostHead({ author, date }) {
+export default function PostHead({ author, date, postId }) {
   const [isVisible, dropDownRef, btnRef, handleDropDownShow] = useDropDown();
   const loginState = useSelector((state) => state.loginReducer);
-  const userId = loginState.userId;
+  const userId = loginState.id;
 
   return (
     <PostHeadDiv>
@@ -48,7 +48,7 @@ export default function PostHead({ author, date }) {
       <PostDate>{date.toLocaleDateString()}</PostDate>
       {author === userId && (
         <PostDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
-          {isVisible && <PostDropDown ref={dropDownRef} />}
+          {isVisible && <PostDropDown ref={dropDownRef} postId={postId} />}
         </PostDropDownBtn>
       )}
     </PostHeadDiv>

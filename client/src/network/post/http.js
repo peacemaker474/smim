@@ -6,6 +6,14 @@ export const postUpload = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);
 };
 
+export const postDelete = (id, header) => {
+  return axios.delete(`${http}/post/${id}`, header);
+};
+
+export const postEdit = (id, header) => {
+  return axios.post(`${http}/post/${id}`, header);
+};
+
 export const postListRead = (targetAge, header) => {
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
