@@ -6,7 +6,7 @@ import Post from '../models/Post.js';
 export const postCommentCreate = async (req, res) => {
   const { post_id, content, parent_id } = req.body;
   const { user: user_id } = req.body;
-  console.log(post_id, content, parent_id);
+
   try {
     const userExist = await User.exists({ _id: user_id });
     const postExist = await Post.exists({ _id: post_id, being: true });
@@ -67,7 +67,49 @@ export const postCommentCreate = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getCommentList = async (req, res) => {
+  const { post_id } = req.body;
+
+  try {
+    const postExist = await Post.exists({ _id: post_id, being: true });
+
+    if (!postExist) {
+      return res.json({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    if (!post_id) {
+      return res.json({
+        success: false,
+        message: 'post_id가 undefined입니다.',
+      });
+    } else {
+      const commentList = await Comment.find({
+        post_id,
+        parent_id: null,
+      });
+
+      const commentDataList = await Promise.all(
+        commentList.map(async (el) => {
+          const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+          return {
+            ...el._doc,
+            children,
+          };
+        })
+      );
+      return res.json(commentDataList);
+    }
+  } catch (error) {
     return res.json({
       success: false,
       message: error.message,
