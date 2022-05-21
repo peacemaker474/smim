@@ -66,7 +66,7 @@ function PostUploadPage() {
     } catch (error) {
       console.error(error);
     }
-  }, [postId, tkn]);
+  }, [postId, tkn, dispatch]);
 
   console.log(postData);
 
@@ -77,7 +77,7 @@ function PostUploadPage() {
       dispatch(postReset()); // post data reset
     }
     dispatch(resetCheck()); // post state reset - all false
-  }, [fetchAPI, pathValue]);
+  }, [fetchAPI, pathValue, dispatch]);
 
   const showModal = () => {
     setIsVisible(!isVisible);

@@ -32,7 +32,7 @@ function PostTitle() {
       titleInput.current && titleInput.current.focus();
       dispatch(resetCheck);
     }
-  }, [postCheck.title]);
+  }, [postCheck.title, dispatch]);
 
   const handleInputChange = (e) => {
     dispatch(titleAdd(e.target.value));

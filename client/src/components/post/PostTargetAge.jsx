@@ -33,7 +33,7 @@ function PostTargetAge() {
       console.log('나이를 입력해주세요'); // refactoring - 나중에 css 처리해야함
       dispatch(resetCheck());
     }
-  }, [postCheck.age]);
+  }, [postCheck.age, dispatch]);
 
   const handleAgeClick = (e) => {
     dispatch(targetAgeAdd(e.target.value));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PostListItem from '../components/postList/PostListItem';
@@ -89,7 +89,7 @@ export default function PostsPage() {
   const tkn = getCookie('users');
   const [postArray, setPostArray] = useState();
 
-  useEffect(async () => {
+  const settingData = useCallback(async () => {
     try {
       const response = await postListRead(age, {
         headers: {
@@ -101,7 +101,11 @@ export default function PostsPage() {
     } catch (error) {
       console.error(error);
     }
-  }, [age]);
+  }, [age, tkn]);
+
+  useEffect(() => {
+    settingData();
+  }, [settingData]);
 
   console.log(postArray);
 
@@ -132,7 +136,7 @@ export default function PostsPage() {
         </PostListHead>
         <PostListBody>
           {(postArray || []).map((el) => (
-            <PostListItem postData={el} key={el.id}></PostListItem>
+            <PostListItem postData={el} key={el._id}></PostListItem>
           ))}
         </PostListBody>
       </PostListContainer>

@@ -68,14 +68,14 @@ function PostTag() {
   const postCheck = useSelector((state) => state.postFormReducer);
   const dispatch = useDispatch();
   const tagInput = useRef();
-
+  console.log('rendering check');
   useEffect(() => {
     if (postCheck.hashtag) {
       // when hashtag state is false
       tagInput.current && tagInput.current.focus();
       dispatch(resetCheck());
     }
-  }, [postCheck.hashtag]);
+  }, [postCheck.hashtag, dispatch]);
 
   const handleKeyUp = (e) => {
     if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
