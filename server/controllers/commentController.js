@@ -6,10 +6,28 @@ import Post from '../models/Post.js';
 export const postCommentCreate = async (req, res) => {
   const { post_id, content, parent_id } = req.body;
   const { user: user_id } = req.body;
-
+  console.log(post_id, content, parent_id);
   try {
     const userExist = await User.exists({ _id: user_id });
     const postExist = await Post.exists({ _id: post_id, being: true });
+
+    if (parent_id != null) {
+      if (parent_id === undefined) {
+        return res.json({
+          success: false,
+          message: 'parent_id가 undefined입니다.',
+        });
+      }
+
+      const commentExist = await Comment.exists({ _id: parent_id, being: true });
+
+      if (!commentExist) {
+        return res.json({
+          success: false,
+          message: '존재하지 않는 댓글입니다.',
+        });
+      }
+    }
 
     if (!postExist) {
       return res.json({
@@ -35,11 +53,6 @@ export const postCommentCreate = async (req, res) => {
         success: false,
         message: 'content가 undefined입니다.',
       });
-    } else if (parent_id === '' || parent_id === 'undefined') {
-      return res.json({
-        success: false,
-        message: 'parent_id가 undefined입니다.',
-      });
     } else {
       await Comment.create({
         text: content,
@@ -47,15 +60,17 @@ export const postCommentCreate = async (req, res) => {
         post_id,
         parent_id,
       });
+
       return res.json({
         success: true,
         message: '댓글 작성 성공했습니다.',
       });
     }
   } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
-      message: error._message,
+      message: error.message,
     });
   }
 };
