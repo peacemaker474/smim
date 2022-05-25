@@ -5,6 +5,12 @@ import { loginClose } from '../toggle/action';
 
 const http = "http://localhost:4000";
 
+const config = {
+  Headers: {
+    'content-type': 'multipart/form-data',
+  },
+};
+
 export const loginUser = (data) => (dispatch) => {
   axios
     .post(`${http}/login`, data, {
@@ -25,16 +31,14 @@ export const loginUser = (data) => (dispatch) => {
 
 export const updateUser = (data) => (dispatch) => {
   axios
-    .put(`${http}/my`, data)
+    .put(`${http}/my`, data, config)
     .then((response) => response.data)
     .then((res) => {
-      setCookie("users", res.accessToken);
-      console.log(res);
       dispatch({
         type: UPDATE_USER,
-        payload: { id: res.id, name: res.name, email: res.email, success: res.success, message: res.message }
-      });
-    });
+        payload: { id: res.id, name: res.name, email: res.email, message: res.message, imgUrl: res.imageUrl, success: res.success }
+      })
+    })
 };
 
 export const logoutUser = () => (dispatch) => {
