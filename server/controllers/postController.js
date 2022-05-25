@@ -222,3 +222,30 @@ export const getPostView = async (req, res) => {
   await post.save();
   return res.json('succes');
 };
+
+// 게시글 검색
+export const getPostSearch = async (req, res) => {
+  const {age, tag, keyword} = req.query;
+  
+  if (!(parseInt(age) >= 60)) {
+    return res.json({
+      success: false,
+      message: '해당 연령대는 존재하지 않습니다',
+    });
+  }
+  const postList = await Post.find({ targetAge: age, being: true });
+
+  const postDataList = await Promise.all(
+    postList
+      .filter((el) => el[tag].includes(keyword))
+      .map(async (el) => {
+        const user = await User.findById(String(el.owner));
+        return {
+          ...el._doc,
+          owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+        };
+      })
+  );
+
+  return res.json(postDataList);
+}
