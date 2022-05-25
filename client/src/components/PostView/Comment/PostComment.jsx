@@ -1,7 +1,66 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CommentItemBox from './CommentItemBox';
+import { getCookie } from '../../../utils/cookie';
+import { CommentCreate } from '../../../network/comment/http';
+
+export default function PostComment() {
+  const inputRef = useRef(null);
+  const [cmnt, setCmnt] = useState('');
+  const tkn = getCookie('users');
+  const location = useLocation();
+  const id = location.pathname.split('view/')[1];
+  const loginState = useSelector((state) => state.loginReducer);
+
+  const handleTextPrint = (e) => {
+    console.log(inputRef);
+    setCmnt(e.target.value);
+  };
+
+  const handlePostingClick = async () => {
+    const response = await CommentCreate(
+      {
+        post_id: `${id}`,
+        content: `${cmnt}`,
+        parent_id: null,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      }
+    );
+
+    const data = response.data;
+    console.log(data);
+  };
+
+  return (
+    <>
+      <CommentContainer>
+        <CommentH2>답변하기</CommentH2>
+        <CommentInputBox>
+          <CommentImg url={loginState.imgUrl}></CommentImg>
+          <CommentInput
+            type='text'
+            placeholder='답변을 기다립니다.'
+            ref={inputRef}
+            onChange={handleTextPrint}
+            value={cmnt}
+          />
+          <CommentBtn onClick={handlePostingClick}>게시</CommentBtn>
+        </CommentInputBox>
+        <CommentItemContainer>
+          <CommentItemBox setCmnt={setCmnt} />
+          <CommentItemBox setCmnt={setCmnt} />
+        </CommentItemContainer>
+      </CommentContainer>
+    </>
+  );
+}
 
 const CommentContainer = styled.div`
   width: 794px;
@@ -59,35 +118,3 @@ const CommentBtn = styled.button`
 `;
 
 const CommentItemContainer = styled.div``;
-
-export default function PostComment() {
-  const inputRef = useRef(null);
-  const [cmnt, setCmnt] = useState('');
-  const handleTextPrint = (e) => {
-    console.log(inputRef);
-    setCmnt(e.target.value);
-  };
-
-  return (
-    <>
-      <CommentContainer>
-        <CommentH2>답변하기</CommentH2>
-        <CommentInputBox>
-          <CommentImg></CommentImg>
-          <CommentInput
-            type='text'
-            placeholder='답변을 기다립니다.'
-            ref={inputRef}
-            onChange={handleTextPrint}
-            value={cmnt}
-          />
-          <CommentBtn>게시</CommentBtn>
-        </CommentInputBox>
-        <CommentItemContainer>
-          <CommentItemBox setCmnt={setCmnt} />
-          <CommentItemBox setCmnt={setCmnt} />
-        </CommentItemContainer>
-      </CommentContainer>
-    </>
-  );
-}
