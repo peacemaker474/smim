@@ -31,6 +31,7 @@ export default function loginReducer(state = {}, action) {
         name: action.payload.name,
         email: action.payload.email,
         social: action.payload.social,
+        imgUrl: action.payload.imgUrl,
       };
     case SET_MESSAGE:
       return {

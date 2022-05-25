@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PostListItem from '../components/postList/PostListItem';
 import Search from '../asset/icon/icon-search-line.svg';
-import { postListRead } from '../network/post/http';
+import { getSearchPost, postListRead } from '../network/post/http';
 import { getCookie } from '../utils/cookie';
 
 const PostListMain = styled.main`
@@ -44,7 +44,7 @@ const SearchDiv = styled.div`
   display: flex;
 `;
 
-const SearchBox = styled.div`
+const SearchBox = styled.form`
   width: 245px;
   height: 33px;
   border: 2px solid ${({ theme }) => theme.color.yellow};
@@ -88,6 +88,11 @@ export default function PostsPage() {
   const age = query.get('age');
   const tkn = getCookie('users');
   const [postArray, setPostArray] = useState();
+  const [searchList, setSearchList] = useState({
+    option: "",
+    inputs: "",
+  });
+
 
   useEffect(async () => {
     try {
@@ -105,19 +110,40 @@ export default function PostsPage() {
 
   console.log(postArray);
 
+  const handleSearchOption = (evt) => {
+    setSearchList({ ...searchList, option: evt.target.value});
+  };
+
+  const handleSearchInputs = (evt) => {
+    setSearchList({ ...searchList, inputs: evt.target.value});
+  };
+
+  const handleSearchPost = (evt) => {
+    evt.preventDefault();
+    if (!searchList.option !== "" && !searchList.inputs !== "") {
+      let body = {
+        option: searchList.option,
+        search: searchList.inputs,
+        target: age,
+      }
+      getSearchPost(body).then((res) => setPostArray(res.data));
+    }
+  }
+
   return (
     <PostListMain>
       <PostListContainer>
         <PostListHeading>{age}대 질문리스트</PostListHeading>
         <PostListHead>
           <SearchDiv>
-            <SearchSelect name='sort'>
-              <option value=''>제목</option>
-              <option value=''>태그</option>
-              <option value=''>내용</option>
+            <SearchSelect name='sort' onChange={handleSearchOption}>
+              <option value="">선택</option>
+              <option value='title'>제목</option>
+              <option value='hashtag'>태그</option>
+              <option value='content'>내용</option>
             </SearchSelect>
-            <SearchBox>
-              <SearchInput />
+            <SearchBox onSubmit={handleSearchPost}>
+              <SearchInput onChange={handleSearchInputs}/>
               <SearchBtn />
             </SearchBox>
           </SearchDiv>

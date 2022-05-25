@@ -75,7 +75,6 @@ function MyInfo () {
       formdata.append('userId', userInfo.id);
       formdata.append('nickname', userInfo.nickname);
       formdata.append('email', userInfo.email);
-      
       dispatch(updateUser(formdata));
     }
   }

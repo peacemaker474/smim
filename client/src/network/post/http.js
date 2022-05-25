@@ -41,3 +41,7 @@ export const postBookmark = (id, header) => {
 export const postUnbookmark = (id, header) => {
   return axios.get(`${http}/post/${id}/unbookmark`, header);
 };
+
+export const getSearchPost = (data) => {
+  return axios.get(`${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`)
+}
