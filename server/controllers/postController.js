@@ -226,8 +226,9 @@ export const getPostView = async (req, res) => {
 // 게시글 검색
 export const getPostSearch = async (req, res) => {
   const {age, tag, keyword} = req.query;
+  console.log(age);
   
-  if (!(parseInt(age) >= 60)) {
+  if (!(parseInt(age) <= 60)) {
     return res.json({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
