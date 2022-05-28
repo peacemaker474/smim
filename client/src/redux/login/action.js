@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
-import { LOGIN_USER, LOGOUT_USER, SET_MESSAGE, UPDATE_USER } from './type';
+import { LOGIN_USER, LOGOUT_USER, SET_MESSAGE, UPDATE_IMAGE, UPDATE_USER } from './type';
 import { loginClose } from '../toggle/action';
 
 const http = "http://localhost:4000";
@@ -40,6 +40,18 @@ export const updateUser = (data) => (dispatch) => {
       })
     })
 };
+
+export const updateImage = (data) => (dispatch) => {
+  axios
+    .put(`${http}/my`, data, config)
+    .then((response) => response.data)
+    .then((res) => {
+      dispatch({
+        type: UPDATE_IMAGE,
+        payload: {imgUrl: res.imageUrl}
+      })
+    })
+}
 
 export const logoutUser = () => (dispatch) => {
   axios.get(`${http}/logout`, {crossDomain: true}).then((response) => {

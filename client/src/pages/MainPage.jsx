@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import QuestionList from '../components/postMain/QuestionList';
 
@@ -19,6 +20,11 @@ const MainContainer = styled.div`
 `;
 
 export default function MainPage() {
+  useEffect(() => {
+    axios.get("http://localhost:4000")
+      .then((res) => console.log(res))
+  }, [])
+
   return (
     <MainBody>
       <MainContainer>

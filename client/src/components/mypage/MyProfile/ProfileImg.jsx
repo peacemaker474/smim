@@ -9,11 +9,11 @@ const MyImg = styled.img`
   border: 1px solid black; // 추후에 지울것
 `;
 
-function ProfileImg () {
+function ProfileImg ({userInfo : {encodeImg}}) {
   const user = useSelector((state) => state.loginReducer);
   
   return (
-    <MyImg src={"http://localhost:4000/" + user.imgUrl}/>
+    <MyImg src={encodeImg !== "" ? encodeImg : "http://localhost:4000/" + user.imgUrl}/>
   );
 }
 

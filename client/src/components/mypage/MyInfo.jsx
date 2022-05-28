@@ -6,7 +6,7 @@ import IdInput from './Myinfo/IdInput';
 import EmailInput from './Myinfo/EmailInput';
 import ProfileImg from './MyProfile/ProfileImg';
 import { UpdateBtn } from '../../styles/common/buttons';
-import { updateUser } from '../../redux/login/action';
+import { updateImage, updateUser } from '../../redux/login/action';
 import ImgInput from './Myinfo/ImgInput';
 
 const Wrapper = styled.form`
@@ -47,6 +47,7 @@ function MyInfo () {
     nickname: user.name,
     email: user.email,
     imgFiles: "",
+    encodeImg: "",
   });
   
   const [myMessage, setMyMessage] = useState({
@@ -67,22 +68,27 @@ function MyInfo () {
   const handleUpdateInfo = (evt) => {
     evt.preventDefault();
 
+    const formdata = new FormData();
+    formdata.append('email', userInfo.email);
+    if (userInfo.imgFiles !== "") formdata.append('file', userInfo.imgFiles[0]);
+
     const lastIdCheck = userInfo.id.indexOf("\b");
     const lastNameCheck = userInfo.nickname.indexOf("\b");
-    if (lastIdCheck !== 0 && lastNameCheck !== 0) {
-      const formdata = new FormData();
-      formdata.append('file', userInfo.imgFiles[0]);
+    if (!(user.id === userInfo.id || user.name === userInfo.nickname) && (lastIdCheck !== 0 && lastNameCheck !== 0)) {
       formdata.append('userId', userInfo.id);
       formdata.append('nickname', userInfo.nickname);
-      formdata.append('email', userInfo.email);
       dispatch(updateUser(formdata));
+    } else {
+      dispatch(updateImage(formdata));
     }
   }
 
   return (
     <Wrapper method='POST' encType='multipart/form-data'>
       <ImgForm>
-        <ProfileImg />
+        <ProfileImg 
+          userInfo={userInfo}
+        />
         <ImgInput 
           userInfo={userInfo}
           setUserInfo={setUserInfo}
