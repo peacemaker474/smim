@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCheck } from '../../redux/postForm/action';
-import { contentAdd } from '../../redux/post/action';
+import { contentAdd } from '../../redux/postCreate/action';
 
 const PostEditorWrap = styled.div`
   margin-top: 30px;
@@ -16,7 +16,7 @@ function Posteditor() {
   const dispatch = useDispatch();
   const contentInput = useRef();
   const postCheck = useSelector((state) => state.postFormReducer);
-  const postData = useSelector((state) => state.postReducer);
+  const postData = useSelector((state) => state.postCreateReducer);
 
   useEffect(() => {
     if (postCheck.content) {

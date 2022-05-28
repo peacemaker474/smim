@@ -15,7 +15,7 @@ const initialState = {
   content: '',
 };
 
-export default function postReducer(state = initialState, action) {
+export default function postCreateReducer(state = initialState, action) {
   switch (action.type) {
     case TITLE_ADD:
       return {

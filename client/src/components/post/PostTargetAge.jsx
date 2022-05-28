@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { targetAgeAdd } from '../../redux/post/action';
+import { targetAgeAdd } from '../../redux/postCreate/action';
 import { resetCheck } from '../../redux/postForm/action';
 
 // PostTargetAge가 onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
@@ -22,7 +22,7 @@ const TargetAgeInput = styled.select`
 
 function PostTargetAge() {
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.postReducer);
+  const postData = useSelector((state) => state.postCreateReducer);
   const postCheck = useSelector((state) => state.postFormReducer);
   const ageInput = useRef();
 

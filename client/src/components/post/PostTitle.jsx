@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { titleAdd } from '../../redux/post/action';
+import { titleAdd } from '../../redux/postCreate/action';
 import { resetCheck } from '../../redux/postForm/action';
 
 // PostTitle onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
@@ -22,7 +22,7 @@ const TitleInput = styled.input`
 
 function PostTitle() {
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.postReducer);
+  const postData = useSelector((state) => state.postCreateReducer);
   const postCheck = useSelector((state) => state.postFormReducer);
   const titleInput = useRef();
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PostLike from './PostLike';
 import PostBookmark from './PostBookmark';
@@ -8,8 +7,7 @@ import { postDetailRead } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 import PostHead from './PostHead';
 
-export default function PostPost() {
-  const location = useLocation();
+export default function PostPost({ postId }) {
   const tkn = getCookie('users');
   const [postDetail, setPostDetail] = useState({
     targetAge: '',
@@ -22,12 +20,11 @@ export default function PostPost() {
     bookmark: false,
     meta: { likes: 0, views: 0 },
   });
-  const id = location.pathname.split('view/')[1];
 
   const fetchAPI = useCallback(async () => {
     try {
       if (tkn) {
-        const response = await postDetailRead(id, {
+        const response = await postDetailRead(postId, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
@@ -35,13 +32,13 @@ export default function PostPost() {
         });
         setPostDetail(response.data);
       } else {
-        const response = await postDetailRead(id);
+        const response = await postDetailRead(postId);
         setPostDetail(response.data);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [id, tkn]);
+  }, [postId, tkn]);
 
   useEffect(() => {
     fetchAPI();
@@ -53,7 +50,7 @@ export default function PostPost() {
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead author={postDetail.owner.nickname} date={date} postId={id} />
+      <PostHead author={postDetail.owner.nickname} date={date} postId={postId} />
       <PostBody>
         <PostContent>
           <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
