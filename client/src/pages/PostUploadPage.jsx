@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { totalAdd } from '../redux/post/action';
+import { totalAdd } from '../redux/postCreate/action';
 import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
 import { postUpload } from '../network/post/http';
-import { postReset } from '../redux/post/action';
+import { postReset } from '../redux/postCreate/action';
 import { postDetailRead } from '../network/post/http';
 import { resetCheck } from '../redux/postForm/action';
 
@@ -36,7 +36,7 @@ const PostHeader = styled.h2`
 function PostUploadPage() {
   const { pathname } = useLocation();
   const [isVisible, setIsVisible] = useState(false);
-  const postData = useSelector((state) => state.postReducer);
+  const postData = useSelector((state) => state.postCreateReducer);
   // const postForm = useSelector((state) => state.postFormReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ColorBtn } from '../../styles/common/buttons';
-import { postReset } from '../../redux/post/action';
+import { postReset } from '../../redux/postCreate/action';
 import {
   contentCheck,
   titleCheck,
@@ -32,7 +32,7 @@ const BtnDiv = styled.div`
 `;
 function PostBottomBtn({ formState, showModal }) {
   const navigate = useNavigate();
-  const postData = useSelector((state) => state.postReducer);
+  const postData = useSelector((state) => state.postCreateReducer);
   const dispatch = useDispatch();
 
   const handleFormCheck = (data) => {

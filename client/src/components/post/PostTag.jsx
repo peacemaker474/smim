@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 import DelBtn from '../../asset/icon/icon-del.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { tagAdd, tagDelete } from '../../redux/post/action';
+import { tagAdd, tagDelete } from '../../redux/postCreate/action';
 import { resetCheck } from '../../redux/postForm/action';
 
 const HashContainer = styled.div`
@@ -64,7 +64,7 @@ const HashDelBtn = styled.button`
 
 function PostTag() {
   const [text, setText] = useState('');
-  const { hashtag } = useSelector((state) => state.postReducer);
+  const { hashtag } = useSelector((state) => state.postCreateReducer);
   const postCheck = useSelector((state) => state.postFormReducer);
   const dispatch = useDispatch();
   const tagInput = useRef();
