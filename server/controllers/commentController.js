@@ -54,7 +54,7 @@ export const postCommentCreate = async (req, res) => {
         message: 'content가 undefined입니다.',
       });
     } else {
-      await Comment.create({
+      const comment = await Comment.create({
         text: content,
         writer_id: user_id,
         post_id,
@@ -63,6 +63,7 @@ export const postCommentCreate = async (req, res) => {
 
       return res.json({
         success: true,
+        comment_id: comment._id,
         message: '댓글 작성 성공했습니다.',
       });
     }
@@ -75,7 +76,8 @@ export const postCommentCreate = async (req, res) => {
 };
 
 export const getCommentList = async (req, res) => {
-  const { post_id } = req.body;
+  const { post_id } = req.query;
+  console.log(post_id);
 
   try {
     const postExist = await Post.exists({ _id: post_id, being: true });
