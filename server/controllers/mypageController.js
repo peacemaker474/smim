@@ -49,13 +49,16 @@ export const putChangeUserInfo = async (req, res) => {
   const user = await User.findOne({email});
   const checkId = await User.findOne({ userId });
   const checkName = await User.findOne({ nickname });
+  const updateImage = await User.findByIdAndUpdate(user._id, {
+    imageUrl: file ? file.path : user.imageUrl,
+  });
+  if (file !== undefined && checkId === null && checkName === null) return res.json({ success: true, imageUrl: updateImage.imageUrl})
   if (checkId !== null) return res.json({ success: false, message: "이미 존재하는 아이디입니다."})
   if (checkName !== null) return res.json({ success: false, message: "이미 존재하는 닉네임입니다."})
   
   const updateUser = await User.findByIdAndUpdate(user._id, {
     userId,
     nickname,
-    imageUrl: file ? file.path : user.imageUrl,
   }, {new: true});
   const token = createToken(user._id);
   
@@ -65,7 +68,7 @@ export const putChangeUserInfo = async (req, res) => {
     email: updateUser.email,
     accessToken: token,
     success: true,
-    imageUrl: updateUser.imageUrl ? updateUser.imageUrl : "",
+    imageUrl: file !== undefined ? updateImage.imageUrl : updateUser.imageUrl,
     message: "성공적으로 정보를 변경하였습니다.",
   })
 }
