@@ -1,4 +1,5 @@
 import express from 'express';
+import { getMainPageLists } from '../controllers/postController.js';
 import {
   getCheckEmail,
   getCheckId,
@@ -10,6 +11,8 @@ import {
 import { userImgUpload } from '../middlewares.js';
 
 const rootRouter = express.Router();
+
+rootRouter.get("/", getMainPageLists);
 
 rootRouter.get('/signup/id-check', getCheckId);
 rootRouter.get('/signup/email-check', getCheckEmail);

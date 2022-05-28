@@ -249,3 +249,22 @@ export const getPostSearch = async (req, res) => {
 
   return res.json(postDataList);
 }
+
+export const getMainPageLists = async (req, res) => {
+  Post.find((err, posts) => {
+    const postLists = {
+      "10": [],
+      "20": [],
+      "30": [],
+      "40": [],
+      "50": [],
+    };
+    if (err) console.log(err);
+    else {
+      posts.forEach((el) => {
+        postLists[el.targetAge].push(el);
+      })
+    }
+    return res.json({ success: true, lists: postLists})
+  });
+}
