@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER, SET_MESSAGE, UPDATE_USER } from "./type";
+import { LOGIN_USER, LOGOUT_USER, SET_MESSAGE, UPDATE_USER, UPDATE_IMAGE } from "./type";
 
 export default function loginReducer(state = {}, action) {
   switch (action.type) {
@@ -31,6 +31,11 @@ export default function loginReducer(state = {}, action) {
         name: action.payload.name,
         email: action.payload.email,
         social: action.payload.social,
+        imgUrl: action.payload.imgUrl,
+      };
+    case UPDATE_IMAGE:
+      return {
+        ...state,
         imgUrl: action.payload.imgUrl,
       };
     case SET_MESSAGE:

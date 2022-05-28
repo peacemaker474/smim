@@ -54,11 +54,17 @@ function ImgInput ({ userInfo, setUserInfo }) {
   const hanldeUploadFile = (evt) => {
     const imgFiles = evt.target.files;
     setFileName(evt.target.value);
-    setUserInfo({ ...userInfo, imgFiles });
-  }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result;
+      if (base64) setUserInfo({ ...userInfo, imgFiles, encodeImg: base64});
+    }
+    reader.readAsDataURL(imgFiles[0])
+  };
 
-  const handleRemoveFile = (evt) => {
+  const handleRemoveFile = () => {
     setFileName("파일선택");
+    setUserInfo({ ...userInfo, encodeImg: ""});
   }
 
   return (
