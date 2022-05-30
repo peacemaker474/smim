@@ -1,8 +1,9 @@
-import { MENU_OPEN, MENU_CLOSE, LOGIN_OPEN, LOGIN_CLOSE } from "./type";
+import { MENU_OPEN, MENU_CLOSE, LOGIN_OPEN, LOGIN_CLOSE, INPUT_SHOW } from './type';
 
 const initialState = {
   menuToggled: false,
   loginToggled: false,
+  inputToggled: false,
 };
 
 export default function toggleReducer(state = initialState, action) {
@@ -26,7 +27,13 @@ export default function toggleReducer(state = initialState, action) {
       return {
         ...state,
         loginToggled: action.payload.loginToggled,
-      }
+      };
+    case INPUT_SHOW:
+      return {
+        ...state,
+        inputToggled: action.payload.inputToggled,
+      };
+
     default:
       return state;
   }

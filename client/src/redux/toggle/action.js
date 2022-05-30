@@ -1,4 +1,4 @@
-import {MENU_OPEN, MENU_CLOSE, LOGIN_OPEN, LOGIN_CLOSE} from './type';
+import { MENU_OPEN, MENU_CLOSE, LOGIN_OPEN, LOGIN_CLOSE, INPUT_SHOW } from './type';
 
 export const menuOpen = () => {
   return {
@@ -14,9 +14,9 @@ export const menuClose = () => {
     type: MENU_CLOSE,
     payload: {
       menuToggled: false,
-    }
-  }
-}
+    },
+  };
+};
 
 export const loginOpen = () => {
   return {
@@ -25,7 +25,7 @@ export const loginOpen = () => {
       loginToggled: true,
     },
   };
-}
+};
 
 export const loginClose = () => {
   return {
@@ -34,4 +34,13 @@ export const loginClose = () => {
       loginToggled: false,
     },
   };
-}
+};
+
+export const cmntInputShow = (toggle) => {
+  return {
+    type: INPUT_SHOW,
+    payload: {
+      inputToggled: toggle,
+    },
+  };
+};
