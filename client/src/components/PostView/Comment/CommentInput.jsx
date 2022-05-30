@@ -1,15 +1,57 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { commentCreate } from '../../../network/comment/http';
+import { getCookie } from '../../../utils/cookie';
+import { commentWrite } from '../../../redux/comment/actions';
 
-export default function CommentInput() {
+
+export default function CommentInput({ postId, parentId }) {
   const loginState = useSelector((state) => state.loginReducer);
+  const [content, setContent] = useState('');
+  const inputRef = useRef('');
+  const tkn = getCookie('users');
+  const dispatch = useDispatch();
+
+  const handleCommentCreate = async () => {
+    const response = await commentCreate(
+      { post_id: postId, content: content, parent_id: parentId },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      }
+    );
+
+    const date = String(new Date());
+    dispatch(
+      commentWrite({
+        text: content,
+        _id: response.data.comment_id,
+        createAt: date,
+        writer_id: loginState.id,
+        parent_id: parentId,
+      })
+    );
+    inputRef.current.value = '';
+  };
+
+  const handleCommentWrite = (e) => {
+    setContent(e.target.value);
+  };
 
   return (
     <CmntInputBox>
       <CmntImg src={`http://localhost:4000/${loginState.imgUrl}`}></CmntImg>
-      <CmntInput type='text' placeholder='답변을 기다립니다.' />
-      <CmntBtn>게시</CmntBtn>
+      <CmntInput
+        type='text'
+        placeholder='답변을 기다립니다.'
+        onChange={handleCommentWrite}
+        value={content}
+        ref={inputRef}
+      />
+      <CmntBtn onClick={handleCommentCreate}>게시</CmntBtn>
     </CmntInputBox>
   );
 }
