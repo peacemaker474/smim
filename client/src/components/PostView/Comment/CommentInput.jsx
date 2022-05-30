@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-export default function CommentInput({}) {
+export default function CommentInput() {
   const loginState = useSelector((state) => state.loginReducer);
 
   return (

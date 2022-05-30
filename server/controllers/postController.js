@@ -262,7 +262,9 @@ export const getMainPageLists = async (req, res) => {
     if (err) console.log(err);
     else {
       posts.forEach((el) => {
-        postLists[el.targetAge].push(el);
+        if (el.title.includes("테스트")) {
+          postLists[el.targetAge].push(el);
+        }
       })
     }
     return res.json({ success: true, lists: postLists})

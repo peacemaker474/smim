@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import QuestionItem from './QuestionItem';
+import heartFill from '../../asset/icon/icon-heart-fill.svg';
 
 const ListContainer = styled.div`
   border: 2px solid ${({ theme }) => theme.color.lightGray};
@@ -27,7 +27,45 @@ const MoreBtn = styled.button`
 
 const ListBody = styled.div``;
 
-export default function QuestionList({ age }) {
+const ListItem = styled.div`
+  height: 60px;
+  width: 100%;
+  padding: 10px;
+  & + div {
+    border-top: 2px solid ${({ theme }) => theme.color.lightGray};
+  }
+`;
+
+const ItemH3 = styled.h3`
+  margin-bottom: 6px;
+`;
+
+const ItemContent = styled.div`
+  display: flex;
+`;
+
+const ItemSpan = styled.span``;
+
+const ItemLike = styled.span`
+  display: flex;
+  color: ${({ theme }) => theme.color.red};
+  &::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    display: block;
+    background: url(${heartFill});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 5px;
+  }
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+export default function QuestionList({ age, post }) {
+  console.log(post);
   return (
     <ListContainer>
       <ListHead>
@@ -35,11 +73,16 @@ export default function QuestionList({ age }) {
         <MoreBtn>더보기</MoreBtn>
       </ListHead>
       <ListBody>
-        <QuestionItem />
-        <QuestionItem />
-        <QuestionItem />
-        <QuestionItem />
-        <QuestionItem />
+        {post && post.map((item, index) => (
+          <ListItem key={index}>
+            <ItemH3>{item.title}</ItemH3>
+            <ItemContent>
+              <ItemSpan>{item.owner}</ItemSpan>
+              <ItemLike>{item.meta.likes}</ItemLike>
+              <ItemSpan>{item.createAt.slice(0, 10).replaceAll('-', '.')}</ItemSpan>
+            </ItemContent>
+          </ListItem>
+        ))}
       </ListBody>
     </ListContainer>
   );
