@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import CommentInput from './CommentInput';
+import CommentContainer from './CommentContainer';
 
 export default function PostComment({ postId }) {
   return (
     <CommentSection>
       <CommentH2>답변하기</CommentH2>
       <CommentInput postId={postId} parentId={null} />
+      <CommentContainer postId={postId} />
     </CommentSection>
   );
 }
