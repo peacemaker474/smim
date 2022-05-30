@@ -1,0 +1,1 @@
+export const COMMENT_WRITE = 'COMMENT_WRITE';
