@@ -5,6 +5,7 @@ import { commentCreate } from '../../../network/comment/http';
 import { getCookie } from '../../../utils/cookie';
 import { commentWrite } from '../../../redux/comment/actions';
 
+
 export default function CommentInput({ postId, parentId }) {
   const loginState = useSelector((state) => state.loginReducer);
   const [content, setContent] = useState('');
