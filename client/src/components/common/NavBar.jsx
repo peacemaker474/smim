@@ -89,7 +89,7 @@ function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLoginModal = () => {
+  const handleLoginClick = () => {
     dispatch(loginOpen());
   };
 
