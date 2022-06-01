@@ -9,33 +9,33 @@ import heartLine from '../../../asset/icon/icon-heart-line.svg';
 import CommentInput from './CommentInput';
 import useVisible from '../../../hooks/useVisible';
 
-export default function CommentItem({ data }) {
-  const [isVisible, dropDownRef, btnRef, handleDropDownShow] = useDropDown();
+export default function CommentItem({ cmntData }) {
+  const [isDropdownVisible, dropDownRef, btnRef, handleDropdownShow] = useDropDown();
   const [isTargetVisible, handleClickShow] = useVisible(false);
   //   const loginState = useSelector((state) => state.loginReducer);
 
   return (
-    <CommentItemFrame>
+    <CommentItemInner>
       <ProfileImg />
       <CommentContent>
         <CommentText>
-          <CommentStrongName>{data.writer_id}</CommentStrongName> {data.text}
+          <CommentStrongName>{cmntData.writer_id}</CommentStrongName> {cmntData.text}
         </CommentText>
         <CommentEtc>
-          <CommentDate>{data.createAt}</CommentDate>
+          <CommentDate>{cmntData.createAt}</CommentDate>
           <CommentReBtn onClick={handleClickShow}>답글 달기</CommentReBtn>
-          <CommentLike>{data.like_count}</CommentLike>
+          <CommentLike>{cmntData.like_count}</CommentLike>
         </CommentEtc>
-        {isTargetVisible && <CommentInput postId={data.post_id} parentId={data._id} />}
+        {isTargetVisible && <CommentInput postId={cmntData.post_id} parentId={cmntData._id} />}
       </CommentContent>
-      <CommentDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
-        {isVisible && <CommentDropDown ref={dropDownRef} />}
+      <CommentDropDownBtn ref={btnRef} onClick={handleDropdownShow}>
+        {isDropdownVisible && <CommentDropDown ref={dropDownRef} />}
       </CommentDropDownBtn>
-    </CommentItemFrame>
+    </CommentItemInner>
   );
 }
 
-const CommentItemFrame = styled.div`
+const CommentItemInner = styled.div`
   margin-bottom: 15px;
   display: flex;
   position: relative;

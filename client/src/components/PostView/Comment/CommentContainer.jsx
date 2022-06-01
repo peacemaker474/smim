@@ -1,17 +1,17 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { commentListRead } from '../../../network/comment/http';
+import { getCommentListRead } from '../../../network/comment/http';
 import { getCookie } from '../../../utils/cookie';
-import CommentContainerItem from './CommentContainerItem';
+import CommentWrapper from './CommentWrapper';
 
 export default function CommentContainer({ postId }) {
   const tkn = getCookie('users');
-  const [readedComments, setReadedComments] = useState();
-  const commentContent = useSelector((state) => state.commentCreateReducer);
+  const [loadedComments, setLoadedComments] = useState();
+  const createdComments = useSelector((state) => state.commentReducer);
 
-  const commentsRead = useCallback(async () => {
-    const response = await commentListRead(
+  const loadComments = useCallback(async () => {
+    const response = await getCommentListRead(
       { post_id: postId },
       {
         headers: {
@@ -21,31 +21,31 @@ export default function CommentContainer({ postId }) {
       }
     );
 
-    setReadedComments(response.data);
+    setLoadedComments(response.data);
   }, [postId, tkn]);
 
   useEffect(() => {
-    commentsRead();
-  }, [commentsRead]);
+    loadComments();
+  }, [loadComments]);
 
-  const cmntMainData = commentContent.filter((el) => el.parent_id == null);
+  const uploadingComments = createdComments.filter((el) => el.parent_id == null);
 
   return (
-    <CommentArrayContainer>
-      {cmntMainData.length !== 0 &&
-        cmntMainData
+    <CommentList>
+      {uploadingComments.length !== 0 &&
+        uploadingComments
           .sort((a, b) => {
             return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
           })
-          .map((el) => <CommentContainerItem key={el._id} data={el} />)}
-      {readedComments &&
-        readedComments
+          .map((el) => <CommentWrapper key={el._id} cmntData={el} />)}
+      {loadedComments &&
+        loadedComments
           .sort((a, b) => {
             return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
           })
-          .map((el) => <CommentContainerItem key={el._id} data={el} />)}
-    </CommentArrayContainer>
+          .map((el) => <CommentWrapper key={el._id} cmntData={el} />)}
+    </CommentList>
   );
 }
 
-const CommentArrayContainer = styled.div``;
+const CommentList = styled.div``;

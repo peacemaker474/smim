@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 function useVisible(state) {
-  const [isTargetVisible, setTargetIsVisible] = useState(state);
+  const [isTargetVisible, setIsTargetVisible] = useState(state);
 
-  const handleClickShow = () => {
-    setTargetIsVisible(!isTargetVisible);
+  const handleTargetShow = () => {
+    setIsTargetVisible(!isTargetVisible);
   };
 
-  return [isTargetVisible, handleClickShow];
+  return [isTargetVisible, handleTargetShow];
 }
 export default useVisible;

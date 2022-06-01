@@ -96,7 +96,7 @@ function NavBar() {
   const handleLogoutClick = () => {
     dispatch(logoutUser());
     navigate('/');
-  }
+  };
 
   return (
     <>
@@ -136,24 +136,26 @@ function NavBar() {
                 60대에게
               </ListLink>
             </NavList>
-            {!loginState.isLogin ? 
-            <NavList>
-              <SignLink onClick={handleLoginModal}> 로그인/회원가입 </SignLink>
-            </NavList> :
-            <>
-              {!loginState.social ?
-                <NavList>
-                  <ListLink to='/my'> 마이페이지 </ListLink>
-                </NavList> :
-                <NavList>
-                  <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
-                </NavList>
-              }
+            {!loginState.isLogin ? (
               <NavList>
-                <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
+                <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
               </NavList>
-            </>
-            }
+            ) : (
+              <>
+                {!loginState.social ? (
+                  <NavList>
+                    <ListLink to='/my'> 마이페이지 </ListLink>
+                  </NavList>
+                ) : (
+                  <NavList>
+                    <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
+                  </NavList>
+                )}
+                <NavList>
+                  <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
+                </NavList>
+              </>
+            )}
           </NavLists>
           <Toggle />
         </NavBox>

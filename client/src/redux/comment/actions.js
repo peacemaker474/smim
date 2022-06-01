@@ -1,8 +1,8 @@
-import { COMMENT_WRITE } from './type';
+import { CREATE_COMMENT } from './type';
 
-export const commentWrite = ({ text, _id, writer_id, createAt, parent_id }) => {
+export const createComment = ({ text, _id, writer_id, createAt, parent_id }) => {
   return {
-    type: COMMENT_WRITE,
+    type: CREATE_COMMENT,
     payload: {
       text,
       _id,
