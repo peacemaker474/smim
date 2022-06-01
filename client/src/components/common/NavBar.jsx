@@ -71,7 +71,7 @@ const ListLink = styled(Link)`
   padding-bottom: 5px;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
-    ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
+  ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
 `;
 
 const SignLink = styled.span`
@@ -96,86 +96,72 @@ function NavBar() {
   const handleLogoutClick = () => {
     dispatch(logoutUser());
     navigate('/');
-  };
+  }
 
-  return (
-    <>
-      <NavContainer>
-        <NavBox>
-          <NavLogo>
-            <NavTitle to='/'> 스며들다 </NavTitle>
-          </NavLogo>
-          <NavLists>
+return (
+  <>
+    <NavContainer>
+      <NavBox>
+      <NavLogo>
+      <NavTitle to='/'> 스며들다 </NavTitle>
+    </NavLogo>
+    <NavLists>
+      <NavList>
+        <ListLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
+          10대에게
+        </ListLink>
+      </NavList>
+      <NavList>
+      <ListLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
+          20대에게
+      </ListLink>
+      </NavList>
+      <NavList>
+        <ListLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
+          30대에게
+        </ListLink>
+      </NavList>
+      <NavList>
+        <ListLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
+          40대에게
+        </ListLink>
+      </NavList>
+      <NavList>
+      <ListLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
+        50대에게
+      </ListLink>
+      </NavList>
+      <NavList>
+        <ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
+          60대에게
+        </ListLink>
+      </NavList>
+      {!loginState.isLogin ?
+        <NavList>
+          <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
+        </NavList> :
+        <>
+          {!loginState.social ?
             <NavList>
-              <ListLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
-                10대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
-                20대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
-                30대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
-                40대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
-                50대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
-                60대에게
-              </ListLink>
-            </NavList>
-            {!loginState.isLogin ? 
-            <NavList>
-              <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
+              <ListLink to='/my'> 마이페이지 </ListLink>
             </NavList> :
-            <>
-              {!loginState.social ?
-                <NavList>
-                  <ListLink to='/my'> 마이페이지 </ListLink>
-                </NavList> :
-                <NavList>
-                  <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
-                </NavList>
-              }
-              <NavList>
-                <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
-              </NavList>
-            ) : (
-              <>
-                {!loginState.social ? (
-                  <NavList>
-                    <ListLink to='/my'> 마이페이지 </ListLink>
-                  </NavList>
-                ) : (
-                  <NavList>
-                    <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
-                  </NavList>
-                )}
-                <NavList>
-                  <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
-                </NavList>
-              </>
-            )}
-          </NavLists>
-          <Toggle />
-        </NavBox>
-      </NavContainer>
-      {loginToggled && <LoginSection />}
-      {menuToggled && <MobileNavBar />}
-    </>
-  );
+            <NavList>
+              <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
+            </NavList>
+          }
+            <NavList>
+              <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
+            </NavList>
+        </>
+      }
+        </NavLists>
+        <Toggle />
+      </NavBox>
+    </NavContainer>
+    {loginToggled && <LoginSection />}
+    {menuToggled && <MobileNavBar />}
+  </>
+);
 }
 
 export default NavBar;

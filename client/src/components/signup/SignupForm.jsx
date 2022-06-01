@@ -7,7 +7,7 @@ import SignupBirth from './SignupBirth';
 import SignupPw from './SignupPw';
 import SignupBtns from './SignupBtns';
 import { useNavigate } from 'react-router-dom';
-import { postSignupSubmit } from '../../network/postSignupSubmit/http';
+import { postSignupSubmit } from '../../network/signup/http';
 
 const SignupFormBox = styled.form`
   width: 60%;
