@@ -31,12 +31,12 @@ function PwChange () {
     newPassword2: "",
   });
 
-  const handleChangeInput = (evt) => {
+  const handleInputChange = (evt) => {
     const name = evt.target.name;
     setPassword({ ...password, [name]: evt.target.value});
   }
 
-  const handleChangePw = (evt) => {
+  const handlePwSubmit = (evt) => {
     evt.preventDefault();
 
     if (!pwValidation(password.oldPassword) && !pwValidation(password.newPassword)) {
@@ -56,9 +56,9 @@ function PwChange () {
     <Wrapper>
       <Title> 비밀번호 변경 </Title>
       <PwInput
-        handleChangeInput={handleChangeInput}
+        onInputChange={handleInputChange}
       />
-      <ChangePwBtn onClick={handleChangePw}> 확인 </ChangePwBtn>
+      <ChangePwBtn onClick={handlePwSubmit}> 확인 </ChangePwBtn>
       <CancelBtn> 취소 </CancelBtn>
     </Wrapper>
   );

@@ -12,12 +12,12 @@ const PwBox = styled.div`
 `;
 
 
-function PwInput ({handleChangeInput}) {
+function PwInput ({onInputChange}) {
   return (
     <PwBox>
-      <MyInfoInput name="oldPassword" type="password" placeholder="현재 비밀번호" onBlur={handleChangeInput} />
-      <MyInfoInput name="newPassword" type="password" placeholder='새 비밀번호' onBlur={handleChangeInput} />
-      <MyInfoInput name="newPassword2" type="password" placeholder='새 비밀번호 확인' onBlur={handleChangeInput} />
+      <MyInfoInput name="oldPassword" type="password" placeholder="현재 비밀번호" onBlur={onInputChange} />
+      <MyInfoInput name="newPassword" type="password" placeholder='새 비밀번호' onBlur={onInputChange} />
+      <MyInfoInput name="newPassword2" type="password" placeholder='새 비밀번호 확인' onBlur={onInputChange} />
     </PwBox>
   );
 }

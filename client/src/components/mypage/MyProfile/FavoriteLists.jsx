@@ -29,7 +29,7 @@ function FavoriteLists ({ userId }) {
     })
   }, [userId])
 
-  const handleMoveFavorite = (evt) => {
+  const handleBookMarkMove = (evt) => {
     const url = evt.currentTarget.id;
     navigate(`/posts/view/${url}`);
   }
@@ -38,7 +38,7 @@ function FavoriteLists ({ userId }) {
     <Wrapper>
       <ListsUl>
         {favoriteList && favoriteList.map(item => 
-          <Listli key={item.createAt} id={item._id} onClick={handleMoveFavorite}>
+          <Listli key={item.createAt} id={item._id} onClick={handleBookMarkMove}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
             <Writer> {item.owner} </Writer>
