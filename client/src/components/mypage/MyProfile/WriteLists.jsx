@@ -29,7 +29,7 @@ function WriteLists ({userId}) {
     })
   }, [userId]);
 
-  const handleMoveDetail = (evt) => {
+  const handleDetailMove = (evt) => {
     const url = evt.currentTarget.id;
     navigate(`/posts/view/${url}`);
   }
@@ -39,7 +39,7 @@ function WriteLists ({userId}) {
     <Wrapper>
       <ListsUl>
         {writeList && writeList.map(item => 
-          <Listli key={item.createAt} id={item._id} onClick={handleMoveDetail}>
+          <Listli key={item.createAt} id={item._id} onClick={handleDetailMove}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
         </Listli>

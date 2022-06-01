@@ -51,7 +51,7 @@ const InputFileValue = styled.input`
 function ImgInput ({ userInfo, setUserInfo }) {
   const [fileName, setFileName] = useState("파일선택");
 
-  const hanldeUploadFile = (evt) => {
+  const handleFileUpload = (evt) => {
     const imgFiles = evt.target.files;
     setFileName(evt.target.value);
     const reader = new FileReader();
@@ -62,7 +62,7 @@ function ImgInput ({ userInfo, setUserInfo }) {
     reader.readAsDataURL(imgFiles[0])
   };
 
-  const handleRemoveFile = () => {
+  const handleFileRemove = () => {
     setFileName("파일선택");
     setUserInfo({ ...userInfo, encodeImg: ""});
   }
@@ -71,10 +71,10 @@ function ImgInput ({ userInfo, setUserInfo }) {
     <InputWrapper>
       <InputFileCustom>
         <ImgUpdateBtn for="user-imgAdd"> 이미지 추가 </ImgUpdateBtn>
-        <InputFile id="user-imgAdd" type="file" accept='image/*' onChange={hanldeUploadFile} />
+        <InputFile id="user-imgAdd" type="file" accept='image/*' onChange={handleFileUpload} />
         <InputFileValue value={fileName} />
       </InputFileCustom>
-      <ImgUpdateBtn onClick={handleRemoveFile}> 이미지 제거 </ImgUpdateBtn>
+      <ImgUpdateBtn onClick={handleFileRemove}> 이미지 제거 </ImgUpdateBtn>
     </InputWrapper>
   );
 }

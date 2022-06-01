@@ -136,7 +136,19 @@ function NavBar() {
                 60대에게
               </ListLink>
             </NavList>
-            {!loginState.isLogin ? (
+            {!loginState.isLogin ? 
+            <NavList>
+              <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
+            </NavList> :
+            <>
+              {!loginState.social ?
+                <NavList>
+                  <ListLink to='/my'> 마이페이지 </ListLink>
+                </NavList> :
+                <NavList>
+                  <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
+                </NavList>
+              }
               <NavList>
                 <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
               </NavList>

@@ -60,12 +60,12 @@ function MyInfo () {
     nickname: false,
   })
 
-  const handleChangeInput = (evt) => {
+  const handleInputChange = (evt) => {
     const name = evt.target.name;
     setUserInfo({ ...userInfo, [name]: evt.target.value});
   };
 
-  const handleUpdateInfo = (evt) => {
+  const handleInfoUpdate = (evt) => {
     evt.preventDefault();
 
     const formdata = new FormData();
@@ -97,7 +97,7 @@ function MyInfo () {
       <InfoForm>
         <IdInput
           userId={userInfo.id}
-          handleChangeInput={handleChangeInput}
+          onInputChange={handleInputChange}
           myMessage={myMessage}
           setMyMessage={setMyMessage}
           success={success}
@@ -105,7 +105,7 @@ function MyInfo () {
         />
         <NameInput
           userName={userInfo.nickname}
-          handleChangeInput={handleChangeInput}
+          onInputChange={handleInputChange}
           myMessage={myMessage}
           setMyMessage={setMyMessage}
           success={success}
@@ -114,7 +114,7 @@ function MyInfo () {
         <EmailInput 
           userEmail={userInfo.email}
         />
-        <UpdateBtn type="submit" onClick={handleUpdateInfo}> 수정 </UpdateBtn>
+        <UpdateBtn type="submit" onClick={handleInfoUpdate}> 수정 </UpdateBtn>
       </InfoForm>
     </Wrapper>
   )

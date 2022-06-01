@@ -87,16 +87,16 @@ function PostTag() {
     }
   };
 
-  const handleTextWrite = (e) => {
+  const handleTagWrite = (e) => {
     setText(e.target.value);
   };
 
-  const handleTagFocusOut = () => {
+  const handleInputReset = () => {
     // input text reset
     setText('');
   };
 
-  const handleDeleteBtnClick = (el) => {
+  const handleTagDelete = (el) => {
     dispatch(tagDelete(el));
   };
 
@@ -106,7 +106,7 @@ function PostTag() {
         {hashtag.map((el, idx) => (
           <HashItem key={idx + el}>
             <span>{el}</span>
-            <HashDelBtn type='button' onClick={() => handleDeleteBtnClick(el)}></HashDelBtn>
+            <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
           </HashItem>
         ))}
       </HashWrapBox>
@@ -114,8 +114,8 @@ function PostTag() {
         type='text'
         placeholder='해시태그를 입력해주시고 콤마로 구분해주세요'
         onKeyUp={handleKeyUp}
-        onChange={handleTextWrite}
-        onBlur={handleTagFocusOut}
+        onChange={handleTagWrite}
+        onBlur={handleInputReset}
         value={text}
         ref={tagInput}
       />
