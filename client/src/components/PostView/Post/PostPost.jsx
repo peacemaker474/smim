@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PostLike from './PostLike';
 import PostBookmark from './PostBookmark';
 import { Tag } from '../../../styles/common/tag';
-import { postDetailRead } from '../../../network/post/http';
+import { postReadPostDetail } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 import PostHead from './PostHead';
 
@@ -24,7 +24,7 @@ export default function PostPost({ postId }) {
   const fetchAPI = useCallback(async () => {
     try {
       if (tkn) {
-        const response = await postDetailRead(postId, {
+        const response = await postReadPostDetail(postId, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
@@ -32,7 +32,7 @@ export default function PostPost({ postId }) {
         });
         setPostDetail(response.data);
       } else {
-        const response = await postDetailRead(postId);
+        const response = await postReadPostDetail(postId);
         setPostDetail(response.data);
       }
     } catch (error) {

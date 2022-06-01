@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const http = 'http://localhost:4000';
 
-export const postUpload = (data, header) => {
+export const postCreatePost = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);
 };
 
@@ -18,7 +18,7 @@ export const postListRead = (targetAge, header) => {
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
 
-export const postDetailRead = (id, header = undefined) => {
+export const postReadPostDetail = (id, header = undefined) => {
   if (header) {
     return axios.get(`${http}/post/${id}/detail`, header);
   } else {
@@ -43,5 +43,7 @@ export const postUnbookmark = (id, header) => {
 };
 
 export const getSearchPost = (data) => {
-  return axios.get(`${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`)
-}
+  return axios.get(
+    `${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`
+  );
+};

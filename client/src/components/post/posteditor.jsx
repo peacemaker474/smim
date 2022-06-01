@@ -26,7 +26,7 @@ function Posteditor() {
     }
   }, [postCheck.content, dispatch]);
 
-  const handleInputChange = (content, delta, source, editor) => {
+  const handleEditorWrite = (content, delta, source, editor) => {
     // setPara(editor.getHTML());
     dispatch(contentAdd(editor.getHTML()));
   };
@@ -71,7 +71,7 @@ function Posteditor() {
         modules={modules}
         formats={formats}
         theme='snow'
-        onChange={handleInputChange}
+        onChange={handleEditorWrite}
         ref={contentInput}
         value={postData.content}
       />
