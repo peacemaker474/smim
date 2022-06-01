@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkName } from '../../network/signup/http';
+import { getCheckName } from '../../network/signup/http';
 import { SignupInput } from '../../styles/common/input';
 import { ValidCheck } from '../../styles/common/validtext';
 import { InputBox } from '../../styles/signup/container';
@@ -12,7 +12,7 @@ function SignupName ({message, setMessage, valid, setValid, onInputChange}) {
       setMessage({ ...message, nickName: "3~8 자리의 한글, 영문, 숫자만 가능합니다. "});
       setValid({ ...valid, nickName: false});
     } else {
-      checkName(evt.target.value)
+      getCheckName(evt.target.value)
         .then(({data}) => {
           setMessage({...message, nickName: data.message});
           setValid({...valid, nickName: data.success});

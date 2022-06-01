@@ -7,7 +7,7 @@ import SignupBirth from './SignupBirth';
 import SignupPw from './SignupPw';
 import SignupBtns from './SignupBtns';
 import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../network/signup/http';
+import { postSignupSubmit } from '../../network/postSignupSubmit/http';
 
 const SignupFormBox = styled.form`
   width: 60%;
@@ -74,7 +74,7 @@ function SignupForm () {
       
       console.log(body);
 
-      signUp(body).then((res) => {
+      postSignupSubmit(body).then((res) => {
         if(res.data.success) {
           navigate('/');
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkId } from '../../network/signup/http';
+import { getCheckId } from '../../network/signup/http';
 import { SignupInput } from '../../styles/common/input';
 import { ValidCheck } from '../../styles/common/validtext';
 import { idValidation } from '../../utils/validation';
@@ -12,7 +12,7 @@ function SignupId ({message, setMessage, valid, setValid, onInputChange}) {
       setMessage({...message, userId: '4~12자리의 영문, 숫자만 가능합니다.'});
       setValid({ ...valid, userId: false});
     } else {
-      checkId(evt.target.value)
+      getCheckId(evt.target.value)
         .then(({data}) => {
           console.log(message, valid);
           setMessage({ ...message, userId: data.message});
