@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
-import { myFavoriteLists } from '../../../network/mypage/http';
+import { getBookMarkLists } from '../../../network/mypage/http';
 import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
@@ -24,12 +24,12 @@ function FavoriteLists ({ userId }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    myFavoriteLists(userId).then((res) => {
+    getBookMarkLists(userId).then((res) => {
       setFavoriteList(res.favoriteLists)
     })
   }, [userId])
 
-  const handleMoveFavorite = (evt) => {
+  const handleBookMarkMove = (evt) => {
     const url = evt.currentTarget.id;
     navigate(`/posts/view/${url}`);
   }
@@ -38,7 +38,7 @@ function FavoriteLists ({ userId }) {
     <Wrapper>
       <ListsUl>
         {favoriteList && favoriteList.map(item => 
-          <Listli key={item.createAt} id={item._id} onClick={handleMoveFavorite}>
+          <Listli key={item.createAt} id={item._id} onClick={handleBookMarkMove}>
             <Title> {item.title} </Title>
             <ListContent> {item.content} </ListContent>
             <Writer> {item.owner} </Writer>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { putPassword } from '../../../network/mypage/http';
+import { putChangePassWord } from '../../../network/mypage/http';
 import { ChangePwBtn, CancelBtn } from '../../../styles/common/buttons';
 import { pwValidation } from '../../../utils/validation';
 import PwInput from '../Myinfo/PwInput';
@@ -31,12 +31,12 @@ function PwChange () {
     newPassword2: "",
   });
 
-  const handleChangeInput = (evt) => {
+  const handleInputChange = (evt) => {
     const name = evt.target.name;
     setPassword({ ...password, [name]: evt.target.value});
   }
 
-  const handleChangePw = (evt) => {
+  const handlePwSubmit = (evt) => {
     evt.preventDefault();
 
     if (!pwValidation(password.oldPassword) && !pwValidation(password.newPassword)) {
@@ -48,7 +48,7 @@ function PwChange () {
         newPassword: password.newPassword,
         newPassword2: password.newPassword2,
       };
-      putPassword(body);
+      putChangePassWord(body);
     }
   }
 
@@ -56,9 +56,9 @@ function PwChange () {
     <Wrapper>
       <Title> 비밀번호 변경 </Title>
       <PwInput
-        handleChangeInput={handleChangeInput}
+        onInputChange={handleInputChange}
       />
-      <ChangePwBtn onClick={handleChangePw}> 확인 </ChangePwBtn>
+      <ChangePwBtn onClick={handlePwSubmit}> 확인 </ChangePwBtn>
       <CancelBtn> 취소 </CancelBtn>
     </Wrapper>
   );
