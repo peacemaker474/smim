@@ -82,7 +82,7 @@ const PostDate = styled.span`
 function PostListItem({ postData }) {
   const { meta, content, createAt, hashtag, title, _id } = postData;
   const navigate = useNavigate();
-  const handleAnchorClick = () => {
+  const handleDetailPageMove = () => {
     navigate(`/posts/view/${_id}`);
   };
   // const text = new TextDecoder('UTF-8').decode(content);
@@ -91,7 +91,7 @@ function PostListItem({ postData }) {
 
   return (
     <PostItem>
-      <PostAnchor onClick={handleAnchorClick}>
+      <PostAnchor onClick={handleDetailPageMove}>
         <PostTitle>{title}</PostTitle>
         <PostEtcDiv>
           <PostTagDiv>

@@ -21,7 +21,7 @@ export default function PostPost({ postId }) {
     meta: { likes: 0, views: 0 },
   });
 
-  const fetchAPI = useCallback(async () => {
+  const loadPostDetail = useCallback(async () => {
     try {
       if (tkn) {
         const response = await postReadPostDetail(postId, {
@@ -41,8 +41,8 @@ export default function PostPost({ postId }) {
   }, [postId, tkn]);
 
   useEffect(() => {
-    fetchAPI();
-  }, [fetchAPI]);
+    loadPostDetail();
+  }, [loadPostDetail]);
 
   const date = new Date(postDetail.createAt);
 

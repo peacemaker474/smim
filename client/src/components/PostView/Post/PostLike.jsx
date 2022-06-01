@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../asset/icon/icon-heart-line.svg';
-import { postLike, postUnlike } from '../../../network/post/http';
+import { getPostLike, getPostUnlike } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 
 export default function PostLike({ quantity, like }) {
-  const [likeCheck, setLikeCheck] = useState(like);
+  const [isLikeChecked, setIsLikeChecked] = useState(like);
   const location = useLocation();
   const tkn = getCookie('users');
   const id = location.pathname.split('view/')[1];
@@ -15,7 +15,7 @@ export default function PostLike({ quantity, like }) {
 
   useEffect(() => {
     setLikeValue(quantity);
-    setLikeCheck(like);
+    setIsLikeChecked(like);
   }, [quantity, like]);
 
   const handleLikeClick = async () => {
@@ -23,17 +23,17 @@ export default function PostLike({ quantity, like }) {
       return;
     }
 
-    if (likeCheck) {
+    if (isLikeChecked) {
       // 좋아요 했을 때
       try {
-        await postUnlike(id, {
+        await getPostUnlike(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
 
-        setLikeCheck(false);
+        setIsLikeChecked(false);
         setLikeValue((prev) => prev - 1);
       } catch (error) {
         console.error(error);
@@ -42,13 +42,13 @@ export default function PostLike({ quantity, like }) {
       // 좋아요 하지 않았을 때
 
       try {
-        await postLike(id, {
+        await getPostLike(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
-        setLikeCheck(true);
+        setIsLikeChecked(true);
         setLikeValue((prev) => prev + 1);
       } catch (error) {
         console.error(error);
@@ -57,7 +57,7 @@ export default function PostLike({ quantity, like }) {
   };
 
   return (
-    <PostLikeSpan onClick={handleLikeClick} check={likeCheck}>
+    <PostLikeSpan onClick={handleLikeClick} likechecked={isLikeChecked}>
       {likeValue}
     </PostLikeSpan>
   );
@@ -72,7 +72,7 @@ const PostLikeSpan = styled.span`
     width: 20px;
     height: 20px;
     display: block;
-    background: ${(props) => (props.check ? `url(${heartFill})` : `url(${heartLine})`)};
+    background: ${(props) => (props.likechecked ? `url(${heartFill})` : `url(${heartLine})`)};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

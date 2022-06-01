@@ -1,12 +1,12 @@
-// custom hooks / useDropDown.js
+// custom hooks / useDropdown.js
 import { useState, useRef, useEffect } from 'react';
 
-function useDropDown() {
+function useDropdown() {
   const [isVisible, setIsVisible] = useState(false);
-  const dropDownRef = useRef(null);
+  const dropdownRef = useRef(null);
   const btnRef = useRef();
 
-  const handleDropDownShow = () => {
+  const handleDropdownShow = () => {
     setIsVisible(!isVisible);
   };
 
@@ -25,6 +25,6 @@ function useDropDown() {
     };
   }, [isVisible]);
 
-  return [isVisible, dropDownRef, btnRef, handleDropDownShow];
+  return [isVisible, dropdownRef, btnRef, handleDropdownShow];
 }
-export default useDropDown;
+export default useDropdown;

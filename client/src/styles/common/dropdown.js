@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import moreIcon from '../../asset/icon/icon-more.svg';
 
-export const DropDownBtn = styled.span`
+export const DropdownBtn = styled.span`
   width: ${({ width }) => width || '24px'};
   height: ${({ height }) => height || '24px'};
   background: url(${moreIcon});
@@ -14,7 +14,7 @@ export const DropDownBtn = styled.span`
   }
 `;
 
-export const DropDownContainer = styled.div`
+export const DropdownContainer = styled.div`
   width: ${({ width }) => width || '72px'};
   height: ${({ height }) => height || '72px'};
   background: #ffffff;
@@ -27,14 +27,14 @@ export const DropDownContainer = styled.div`
   border-radius: 10px;
 `;
 
-export const DropDownBox = styled.div`
+export const DropdownBox = styled.div`
   padding: 5px;
   & button + button {
     margin-top: 8px;
   }
 `;
 
-export const DropDownItemBtn = styled.button`
+export const DropdownItemBtn = styled.button`
   border-radius: 5px;
   display: flex;
   align-items: center;
