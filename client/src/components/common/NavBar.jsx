@@ -138,7 +138,7 @@ function NavBar() {
             </NavList>
             {!loginState.isLogin ? 
             <NavList>
-              <SignLink onClick={handleLoginModal}> 로그인/회원가입 </SignLink>
+              <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
             </NavList> :
             <>
               {!loginState.social ?
