@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
-import { myFavoriteLists } from '../../../network/mypage/http';
+import { getBookMarkLists } from '../../../network/mypage/http';
 import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ function FavoriteLists ({ userId }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    myFavoriteLists(userId).then((res) => {
+    getBookMarkLists(userId).then((res) => {
       setFavoriteList(res.favoriteLists)
     })
   }, [userId])

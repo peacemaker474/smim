@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { putPassword } from '../../../network/mypage/http';
+import { putChangePassWord } from '../../../network/mypage/http';
 import { ChangePwBtn, CancelBtn } from '../../../styles/common/buttons';
 import { pwValidation } from '../../../utils/validation';
 import PwInput from '../Myinfo/PwInput';
@@ -48,7 +48,7 @@ function PwChange () {
         newPassword: password.newPassword,
         newPassword2: password.newPassword2,
       };
-      putPassword(body);
+      putChangePassWord(body);
     }
   }
 

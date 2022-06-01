@@ -8,7 +8,7 @@ function IdInput ({userId, onInputChange, myMessage, setMyMessage, success, setS
   //     setMyMessage({ ...myMessage, id: '4~12자리의 영문, 숫자만 가능합니다.'});
   //     setSuccess({ ...success, id: false });
   //   } else {
-  //     checkMyId(evt.target.value)
+  //     getCheckMyId(evt.target.value)
   //       .then(({data}) => {
   //         setMyMessage({ ...myMessage, id: data.message });
   //         setSuccess({ ...success, id: data.success });
