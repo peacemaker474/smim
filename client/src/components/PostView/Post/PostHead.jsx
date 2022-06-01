@@ -48,7 +48,7 @@ export default function PostHead({ author, date, postId }) {
       <PostDate>{date.toLocaleDateString()}</PostDate>
       {author === userId && (
         <PostDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-          {isDropdownVisible && <PostDropDown ref={dropdownRef} postId={postId} />}
+          {isDropdownVisible && <PostDropdown ref={dropdownRef} postId={postId} />}
         </PostDropdownBtn>
       )}
     </PostHeadDiv>
