@@ -1,10 +1,10 @@
-import { COMMENT_WRITE } from './type';
+import { CREATE_COMMENT } from './type';
 
 const initialState = [];
 
-export default function commentCreateReducer(state = initialState, action) {
+export default function commentReducer(state = initialState, action) {
   switch (action.type) {
-    case COMMENT_WRITE:
+    case CREATE_COMMENT:
       return [
         ...state,
         {

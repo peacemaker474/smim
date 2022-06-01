@@ -1,1 +1,1 @@
-export const COMMENT_WRITE = 'COMMENT_WRITE';
+export const CREATE_COMMENT = 'CREATE_COMMENT';

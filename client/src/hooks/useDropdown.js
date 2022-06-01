@@ -2,18 +2,18 @@
 import { useState, useRef, useEffect } from 'react';
 
 function useDropdown() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
   const btnRef = useRef();
 
   const handleDropdownShow = () => {
-    setIsVisible(!isVisible);
+    setIsDropdownVisible(!isDropdownVisible);
   };
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      if (isVisible && btnRef.current && !btnRef.current.contains(e.target)) {
-        setIsVisible(false);
+      if (isDropdownVisible && btnRef.current && !btnRef.current.contains(e.target)) {
+        setIsDropdownVisible(false);
       }
     };
 
@@ -23,8 +23,9 @@ function useDropdown() {
       // Cleanup the event listener
       document.removeEventListener('mousedown', checkIfClickedOutside);
     };
-  }, [isVisible]);
+  }, [isDropdownVisible]);
 
-  return [isVisible, dropdownRef, btnRef, handleDropdownShow];
+  return [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow];
+
 }
 export default useDropdown;

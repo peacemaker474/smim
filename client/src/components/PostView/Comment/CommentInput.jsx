@@ -1,21 +1,20 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { commentCreate } from '../../../network/comment/http';
+import { postCommentCreate } from '../../../network/comment/http';
 import { getCookie } from '../../../utils/cookie';
-import { commentWrite } from '../../../redux/comment/actions';
-
+import { createComment } from '../../../redux/comment/actions';
 
 export default function CommentInput({ postId, parentId }) {
   const loginState = useSelector((state) => state.loginReducer);
-  const [content, setContent] = useState('');
+  const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
   const tkn = getCookie('users');
   const dispatch = useDispatch();
 
   const handleCommentCreate = async () => {
-    const response = await commentCreate(
-      { post_id: postId, content: content, parent_id: parentId },
+    const response = await postCommentCreate(
+      { post_id: postId, content: inputText, parent_id: parentId },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -26,8 +25,8 @@ export default function CommentInput({ postId, parentId }) {
 
     const date = String(new Date());
     dispatch(
-      commentWrite({
-        text: content,
+      createComment({
+        text: inputText,
         _id: response.data.comment_id,
         createAt: date,
         writer_id: loginState.id,
@@ -38,7 +37,7 @@ export default function CommentInput({ postId, parentId }) {
   };
 
   const handleCommentWrite = (e) => {
-    setContent(e.target.value);
+    setInputText(e.target.value);
   };
 
   return (
@@ -48,7 +47,7 @@ export default function CommentInput({ postId, parentId }) {
         type='text'
         placeholder='답변을 기다립니다.'
         onChange={handleCommentWrite}
-        value={content}
+        value={inputText}
         ref={inputRef}
       />
       <CmntBtn onClick={handleCommentCreate}>게시</CmntBtn>

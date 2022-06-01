@@ -6,7 +6,7 @@ import loginReducer from './login/reducer';
 import toggleReducer from './toggle/reducer';
 import postCreateReducer from './postCreate/reducer';
 import postFormReducer from './postForm/reducer';
-import commentCreateReducer from './comment/reducer';
+import commentReducer from './comment/reducer';
 
 const persistConfig = {
   key: 'root',
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   toggleReducer,
   postCreateReducer,
   postFormReducer,
-  commentCreateReducer,
+  commentReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
