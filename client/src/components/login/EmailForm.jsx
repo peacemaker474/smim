@@ -53,7 +53,7 @@ function EmailForm () {
     dispatch(loginClose());
   }
 
-  const handleLogin = (evt) => {
+  const handleLoginSubmit = (evt) => {
     evt.preventDefault();
 
     let body = {
@@ -63,19 +63,18 @@ function EmailForm () {
     dispatch(loginUser(body));
   }
 
-  console.log(message);
   return (
     <FormBox method='POST'>
       <LoginId 
-        handleIdChange={handleIdChange}
+        onIdChange={handleIdChange}
       />
       <LoginPw
-        handlePwChange={handlePwChange}
+        onPwChange={handlePwChange}
       />
       {message !== undefined && <LoginValid validLogin={message}> {message} </LoginValid>}
-      <LoginBtn onClick={handleLogin}> 로그인 </LoginBtn>
+      <LoginBtn onClick={handleLoginSubmit}> 로그인 </LoginBtn>
       <SignupLink
-        handleLoginClose={handleLoginClose}
+        onLoginClose={handleLoginClose}
       />
       <FindIdPwd> 혹시 아이디와 비밀번호를 잊어버리셨나요? </FindIdPwd>
     </FormBox>
