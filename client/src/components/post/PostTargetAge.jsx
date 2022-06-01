@@ -35,13 +35,13 @@ function PostTargetAge() {
     }
   }, [postCheck.age, dispatch]);
 
-  const handleAgeClick = (e) => {
+  const handleAgeSelect = (e) => {
     dispatch(targetAgeAdd(e.target.value));
   };
 
   return (
     <TargetWrap>
-      <TargetAgeInput palette='yellow' onChange={handleAgeClick} value={postData.targetAge}>
+      <TargetAgeInput palette='yellow' onChange={handleAgeSelect} value={postData.targetAge}>
         <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
