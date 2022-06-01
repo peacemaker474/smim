@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import bookmarkFill from '../../../asset/icon/icon-bookmark-fill.svg';
 import bookmarkLine from '../../../asset/icon/icon-bookmark-line.svg';
-import { postBookmark, postUnbookmark } from '../../../network/post/http';
+import { getBookmark, getUnbookmark } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 
 export default function PostBookmark({ bookmark }) {
-  const [BookmarkCheck, setBookmarkCheck] = useState(bookmark);
+  const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmark);
   const location = useLocation();
   const tkn = getCookie('users');
   const id = location.pathname.split('view/')[1];
 
   useEffect(() => {
-    setBookmarkCheck(bookmark);
+    setIsBookmarkChecked(bookmark);
   }, [bookmark]);
 
   const handleBookmarkClick = async () => {
@@ -21,17 +21,17 @@ export default function PostBookmark({ bookmark }) {
       return;
     }
 
-    if (BookmarkCheck) {
+    if (isBookmarkChecked) {
       // 북마크 했을 때
       try {
-        const response = await postUnbookmark(id, {
+        const response = await getUnbookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
         console.log(response);
-        setBookmarkCheck(false);
+        setIsBookmarkChecked(false);
       } catch (error) {
         console.error(error);
       }
@@ -39,24 +39,24 @@ export default function PostBookmark({ bookmark }) {
       // 북마크 하지 않았을 때
 
       try {
-        const response = await postBookmark(id, {
+        const response = await getBookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
         console.log(response);
-        setBookmarkCheck(true);
+        setIsBookmarkChecked(true);
       } catch (error) {
         console.error(error);
       }
     }
   };
 
-  return <PostBookmarkSpan onClick={handleBookmarkClick} check={BookmarkCheck} />;
+  return <BookmarkSpan onClick={handleBookmarkClick} bookmarkChecked={isBookmarkChecked} />;
 }
 
-const PostBookmarkSpan = styled.span`
+const BookmarkSpan = styled.span`
   display: flex;
   margin-right: 12px;
   cursor: pointer;
@@ -65,7 +65,8 @@ const PostBookmarkSpan = styled.span`
     width: 20px;
     height: 20px;
     display: block;
-    background: ${(props) => (props.check ? `url(${bookmarkFill})` : `url(${bookmarkLine})`)};
+    background: ${(props) =>
+      props.bookmarkChecked ? `url(${bookmarkFill})` : `url(${bookmarkLine})`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

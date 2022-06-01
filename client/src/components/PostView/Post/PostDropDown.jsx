@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { DropDownBox, DropDownContainer, DropDownItemBtn } from '../../../styles/common/dropdown';
-import { postDelete } from '../../../network/post/http';
+import { DropdownBox, DropdownContainer, DropdownItemBtn } from '../../../styles/common/dropdown';
+import { deletePost } from '../../../network/post/http';
 import { getCookie } from '../../../utils/cookie';
 
-function DropDown({ postId }, ref) {
+function Dropdown({ postId }, ref) {
   const tkn = getCookie('users');
   let navigate = useNavigate();
 
@@ -16,7 +16,7 @@ function DropDown({ postId }, ref) {
   const handlePostDel = async (e) => {
     e.preventDefault();
     console.log('삭제');
-    const response = await postDelete(postId, {
+    const response = await deletePost(postId, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tkn}`,
@@ -25,20 +25,20 @@ function DropDown({ postId }, ref) {
     console.log(response);
   };
   return (
-    <PostDropDownContainer ref={ref}>
-      <PostDropDownBox>
-        <PostDropDownBtn onClick={handlePostEdit}>수정</PostDropDownBtn>
-        <PostDropDownBtn onClick={handlePostDel}>삭제</PostDropDownBtn>
-      </PostDropDownBox>
-    </PostDropDownContainer>
+    <PostDropdownContainer ref={ref}>
+      <PostDropdownBox>
+        <PostDropdownBtn onClick={handlePostEdit}>수정</PostDropdownBtn>
+        <PostDropdownBtn onClick={handlePostDel}>삭제</PostDropdownBtn>
+      </PostDropdownBox>
+    </PostDropdownContainer>
   );
 }
-export const PostDropDown = React.forwardRef(DropDown);
+export const PostDropdown = React.forwardRef(Dropdown);
 
-const PostDropDownContainer = styled(DropDownContainer)`
+const PostDropdownContainer = styled(DropdownContainer)`
   height: auto;
 `;
 
-const PostDropDownBox = styled(DropDownBox)``;
+const PostDropdownBox = styled(DropdownBox)``;
 
-const PostDropDownBtn = styled(DropDownItemBtn)``;
+const PostDropdownBtn = styled(DropdownItemBtn)``;

@@ -1,16 +1,16 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
-import useDropDown from '../../../hooks/useDropDown';
+import useDropdown from '../../../hooks/useDropdown';
 import styled from 'styled-components';
-import { CommentDropDown } from './CommentDropDown';
-import { DropDownBtn } from '../../../styles/common/dropdown';
+import { CommentDropdown } from './CommentDropdown';
+import { DropdownBtn } from '../../../styles/common/dropdown';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../asset/icon/icon-heart-line.svg';
 import CommentInput from './CommentInput';
 import useVisible from '../../../hooks/useVisible';
 
 export default function CommentItem({ data }) {
-  const [isVisible, dropDownRef, btnRef, handleDropDownShow] = useDropDown();
+  const [isVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
   const [isTargetVisible, handleClickShow] = useVisible(false);
   //   const loginState = useSelector((state) => state.loginReducer);
 
@@ -28,9 +28,9 @@ export default function CommentItem({ data }) {
         </CommentEtc>
         {isTargetVisible && <CommentInput postId={data.post_id} parentId={data._id} />}
       </CommentContent>
-      <CommentDropDownBtn ref={btnRef} onClick={handleDropDownShow}>
-        {isVisible && <CommentDropDown ref={dropDownRef} />}
-      </CommentDropDownBtn>
+      <CommentDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
+        {isVisible && <CommentDropdown ref={dropdownRef} />}
+      </CommentDropdownBtn>
     </CommentItemFrame>
   );
 }
@@ -50,7 +50,7 @@ const ProfileImg = styled.img`
   margin-right: 11px;
 `;
 
-const CommentDropDownBtn = styled(DropDownBtn)``;
+const CommentDropdownBtn = styled(DropdownBtn)``;
 
 const CommentContent = styled.div`
   width: 709px;

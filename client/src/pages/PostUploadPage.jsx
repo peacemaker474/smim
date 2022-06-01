@@ -7,9 +7,8 @@ import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
-import { postUpload } from '../network/post/http';
+import { postPostCreate, getPostDetailRead } from '../network/post/http';
 import { postReset } from '../redux/postCreate/action';
-import { postDetailRead } from '../network/post/http';
 import { resetCheck } from '../redux/postForm/action';
 
 const PostCreateContainer = styled.div`
@@ -47,7 +46,7 @@ function PostUploadPage() {
 
   const fetchAPI = useCallback(async () => {
     try {
-      const response = await postDetailRead(postId, {
+      const response = await getPostDetailRead(postId, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${tkn}`,
@@ -85,7 +84,7 @@ function PostUploadPage() {
 
   const handleRequest = async () => {
     const tkn = getCookie('users');
-    postUpload(
+    postPostCreate(
       {
         title: postData.title,
         content: postData.content,

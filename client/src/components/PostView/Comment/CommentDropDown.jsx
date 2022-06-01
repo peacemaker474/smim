@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DropDownContainer, DropDownBox, DropDownItemBtn } from '../../../styles/common/dropdown';
+import { DropdownContainer, DropdownBox, DropdownItemBtn } from '../../../styles/common/dropdown';
 
-function DropDown({ setIsEditing }, ref) {
+function Dropdown({ setIsEditing }, ref) {
   const handleCommentEdit = (e) => {
     e.preventDefault();
     setIsEditing(true);
@@ -11,18 +11,18 @@ function DropDown({ setIsEditing }, ref) {
     e.preventDefault();
   };
   return (
-    <CommentDropDownContainer ref={ref}>
-      <CommentDropDownBox>
-        <CommentDropDownBtn onClick={handleCommentEdit}>수정</CommentDropDownBtn>
-        <CommentDropDownBtn onClick={handleCommentDel}>삭제</CommentDropDownBtn>
-      </CommentDropDownBox>
-    </CommentDropDownContainer>
+    <CommentDropdownContainer ref={ref}>
+      <CommentDropdownBox>
+        <CommentDropdownBtn onClick={handleCommentEdit}>수정</CommentDropdownBtn>
+        <CommentDropdownBtn onClick={handleCommentDel}>삭제</CommentDropdownBtn>
+      </CommentDropdownBox>
+    </CommentDropdownContainer>
   );
 }
-export const CommentDropDown = React.forwardRef(DropDown);
+export const CommentDropdown = React.forwardRef(Dropdown);
 
-const CommentDropDownContainer = styled(DropDownContainer)``;
+const CommentDropdownContainer = styled(DropdownContainer)``;
 
-const CommentDropDownBox = styled(DropDownBox)``;
+const CommentDropdownBox = styled(DropdownBox)``;
 
-const CommentDropDownBtn = styled(DropDownItemBtn)``;
+const CommentDropdownBtn = styled(DropdownItemBtn)``;
