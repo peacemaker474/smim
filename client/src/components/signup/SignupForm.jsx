@@ -7,7 +7,7 @@ import SignupBirth from './SignupBirth';
 import SignupPw from './SignupPw';
 import SignupBtns from './SignupBtns';
 import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../network/signup/http';
+import { postSignupSubmit } from '../../network/signup/http';
 
 const SignupFormBox = styled.form`
   width: 60%;
@@ -51,7 +51,7 @@ function SignupForm () {
 
   const navigate = useNavigate();
 
-  const handleSignupClick = (evt) => {
+  const handleSignupSubmit = (evt) => {
     evt.preventDefault();
 
     let result = [];
@@ -74,7 +74,7 @@ function SignupForm () {
       
       console.log(body);
 
-      signUp(body).then((res) => {
+      postSignupSubmit(body).then((res) => {
         if(res.data.success) {
           navigate('/');
         }
@@ -89,21 +89,21 @@ function SignupForm () {
         setMessage={setMessage}
         valid={valid}
         setValid={setValid}
-        handleInputChange={handleInputChange}
+        onInputChange={handleInputChange}
       />
       <SignupEmail 
         message={message}
         setMessage={setMessage}
         valid={valid}
         setValid={setValid}
-        handleInputChange={handleInputChange}
+        onInputChange={handleInputChange}
       />
       <SignupName 
         message={message}
         setMessage={setMessage}
         valid={valid}
         setValid={setValid}
-        handleInputChange={handleInputChange}
+        onInputChange={handleInputChange}
       />
       <SignupBirth
         inputs={inputs}
@@ -115,9 +115,9 @@ function SignupForm () {
         valid={valid}
         setValid={setValid}
         inputs={inputs}
-        handleInputChange={handleInputChange}
+        onInputChange={handleInputChange}
       />
-      <SignupBtns handleSignupClick={handleSignupClick} />
+      <SignupBtns onSignupSubmit={handleSignupSubmit} />
     </SignupFormBox>
   );
 }

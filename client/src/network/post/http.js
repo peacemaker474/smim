@@ -2,23 +2,25 @@ import axios from 'axios';
 
 const http = 'http://localhost:4000';
 
-export const postUpload = (data, header) => {
+
+export const postCreatePost = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);
 };
 
-export const postDelete = (id, header) => {
+export const deletePost = (id, header) => {
   return axios.delete(`${http}/post/${id}`, header);
 };
 
-export const postEdit = (id, header) => {
+export const postPostEdit = (id, header) => {
   return axios.post(`${http}/post/${id}`, header);
 };
 
-export const postListRead = (targetAge, header) => {
+export const getPostListRead = (targetAge, header) => {
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
 
-export const postDetailRead = (id, header = undefined) => {
+
+export const postReadPostDetail = (id, header = undefined) => {
   if (header) {
     return axios.get(`${http}/post/${id}/detail`, header);
   } else {
@@ -26,22 +28,24 @@ export const postDetailRead = (id, header = undefined) => {
   }
 };
 
-export const postLike = (id, header) => {
+export const getPostLike = (id, header) => {
   return axios.get(`${http}/post/${id}/like`, header);
 };
 
-export const postUnlike = (id, header) => {
+export const getPostUnlike = (id, header) => {
   return axios.get(`${http}/post/${id}/unlike`, header);
 };
 
-export const postBookmark = (id, header) => {
+export const getBookmark = (id, header) => {
   return axios.get(`${http}/post/${id}/bookmark`, header);
 };
 
-export const postUnbookmark = (id, header) => {
+export const getUnbookmark = (id, header) => {
   return axios.get(`${http}/post/${id}/unbookmark`, header);
 };
 
 export const getSearchPost = (data) => {
-  return axios.get(`${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`)
-}
+  return axios.get(
+    `${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`
+  );
+};

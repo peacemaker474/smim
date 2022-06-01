@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent } from '../../../styles/mypage/writeList';
-import { myWriteLists } from '../../../network/mypage/http';
+import { getMyWriteLists } from '../../../network/mypage/http';
 import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ function WriteLists ({userId}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    myWriteLists(userId).then((res) => {
+    getMyWriteLists(userId).then((res) => {
       setWriteList(res.writeLists);
     })
   }, [userId]);

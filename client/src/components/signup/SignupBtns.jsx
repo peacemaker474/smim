@@ -28,11 +28,11 @@ const CancelBtn = styled(ColorBtn)`
   font-weight: bold;
 `;
 
-function SignupBtns ({ handleSignupClick }) {
+function SignupBtns ({ onSignupSubmit }) {
   return (
     <BtnBox>
       <CancelBtn> 취소 </CancelBtn>
-      <SignupBtn onClick={handleSignupClick}> 회원가입 </SignupBtn>
+      <SignupBtn onClick={onSignupSubmit}> 회원가입 </SignupBtn>
     </BtnBox>
   )
 }

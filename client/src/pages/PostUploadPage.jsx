@@ -7,9 +7,9 @@ import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn';
 import PostForm from '../components/post/PostForm';
 import Modal from '../components/common/Modal';
-import { postUpload } from '../network/post/http';
+import { postCreatePost } from '../network/post/http';
 import { postReset } from '../redux/postCreate/action';
-import { postDetailRead } from '../network/post/http';
+import { postReadPostDetail } from '../network/post/http';
 import { resetCheck } from '../redux/postForm/action';
 
 const PostCreateContainer = styled.div`
@@ -45,9 +45,9 @@ function PostUploadPage() {
   const postId = pathArr[3];
   const tkn = getCookie('users');
 
-  const fetchAPI = useCallback(async () => {
+  const loadCreatedPost = useCallback(async () => {
     try {
-      const response = await postDetailRead(postId, {
+      const response = await postReadPostDetail(postId, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${tkn}`,
@@ -72,20 +72,20 @@ function PostUploadPage() {
 
   useEffect(() => {
     if (pathValue === 'edit') {
-      fetchAPI();
+      loadCreatedPost();
     } else {
       dispatch(postReset()); // post data reset
     }
     dispatch(resetCheck()); // post state reset - all false
-  }, [fetchAPI, pathValue, dispatch]);
+  }, [loadCreatedPost, pathValue, dispatch]);
 
   const showModal = () => {
     setIsVisible(!isVisible);
   };
 
-  const handleRequest = async () => {
+  const uploadPost = async () => {
     const tkn = getCookie('users');
-    postUpload(
+    postCreatePost(
       {
         title: postData.title,
         content: postData.content,
@@ -110,7 +110,7 @@ function PostUploadPage() {
   return (
     <>
       {isVisible ? (
-        <Modal showModal={showModal} actionfunc={handleRequest}>
+        <Modal showModal={showModal} actionfunc={uploadPost}>
           게시물을 등록하시겠습니까?
         </Modal>
       ) : (

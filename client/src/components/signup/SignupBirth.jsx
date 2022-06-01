@@ -16,7 +16,7 @@ function SignupBirth ({inputs, setInputs}) {
     mm: "",
   });
 
-  const handleBirthYear = (evt) => {
+  const handleBirthYearInput = (evt) => {
     const name = evt.target.name;
     const myYear = evt.target.value;
     const nowYear = new Date().getFullYear();
@@ -28,7 +28,7 @@ function SignupBirth ({inputs, setInputs}) {
     }
   }
 
-  const handleBirthMonth = (evt) => {
+  const handleBirthMonthInput = (evt) => {
     const name = evt.target.name;
     if (evt.target.value === "00") {
       setMessage({ ...message, mm: "태어난 월을 선택하세요."});
@@ -38,7 +38,7 @@ function SignupBirth ({inputs, setInputs}) {
     }
   }
 
-  const handleBirthDay = (evt) => {
+  const handleBirthDayInput = (evt) => {
     const month = parseInt(birth.mm);
     let day = parseInt(evt.target.value);
 
@@ -61,8 +61,8 @@ function SignupBirth ({inputs, setInputs}) {
     <InputBox>
       <SignupTitle> 생년월일 </SignupTitle>
       <BirthBox>
-        <BirthYear type="text" name="yy" onBlur={handleBirthYear} placeholder='년(4자)' maxLength={4}/>
-        <BirthMonth name="mm" onBlur={handleBirthMonth}>
+        <BirthYear type="text" name="yy" onBlur={handleBirthYearInput} placeholder='년(4자)' maxLength={4}/>
+        <BirthMonth name="mm" onBlur={handleBirthMonthInput}>
           <option value="00"> 월 </option>
           <option value="01"> 1 </option>
           <option value="02"> 2 </option>
@@ -77,7 +77,7 @@ function SignupBirth ({inputs, setInputs}) {
           <option value="11"> 11 </option>
           <option value="12"> 12 </option>
         </BirthMonth>
-        <BirthYear type="text" name="dd" onBlur={handleBirthDay} placeholder='일' maxLength={2}/>
+        <BirthYear type="text" name="dd" onBlur={handleBirthDayInput} placeholder='일' maxLength={2}/>
       </BirthBox>
       {message.yy !== "" && <ValidCheck> {message.yy} </ValidCheck>}
       {message.mm !== "" && <ValidCheck> {message.mm} </ValidCheck>}

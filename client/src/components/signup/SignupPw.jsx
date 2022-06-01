@@ -5,8 +5,8 @@ import { InputBox } from '../../styles/signup/container';
 import { SignupTitle } from '../../styles/signup/title';
 import { pwValidation } from '../../utils/validation';
 
-function SignupPw ({message, setMessage, valid, setValid, inputs, handleInputChange}) {
-  const handleBlurPw = (evt) => {
+function SignupPw ({message, setMessage, valid, setValid, inputs, onInputChange}) {
+  const handlePwBlur = (evt) => {
     if (!pwValidation(evt.target.value)) {
       setMessage({ ...message, password: "8~16자, 최소 하나의 숫자와 특수문자가 필요합니다."});
       setValid({ ...valid, password: false});
@@ -15,7 +15,7 @@ function SignupPw ({message, setMessage, valid, setValid, inputs, handleInputCha
     }
   }
 
-  const handleBlurCheck = (evt) => {
+  const handleCheckBlur = (evt) => {
     if (inputs.password !== evt.target.value) {
       setMessage({ ...message, check: "비밀번호가 서로 다릅니다."});
       setValid({ ...valid, check: false});
@@ -27,12 +27,12 @@ function SignupPw ({message, setMessage, valid, setValid, inputs, handleInputCha
     <>
     <InputBox>
       <SignupTitle> 비밀번호 </SignupTitle>
-      <SignupInput type="password" name="password" onChange={handleInputChange} onBlur={handleBlurPw} />
+      <SignupInput type="password" name="password" onChange={onInputChange} onBlur={handlePwBlur} />
       {message.password !== "" && <ValidCheck> {message.password} </ValidCheck>}
     </InputBox>
     <InputBox>
       <SignupTitle> 비밀번호 재확인 </SignupTitle>
-      <SignupInput type="password" name="check" onChange={handleInputChange} onBlur={handleBlurCheck} />
+      <SignupInput type="password" name="check" onChange={onInputChange} onBlur={handleCheckBlur} />
       {message.check !== "" && <ValidCheck> {message.check} </ValidCheck>}
     </InputBox>
     </>

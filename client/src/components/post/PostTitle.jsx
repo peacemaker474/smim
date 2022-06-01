@@ -34,7 +34,7 @@ function PostTitle() {
     }
   }, [postCheck.title, dispatch]);
 
-  const handleInputChange = (e) => {
+  const handleTitleWrite = (e) => {
     dispatch(titleAdd(e.target.value));
   };
 
@@ -44,7 +44,7 @@ function PostTitle() {
       <TitleInput
         placeholder='제목'
         palette='yellow'
-        onChange={handleInputChange}
+        onChange={handleTitleWrite}
         value={postData.title}
         ref={titleInput}
       />

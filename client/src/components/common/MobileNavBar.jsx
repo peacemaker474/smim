@@ -110,7 +110,7 @@ function MobileNavBar () {
   const loginState = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleToggle = () => {
+  const handleMenuClick = () => {
     dispatch(menuClose());
   }
 
@@ -126,7 +126,7 @@ function MobileNavBar () {
           <MobileList>
             {!loginState.isLogin ? (
               <MobileSignBox>
-                <MobileSignIn onClick={handleToggle}> 로그인 하기 </MobileSignIn>
+                <MobileSignIn onClick={handleMenuClick}> 로그인 하기 </MobileSignIn>
                 <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
                 <MobileSignUp to="/signup"> 회원가입 </MobileSignUp>
               </MobileSignBox>

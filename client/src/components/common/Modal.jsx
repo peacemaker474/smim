@@ -38,10 +38,10 @@ const Btn = styled(ColorBtn)`
 `;
 
 function Modal({ children, showModal, actionfunc }) {
-  const handleCancelClick = () => {
+  const handleModalCancle = () => {
     showModal();
   };
-  const handleActionClick = () => {
+  const handleModalConfirm = () => {
     actionfunc();
   };
   return (
@@ -49,8 +49,8 @@ function Modal({ children, showModal, actionfunc }) {
       <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
-          <Btn onClick={handleCancelClick}>취소</Btn>
-          <Btn onClick={handleActionClick}>확인</Btn>
+          <Btn onClick={handleModalCancle}>취소</Btn>
+          <Btn onClick={handleModalConfirm}>확인</Btn>
         </BtnBox>
       </ModalBox>
     </ModalContainer>

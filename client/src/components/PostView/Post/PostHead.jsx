@@ -1,9 +1,9 @@
 import React from 'react';
-import useDropDown from '../../../hooks/useDropDown';
+import useDropdown from '../../../hooks/useDropdown';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { DropDownBtn } from '../../../styles/common/dropdown';
-import { PostDropDown } from './PostDropDown';
+import { DropdownBtn } from '../../../styles/common/dropdown';
+import { PostDropdown } from './PostDropdown';
 
 const PostHeadDiv = styled.div`
   display: flex;
@@ -35,10 +35,10 @@ const PostDate = styled.span`
   color: ${({ theme }) => theme.color.gray};
 `;
 
-const PostDropDownBtn = styled(DropDownBtn)``;
+const PostDropdownBtn = styled(DropdownBtn)``;
 
 export default function PostHead({ author, date, postId }) {
-  const [isDropdownVisible, dropDownRef, btnRef, handleDropdownShow] = useDropDown();
+  const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
   const loginState = useSelector((state) => state.loginReducer);
   const userId = loginState.id;
 
@@ -47,9 +47,9 @@ export default function PostHead({ author, date, postId }) {
       <PostAuthor>{author}</PostAuthor>
       <PostDate>{date.toLocaleDateString()}</PostDate>
       {author === userId && (
-        <PostDropDownBtn ref={btnRef} onClick={handleDropdownShow}>
-          {isDropdownVisible && <PostDropDown ref={dropDownRef} postId={postId} />}
-        </PostDropDownBtn>
+        <PostDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
+          {isDropdownVisible && <PostDropDown ref={dropdownRef} postId={postId} />}
+        </PostDropdownBtn>
       )}
     </PostHeadDiv>
   );
