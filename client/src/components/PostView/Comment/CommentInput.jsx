@@ -29,7 +29,10 @@ export default function CommentInput({ postId, parentId }) {
         text: inputText,
         _id: response.data.comment_id,
         createAt: date,
-        writer_id: loginState.id,
+        writer: {
+          userId: loginState.id,
+          nickname: loginState.name,
+        },
         parent_id: parentId,
       })
     );
