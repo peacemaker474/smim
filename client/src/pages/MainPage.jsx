@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import QuestionList from '../components/postMain/QuestionList';
+import QuestionList from '../components/postmain/QuestionList';
 import { getMainPostLists } from '../network/main/http';
 
 const MainBody = styled.div`
