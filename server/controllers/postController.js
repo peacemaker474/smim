@@ -6,8 +6,10 @@ import Like from '../models/Like.js';
 // 게시물 생성(Post Create)
 export const postCreate = async (req, res) => {
   const { title, content, hashtag, targetAge } = req.body;
-  const { user: user_id } = req.body;
-  const user = await User.findById({ _id: user_id });
+  const {
+    user: { _id },
+  } = req.body;
+  const user = await User.findById({ _id: _id });
   if (!title) {
     return res.json({
       success: false,
@@ -37,23 +39,27 @@ export const postCreate = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   } else {
-    const post = await Post.create({
-      title,
-      hashtag,
-      content,
-      targetAge,
-      owner: user_id,
-    });
-    await Like.create({
-      post_id: post._id,
-    });
+    try {
+      const post = await Post.create({
+        title,
+        hashtag,
+        content,
+        targetAge,
+        owner: _id,
+      });
+      await Like.create({
+        post_id: post._id,
+      });
 
-    user.posts.push(post._id);
-    await user.save();
-    return res.json({
-      success: true,
-      message: '새로운 게시글 작성이 완료되었습니다.',
-    });
+      user.posts.push(post._id);
+      await user.save();
+      return res.json({
+        success: true,
+        message: '새로운 게시글 작성이 완료되었습니다.',
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 // 게시물 수정(Post Edit)
@@ -112,11 +118,12 @@ export const putEdit = async (req, res) => {
     });
   }
 };
-
 // 게시물 보기(Post Detail Read)
 export const getPostDetail = async (req, res) => {
   const { id } = req.params;
-  const { user: user_id } = req.body;
+  const {
+    user: { _id, nickname, userId },
+  } = req.body;
   try {
     const postData = await Post.findById(id);
 
@@ -128,21 +135,21 @@ export const getPostDetail = async (req, res) => {
     }
 
     const owner = await User.findById(String(postData.owner));
-    const user = await User.findOne({ _id: user_id });
+    const user = await User.findOne({ _id: _id });
     const like = await Like.findOne({ post_id: id });
 
     if (!user) {
       return res.json({
         ...postData._doc,
-        owner: { _id: owner._id, nickname: owner.nickname, imageUrl: owner.imageUrl },
+        owner: { _id, userId, nickname, imageUrl: owner.imageUrl },
       });
     }
 
     return res.json({
       ...postData._doc,
       bookmark: user.bookmarks.includes(id),
-      like: like.user_array.includes(user_id),
-      owner: { _id: owner._id, nickname: owner.nickname, imageUrl: owner.imageUrl },
+      like: like.user_array.includes(_id),
+      owner: { _id, userId, nickname, imageUrl: owner.imageUrl },
     });
   } catch (error) {
     console.log(error);
@@ -171,7 +178,12 @@ export const getPostList = async (req, res) => {
       const user = await User.findById(String(el.owner));
       return {
         ...el._doc,
-        owner: { _id: user._id, nickname: user.nickname, imageUrl: user.imageUrl },
+        owner: {
+          _id: user._id,
+          nickname: user.nickname,
+          userId: user.userId,
+          imageUrl: user.imageUrl,
+        },
       };
     })
   );
@@ -182,9 +194,11 @@ export const getPostList = async (req, res) => {
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
-  const { user: user_id } = req.body; // user id
+  const {
+    user: { _id, nickname, userId },
+  } = req.body; // user id
   try {
-    const postData = await Post.find({ _id: id, owner: user_id, being: true });
+    const postData = await Post.find({ _id: id, owner: _id, being: true });
 
     if (postData.length === 0) {
       return res.json({
@@ -225,8 +239,8 @@ export const getPostView = async (req, res) => {
 
 // 게시글 검색
 export const getPostSearch = async (req, res) => {
-  const {age, tag, keyword} = req.query;
-  
+  const { age, tag, keyword } = req.query;
+
   if (!(parseInt(age) >= 60)) {
     return res.json({
       success: false,
@@ -248,25 +262,25 @@ export const getPostSearch = async (req, res) => {
   );
 
   return res.json(postDataList);
-}
+};
 
 export const getMainPageLists = async (req, res) => {
   Post.find((err, posts) => {
     const postLists = {
-      "10": [],
-      "20": [],
-      "30": [],
-      "40": [],
-      "50": [],
+      10: [],
+      20: [],
+      30: [],
+      40: [],
+      50: [],
     };
     if (err) console.log(err);
     else {
       posts.forEach((el) => {
-        if (el.title.includes("테스트")) {
+        if (el.title.includes('테스트')) {
           postLists[el.targetAge].push(el);
         }
-      })
+      });
     }
-    return res.json({ success: true, lists: postLists})
+    return res.json({ success: true, lists: postLists });
   });
-}
+};
