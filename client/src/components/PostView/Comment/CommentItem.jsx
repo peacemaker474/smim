@@ -9,7 +9,6 @@ import heartLine from '../../../asset/icon/icon-heart-line.svg';
 import CommentInput from './CommentInput';
 import useVisible from '../../../hooks/useVisible';
 
-
 export default function CommentItem({ cmntData }) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
   const [isTargetVisible, handleClickShow] = useVisible(false);
@@ -20,7 +19,7 @@ export default function CommentItem({ cmntData }) {
       <ProfileImg />
       <CommentContent>
         <CommentText>
-          <CommentStrongName>{cmntData.writer_id}</CommentStrongName> {cmntData.text}
+          <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName> {cmntData.text}
         </CommentText>
         <CommentEtc>
           <CommentDate>{cmntData.createAt}</CommentDate>
@@ -33,7 +32,6 @@ export default function CommentItem({ cmntData }) {
         {isDropdownVisible && <CommentDropdown ref={dropdownRef} />}
       </CommentDropdownBtn>
     </CommentItemInner>
-
   );
 }
 
