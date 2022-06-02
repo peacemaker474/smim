@@ -5,10 +5,12 @@ import Post from '../models/Post.js';
 // 댓글 생성(Comment Create)
 export const postCommentCreate = async (req, res) => {
   const { post_id, content, parent_id } = req.body;
-  const { user: user_id } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
-    const userExist = await User.exists({ _id: user_id });
+    const userExist = await User.exists({ _id: _id });
     const postExist = await Post.exists({ _id: post_id, being: true });
 
     if (parent_id != null) {
@@ -56,10 +58,19 @@ export const postCommentCreate = async (req, res) => {
     } else {
       const comment = await Comment.create({
         text: content,
-        writer_id: user_id,
+        writer: _id,
         post_id,
         parent_id,
       });
+
+      if (parent_id != null) {
+        const parentComment = await Comment.findOne({ _id: parent_id });
+        console.log(parentComment.children);
+        console.log(comment._id);
+        parentComment.children.push(comment._id);
+        await parentComment.save();
+        console.log(parentComment);
+      }
 
       return res.json({
         success: true,
@@ -68,6 +79,7 @@ export const postCommentCreate = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
       message: error.message,
@@ -77,7 +89,6 @@ export const postCommentCreate = async (req, res) => {
 
 export const getCommentList = async (req, res) => {
   const { post_id } = req.query;
-  console.log(post_id);
 
   try {
     const postExist = await Post.exists({ _id: post_id, being: true });
@@ -103,12 +114,20 @@ export const getCommentList = async (req, res) => {
       const commentDataList = await Promise.all(
         commentList.map(async (el) => {
           const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+          const writer = await User.findOne({ _id: el.writer });
+
           return {
             ...el._doc,
             children,
+            writer: {
+              userId: writer.userId,
+              _id: writer._id,
+              nickname: writer.nickname,
+            },
           };
         })
       );
+
       return res.json(commentDataList);
     }
   } catch (error) {
