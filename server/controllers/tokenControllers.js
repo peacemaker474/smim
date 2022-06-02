@@ -23,8 +23,9 @@ export const verifyToken = async (req, res, next) => {
       console.log(exist);
       return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
     }
-
-    req.body.user = decoded.user_id;
+    // console.log(decoded)
+    const userData = await User.findById({ _id: decoded.user_id });
+    req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
     next();
   });
 

@@ -2,10 +2,12 @@ import Post from '../models/Post.js';
 import User from '../models/User.js';
 
 export const getBookmark = async (req, res) => {
-  const { user: user_id } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
-    const { bookmarks } = await User.findOne({ _id: user_id });
+    const { bookmarks } = await User.findOne({ _id: _id });
 
     const newBook = await Promise.all(
       bookmarks.map(async (el) => {
@@ -22,11 +24,13 @@ export const getBookmark = async (req, res) => {
 
 export const postBookmark = async (req, res) => {
   const { id } = req.params;
-  const { user: user_id } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
     const exist = await Post.exists({ _id: id, being: true });
-    const user = await User.findById({ _id: user_id });
+    const user = await User.findById({ _id: _id });
 
     if (!exist) {
       return res.json({
@@ -58,7 +62,9 @@ export const postBookmark = async (req, res) => {
 
 export const deleteBookmark = async (req, res) => {
   const { id } = req.params;
-  const { user: user_id } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
     const exist = await Post.exists({ _id: id, being: true });
@@ -69,7 +75,7 @@ export const deleteBookmark = async (req, res) => {
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
-    const user = await User.findById({ _id: user_id });
+    const user = await User.findById({ _id: _id });
 
     const check = user.bookmarks.includes(id);
     if (!check) {
