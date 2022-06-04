@@ -2,7 +2,7 @@ import React from 'react';
 // import { useSelector } from 'react-redux';
 import useDropdown from '../../../hooks/useDropdown';
 import styled from 'styled-components';
-import { CommentDropdown } from './CommentDropdown';
+import { CommentDropdown } from './CommentDropDown';
 import { DropdownBtn } from '../../../styles/common/dropdown';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../asset/icon/icon-heart-line.svg';

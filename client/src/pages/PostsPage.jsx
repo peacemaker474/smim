@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import PostListItem from '../components/postList/PostListItem';
+import PostListItem from '../components/postlist/PostListItem';
 import Search from '../asset/icon/icon-search-line.svg';
 import { getSearchPost, getPostListRead } from '../network/post/http';
 import { getCookie } from '../utils/cookie';
