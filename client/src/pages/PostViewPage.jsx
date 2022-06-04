@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import PostPost from '../components/PostView/Post/PostPost';
-import PostComment from '../components/PostView/Comment/PostComment';
+import PostPost from '../components/postview/Post/PostPost';
+import PostComment from '../components/postview/Comment/PostComment';
 import styled from 'styled-components';
 
 const PostViewContainer = styled.div`

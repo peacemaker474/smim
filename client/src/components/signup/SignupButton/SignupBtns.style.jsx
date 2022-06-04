@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColorBtn } from '../../styles/common/buttons';
+import { ColorBtn } from '../../../styles/common/buttons';
 
 const BtnBox = styled.div`
   width: 40%;
@@ -28,13 +28,13 @@ const CancelBtn = styled(ColorBtn)`
   font-weight: bold;
 `;
 
-function SignupBtns ({ onSignupSubmit }) {
+function SignupBtnsStyle ({ onSignupSubmit }) {
   return (
     <BtnBox>
       <CancelBtn> 취소 </CancelBtn>
       <SignupBtn onClick={onSignupSubmit}> 회원가입 </SignupBtn>
     </BtnBox>
-  )
+  );
 }
 
-export default SignupBtns;
+export default SignupBtnsStyle;

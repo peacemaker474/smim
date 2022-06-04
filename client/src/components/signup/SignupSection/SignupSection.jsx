@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SignupForm from './SignupForm';
+import SignupForm from '../SignupForm/SignupForm';
 
 const SignupContainer = styled.section`
   width: 50vw;
