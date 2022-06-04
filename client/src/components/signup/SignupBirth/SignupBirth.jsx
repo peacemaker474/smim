@@ -23,7 +23,7 @@ function SignupBirth ({inputs, setInputs}) {
       setMessage({ ...message, yy: "정말이세요?"});
     } else {
       setMessage({ ...message, yy: ""});
-      setBirth({ ...birth, [name]: evt.target.value});
+      setBirth({ ...birth, [name]: evt.target.value})
     }
   }
 
