@@ -71,7 +71,7 @@ const ListLink = styled(Link)`
   padding-bottom: 5px;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
-  ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
+    ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
 `;
 
 const SignLink = styled.span`
@@ -96,9 +96,9 @@ function NavBar() {
   const handleLogoutClick = () => {
     dispatch(logoutUser());
     navigate('/');
-  }
+  };
 
-return (
+  return (
     <>
       <NavContainer>
         <NavBox>
@@ -132,31 +132,33 @@ return (
               </ListLink>
             </NavList>
             <NavList>
-              <ListLink ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
+              <ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
                 60대에게
               </ListLink>
             </NavList>
-            {!loginState.isLogin ?
+            {!loginState.isLogin ? (
               <NavList>
                 <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
-              </NavList> :
+              </NavList>
+            ) : (
               <>
-                {!loginState.social ?
+                {!loginState.social ? (
                   <NavList>
                     <ListLink to='/my'> 마이페이지 </ListLink>
-                  </NavList> :
+                  </NavList>
+                ) : (
                   <NavList>
                     <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
                   </NavList>
-                }
+                )}
                 <NavList>
                   <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
                 </NavList>
               </>
-            }
+            )}
           </NavLists>
           <Toggle />
-          </NavBox>
+        </NavBox>
       </NavContainer>
       {loginToggled && <LoginSection />}
       {menuToggled && <MobileNavBar />}

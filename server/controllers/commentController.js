@@ -111,24 +111,64 @@ export const getCommentList = async (req, res) => {
         parent_id: null,
       });
 
-      const commentDataList = await Promise.all(
-        commentList.map(async (el) => {
-          const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
-          const writer = await User.findOne({ _id: el.writer });
+      const DATA = [];
 
-          return {
-            ...el._doc,
-            children,
-            writer: {
-              userId: writer.userId,
-              _id: writer._id,
-              nickname: writer.nickname,
-            },
-          };
-        })
-      );
+      async function repeat(comment, check) {
+        if (comment.length === 0) {
+          return;
+        }
+        const commentDataList = await Promise.all(
+          comment.map(async (el) => {
+            const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+            const writer = await User.findOne({ _id: el.writer });
 
-      return res.json(commentDataList);
+            return {
+              ...el._doc,
+              children,
+              writer: {
+                userId: writer.userId,
+                _id: writer._id,
+                nickname: writer.nickname,
+              },
+            };
+          })
+        );
+
+        for (let i = 0; i < commentDataList.length; i++) {
+          if (commentDataList[i].parent_id == null) {
+            check = i;
+            DATA[check] = [];
+          }
+          DATA[check].push(commentDataList[i]);
+          console.log('CHECK', check);
+          await repeat(commentDataList[i].children, check);
+        }
+      }
+
+      await repeat(commentList, 0);
+      console.log(DATA);
+
+      // const commentDataList = await Promise.all(
+      //   commentList.map(async (el) => {
+      //     const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+      //     const writer = await User.findOne({ _id: el.writer });
+
+      //     return {
+      //       ...el._doc,
+      //       children,
+      //       writer: {
+      //         userId: writer.userId,
+      //         _id: writer._id,
+      //         nickname: writer.nickname,
+      //       },
+      //     };
+      //   })
+      // );
+
+      return res.json({
+        success: true,
+        data: DATA,
+      });
     }
   } catch (error) {
     return res.json({
