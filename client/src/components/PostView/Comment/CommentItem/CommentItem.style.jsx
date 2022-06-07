@@ -1,19 +1,20 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
-import useDropdown from '../../../hooks/useDropdown';
 import styled from 'styled-components';
-import { CommentDropdown } from './CommentDropDown';
-import { DropdownBtn } from '../../../styles/common/dropdown';
-import heartFill from '../../../asset/icon/icon-heart-fill.svg';
-import heartLine from '../../../asset/icon/icon-heart-line.svg';
-import CommentInput from './CommentInput';
-import useVisible from '../../../hooks/useVisible';
+import heartFill from '../../../../asset/icon/icon-heart-fill.svg';
+import heartLine from '../../../../asset/icon/icon-heart-line.svg';
+import CommentInputPresenter from '../CommentInput/CommentInput.style';
+import CommentDropdownPresenter from '../CommentDropdown/CommentDropdown.style';
+import { DropdownBtn } from '../../../../styles/common/dropdown';
 
-export default function CommentItem({ cmntData }) {
-  const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
-  const [isTargetVisible, handleClickShow] = useVisible(false);
-  //   const loginState = useSelector((state) => state.loginReducer);
-
+export default function CommentItemPresenter({
+  cmntData,
+  handleClickShow,
+  isTargetVisible,
+  btnRef,
+  handleDropdownShow,
+  isDropdownVisible,
+  dropdownRef,
+}) {
   return (
     <CommentItemInner>
       <ProfileImg />
@@ -26,10 +27,12 @@ export default function CommentItem({ cmntData }) {
           <CommentReBtn onClick={handleClickShow}>답글 달기</CommentReBtn>
           <CommentLike>{cmntData.like_count}</CommentLike>
         </CommentEtc>
-        {isTargetVisible && <CommentInput postId={cmntData.post_id} parentId={cmntData._id} />}
+        {isTargetVisible && (
+          <CommentInputPresenter postId={cmntData.post_id} parentId={cmntData._id} />
+        )}
       </CommentContent>
       <CommentDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-        {isDropdownVisible && <CommentDropdown ref={dropdownRef} />}
+        {isDropdownVisible && <CommentDropdownPresenter ref={dropdownRef} />}
       </CommentDropdownBtn>
     </CommentItemInner>
   );
