@@ -20,7 +20,9 @@ export default function CommentContainer({ postId }) {
       }
     );
 
-    setLoadedComments(response.data);
+    if (response.data.success) {
+      setLoadedComments(response.data.data);
+    }
   }, [postId, tkn]);
 
   useEffect(() => {
