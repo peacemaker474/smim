@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from './LoginForm';
-import LoginHeader from './LoginHeader';
-import { useDispatch } from 'react-redux';
-import { loginClose } from '../../redux/toggle/action';
+import EmailForm from '../EmailForm/EmailForm';
+import SocialForm from '../SocialForm/SocialForm';
+import LoginHeader from '../LoginHeader/LoginHeader';
 
 const LoginContainer = styled.div`
   width: 100vw;
@@ -23,7 +22,7 @@ const LoginOverlay = styled.div`
   left: 0;
 `;
 
-const LoginBox = styled.section`
+const LoginWrapper = styled.section`
   width: 40%;
   height: 80%;
   position: absolute;
@@ -34,21 +33,26 @@ const LoginBox = styled.section`
   border-radius: 5px;
 `;
 
-function LoginSection() {
-  const dispatch = useDispatch();
-  const handleLoginClose = () => {
-    dispatch(loginClose());
-  };
+const LoginBox = styled.div`
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+`;
 
+
+function LoginSectionStyle ({ onLoginClose }) {
   return (
     <LoginContainer>
-      <LoginOverlay onClick={handleLoginClose} />
-      <LoginBox>
+      <LoginOverlay onClick={onLoginClose} />
+      <LoginWrapper>
         <LoginHeader />
-        <LoginForm />
-      </LoginBox>
+        <LoginBox>
+          <EmailForm />
+          <SocialForm />
+        </LoginBox>
+      </LoginWrapper>
     </LoginContainer>
   );
 }
 
-export default LoginSection;
+export default LoginSectionStyle;

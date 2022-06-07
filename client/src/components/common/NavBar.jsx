@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginOpen } from '../../redux/toggle/action';
 import Toggle from './Toggle';
-import LoginSection from '../login/LoginSection';
+import LoginSection from '../login/LoginSection/LoginSection';
 import MobileNavBar from './MobileNavBar';
 import { logoutUser } from '../../redux/login/action';
 
