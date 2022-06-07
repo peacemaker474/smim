@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FormBox } from './EmailForm';
+import { FormBox } from '../EmailForm/EmailForm.style';
 
 const SocialFormBox = styled(FormBox)`
   width: 70%;
@@ -35,7 +35,7 @@ const GoogleLink = styled(KaKaoLink)`
   border: 1px solid black;
 `;
 
-function SocialForm() {
+function SocialFormStyle () {
   return (
     <SocialFormBox>
       <KaKaoLink href='http://localhost:4000/login/kakao'> KaKao </KaKaoLink>
@@ -44,4 +44,4 @@ function SocialForm() {
   );
 }
 
-export default SocialForm;
+export default SocialFormStyle;

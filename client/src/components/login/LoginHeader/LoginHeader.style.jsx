@@ -1,12 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { loginClose } from '../../redux/toggle/action';
-
-/* 
-1. 리덕스를 활용해서 LoginModal 값 관리
-2. 반응형을 고려한 각각의 디테일
-*/
 
 const Header = styled.div`
   width: 100%;
@@ -32,18 +25,13 @@ const CancelBtn = styled.button`
   cursor: pointer;
 `;
 
-function LoginHeader () {
-  const dispatch = useDispatch();
-
-  const handleLoginClose = () => {
-    dispatch(loginClose());
-  }
+function LoginHeaderStyle ({ onLoginClose }) {
   return (
     <Header>
       <LoginTitle> 스며들다 </LoginTitle>
-      <CancelBtn onClick={handleLoginClose}> ❌ </CancelBtn>
+      <CancelBtn onClick={onLoginClose}> ❌ </CancelBtn>
     </Header>
   );
 }
 
-export default LoginHeader;
+export default LoginHeaderStyle;

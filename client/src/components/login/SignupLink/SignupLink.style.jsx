@@ -16,13 +16,13 @@ const SignLink = styled(Link)`
   font-weight: bold;
 `;
 
-function SignupLink ({onLoginClose}) {
+function SignupLinkStyle ({ onLoginClose }) {
   return (
     <SignBox>
       <SignText> 아직 회원이 아니신가요? </SignText>
       <SignLink to="/signup" onClick={onLoginClose}> 회원가입 </SignLink>
     </SignBox>
-  )
+  );
 }
 
-export default SignupLink;
+export default SignupLinkStyle;
