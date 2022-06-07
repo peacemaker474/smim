@@ -276,7 +276,9 @@ export const getMainPageLists = async (req, res) => {
     if (err) console.log(err);
     else {
       posts.forEach((el) => {
-        if (el.title.includes('테스트')) {
+        if (postLists[el.targetAge].length < 5 && el.meta.pinnedCmnt === false) {
+          postLists[el.targetAge].push(el);
+        } else if (postLists[el.targetAge].length < 5) {
           postLists[el.targetAge].push(el);
         }
       });
