@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentInput from './CommentInput';
-import CommentContainer from './CommentContainer';
+import CommentInput from '../CommentInput/CommentInput';
+import CommentContainer from '../CommentContainer/CommentContainer';
 
-export default function PostComment({ postId }) {
+export default function PostCommentPresenter({ postId }) {
   return (
     <CommentSection>
       <CommentH2>답변하기</CommentH2>

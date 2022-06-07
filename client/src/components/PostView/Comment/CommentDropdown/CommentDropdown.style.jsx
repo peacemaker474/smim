@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DropdownContainer, DropdownBox, DropdownItemBtn } from '../../../styles/common/dropdown';
+import {
+  DropdownContainer,
+  DropdownBox,
+  DropdownItemBtn,
+} from '../../../../styles/common/dropdown';
 
-function Dropdown({ setIsEditing }, ref) {
-  const handleCommentEdit = (e) => {
-    e.preventDefault();
-    setIsEditing(true);
-  };
-  const handleCommentDel = (e) => {
-    e.preventDefault();
-  };
+export default function CommentDropdownPresenter({ ref, handleCommentEdit, handleCommentDel }) {
   return (
     <CommentDropdownContainer ref={ref}>
       <CommentDropdownBox>
@@ -19,7 +16,6 @@ function Dropdown({ setIsEditing }, ref) {
     </CommentDropdownContainer>
   );
 }
-export const CommentDropdown = React.forwardRef(Dropdown);
 
 const CommentDropdownContainer = styled(DropdownContainer)``;
 
