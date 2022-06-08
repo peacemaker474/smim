@@ -1,8 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { Tag } from '../../styles/common/tag';
-import Heart from '../../asset/icon/icon-heart-fill.svg';
+import { Tag } from '../../../styles/common/tag';
+import Heart from '../../../asset/icon/icon-heart-fill.svg';
+
+export default function PostListItemPresenter({
+  handleDetailPageMove,
+  hashtag,
+  content,
+  meta,
+  title,
+  date,
+}) {
+  return (
+    <PostItem>
+      <PostAnchor onClick={handleDetailPageMove}>
+        <PostTitle>{title}</PostTitle>
+        <PostEtcDiv>
+          <PostTagDiv>
+            {(hashtag || []).map((el, idx) => (
+              <TagItem color='yellow' key={idx}>
+                {el}
+              </TagItem>
+            ))}
+          </PostTagDiv>
+        </PostEtcDiv>
+        <PostText dangerouslySetInnerHTML={{ __html: content }} />
+        <PostLikeDiv>
+          <LikeSpan>{meta.likes}</LikeSpan>
+        </PostLikeDiv>
+        <PostDate>{date}</PostDate>
+      </PostAnchor>
+    </PostItem>
+  );
+}
 
 const PostItem = styled.a`
   border: 2px solid ${({ theme }) => theme.color.lightGray};
@@ -78,39 +108,3 @@ const PostDate = styled.span`
   bottom: 23px;
   right: 18px;
 `;
-
-function PostListItem({ postData }) {
-  const { meta, content, createAt, hashtag, title, _id } = postData;
-  const navigate = useNavigate();
-  const handleDetailPageMove = () => {
-    navigate(`/posts/view/${_id}`)
-  };
-  // const text = new TextDecoder('UTF-8').decode(content);
-
-  const date = new Date(createAt);
-  console.log(date);
-
-  return (
-    <PostItem>
-      <PostAnchor onClick={handleDetailPageMove}>
-        <PostTitle>{title}</PostTitle>
-        <PostEtcDiv>
-          <PostTagDiv>
-            {(hashtag || []).map((el, idx) => (
-              <TagItem color='yellow' key={idx}>
-                {el}
-              </TagItem>
-            ))}
-          </PostTagDiv>
-        </PostEtcDiv>
-        <PostText dangerouslySetInnerHTML={{ __html: content }} />
-        <PostLikeDiv>
-          <LikeSpan>{meta.likes}</LikeSpan>
-        </PostLikeDiv>
-        <PostDate>{date.toLocaleDateString()}</PostDate>
-      </PostAnchor>
-    </PostItem>
-  );
-}
-
-export default PostListItem;
