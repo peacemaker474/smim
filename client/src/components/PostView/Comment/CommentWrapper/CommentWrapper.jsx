@@ -7,13 +7,16 @@ export default function CommentWrapper({ cmntData }) {
   const [isTargetVisible, handleTargetShow] = useVisible(false);
   const createdComments = useSelector((state) => state.commentReducer);
 
-  const parentData = cmntData.find((el) => el.parent_id == null);
-  const childrenData = cmntData.slice(1);
+  const parentData = Array.isArray(cmntData)
+    ? cmntData && cmntData.find((el) => el.parent_id == null)
+    : cmntData;
+  const childrenData = Array.isArray(cmntData) ? cmntData && cmntData.slice(1) : [];
 
-  const uploadingReplies = createdComments.filter((el) => el.parent_id === parentData._id);
+  const uploadingReplies = createdComments.filter((el) => el.group_id === parentData._id);
 
   return (
     <CommentWrapperPresenter
+      parentData={parentData}
       childrenData={childrenData}
       uploadingReplies={uploadingReplies}
       isTargetVisible={isTargetVisible}

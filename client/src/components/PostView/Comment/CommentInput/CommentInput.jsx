@@ -5,7 +5,7 @@ import { getCookie } from '../../../../utils/cookie';
 import { createComment } from '../../../../redux/comment/actions';
 import CommentInputPresenter from './CommentInput.style';
 
-export default function CommentInput({ postId, parentId }) {
+export default function CommentInput({ postId, parentId, groupId, handleClickShow }) {
   const loginState = useSelector((state) => state.loginReducer);
   const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
@@ -23,20 +23,29 @@ export default function CommentInput({ postId, parentId }) {
       }
     );
 
-    const date = String(new Date());
-    dispatch(
-      createComment({
-        text: inputText,
-        _id: response.data.comment_id,
-        createAt: date,
-        writer: {
-          userId: loginState.id,
-          nickname: loginState.name,
-        },
-        parent_id: parentId,
-      })
-    );
+    if (response.data.success) {
+      const date = String(new Date());
+      dispatch(
+        createComment({
+          text: inputText,
+          _id: response.data.comment_id,
+          createAt: date,
+          writer: {
+            userId: loginState.id,
+            nickname: loginState.name,
+          },
+          parent_id: parentId,
+          group_id: groupId,
+          post_id: postId,
+        })
+      );
+    } else {
+      console.log(response.data.success);
+    }
     inputRef.current.value = '';
+    if (parentId) {
+      handleClickShow(false);
+    }
   };
 
   const handleCommentWrite = (e) => {

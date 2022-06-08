@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentItemPresenter from '../CommentItem/CommentItem.style';
+import CommentItem from '../CommentItem/CommentItem';
 
 export default function CommentWrapperPresenter({
+  parentData,
   childrenData,
   uploadingReplies,
   isTargetVisible,
@@ -10,23 +11,28 @@ export default function CommentWrapperPresenter({
 }) {
   return (
     <CommentInner>
-      <CommentItemPresenter key={childrenData._id} cmntData={cmntData}></CommentItemPresenter>
-      <ReplyContainer>
-        {(childrenData.children.length !== 0 || uploadingReplies.length !== 0) && (
-          <>
-            <ReplyShowingBtn onClick={handleTargetShow}>
-              답글 {isTargetVisible ? '닫기' : '보기'}
-            </ReplyShowingBtn>
-            {isTargetVisible &&
-              childrenData.children.map((el) => (
-                <CommentItemPresenter key={el._id} cmntData={el} />
-              ))}
-            {isTargetVisible &&
-              uploadingReplies.length !== 0 &&
-              uploadingReplies.map((el) => <CommentItemPresenter key={el._id} cmntData={el} />)}
-          </>
-        )}
-      </ReplyContainer>
+      <CommentItem
+        key={parentData._id}
+        cmntData={parentData}
+        groupId={parentData._id}
+      ></CommentItem>
+
+      {(childrenData.length !== 0 || uploadingReplies.length !== 0) && (
+        <ReplyContainer>
+          <ReplyShowingBtn onClick={handleTargetShow}>
+            답글 {isTargetVisible ? '닫기' : '보기'}
+          </ReplyShowingBtn>
+          {isTargetVisible &&
+            childrenData.map((el) => (
+              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+            ))}
+          {isTargetVisible &&
+            uploadingReplies.length !== 0 &&
+            uploadingReplies.map((el) => (
+              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+            ))}
+        </ReplyContainer>
+      )}
     </CommentInner>
   );
 }
