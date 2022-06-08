@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import heartFill from '../../../asset/icon/icon-heart-fill.svg';
-import heartLine from '../../../asset/icon/icon-heart-line.svg';
-import { getPostLike, getPostUnlike } from '../../../network/post/http';
-import { getCookie } from '../../../utils/cookie';
+import { getPostLike, getPostUnlike } from '../../../../network/post/http';
+import { getCookie } from '../../../../utils/cookie';
+import PostLikePresenter from './PostLike.style';
 
 export default function PostLike({ quantity, like }) {
   const [isLikeChecked, setIsLikeChecked] = useState(like);
@@ -57,25 +55,10 @@ export default function PostLike({ quantity, like }) {
   };
 
   return (
-    <PostLikeSpan onClick={handleLikeClick} likechecked={isLikeChecked}>
-      {likeValue}
-    </PostLikeSpan>
+    <PostLikePresenter
+      handleLikeClick={handleLikeClick}
+      isLikeChecked={isLikeChecked}
+      likeValue={likeValue}
+    />
   );
 }
-
-const PostLikeSpan = styled.span`
-  display: flex;
-  margin-right: 12px;
-  cursor: pointer;
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    display: block;
-    background: ${(props) => (props.likechecked ? `url(${heartFill})` : `url(${heartLine})`)};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin-right: 7px;
-  }
-`;

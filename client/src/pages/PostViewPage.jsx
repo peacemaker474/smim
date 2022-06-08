@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import PostPost from '../components/postview/Post/PostPost';
+import PostPost from '../components/postview/Post/PostPost/PostPost';
 import PostCommentPresenter from '../components/postview/Comment/PostComment/PostComment.style';
 import styled from 'styled-components';
 
