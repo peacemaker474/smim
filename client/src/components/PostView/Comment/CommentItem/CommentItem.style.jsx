@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import heartFill from '../../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../../asset/icon/icon-heart-line.svg';
-import CommentInputPresenter from '../CommentInput/CommentInput.style';
-import CommentDropdownPresenter from '../CommentDropdown/CommentDropdown.style';
+import CommentInput from '../CommentInput/CommentInput';
+import { CommentDropdown } from '../CommentDropdown/CommentDropdown';
 import { DropdownBtn } from '../../../../styles/common/dropdown';
 
 export default function CommentItemPresenter({
@@ -14,6 +14,7 @@ export default function CommentItemPresenter({
   handleDropdownShow,
   isDropdownVisible,
   dropdownRef,
+  groupId,
 }) {
   return (
     <CommentItemInner>
@@ -28,11 +29,16 @@ export default function CommentItemPresenter({
           <CommentLike>{cmntData.like_count}</CommentLike>
         </CommentEtc>
         {isTargetVisible && (
-          <CommentInputPresenter postId={cmntData.post_id} parentId={cmntData._id} />
+          <CommentInput
+            groupId={groupId}
+            postId={cmntData.post_id}
+            parentId={cmntData._id}
+            handleClickShow={handleClickShow}
+          />
         )}
       </CommentContent>
       <CommentDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-        {isDropdownVisible && <CommentDropdownPresenter ref={dropdownRef} />}
+        {isDropdownVisible && <CommentDropdown ref={dropdownRef} />}
       </CommentDropdownBtn>
     </CommentItemInner>
   );
