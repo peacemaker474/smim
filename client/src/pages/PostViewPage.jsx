@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import PostPost from '../components/postview/Post/PostPost/PostPost';
-import PostCommentPresenter from '../components/postview/Comment/PostComment/PostComment.style';
+import PostPost from '../components/postview/Post/PostPost';
+import PostComment from '../components/postview/Comment/PostComment/PostComment';
 import styled from 'styled-components';
 
 const PostViewContainer = styled.div`
@@ -16,7 +16,7 @@ export default function PostViewPage() {
   return (
     <PostViewContainer>
       <PostPost postId={id} />
-      <PostCommentPresenter postId={id} />
+      <PostComment postId={id} />
     </PostViewContainer>
   );
 }

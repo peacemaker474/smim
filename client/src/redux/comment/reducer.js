@@ -14,6 +14,8 @@ export default function commentReducer(state = initialState, action) {
           like_count: action.payload.like_count,
           writer: action.payload.writer,
           parent_id: action.payload.parent_id,
+          group_id: action.payload.group_id,
+          post_id: action.payload.post_id,
         },
       ];
 

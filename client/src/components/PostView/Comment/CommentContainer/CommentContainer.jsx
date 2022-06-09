@@ -29,12 +29,22 @@ export default function CommentContainer({ postId }) {
     loadComments();
   }, [loadComments]);
 
-  const uploadingComments = createdComments.filter((el) => el.parent_id == null);
+  const uploadingComments = createdComments
+    .filter((el) => el.parent_id == null)
+    .sort((a, b) => {
+      return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
+    });
+
+  const sortedLoadedComments =
+    loadedComments &&
+    loadedComments.sort((a, b) => {
+      return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
+    });
 
   return (
     <CommentContainerPresenter
       uploadingComments={uploadingComments}
-      loadedComments={loadedComments}
+      sortedLoadedComments={sortedLoadedComments}
     />
   );
 }
