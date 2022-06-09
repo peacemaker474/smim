@@ -24,17 +24,17 @@ export default function MainPage() {
   useEffect(() => {
     getMainPostLists().then((res) => {
       setPostLists(res.data.lists);
-    })
-  }, [])
+    });
+  }, []);
   return (
     <MainBody>
       <MainContainer>
-        <QuestionList age='10' post={postLists && postLists['10']}/>
-        <QuestionList age='20' post={postLists && postLists['20']}/>
-        <QuestionList age='30' post={postLists && postLists['30']}/>
-        <QuestionList age='40' post={postLists && postLists['40']}/>
-        <QuestionList age='50' post={postLists && postLists['50']}/>
-        <QuestionList age='60' post={postLists && postLists['60']}/>
+        <QuestionList age='10' post={postLists && postLists['10']} />
+        <QuestionList age='20' post={postLists && postLists['20']} />
+        <QuestionList age='30' post={postLists && postLists['30']} />
+        <QuestionList age='40' post={postLists && postLists['40']} />
+        <QuestionList age='50' post={postLists && postLists['50']} />
+        <QuestionList age='60' post={postLists && postLists['60']} />
       </MainContainer>
     </MainBody>
   );

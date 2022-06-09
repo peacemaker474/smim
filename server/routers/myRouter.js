@@ -5,7 +5,7 @@ import { userImgUpload } from '../middlewares.js';
 const myRouter = express.Router();
 
 myRouter.get("/writeLists", getWriteLists);
-myRouter.get("/favoriteLists", getFavoriteLists);
+myRouter.get("/bookmarkLists", getFavoriteLists);
 myRouter.put("/changepw", putChangePassword);
 myRouter.put("/", userImgUpload.single("file"), putChangeUserInfo);
 
