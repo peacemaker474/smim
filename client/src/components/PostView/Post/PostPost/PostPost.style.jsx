@@ -1,51 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PostLike from './PostLike';
-import PostBookmark from './PostBookmark';
-import { Tag } from '../../../styles/common/tag';
-import { postReadPostDetail } from '../../../network/post/http';
-import { getCookie } from '../../../utils/cookie';
-import PostHead from './PostHead';
+import PostLike from '../PostLike/PostLike';
+import PostBookmark from '../PostBookmark/PostBookmark';
+import { Tag } from '../../../../styles/common/tag';
+import PostHead from '../PostHead/PostHead';
 
-export default function PostPost({ postId }) {
-  const tkn = getCookie('users');
-  const [postDetail, setPostDetail] = useState({
-    targetAge: '',
-    content: '',
-    title: '',
-    owner: { nickname: '', _id: '' },
-    createAt: '',
-    hashtag: [],
-    like: false,
-    bookmark: false,
-    meta: { likes: 0, views: 0 },
-  });
-
-  const loadPostDetail = useCallback(async () => {
-    try {
-      if (tkn) {
-        const response = await postReadPostDetail(postId, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
-          },
-        });
-        setPostDetail(response.data);
-      } else {
-        const response = await postReadPostDetail(postId);
-        setPostDetail(response.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [postId, tkn]);
-
-  useEffect(() => {
-    loadPostDetail();
-  }, [loadPostDetail]);
-
-  const date = new Date(postDetail.createAt);
-
+export default function PostPostPresenter({ postDetail, postId, date }) {
   return (
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>

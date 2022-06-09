@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import bookmarkFill from '../../../asset/icon/icon-bookmark-fill.svg';
-import bookmarkLine from '../../../asset/icon/icon-bookmark-line.svg';
-import { getBookmark, getUnbookmark } from '../../../network/post/http';
-import { getCookie } from '../../../utils/cookie';
+import { getBookmark, getUnbookmark } from '../../../../network/post/http';
+import { getCookie } from '../../../../utils/cookie';
+import PostBookmarkPresenter from './PostBookmark.style';
 
 export default function PostBookmark({ bookmark }) {
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmark);
@@ -53,23 +51,10 @@ export default function PostBookmark({ bookmark }) {
     }
   };
 
-  return <BookmarkSpan onClick={handleBookmarkClick} bookmarkChecked={isBookmarkChecked} />;
+  return (
+    <PostBookmarkPresenter
+      handleBookmarkClick={handleBookmarkClick}
+      isBookmarkChecked={isBookmarkChecked}
+    />
+  );
 }
-
-const BookmarkSpan = styled.span`
-  display: flex;
-  margin-right: 12px;
-  cursor: pointer;
-  &::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    display: block;
-    background: ${(props) =>
-      props.bookmarkChecked ? `url(${bookmarkFill})` : `url(${bookmarkLine})`};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin-right: 7px;
-  }
-`;
