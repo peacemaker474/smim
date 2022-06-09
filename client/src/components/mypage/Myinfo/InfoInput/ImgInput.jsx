@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const InputWrapper = styled.div`
@@ -48,33 +48,16 @@ const InputFileValue = styled.input`
   border-radius: 5px;
 `;
 
-function ImgInput ({ userInfo, setUserInfo }) {
-  const [fileName, setFileName] = useState("파일선택");
-
-  const handleFileUpload = (evt) => {
-    const imgFiles = evt.target.files;
-    setFileName(evt.target.value);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result;
-      if (base64) setUserInfo({ ...userInfo, imgFiles, encodeImg: base64});
-    }
-    reader.readAsDataURL(imgFiles[0])
-  };
-
-  const handleFileRemove = () => {
-    setFileName("파일선택");
-    setUserInfo({ ...userInfo, encodeImg: ""});
-  }
+function ImgInput ({ fileName, onFileUpload, onFileRemove}) {
 
   return (
     <InputWrapper>
       <InputFileCustom>
         <ImgUpdateBtn for="user-imgAdd"> 이미지 추가 </ImgUpdateBtn>
-        <InputFile id="user-imgAdd" type="file" accept='image/*' onChange={handleFileUpload} />
+        <InputFile id="user-imgAdd" type="file" accept='image/*' onChange={onFileUpload} />
         <InputFileValue value={fileName} />
       </InputFileCustom>
-      <ImgUpdateBtn onClick={handleFileRemove}> 이미지 제거 </ImgUpdateBtn>
+      <ImgUpdateBtn onClick={onFileRemove}> 이미지 제거 </ImgUpdateBtn>
     </InputWrapper>
   );
 }

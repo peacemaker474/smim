@@ -1,6 +1,6 @@
 import React from 'react';
-import { MyInfoInput } from '../../../styles/common/input';
-import { InfoLabel, InfoBox } from '../../../styles/mypage/myinfo';
+import { MyInfoInput } from '../../../../styles/common/input';
+import { InfoLabel, InfoBox } from '../../../../styles/mypage/myinfo';
 
 function IdInput ({userId, onInputChange, myMessage, setMyMessage, success, setSuccess}) {
   // const handleCheckId = (evt) => {

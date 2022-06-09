@@ -9,7 +9,7 @@ export const getMyWriteLists = (data) => {
 }
 
 export const getBookMarkLists = (data) => {
-  return axios.get(`${http}/my/favoriteLists?userId=${data}`).then(res => {
+  return axios.get(`${http}/my/bookmarkLists?userId=${data}`).then(res => {
     return res.data;
   });
 }
