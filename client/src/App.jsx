@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PublicRoute from './routes/PublicRoute';
 import NavBar from './components/common/NavBar';
-import WriteBtn from './components/common/WriteBtn';
+import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <NavBar />
-      {user.isLogin && pathCheck !== 'create' && pathCheck !== 'edit' && <WriteBtn />}
+      {user.isLogin && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       {user.isLogin ? <PublicRoute /> : <PrivateRoute />}
     </>
   );
