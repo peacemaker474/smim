@@ -1,17 +1,11 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCheck } from '../../redux/postForm/action';
-import { contentAdd } from '../../redux/postCreate/action';
+import { resetCheck } from '../../../redux/postForm/action';
+import { contentAdd } from '../../../redux/postCreate/action';
+import PostEditorPresenter from './PostEditor.style';
 
-const PostEditorWrap = styled.div`
-  margin-top: 30px;
-  height: 400px;
-`;
-
-function Posteditor() {
+function PostEditor() {
   // const [para, setPara] = useState('');
   const dispatch = useDispatch();
   const contentInput = useRef();
@@ -65,18 +59,14 @@ function Posteditor() {
   ];
 
   return (
-    <PostEditorWrap>
-      <ReactQuill
-        style={{ height: '85%', marginBottom: '6%' }}
-        modules={modules}
-        formats={formats}
-        theme='snow'
-        onChange={handleEditorWrite}
-        ref={contentInput}
-        value={postData.content}
-      />
-    </PostEditorWrap>
+    <PostEditorPresenter
+      modules={modules}
+      formats={formats}
+      handleEditorWrite={handleEditorWrite}
+      contentInput={contentInput}
+      postData={postData}
+    />
   );
 }
 
-export default Posteditor;
+export default PostEditor;

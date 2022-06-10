@@ -1,7 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import MainAdd from '../../asset/icon/icon-mail-add-fill.png';
-import { useNavigate } from 'react-router-dom';
+import MainAdd from '../../../asset/icon/icon-mail-add-fill.png';
+
+function PostWriteBtnPresenter({ handleBtnClick }) {
+  return (
+    <BtnDiv onClick={handleBtnClick}>
+      <ImgDiv></ImgDiv>
+    </BtnDiv>
+  );
+}
+
+export default PostWriteBtnPresenter;
 
 const BtnDiv = styled.div`
   position: fixed;
@@ -23,17 +32,3 @@ const ImgDiv = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
 `;
-
-function WriteBtn() {
-  const navigate = useNavigate();
-  const handleBtnClick = () => {
-    navigate('/posts/create');
-  };
-  return (
-    <BtnDiv onClick={handleBtnClick}>
-      <ImgDiv></ImgDiv>
-    </BtnDiv>
-  );
-}
-
-export default WriteBtn;

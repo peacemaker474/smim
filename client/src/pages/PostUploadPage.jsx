@@ -4,35 +4,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { totalAdd } from '../redux/postCreate/action';
 import { getCookie } from '../utils/cookie';
-import PostBottomBtn from '../components/post/PostBottomBtn';
-import PostForm from '../components/post/PostForm';
-import Modal from '../components/common/Modal';
+import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
+import PostForm from '../components/post/PostForm/PostForm';
+import Modal from '../components/common/Modal/Modal';
 import { postCreatePost } from '../network/post/http';
 import { postReset } from '../redux/postCreate/action';
 import { postReadPostDetail } from '../network/post/http';
 import { resetCheck } from '../redux/postForm/action';
 
-const PostCreateContainer = styled.div`
-  width: 1200px;
-  height: 80vh;
-  margin-top: 15vh;
-  margin-left: 30px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const PostHeader = styled.h2`
-  position: relative;
-  width: fit-content;
-  font-size: 35px;
-  border-bottom: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
-  @media screen and (max-width: 550px) {
-    font-size: 25px;
-    width: 100px;
-    left: 150px;
-  }
-`;
 function PostUploadPage() {
   const { pathname } = useLocation();
   const [isVisible, setIsVisible] = useState(false);
@@ -126,3 +105,25 @@ function PostUploadPage() {
 }
 
 export default PostUploadPage;
+
+const PostCreateContainer = styled.div`
+  width: 1200px;
+  height: 80vh;
+  margin-top: 15vh;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostHeader = styled.h2`
+  position: relative;
+  width: fit-content;
+  font-size: 35px;
+  border-bottom: 2px solid
+    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
+  @media screen and (max-width: 550px) {
+    font-size: 25px;
+    width: 100px;
+    left: 150px;
+  }
+`;

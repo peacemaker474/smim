@@ -1,6 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColorBtn } from '../../styles/common/buttons';
+import { ColorBtn } from '../../../styles/common/buttons';
+
+function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
+  return (
+    <ModalContainer>
+      <ModalBox>
+        <ModalText>{children}</ModalText>
+        <BtnBox>
+          <Btn onClick={handleModalCancle}>취소</Btn>
+          <Btn onClick={handleModalConfirm}>확인</Btn>
+        </BtnBox>
+      </ModalBox>
+    </ModalContainer>
+  );
+}
+export default ModalPresenter;
 
 const ModalContainer = styled.div`
   z-index: 4;
@@ -36,24 +51,3 @@ const Btn = styled(ColorBtn)`
     color: #fff;
   }
 `;
-
-function Modal({ children, showModal, actionfunc }) {
-  const handleModalCancle = () => {
-    showModal();
-  };
-  const handleModalConfirm = () => {
-    actionfunc();
-  };
-  return (
-    <ModalContainer>
-      <ModalBox>
-        <ModalText>{children}</ModalText>
-        <BtnBox>
-          <Btn onClick={handleModalCancle}>취소</Btn>
-          <Btn onClick={handleModalConfirm}>확인</Btn>
-        </BtnBox>
-      </ModalBox>
-    </ModalContainer>
-  );
-}
-export default Modal;
