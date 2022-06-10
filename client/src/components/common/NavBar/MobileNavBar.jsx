@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { menuClose } from '../../redux/toggle/action';
-import { logoutUser } from '../../redux/login/action';
+import { menuClose } from '../../../redux/toggle/action';
+import { logoutUser } from '../../../redux/login/action';
 
 const MobileNavBox = styled.section`
   width: 45vw;

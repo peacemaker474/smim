@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NameInput from './InfoInput/NameInput';
 import IdInput from './InfoInput/IdInput';
 import EmailInput from './InfoInput/EmailInput';
-import ProfileImg from '../MyProfile/ProfileImg';
+import UserImage from '../../common/UserImage/UserImage';
 import ImgInput from './InfoInput/ImgInput';
 import { UpdateBtn } from '../../../styles/common/buttons';
 
@@ -37,11 +37,11 @@ const UserInfoWrapper = styled.div`
   gap: 25px;
 `;
 
-function MyInfoStyle ({ myMessage, success, userInfo, fileName, setUserInfo, setMyMessage, setSuccess, onInputChange, onInfoUpdate, onFileUpload, onFileRemove}) {
+function MyInfoStyle ({ myMessage, success, userInfo, fileName, setMyMessage, setSuccess, onInputChange, onInfoUpdate, onFileUpload, onFileRemove}) {
   return (
     <MyInfoForm method='POST' encType='multipart/form-data'>
       <UserImageWrapper>
-        <ProfileImg 
+        <UserImage 
           userInfo={userInfo}
         />
         <ImgInput 

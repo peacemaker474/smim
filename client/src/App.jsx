@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PublicRoute from './routes/PublicRoute';
-import NavBar from './components/common/NavBar';
 import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
+import NavBar from './components/common/NavBar/NavBar';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {

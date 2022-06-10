@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
-import { loginOpen } from '../../redux/toggle/action';
 import Toggle from './Toggle';
-import LoginSection from '../login/LoginSection/LoginSection';
 import MobileNavBar from './MobileNavBar';
-import { logoutUser } from '../../redux/login/action';
+import LoginSection from '../../login/LoginSection/LoginSection';
 
 const NavContainer = styled.nav`
   width: 100vw;
@@ -81,22 +78,8 @@ const SignLink = styled.span`
   cursor: pointer;
 `;
 
-function NavBar() {
+function NavBarStyle ({ menuToggled, loginToggled, loginState, onLoginClick, onLogoutClick, onToggleClick}) {
   const { pathname } = useLocation(null);
-  const menuToggled = useSelector((state) => state.toggleReducer.menuToggled);
-  const loginToggled = useSelector((state) => state.toggleReducer.loginToggled);
-  const loginState = useSelector((state) => state.loginReducer);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    dispatch(loginOpen());
-  };
-
-  const handleLogoutClick = () => {
-    dispatch(logoutUser());
-    navigate('/');
-  };
 
   return (
     <>
@@ -138,7 +121,7 @@ function NavBar() {
             </NavList>
             {!loginState.isLogin ? (
               <NavList>
-                <SignLink onClick={handleLoginClick}> 로그인/회원가입 </SignLink>
+                <SignLink onClick={onLoginClick}> 로그인/회원가입 </SignLink>
               </NavList>
             ) : (
               <>
@@ -152,12 +135,15 @@ function NavBar() {
                   </NavList>
                 )}
                 <NavList>
-                  <SignLink onClick={handleLogoutClick}> 로그아웃 </SignLink>
+                  <SignLink onClick={onLogoutClick}> 로그아웃 </SignLink>
                 </NavList>
               </>
             )}
           </NavLists>
-          <Toggle />
+          <Toggle
+            menuToggled={menuToggled}
+            onToggleClick={onToggleClick}
+          />
         </NavBox>
       </NavContainer>
       {loginToggled && <LoginSection />}
@@ -166,4 +152,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default NavBarStyle;

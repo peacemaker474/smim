@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useSelector, useDispatch} from 'react-redux';
-import {menuOpen, menuClose} from '../../redux/toggle/action';
 
 const ToggleBtn = styled.div`
   width: 45px;
@@ -93,19 +91,10 @@ const ToggleBurger = styled.div`
   }
 `;
 
-function Toggle () {
-  const dispatch = useDispatch();
-  const menuToggled = useSelector((state) => state.toggleReducer.menuToggled);
-  const handleToggle = () => {
-    if (menuToggled) {
-      dispatch(menuClose());
-    } else {
-      dispatch(menuOpen());
-    }
-  }
+function Toggle ({ menuToggled, onToggleClick }) {
   return (
     <>
-      <ToggleBtn onClick={handleToggle}>
+      <ToggleBtn onClick={onToggleClick}>
         <ToggleBurger current={menuToggled} />
       </ToggleBtn>
     </>

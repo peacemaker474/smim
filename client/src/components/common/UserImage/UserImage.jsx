@@ -9,7 +9,7 @@ const MyImg = styled.img`
   border: 1px solid black; // 추후에 지울것
 `;
 
-function ProfileImg ({userInfo : {encodeImg}}) {
+function UserImage ({userInfo : {encodeImg}}) {
   const user = useSelector((state) => state.loginReducer);
   
   return (
@@ -17,4 +17,4 @@ function ProfileImg ({userInfo : {encodeImg}}) {
   );
 }
 
-export default ProfileImg;
+export default UserImage;
