@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PublicRoute from './routes/PublicRoute';
-import NavBar from './components/common/NavBar';
+import NavBar from './components/common/NavBar/NavBar';
 import WriteBtn from './components/common/WriteBtn';
 import PrivateRoute from './routes/PrivateRoute';
 
