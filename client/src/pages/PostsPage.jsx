@@ -111,8 +111,6 @@ export default function PostsPage() {
     settingData();
   }, [settingData]);
 
-  console.log(postArray);
-
   const handleSearchOption = (evt) => {
     setSearchList({ ...searchList, option: evt.target.value });
   };
