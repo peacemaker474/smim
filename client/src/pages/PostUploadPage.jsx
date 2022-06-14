@@ -2,21 +2,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { totalAdd } from '../redux/postCreate/action';
 import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
 import { postCreatePost } from '../network/post/http';
-import { postReset } from '../redux/postCreate/action';
 import { postReadPostDetail } from '../network/post/http';
-import { resetCheck } from '../redux/postForm/action';
+import { totalAdd, postReset } from '../redux/postCreate/postCreateSlice';
+import { resetCheck } from '../redux/postForm/postFormCheckSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
   const [isVisible, setIsVisible] = useState(false);
-  const postData = useSelector((state) => state.postCreateReducer);
-  // const postForm = useSelector((state) => state.postFormReducer);
+  const postData = useSelector((state) => state.postCreate);
+  // const postForm = useSelector((state) => state.postFormCheck);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pathArr = pathname.split('/');
@@ -46,8 +45,6 @@ function PostUploadPage() {
       console.error(error);
     }
   }, [postId, tkn, dispatch]);
-
-  console.log(postData);
 
   useEffect(() => {
     if (pathValue === 'edit') {

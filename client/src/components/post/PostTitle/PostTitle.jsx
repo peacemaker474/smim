@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { titleAdd } from '../../../redux/postCreate/action';
-import { resetCheck } from '../../../redux/postForm/action';
+import { titleAdd } from '../../../redux/postCreate/postCreateSlice';
+import { resetCheck } from '../../../redux/postForm/postFormCheckSlice';
 import PostTitlePresenter from './PostTitle.style';
 
 function PostTitle() {
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.postCreateReducer);
-  const postCheck = useSelector((state) => state.postFormReducer);
+  const postData = useSelector((state) => state.postCreate);
+  const postCheck = useSelector((state) => state.postFormCheck);
   const titleInput = useRef();
 
   useEffect(() => {
