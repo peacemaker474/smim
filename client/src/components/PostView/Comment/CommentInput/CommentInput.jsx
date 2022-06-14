@@ -2,11 +2,12 @@ import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate } from '../../../../network/comment/http';
 import { getCookie } from '../../../../utils/cookie';
-import { createComment } from '../../../../redux/comment/actions';
+// import { createComment } from '../../../../redux/comment/actions';
+import { createComment } from '../../../../redux/comment/commentSlice';
 import CommentInputPresenter from './CommentInput.style';
 
 export default function CommentInput({ postId, parentId, groupId, handleClickShow }) {
-  const loginState = useSelector((state) => state.loginReducer);
+  const loginState = useSelector((state) => state.login);
   const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
   const tkn = getCookie('users');
