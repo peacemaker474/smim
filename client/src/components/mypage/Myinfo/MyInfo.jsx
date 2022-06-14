@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateImage, updateUser } from '../../../redux/login/action';
 import MyInfoStyle from './MyInfo.style';
 
-function MyInfo () {
-  const user = useSelector((state) => state.loginReducer);
+function MyInfo() {
+  const user = useSelector((state) => state.login);
   const dispatch = useDispatch();
   // 유저 정보 및 메세지, 성공, 이미지 데이타 관리
 
@@ -12,13 +12,13 @@ function MyInfo () {
     id: user.id,
     nickname: user.name,
     email: user.email,
-    imgFiles: "",
-    encodeImg: "",
+    imgFiles: '',
+    encodeImg: '',
   });
-  
+
   const [myMessage, setMyMessage] = useState({
-    id: "",
-    nickname: "",
+    id: '',
+    nickname: '',
   });
 
   const [success, setSuccess] = useState({
@@ -26,12 +26,12 @@ function MyInfo () {
     nickname: false,
   });
 
-  const [fileName, setFileName] = useState("파일선택");
+  const [fileName, setFileName] = useState('파일선택');
 
   // 이벰트 영역
   const handleInputChange = (evt) => {
     const name = evt.target.name;
-    setUserInfo({ ...userInfo, [name]: evt.target.value});
+    setUserInfo({ ...userInfo, [name]: evt.target.value });
   };
 
   const handleFileUpload = (evt) => {
@@ -40,14 +40,14 @@ function MyInfo () {
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result;
-      if (base64) setUserInfo({ ...userInfo, imgFiles, encodeImg: base64});
-    }
-    reader.readAsDataURL(imgFiles[0])
+      if (base64) setUserInfo({ ...userInfo, imgFiles, encodeImg: base64 });
+    };
+    reader.readAsDataURL(imgFiles[0]);
   };
 
   const handleFileRemove = () => {
-    setFileName("파일선택");
-    setUserInfo({ ...userInfo, encodeImg: ""});
+    setFileName('파일선택');
+    setUserInfo({ ...userInfo, encodeImg: '' });
   };
 
   const handleInfoUpdate = (evt) => {
@@ -55,11 +55,15 @@ function MyInfo () {
 
     const formdata = new FormData();
     formdata.append('email', userInfo.email);
-    if (userInfo.imgFiles !== "") formdata.append('file', userInfo.imgFiles[0]);
+    if (userInfo.imgFiles !== '') formdata.append('file', userInfo.imgFiles[0]);
 
-    const lastIdCheck = userInfo.id.indexOf("\b");
-    const lastNameCheck = userInfo.nickname.indexOf("\b");
-    if (!(user.id === userInfo.id || user.name === userInfo.nickname) && (lastIdCheck !== 0 && lastNameCheck !== 0)) {
+    const lastIdCheck = userInfo.id.indexOf('\b');
+    const lastNameCheck = userInfo.nickname.indexOf('\b');
+    if (
+      !(user.id === userInfo.id || user.name === userInfo.nickname) &&
+      lastIdCheck !== 0 &&
+      lastNameCheck !== 0
+    ) {
       formdata.append('userId', userInfo.id);
       formdata.append('nickname', userInfo.nickname);
       dispatch(updateUser(formdata));
@@ -82,7 +86,7 @@ function MyInfo () {
       onFileUpload={handleFileUpload}
       onFileRemove={handleFileRemove}
     />
-  )
+  );
 }
 
 export default MyInfo;

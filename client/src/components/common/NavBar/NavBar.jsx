@@ -5,11 +5,10 @@ import { loginOpen } from '../../../redux/toggle/action';
 import { logoutUser } from '../../../redux/login/action';
 import NavBarStyle from './NavBar.style';
 
-
 function NavBar() {
-  const menuToggled = useSelector((state) => state.toggleReducer.menuToggled);
-  const loginToggled = useSelector((state) => state.toggleReducer.loginToggled);
-  const loginState = useSelector((state) => state.loginReducer);
+  const menuToggled = useSelector((state) => state.toggle.menuToggled);
+  const loginToggled = useSelector((state) => state.toggle.loginToggled);
+  const loginState = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

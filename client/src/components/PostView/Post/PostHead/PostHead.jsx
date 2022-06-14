@@ -5,7 +5,7 @@ import PostHeadPresenter from './PostHead.style';
 
 export default function PostHead({ author, date, postId }) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
-  const loginState = useSelector((state) => state.loginReducer);
+  const loginState = useSelector((state) => state.login);
   const userId = loginState.id;
 
   const postDate = date.toLocaleDateString();

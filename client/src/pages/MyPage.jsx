@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import MyInfo from '../components/mypage/Myinfo/MyInfo';
@@ -18,16 +18,16 @@ const MyPageSection = styled.section`
 `;
 
 export default function MyPage() {
-  const user = useSelector((state) => state.loginReducer);
+  const user = useSelector((state) => state.login);
 
   return (
     <MyPageSection>
       <MyProfile />
       <Routes>
-        <Route path="/" element={ <MyInfo /> } />
-        <Route path="writeLists" element={ <MyWriteLists userId={user.id} /> } />
-        <Route path="favoriteLists" element={ <BookMarkLists userId={user.id}/> } />
-        <Route path="changepw" element={ <PasswordChange /> } />
+        <Route path='/' element={<MyInfo />} />
+        <Route path='writeLists' element={<MyWriteLists userId={user.id} />} />
+        <Route path='favoriteLists' element={<BookMarkLists userId={user.id} />} />
+        <Route path='changepw' element={<PasswordChange />} />
       </Routes>
     </MyPageSection>
   );
