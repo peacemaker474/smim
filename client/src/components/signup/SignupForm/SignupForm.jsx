@@ -54,7 +54,6 @@ function SignupForm() {
         nickname: inputs.nickName,
         birthday: inputs.birthday,
         password: inputs.password,
-        password2: inputs.check,
       };
 
       postSignupSubmit(body).then((res) => {

@@ -14,7 +14,12 @@ function SignupId ({message, setMessage, valid, setValid, onInputChange}) {
           console.log(message, valid);
           setMessage({ ...message, userId: data.message});
           setValid({ ...valid, userId: data.success });
-        });
+        })
+        .catch(({ response: { data } }) => {
+          setMessage({ ...message, userId: data.message});
+          setValid({ ...valid, userId: data.success });
+        })
+        ;
     }
   }
 

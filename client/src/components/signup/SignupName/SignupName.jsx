@@ -14,6 +14,10 @@ function SignupName ({message, setMessage, valid, setValid, onInputChange}) {
           setMessage({...message, nickName: data.message});
           setValid({...valid, nickName: data.success});
         })
+        .catch(({ response: { data }}) => {
+          setMessage({...message, nickName: data.message});
+          setValid({...valid, nickName: data.success});
+        })
     }
   }
   return (
