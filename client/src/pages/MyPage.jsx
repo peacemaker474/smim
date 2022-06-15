@@ -18,7 +18,7 @@ const MyPageSection = styled.section`
 `;
 
 export default function MyPage() {
-  const user = useSelector((state) => state.login);
+  const user = useSelector((state) => state.user);
 
   return (
     <MyPageSection>

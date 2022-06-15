@@ -9,10 +9,12 @@ const MyImg = styled.img`
   border: 1px solid black; // 추후에 지울것
 `;
 
-function UserImage({ userInfo: { encodeImg } }) {
-  const user = useSelector((state) => state.login);
-
-  return <MyImg src={encodeImg !== '' ? encodeImg : 'http://localhost:4000/' + user.imgUrl} />;
+function UserImage ({userInfo : {encodeImg}}) {
+  const user = useSelector((state) => state.user);
+  
+  return (
+    <MyImg src={encodeImg !== "" ? encodeImg : "http://localhost:4000/" + user.imgUrl}/>
+  );
 }
 
 export default UserImage;

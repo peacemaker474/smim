@@ -6,7 +6,7 @@ import { createComment } from '../../../../redux/slice/commentSlice';
 import CommentInputPresenter from './CommentInput.style';
 
 export default function CommentInput({ postId, parentId, groupId, handleClickShow }) {
-  const loginState = useSelector((state) => state.login);
+  const loginState = useSelector((state) => state.user);
   const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
   const tkn = getCookie('users');

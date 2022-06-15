@@ -4,8 +4,8 @@ import { putChangePassWord } from '../../../network/mypage/http';
 import { pwValidation } from '../../../utils/validation';
 import PasswordChangeStyle from './PasswordChange.style';
 
-function PasswordChange() {
-  const user = useSelector((state) => state.login);
+function PasswordChange () {
+  const user = useSelector((state) => state.user);
   const [password, setPassword] = useState({
     oldPassword: '',
     newPassword: '',

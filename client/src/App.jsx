@@ -7,7 +7,7 @@ import NavBar from './components/common/NavBar/NavBar';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
-  const user = useSelector((state) => state.login);
+  const user = useSelector((state) => state.user);
   const { pathname } = useLocation();
   const pathCheck = pathname.split('/')[2];
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateImage, updateUser } from '../../../redux/login/action';
+import { putUpdateUser, putUserImage } from '../../../redux/services/UserService';
 import MyInfoStyle from './MyInfo.style';
 
-function MyInfo() {
-  const user = useSelector((state) => state.login);
+function MyInfo () {
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // 유저 정보 및 메세지, 성공, 이미지 데이타 관리
 
@@ -66,9 +66,9 @@ function MyInfo() {
     ) {
       formdata.append('userId', userInfo.id);
       formdata.append('nickname', userInfo.nickname);
-      dispatch(updateUser(formdata));
+      dispatch(putUpdateUser(formdata));
     } else {
-      dispatch(updateImage(formdata));
+      dispatch(putUserImage(formdata));
     }
   };
 

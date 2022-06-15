@@ -1,8 +1,9 @@
+import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { combineReducers } from 'redux';
-import loginReducer from './login/reducer';
-import toggleReducer from './toggle/reducer';
+
+import userSlice from './slice/userSlice';
+import toggleSlice from './slice/toggleSlice';
 import postCreateSlice from './slice/postCreateSlice';
 import postFormCheckSlice from './slice/postFormCheckSlice';
 import commentSlice from './slice/commentSlice';
@@ -10,14 +11,14 @@ import commentSlice from './slice/commentSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['login'],
+  whiteList: ['user'],
 };
 
 const rootReducer = combineReducers({
-  login: loginReducer,
-  toggle: toggleReducer,
+  user: userSlice.reducer,
+  toggle: toggleSlice.reducer,
   postCreate: postCreateSlice,
-  postFormCheck: postFormCheckSlice,
+  postForm: postFormCheckSlice,
   comment: commentSlice,
 });
 
