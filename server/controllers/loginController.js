@@ -14,7 +14,7 @@ export const postLogin = async (req, res) => {
   }
 
   const token = createToken(user._id);
-  return res.status(201).json({
+  return res.status(200).json({
     id: user.userId,
     name: user.nickname,
     email: user.email,
@@ -27,5 +27,5 @@ export const postLogin = async (req, res) => {
 }
 
 export const getLogout = (req, res) => {
-  return res.status(201).json({ success: true });
+  return res.status(200).json({ success: true });
 }
