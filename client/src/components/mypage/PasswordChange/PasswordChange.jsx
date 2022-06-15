@@ -5,7 +5,7 @@ import { pwValidation } from '../../../utils/validation';
 import PasswordChangeStyle from './PasswordChange.style';
 
 function PasswordChange () {
-  const user = useSelector((state) => state.loginReducer);
+  const user = useSelector((state) => state.user);
   const [password, setPassword] = useState({
     oldPassword: "",
     newPassword: "",

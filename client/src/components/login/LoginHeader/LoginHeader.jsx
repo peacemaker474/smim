@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { loginClose } from '../../../redux/toggle/action';
+import { loginToggle } from '../../../redux/slice/toggleSlice';
 import LoginHeaderStyle from './LoginHeader.style';
 
 /* 
@@ -12,10 +12,10 @@ function LoginHeader () {
   const dispatch = useDispatch();
 
   const handleLoginClose = () => {
-    dispatch(loginClose());
+    dispatch(loginToggle());
   }
   return (
-    <LoginHeaderStyle 
+    <LoginHeaderStyle
       onLoginClose={handleLoginClose}
     />
   );

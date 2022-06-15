@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginClose } from '../../../redux/toggle/action';
-import { loginUser } from '../../../redux/login/action';
+import { postUserLogin } from '../../../redux/services/UserService';
 import EmailFormStyle from './EmailForm.style';
+import { loginToggle } from '../../../redux/slice/toggleSlice';
 
 function EmailForm () {
-  const state = useSelector((state) => state.loginReducer);
+  const state = useSelector((state) => state.user);
   const {isLogin, message} = state;
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
@@ -28,7 +28,7 @@ function EmailForm () {
   }
 
   const handleLoginClose = () => {
-    dispatch(loginClose());
+    dispatch(loginToggle());
   }
 
   const handleLoginSubmit = (evt) => {
@@ -38,7 +38,8 @@ function EmailForm () {
       userId,
       password: userPw,
     }
-    dispatch(loginUser(body));
+    dispatch(postUserLogin(body));
+    dispatch(loginToggle());
   }
 
   return (

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { menuClose } from '../../../redux/toggle/action';
-import { logoutUser } from '../../../redux/login/action';
+import { menuToggle } from '../../../redux/slice/toggleSlice';
+import { getUserLogOut } from '../../../redux/services/UserService';
 
 const MobileNavBox = styled.section`
   width: 45vw;
@@ -107,16 +107,16 @@ const MobileSignUp = styled(Link)`
 `;
 
 function MobileNavBar () {
-  const loginState = useSelector((state) => state.loginReducer);
+  const loginState = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleMenuClick = () => {
-    dispatch(menuClose());
+    dispatch(menuToggle());
   }
 
   const handleLogoutClick = () => {
-    dispatch(logoutUser());
-    dispatch(menuClose());
+    dispatch(getUserLogOut());
+    dispatch(menuToggle());
     navigate('/');
   }
 

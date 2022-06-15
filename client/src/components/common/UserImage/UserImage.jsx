@@ -10,7 +10,7 @@ const MyImg = styled.img`
 `;
 
 function UserImage ({userInfo : {encodeImg}}) {
-  const user = useSelector((state) => state.loginReducer);
+  const user = useSelector((state) => state.user);
   
   return (
     <MyImg src={encodeImg !== "" ? encodeImg : "http://localhost:4000/" + user.imgUrl}/>
