@@ -8,8 +8,8 @@ import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
 import { postCreatePost } from '../network/post/http';
 import { postReadPostDetail } from '../network/post/http';
-import { totalAdd, postReset } from '../redux/postCreate/postCreateSlice';
-import { resetCheck } from '../redux/postForm/postFormCheckSlice';
+import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
+import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();

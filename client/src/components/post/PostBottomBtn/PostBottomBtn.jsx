@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { postReset } from '../../../redux/postCreate/postCreateSlice';
+import { postReset } from '../../../redux/slice/postCreateSlice';
 import {
   titleCheck,
   ageCheck,
   hashtagCheck,
   contentCheck,
   resetCheck,
-} from '../../../redux/postForm/postFormCheckSlice';
+} from '../../../redux/slice/postFormCheckSlice';
 import PostBottomBtnPresenter from './PostBottomBtn.style';
 
 function PostBottomBtn({ formState, showModal }) {

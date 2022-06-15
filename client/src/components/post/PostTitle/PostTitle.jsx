@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { titleAdd } from '../../../redux/postCreate/postCreateSlice';
-import { resetCheck } from '../../../redux/postForm/postFormCheckSlice';
+import { titleAdd } from '../../../redux/slice/postCreateSlice';
+import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTitlePresenter from './PostTitle.style';
 
 function PostTitle() {

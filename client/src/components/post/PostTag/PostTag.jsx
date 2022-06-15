@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { tagAdd, tagDelete } from '../../../redux/postCreate/postCreateSlice';
-import { resetCheck } from '../../../redux/postForm/postFormCheckSlice';
+import { tagAdd, tagDelete } from '../../../redux/slice/postCreateSlice';
+import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTagPresenter from './PostTag.style';
 
 function PostTag() {

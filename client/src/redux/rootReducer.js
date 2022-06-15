@@ -3,11 +3,9 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import loginReducer from './login/reducer';
 import toggleReducer from './toggle/reducer';
-// import postCreateReducer from './postCreate/reducer';
-import postCreateSlice from './postCreate/postCreateSlice';
-import postFormCheckSlice from './postForm/postFormCheckSlice';
-import commentSlice from './comment/commentSlice';
-// import postFormReducer from './postForm/reducer';
+import postCreateSlice from './slice/postCreateSlice';
+import postFormCheckSlice from './slice/postFormCheckSlice';
+import commentSlice from './slice/commentSlice';
 
 const persistConfig = {
   key: 'root',
