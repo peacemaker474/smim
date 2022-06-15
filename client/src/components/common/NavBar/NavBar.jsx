@@ -5,7 +5,6 @@ import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import NavBarStyle from './NavBar.style';
 
-
 function NavBar() {
   const menuToggled = useSelector((state) => state.toggle.menuToggled);
   const loginToggled = useSelector((state) => state.toggle.loginToggled);

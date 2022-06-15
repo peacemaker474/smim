@@ -1,19 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { postReset } from '../../../redux/postCreate/action';
+import { postReset } from '../../../redux/slice/postCreateSlice';
 import {
-  contentCheck,
   titleCheck,
   ageCheck,
   hashtagCheck,
+  contentCheck,
   resetCheck,
-} from '../../../redux/postForm/action';
+} from '../../../redux/slice/postFormCheckSlice';
 import PostBottomBtnPresenter from './PostBottomBtn.style';
 
 function PostBottomBtn({ formState, showModal }) {
   const navigate = useNavigate();
-  const postData = useSelector((state) => state.postCreateReducer);
+  const postData = useSelector((state) => state.postCreate);
   const dispatch = useDispatch();
 
   const handleFormCheck = (data) => {

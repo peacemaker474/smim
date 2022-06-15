@@ -7,21 +7,21 @@ import PasswordChangeStyle from './PasswordChange.style';
 function PasswordChange () {
   const user = useSelector((state) => state.user);
   const [password, setPassword] = useState({
-    oldPassword: "",
-    newPassword: "",
-    newPassword2: "",
+    oldPassword: '',
+    newPassword: '',
+    newPassword2: '',
   });
 
   const handleInputChange = (evt) => {
     const name = evt.target.name;
-    setPassword({ ...password, [name]: evt.target.value});
-  }
+    setPassword({ ...password, [name]: evt.target.value });
+  };
 
   const handlePwSubmit = (evt) => {
     evt.preventDefault();
 
     if (!pwValidation(password.oldPassword) && !pwValidation(password.newPassword)) {
-      return alert("8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.");
+      return alert('8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.');
     } else {
       let body = {
         userId: user.id,
@@ -31,14 +31,9 @@ function PasswordChange () {
       };
       putChangePassWord(body);
     }
-  }
+  };
 
-  return (
-    <PasswordChangeStyle
-      onInputChange={handleInputChange}
-      onPwSubmit={handlePwSubmit}
-    />
-  );
+  return <PasswordChangeStyle onInputChange={handleInputChange} onPwSubmit={handlePwSubmit} />;
 }
 
 export default PasswordChange;

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate } from '../../../../network/comment/http';
 import { getCookie } from '../../../../utils/cookie';
-import { createComment } from '../../../../redux/comment/actions';
+import { createComment } from '../../../../redux/slice/commentSlice';
 import CommentInputPresenter from './CommentInput.style';
 
 export default function CommentInput({ postId, parentId, groupId, handleClickShow }) {

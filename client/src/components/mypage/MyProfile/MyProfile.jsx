@@ -5,11 +5,7 @@ import { useSelector } from 'react-redux';
 function MyProfile () {
   const { social } = useSelector((state) => state.user);
 
-  return (
-    <MyProfileStyle 
-      social={social}
-    />
-  )
+  return <MyProfileStyle social={social} />;
 }
 
 export default MyProfile;

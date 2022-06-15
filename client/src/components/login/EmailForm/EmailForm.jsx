@@ -7,7 +7,7 @@ import { loginToggle } from '../../../redux/slice/toggleSlice';
 
 function EmailForm () {
   const state = useSelector((state) => state.user);
-  const {isLogin, message} = state;
+  const { isLogin, message } = state;
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
   const dispatch = useDispatch();
@@ -21,11 +21,11 @@ function EmailForm () {
 
   const handleIdChange = (evt) => {
     setUserId(evt.target.value);
-  }
+  };
 
   const handlePwChange = (evt) => {
     setUserPw(evt.target.value);
-  }
+  };
 
   const handleLoginClose = () => {
     dispatch(loginToggle());
