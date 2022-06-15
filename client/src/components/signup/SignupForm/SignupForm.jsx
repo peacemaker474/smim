@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { postSignupSubmit } from '../../../network/signup/http';
 import SignupFormStyle from './SignupForm.style';
 
-function SignupForm () {
+function SignupForm() {
   const [message, setMessage] = useState({
-    userId: "",
-    email: "",
-    nickName: "",
-    password: "",
-    check: "",
+    userId: '',
+    email: '',
+    nickName: '',
+    password: '',
+    check: '',
   });
 
   const [valid, setValid] = useState({
@@ -21,18 +21,18 @@ function SignupForm () {
   });
 
   const [inputs, setInputs] = useState({
-    userId: "",
-    email: "",
-    nickName: "",
-    birthday: "",
-    password: "",
-    check: "",
+    userId: '',
+    email: '',
+    nickName: '',
+    birthday: '',
+    password: '',
+    check: '',
   });
 
   const handleInputChange = (evt) => {
     const name = evt.target.name;
-    setInputs({ ...inputs, [name]: evt.target.value});
-  }
+    setInputs({ ...inputs, [name]: evt.target.value });
+  };
 
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ function SignupForm () {
     evt.preventDefault();
 
     let result = [];
-    
+
     for (let key in valid) {
       if (valid[key] === false) {
         result.push(key);
@@ -56,11 +56,9 @@ function SignupForm () {
         password: inputs.password,
         password2: inputs.check,
       };
-      
-      console.log(body);
 
       postSignupSubmit(body).then((res) => {
-        if(res.data.success) {
+        if (res.data.success) {
           navigate('/');
         }
       });
@@ -68,7 +66,7 @@ function SignupForm () {
   };
 
   return (
-    <SignupFormStyle 
+    <SignupFormStyle
       message={message}
       setMessage={setMessage}
       valid={valid}

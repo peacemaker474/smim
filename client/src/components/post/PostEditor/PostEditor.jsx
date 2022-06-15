@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCheck } from '../../../redux/postForm/action';
-import { contentAdd } from '../../../redux/postCreate/action';
+import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
+import { contentAdd } from '../../../redux/slice/postCreateSlice';
 import PostEditorPresenter from './PostEditor.style';
 
 function PostEditor() {
   // const [para, setPara] = useState('');
   const dispatch = useDispatch();
   const contentInput = useRef();
-  const postCheck = useSelector((state) => state.postFormReducer);
-  const postData = useSelector((state) => state.postCreateReducer);
+  const postCheck = useSelector((state) => state.postFormCheck);
+  const postData = useSelector((state) => state.postCreate);
 
   useEffect(() => {
     if (postCheck.content) {

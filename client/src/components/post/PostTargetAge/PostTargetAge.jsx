@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { targetAgeAdd } from '../../../redux/postCreate/action';
-import { resetCheck } from '../../../redux/postForm/action';
+import { targetAgeAdd } from '../../../redux/slice/postCreateSlice';
+import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTargetAgePresenter from './PostTargetAge.style';
 
 function PostTargetAge() {
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.postCreateReducer);
-  const postCheck = useSelector((state) => state.postFormReducer);
+  const postData = useSelector((state) => state.postCreate);
+  const postCheck = useSelector((state) => state.postFormCheck);
   const ageInput = useRef();
 
   useEffect(() => {

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { tagAdd, tagDelete } from '../../../redux/postCreate/action';
-import { resetCheck } from '../../../redux/postForm/action';
+import { tagAdd, tagDelete } from '../../../redux/slice/postCreateSlice';
+import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTagPresenter from './PostTag.style';
 
 function PostTag() {
   const [text, setText] = useState('');
-  const { hashtag } = useSelector((state) => state.postCreateReducer);
-  const postCheck = useSelector((state) => state.postFormReducer);
+  const { hashtag } = useSelector((state) => state.postCreate);
+  const postCheck = useSelector((state) => state.postFormCheck);
   const dispatch = useDispatch();
   const tagInput = useRef();
 

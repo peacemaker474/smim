@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { menuClose } from '../../../redux/toggle/action';
 import { logoutUser } from '../../../redux/login/action';
 
@@ -13,10 +13,10 @@ const MobileNavBox = styled.section`
   right: 0;
   background-color: white;
   display: none;
-  @media ${({theme}) => theme.device.ipad} {
+  @media ${({ theme }) => theme.device.ipad} {
     display: flex;
     justify-content: flex-end;
-    box-shadow: rgb(0 0 0 / 50%) -16px 0px 16px -16px
+    box-shadow: rgb(0 0 0 / 50%) -16px 0px 16px -16px;
   }
 `;
 
@@ -38,22 +38,22 @@ const MobileList = styled.li`
 const MobileLink = styled(Link)`
   font-size: 26px;
   text-decoration: none;
-  color: ${({theme}) => theme.color.gray};
+  color: ${({ theme }) => theme.color.gray};
   cursor: pointer;
-  @media ${({theme}) => theme.device.iphoneSE} {
+  @media ${({ theme }) => theme.device.iphoneSE} {
     font-size: 18px;
   }
-  @media ${({theme}) => theme.device.fold} {
+  @media ${({ theme }) => theme.device.fold} {
     font-size: 17px;
   }
 `;
 
 const MobileSignBox = styled.div`
   width: 90%;
-  @media ${({theme}) => theme.device.iphoneSE} {
+  @media ${({ theme }) => theme.device.iphoneSE} {
     width: 95%;
   }
-  @media ${({theme}) => theme.device.fold} {
+  @media ${({ theme }) => theme.device.fold} {
     width: 100%;
   }
 `;
@@ -62,11 +62,11 @@ const MobileSignIn = styled.h2`
   font-size: 18px;
   margin: 10px 0;
   cursor: pointer;
-  @media ${({theme}) => theme.device.iphoneSE} {
+  @media ${({ theme }) => theme.device.iphoneSE} {
     font-size: 15px;
     margin: 5px 0;
   }
-  @media ${({theme}) => theme.device.fold} {
+  @media ${({ theme }) => theme.device.fold} {
     font-size: 14px;
     margin: 5px 0;
   }
@@ -74,15 +74,15 @@ const MobileSignIn = styled.h2`
 
 const MobileSignUpTitle = styled.span`
   font-size: 13px;
-  color: ${({theme}) => theme.color.gray};
+  color: ${({ theme }) => theme.color.gray};
   font-weight: 500;
 
-  @media ${({theme}) => theme.device.iphoneSE} {
+  @media ${({ theme }) => theme.device.iphoneSE} {
     display: block;
     font-size: 11px;
     margin-bottom: 5px;
   }
-  @media ${({theme}) => theme.device.fold} {
+  @media ${({ theme }) => theme.device.fold} {
     font-size: 10px;
     display: block;
     margin-bottom: 5px;
@@ -90,76 +90,79 @@ const MobileSignUpTitle = styled.span`
 `;
 
 const MobileSignUp = styled(Link)`
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   font-weight: bold;
   font-size: 15px;
   padding-left: 5px;
 
-  @media ${({theme}) => theme.device.iphoneSE} {
+  @media ${({ theme }) => theme.device.iphoneSE} {
     font-size: 13px;
     padding-left: 0;
   }
 
-  @media ${({theme}) => theme.device.fold} {
+  @media ${({ theme }) => theme.device.fold} {
     font-size: 12px;
     padding-left: 0;
   }
 `;
 
-function MobileNavBar () {
-  const loginState = useSelector((state) => state.loginReducer);
+function MobileNavBar() {
+  const loginState = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleMenuClick = () => {
     dispatch(menuClose());
-  }
+  };
 
   const handleLogoutClick = () => {
     dispatch(logoutUser());
     dispatch(menuClose());
     navigate('/');
-  }
+  };
 
   return (
     <MobileNavBox>
-        <MobileLists>
+      <MobileLists>
+        <MobileList>
+          {!loginState.isLogin ? (
+            <MobileSignBox>
+              <MobileSignIn onClick={handleMenuClick}> 로그인 하기 </MobileSignIn>
+              <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
+              <MobileSignUp to='/signup'> 회원가입 </MobileSignUp>
+            </MobileSignBox>
+          ) : (
+            <MobileLink to='/my'> 마이페이지 </MobileLink>
+          )}
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation10'> 10대에게 </MobileLink>
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation20'> 20대에게 </MobileLink>
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation30'> 30대에게 </MobileLink>
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation40'> 40대에게 </MobileLink>
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation50'> 50대에게 </MobileLink>
+        </MobileList>
+        <MobileList>
+          <MobileLink to='/post/view/generation60'> 60대에게 </MobileLink>
+        </MobileList>
+        {loginState.isLogin && (
           <MobileList>
-            {!loginState.isLogin ? (
-              <MobileSignBox>
-                <MobileSignIn onClick={handleMenuClick}> 로그인 하기 </MobileSignIn>
-                <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
-                <MobileSignUp to="/signup"> 회원가입 </MobileSignUp>
-              </MobileSignBox>
-            ) : (
-              <MobileLink to="/my"> 마이페이지 </MobileLink>
-            )}
+            <MobileLink to='/' onClick={handleLogoutClick}>
+              {' '}
+              로그아웃{' '}
+            </MobileLink>
           </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation10"> 10대에게 </MobileLink>
-          </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation20"> 20대에게 </MobileLink>
-          </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation30"> 30대에게 </MobileLink>
-          </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation40"> 40대에게 </MobileLink>
-          </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation50"> 50대에게 </MobileLink>
-          </MobileList>
-          <MobileList>
-            <MobileLink to="/post/view/generation60"> 60대에게 </MobileLink>
-          </MobileList>
-          {loginState.isLogin && 
-            <MobileList>
-              <MobileLink to="/" onClick={handleLogoutClick}> 로그아웃 </MobileLink>
-            </MobileList>
-          }
-        </MobileLists>
+        )}
+      </MobileLists>
     </MobileNavBox>
   );
 }
 
-export default MobileNavBar
+export default MobileNavBar;

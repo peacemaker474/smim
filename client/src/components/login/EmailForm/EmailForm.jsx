@@ -5,9 +5,9 @@ import { loginClose } from '../../../redux/toggle/action';
 import { loginUser } from '../../../redux/login/action';
 import EmailFormStyle from './EmailForm.style';
 
-function EmailForm () {
-  const state = useSelector((state) => state.loginReducer);
-  const {isLogin, message} = state;
+function EmailForm() {
+  const state = useSelector((state) => state.login);
+  const { isLogin, message } = state;
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
   const dispatch = useDispatch();
@@ -21,15 +21,15 @@ function EmailForm () {
 
   const handleIdChange = (evt) => {
     setUserId(evt.target.value);
-  }
+  };
 
   const handlePwChange = (evt) => {
     setUserPw(evt.target.value);
-  }
+  };
 
   const handleLoginClose = () => {
     dispatch(loginClose());
-  }
+  };
 
   const handleLoginSubmit = (evt) => {
     evt.preventDefault();
@@ -37,9 +37,9 @@ function EmailForm () {
     let body = {
       userId,
       password: userPw,
-    }
+    };
     dispatch(loginUser(body));
-  }
+  };
 
   return (
     <EmailFormStyle

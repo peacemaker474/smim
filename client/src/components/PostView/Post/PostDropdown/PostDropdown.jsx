@@ -14,7 +14,6 @@ export default function PostDropdown({ postId }, ref) {
   };
   const handlePostDel = async (e) => {
     e.preventDefault();
-    console.log('삭제');
     const response = await deletePost(postId, {
       headers: {
         'Content-Type': 'application/json',
