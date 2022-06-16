@@ -13,7 +13,11 @@ function SignupEmail ({message, setMessage, valid, setValid, onInputChange}) {
         .then(({data}) => {
           setMessage({ ...message, email: data.message});
           setValid({ ...valid, email: data.success});
-        });
+        })
+        .catch(({ response : { data }}) => {
+          setMessage({ ...message, email: data.message});
+          setValid({ ...valid, email: data.success});
+        })
     }
   }
   return (

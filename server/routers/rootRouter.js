@@ -1,9 +1,9 @@
 import express from 'express';
 import { getMainPageLists } from '../controllers/postController.js';
 import {
-  getCheckEmail,
-  getCheckId,
-  getCheckName,
+  getEmailCheck,
+  getIdCheck,
+  getNameCheck,
   postSignup,
   getGoogleAuth,
   getGoogleCallback,
@@ -14,9 +14,9 @@ const rootRouter = express.Router();
 
 rootRouter.get("/", getMainPageLists);
 
-rootRouter.get('/signup/id-check', getCheckId);
-rootRouter.get('/signup/email-check', getCheckEmail);
-rootRouter.get('/signup/name-check', getCheckName);
+rootRouter.get('/signup/id-check', getIdCheck);
+rootRouter.get('/signup/email-check', getEmailCheck);
+rootRouter.get('/signup/name-check', getNameCheck);
 rootRouter.post('/signup', userImgUpload.single("users"), postSignup);
 
 // google oauth

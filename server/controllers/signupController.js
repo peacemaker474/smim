@@ -4,54 +4,53 @@ const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const GOOGLE_AUTH_REDIRECT_URL = 'http://localhost:4000/login/google/callback';
 const GOOGLE_AUTH_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
-export const getSignup = (req, res) => {
-  return res.send({ pageTitle: 'SignUp' });
-};
+/* 
+  회원가입에서 발생하는 유효성 검사를 서버단에서 처리할 것인지
+  클라이언트 단에서 처리할 것인지 정해야 한다.
+*/
 
-export const getCheckId = (req, res) => {
+
+export const getIdCheck = (req, res) => {
   const { userId } = req.query;
   User.findOne({ userId })
     .then((data) => {
       if (data) {
-        return res.json({ success: false, message: '이미 사용중이거나 탈퇴한 아이디입니다.' });
+        return res.status(409).json({ success: false, message: '이미 사용중이거나 탈퇴한 아이디입니다.' });
       } else {
-        return res.json({ success: true, message: '사용이 가능한 아이디입니다.' });
+        return res.status(200).json({ success: true, message: '사용이 가능한 아이디입니다.' });
       }
     })
     .catch((err) => console.log(err));
 };
 
-export const getCheckEmail = (req, res) => {
+export const getEmailCheck = (req, res) => {
   const { email } = req.query;
   User.findOne({ email })
     .then((data) => {
       if (data) {
-        return res.json({ success: false, message: '이미 사용중이거나 탈퇴한 이메일입니다.' });
+        return res.status(409).json({ success: false, message: '이미 사용중이거나 탈퇴한 이메일입니다.' });
       } else {
-        return res.json({ success: true, message: '사용이 가능한 이메일입니다.' });
+        return res.status(200).json({ success: true, message: '사용이 가능한 이메일입니다.' });
       }
     })
     .catch((err) => console.log(err));
 };
 
-export const getCheckName = (req, res) => {
+export const getNameCheck = (req, res) => {
   const { nickname } = req.query;
   User.findOne({ nickname })
     .then((data) => {
       if (data) {
-        return res.json({ success: false, message: '이미 사용중인 닉네임입니다.' });
+        return res.status(409).json({ success: false, message: '이미 사용중인 닉네임입니다.' });
       } else {
-        return res.json({ success: true, message: '사용이 가능한 닉네임입니다.' });
+        return res.status(200).json({ success: true, message: '사용이 가능한 닉네임입니다.' });
       }
     })
     .catch((err) => console.log(err));
 };
 
 export const postSignup = async (req, res) => {
-  const { userId, email, nickname, birthday, password, password2 } = req.body;
-  if (password !== password2) {
-    return res.json({ success: false, message: '비밀번호가 서로 다릅니다.' });
-  }
+  const { userId, email, nickname, birthday, password } = req.body;
   try {
     await User.create({
       userId,
@@ -60,7 +59,7 @@ export const postSignup = async (req, res) => {
       birthday,
       password,
     });
-    return res.json({ success: true, message: '회원가입에 성공하셨습니다.' });
+    return res.status(201).json({ success: true, message: '회원가입에 성공하셨습니다.' });
   } catch (error) {
     console.log(error);
   }
