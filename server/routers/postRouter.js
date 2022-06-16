@@ -1,7 +1,7 @@
 import express from 'express';
 import {
-  postCreate,
-  putEdit,
+  postPostCreate,
+  putPostEdit,
   deletePost,
   getPostDetail,
   getPostList,
@@ -17,14 +17,14 @@ export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
-postRouter.post('/create', verifyToken, postCreate);
+postRouter.post('/create', verifyToken, postPostCreate);
 postRouter.get('/bookmark', verifyToken, getBookmark);
 postRouter.route('/comment').get(getCommentList).post(verifyToken, postCommentCreate);
 
 postRouter
   .route('/:id')
   .get(getPostDetail)
-  .put(verifyToken, putEdit)
+  .put(verifyToken, putPostEdit)
   .delete(verifyToken, deletePost);
 
 postRouter.route('/:id/detail').get(verifyToken, getPostDetail);
