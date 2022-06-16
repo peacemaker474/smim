@@ -6,9 +6,9 @@ import {
   DropdownItemBtn,
 } from '../../../../styles/common/dropdown';
 
-function Dropdown({ handlePostEdit, handlePostDel }, ref) {
+export default function PostDropdownPresenter({ forwardRef, handlePostEdit, handlePostDel }) {
   return (
-    <PostDropdownContainer ref={ref}>
+    <PostDropdownContainer ref={forwardRef}>
       <PostDropdownBox>
         <PostDropdownBtn onClick={handlePostEdit}>수정</PostDropdownBtn>
         <PostDropdownBtn onClick={handlePostDel}>삭제</PostDropdownBtn>
@@ -16,7 +16,6 @@ function Dropdown({ handlePostEdit, handlePostDel }, ref) {
     </PostDropdownContainer>
   );
 }
-export const PostDropdownPresenter = React.forwardRef(Dropdown);
 
 const PostDropdownContainer = styled(DropdownContainer)`
   height: auto;
