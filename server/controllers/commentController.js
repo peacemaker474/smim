@@ -65,11 +65,8 @@ export const postCommentCreate = async (req, res) => {
 
       if (parent_id != null) {
         const parentComment = await Comment.findOne({ _id: parent_id });
-        console.log(parentComment.children);
-        console.log(comment._id);
         parentComment.children.push(comment._id);
         await parentComment.save();
-        console.log(parentComment);
       }
 
       return res.json({
@@ -140,13 +137,11 @@ export const getCommentList = async (req, res) => {
             DATA[check] = [];
           }
           DATA[check].push(commentDataList[i]);
-          console.log('CHECK', check);
           await repeat(commentDataList[i].children, check);
         }
       }
 
       await repeat(commentList, 0);
-      console.log(DATA);
 
       // const commentDataList = await Promise.all(
       //   commentList.map(async (el) => {
