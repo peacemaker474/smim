@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DropdownBtn } from '../../../../styles/common/dropdown';
-import PostDropdown from '../PostDropdown/PostDropdown';
+import { PostDropdown } from '../PostDropdown/PostDropdown';
 
 export default function PostHeadPresenter({
   author,

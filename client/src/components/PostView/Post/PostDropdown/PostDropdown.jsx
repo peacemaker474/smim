@@ -2,14 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deletePost } from '../../../../network/post/http';
 import { getCookie } from '../../../../utils/cookie';
-import { PostDropdownPresenter } from './PostDropdown.style';
+import PostDropdownPresenter from './PostDropdown.style';
 
-export default function PostDropdown({ postId }, ref) {
+function Dropdown({ postId }, ref) {
   const tkn = getCookie('users');
   let navigate = useNavigate();
 
   const handlePostEdit = (e) => {
     e.preventDefault();
+    console.log('hey');
     navigate(`/posts/edit/${postId}`);
   };
   const handlePostDel = async (e) => {
@@ -26,7 +27,9 @@ export default function PostDropdown({ postId }, ref) {
     <PostDropdownPresenter
       handlePostEdit={handlePostEdit}
       handlePostDel={handlePostDel}
-      ref={ref}
+      forwardRef={ref}
     />
   );
 }
+
+export const PostDropdown = React.forwardRef(Dropdown);
