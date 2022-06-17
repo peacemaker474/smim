@@ -30,7 +30,9 @@ export const putChangePassWord = (data) => {
   return axios
     .put(`${http}/my/changepw`, data)
     .then(({data}) => {
-      if (!data.success) alert(data.message);
+      alert(data.message);
     })
-    .catch((err) => err);
+    .catch(({ response : { data }}) => {
+      if (!data.success) alert(data.message);
+    });
 };

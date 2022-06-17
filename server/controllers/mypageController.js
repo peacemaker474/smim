@@ -14,7 +14,7 @@ import { createToken } from './tokenControllers.js';
 export const getWriteLists = async (req, res) => {
   const { userId } = req.query;
   const { posts } = await User.findOne({userId});
-  if (posts.length === 0) return res.send("작성한 게시글이 없습니다.");
+  if (posts.length === 0) return res.status(204).send("작성한 게시글이 없습니다.");
   
   const writeLists = await Promise.all(
     posts.map(async (list) => {
@@ -23,13 +23,13 @@ export const getWriteLists = async (req, res) => {
     })
   );
   
-  return res.json({ success: true, writeLists});
+  return res.status(200).json({ success: true, writeLists});
 };
 
 export const getFavoriteLists = async (req, res) => {
   const { userId } = req.query;
   const { bookmarks } = await User.findOne({userId});
-  if (bookmarks.length === 0) return res.send("즐겨찾기한 게시글이 없습니다.");
+  if (bookmarks.length === 0) return res.status(204).send("즐겨찾기한 게시글이 없습니다.");
 
   const favoriteLists = await Promise.all(
     bookmarks.map(async (list) => {
@@ -38,8 +38,10 @@ export const getFavoriteLists = async (req, res) => {
     })
   );
   
-  return res.json({ success: true, favoriteLists});
+  return res.status(200).json({ success: true, favoriteLists});
 };
+
+// REFACOTRING 필요
 
 export const putChangeUserInfo = async (req, res) => {
   const { 
@@ -52,9 +54,9 @@ export const putChangeUserInfo = async (req, res) => {
   const updateImage = await User.findByIdAndUpdate(user._id, {
     imageUrl: file ? file.path : user.imageUrl,
   });
-  if (file !== undefined && checkId === null && checkName === null) return res.json({ success: true, imageUrl: updateImage.imageUrl})
-  if (checkId !== null) return res.json({ success: false, message: "이미 존재하는 아이디입니다."})
-  if (checkName !== null) return res.json({ success: false, message: "이미 존재하는 닉네임입니다."})
+  if (file !== undefined && checkId === null && checkName === null) return res.status(201).json({ success: true, imageUrl: updateImage.imageUrl})
+  if (checkId !== null) return res.status(409).json({ success: false, message: "이미 존재하는 아이디입니다."})
+  if (checkName !== null) return res.status(409).json({ success: false, message: "이미 존재하는 닉네임입니다."})
   
   const updateUser = await User.findByIdAndUpdate(user._id, {
     userId,
@@ -62,7 +64,7 @@ export const putChangeUserInfo = async (req, res) => {
   }, {new: true});
   const token = createToken(user._id);
   
-  return res.json({
+  return res.status(201).json({
     id: updateUser.userId,
     name: updateUser.nickname,
     email: updateUser.email,
@@ -78,18 +80,18 @@ export const putChangePassword = async (req, res) => {
   const user = await User.findOne({userId});
   const checkPassword = await bcrypt.compare(oldPassword, user.password);
   if (!checkPassword) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "비밀번호를 다시 입력하세요.",
     });
   }
   if (newPassword !== newPassword2) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.",
     })
   }
   user.password = newPassword;
   await user.save();
-  return res.send("성공적으로 비밀번호를 변경하였습니다.");
+  return res.status(201).send("성공적으로 비밀번호를 변경하였습니다.");
 };
