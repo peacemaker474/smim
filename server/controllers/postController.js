@@ -4,24 +4,24 @@ import Like from '../models/Like.js';
 // import Tag from '../models/Tag.js';
 
 // 게시물 생성(Post Create)
-export const postCreate = async (req, res) => {
+export const postPostCreate = async (req, res) => {
   const { title, content, hashtag, targetAge } = req.body;
   const {
     user: { _id },
   } = req.body;
   const user = await User.findById({ _id: _id });
   if (!title) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: 'title이 undefined입니다.',
     });
   } else if (!hashtag) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: 'hashtag가 undefined입니다.',
     });
   } else if (!content) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: 'content가 undefined입니다.',
     });
@@ -34,7 +34,7 @@ export const postCreate = async (req, res) => {
       targetAge === '50'
     )
   ) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
     });
@@ -53,7 +53,7 @@ export const postCreate = async (req, res) => {
 
       user.posts.push(post._id);
       await user.save();
-      return res.json({
+      return res.status(200).send({
         success: true,
         message: '새로운 게시글 작성이 완료되었습니다.',
       });
@@ -63,31 +63,31 @@ export const postCreate = async (req, res) => {
   }
 };
 // 게시물 수정(Post Edit)
-export const putEdit = async (req, res) => {
+export const putPostEdit = async (req, res) => {
   const { id } = req.params;
   const { title, content, hashtag, targetAge } = req.body;
 
   try {
     const exist = await Post.exists({ _id: id, being: true });
     if (!exist) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
     if (!title) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'title이 undefined입니다.',
       });
     } else if (!hashtag) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'hashtag가 undefined입니다.',
       });
     } else if (!content) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'content가 undefined입니다.',
       });
@@ -100,19 +100,19 @@ export const putEdit = async (req, res) => {
         targetAge === '50'
       )
     ) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '해당 연령대는 존재하지 않습니다',
       });
     } else {
       await Post.findByIdAndUpdate(id, { ...req.body });
-      return res.json({
+      return res.status(200).send({
         success: true,
         message: '게시글 수정이 완료되었습니다.',
       });
     }
   } catch {
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: '게시물의 아이디가 올바르지 않습니다.',
     });
@@ -128,7 +128,7 @@ export const getPostDetail = async (req, res) => {
     const postData = await Post.findById(id);
 
     if (!postData) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
@@ -139,13 +139,13 @@ export const getPostDetail = async (req, res) => {
     const like = await Like.findOne({ post_id: id });
 
     if (!user) {
-      return res.json({
+      return res.status(200).send({
         ...postData._doc,
         owner: { _id, userId, nickname, imageUrl: owner.imageUrl },
       });
     }
 
-    return res.json({
+    return res.status(200).send({
       ...postData._doc,
       bookmark: user.bookmarks.includes(id),
       like: like.user_array.includes(_id),
@@ -153,7 +153,7 @@ export const getPostDetail = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: '에러가 발생했습니다.',
     });
@@ -166,7 +166,7 @@ export const getPostList = async (req, res) => {
   console.log(age);
 
   if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
     });
@@ -188,32 +188,32 @@ export const getPostList = async (req, res) => {
     })
   );
 
-  return res.json(postDataList);
+  return res.status(200).send(postDataList);
 };
 
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
   const {
-    user: { _id, nickname, userId },
+    user: { _id },
   } = req.body; // user id
   try {
     const postData = await Post.find({ _id: id, owner: _id, being: true });
 
     if (postData.length === 0) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
     await Post.findByIdAndUpdate(id, { being: false });
-    return res.json({
+    return res.status(200).send({
       success: true,
       message: '게시글 삭제가 완료되었습니다.',
     });
   } catch {
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: '게시물의 아이디가 올바르지 않습니다.',
     });
@@ -226,7 +226,7 @@ export const getPostView = async (req, res) => {
   const post = await Post.find({ _id: id, being: true });
 
   if (post.length === 0) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: '존재하지 않거나 삭제된 게시물입니다.',
     });
@@ -234,7 +234,7 @@ export const getPostView = async (req, res) => {
 
   post.meta.views += 1;
   await post.save();
-  return res.json('succes');
+  return res.status(200).send('succes');
 };
 
 // 게시글 검색
@@ -283,6 +283,6 @@ export const getMainPageLists = async (req, res) => {
         }
       });
     }
-    return res.json({ success: true, lists: postLists });
+    return res.status(200).send({ success: true, lists: postLists });
   });
 };
