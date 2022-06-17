@@ -15,7 +15,7 @@ export const postCommentCreate = async (req, res) => {
 
     if (parent_id != null) {
       if (parent_id === undefined) {
-        return res.json({
+        return res.status(400).send({
           success: false,
           message: 'parent_id가 undefined입니다.',
         });
@@ -24,7 +24,7 @@ export const postCommentCreate = async (req, res) => {
       const commentExist = await Comment.exists({ _id: parent_id, being: true });
 
       if (!commentExist) {
-        return res.json({
+        return res.status(400).send({
           success: false,
           message: '존재하지 않는 댓글입니다.',
         });
@@ -32,21 +32,21 @@ export const postCommentCreate = async (req, res) => {
     }
 
     if (!postExist) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
     if (!userExist) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 탈퇴한 사용자입니다.',
       });
     }
 
     if (!post_id) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'post_id가 undefined입니다.',
       });
@@ -65,14 +65,11 @@ export const postCommentCreate = async (req, res) => {
 
       if (parent_id != null) {
         const parentComment = await Comment.findOne({ _id: parent_id });
-        console.log(parentComment.children);
-        console.log(comment._id);
         parentComment.children.push(comment._id);
         await parentComment.save();
-        console.log(parentComment);
       }
 
-      return res.json({
+      return res.status(200).send({
         success: true,
         comment_id: comment._id,
         message: '댓글 작성 성공했습니다.',
@@ -80,7 +77,7 @@ export const postCommentCreate = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: error.message,
     });
@@ -94,14 +91,14 @@ export const getCommentList = async (req, res) => {
     const postExist = await Post.exists({ _id: post_id, being: true });
 
     if (!postExist) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
     if (!post_id) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'post_id가 undefined입니다.',
       });
@@ -140,13 +137,11 @@ export const getCommentList = async (req, res) => {
             DATA[check] = [];
           }
           DATA[check].push(commentDataList[i]);
-          console.log('CHECK', check);
           await repeat(commentDataList[i].children, check);
         }
       }
 
       await repeat(commentList, 0);
-      console.log(DATA);
 
       // const commentDataList = await Promise.all(
       //   commentList.map(async (el) => {
@@ -165,13 +160,13 @@ export const getCommentList = async (req, res) => {
       //   })
       // );
 
-      return res.json({
+      return res.status(200).send({
         success: true,
         data: DATA,
       });
     }
   } catch (error) {
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: error.message,
     });
