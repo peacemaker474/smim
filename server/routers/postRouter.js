@@ -12,19 +12,20 @@ import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
 import { postBookmark, deleteBookmark, getBookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 import { postCommentCreate, getCommentList } from '../controllers/commentController.js';
+import { fieldCheck } from '../middlewares/fieldCheck.js';
 
 export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
-postRouter.post('/create', verifyToken, postPostCreate);
+postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
 postRouter.get('/bookmark', verifyToken, getBookmark);
 postRouter.route('/comment').get(getCommentList).post(verifyToken, postCommentCreate);
 
 postRouter
   .route('/:id')
   .get(getPostDetail)
-  .put(verifyToken, putPostEdit)
+  .put(verifyToken, fieldCheck, putPostEdit)
   .delete(verifyToken, deletePost);
 
 postRouter.route('/:id/detail').get(verifyToken, getPostDetail);
