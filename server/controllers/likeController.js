@@ -12,7 +12,7 @@ export const getPostLike = async (req, res) => {
     const like = await Like.findOne({ post_id: post._id });
 
     if (!post) {
-      return res.json({
+      return res.status(404).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
@@ -31,12 +31,12 @@ export const getPostLike = async (req, res) => {
     like.user_array.push(_id);
     await like.save();
 
-    return res.json({
+    return res.status(200).send({
       success: true,
       message: '좋아요를 눌렀습니다.',
     });
   } catch {
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: '게시물의 아이디가 올바르지 않습니다.',
     });
@@ -54,14 +54,14 @@ export const getPostUnlike = async (req, res) => {
     const like = await Like.findOne({ post_id: post._id });
 
     if (!post) {
-      return res.json({
+      return res.status(404).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
     if (!like.user_array.includes(_id)) {
-      return res.json({
+      return res.status(404).send({
         success: true,
         message: '좋아요를 누르지 않은 게시물입니다.',
       });
@@ -72,13 +72,13 @@ export const getPostUnlike = async (req, res) => {
     like.user_array = like.user_array.filter((el) => toString(el) !== toString(_id));
     await like.save();
 
-    return res.json({
+    return res.status(200).send({
       success: true,
       message: '좋아요를 취소했습니다.',
     });
   } catch (error) {
     console.log(error);
-    return res.json({
+    return res.status(500).send({
       success: false,
       message: '게시물의 아이디가 올바르지 않습니다.',
     });
