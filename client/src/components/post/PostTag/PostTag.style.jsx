@@ -15,12 +15,13 @@ function PostTagPresenter({
   return (
     <HashContainer palette='yellow'>
       <HashWrapBox>
-        {hashtag.map((el, idx) => (
-          <HashItem key={idx + el}>
-            <span>{el}</span>
-            <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
-          </HashItem>
-        ))}
+        {hashtag &&
+          hashtag.map((el, idx) => (
+            <HashItem key={idx + el}>
+              <span>{el}</span>
+              <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
+            </HashItem>
+          ))}
       </HashWrapBox>
       <HashInput
         type='text'

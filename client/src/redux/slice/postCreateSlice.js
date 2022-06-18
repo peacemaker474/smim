@@ -78,13 +78,13 @@ const postCreateSlice = createSlice({
         state.targetAge = action.payload.targetAge;
         state.hashtag = action.payload.hashtag;
       },
-      prepare(title, content, targetAge, hashtag) {
+      prepare(title, targetAge, hashtag, content) {
         return {
           payload: {
             title,
-            content,
             targetAge,
             hashtag,
+            content,
           },
         };
       },
@@ -98,7 +98,7 @@ const postCreateSlice = createSlice({
   },
 });
 
-export const { titleAdd, contentAdd, targetAgeAdd, tagAdd, totalAdd, tagDelete, postReset } =
+export const { titleAdd, targetAgeAdd, contentAdd, tagAdd, totalAdd, tagDelete, postReset } =
   postCreateSlice.actions;
 
 export default postCreateSlice.reducer;
