@@ -69,15 +69,15 @@ export const getPostUnlike = async (req, res) => {
 
     post.meta.likes -= 1;
     await post.save();
-    like.user_array = like.user_array.filter((el) => el !== user_id);
-
+    like.user_array = like.user_array.filter((el) => toString(el) !== toString(_id));
     await like.save();
 
     return res.json({
       success: true,
       message: '좋아요를 취소했습니다.',
     });
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.json({
       success: false,
       message: '게시물의 아이디가 올바르지 않습니다.',
