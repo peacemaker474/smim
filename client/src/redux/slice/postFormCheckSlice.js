@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const postFormCheckSlice = createSlice({
-  name: 'postCreate',
+  name: 'postFormCheck',
   initialState,
   reducers: {
     titleCheck(state) {

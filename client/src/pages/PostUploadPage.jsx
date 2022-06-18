@@ -32,15 +32,7 @@ function PostUploadPage() {
         },
       });
       const data = response.data;
-
-      dispatch(
-        totalAdd({
-          title: data.title,
-          targetAge: data.targetAge,
-          content: data.content,
-          hashtag: data.hashtag,
-        })
-      );
+      dispatch(totalAdd(data.title, data.targetAge, data.hashtag, data.content));
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +45,7 @@ function PostUploadPage() {
       dispatch(postReset()); // post data reset
     }
     dispatch(resetCheck()); // post state reset - all false
-  }, [loadCreatedPost, pathValue, dispatch]);
+  }, [dispatch, loadCreatedPost, pathValue]);
 
   const showModal = () => {
     setIsVisible(!isVisible);

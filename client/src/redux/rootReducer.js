@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   user: userSlice.reducer,
   toggle: toggleSlice.reducer,
   postCreate: postCreateSlice,
-  postForm: postFormCheckSlice,
+  postFormCheck: postFormCheckSlice,
   comment: commentSlice,
 });
 
