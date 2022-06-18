@@ -25,7 +25,7 @@ export const postPostCreate = async (req, res) => {
 
     user.posts.push(post._id);
     await user.save();
-    return res.status(200).send({
+    return res.status(201).send({
       success: true,
       message: '새로운 게시글 작성이 완료되었습니다.',
     });
@@ -49,7 +49,7 @@ export const putPostEdit = async (req, res) => {
     }
 
     await Post.findByIdAndUpdate(id, { ...req.body });
-    return res.status(200).send({
+    return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
     });
@@ -69,7 +69,7 @@ export const getPostDetail = async (req, res) => {
     const postData = await Post.findById(postId);
 
     if (!postData) {
-      return res.status(400).send({
+      return res.status(404).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
@@ -120,7 +120,7 @@ export const getPostList = async (req, res) => {
   const { age } = req.query;
 
   if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
-    return res.status(400).send({
+    return res.status(404).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
     });
@@ -155,7 +155,7 @@ export const deletePost = async (req, res) => {
     const postData = await Post.find({ _id: id, owner: _id, being: true });
 
     if (postData.length === 0) {
-      return res.status(400).send({
+      return res.status(404).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
@@ -180,7 +180,7 @@ export const getPostView = async (req, res) => {
   const post = await Post.find({ _id: id, being: true });
 
   if (post.length === 0) {
-    return res.status(400).send({
+    return res.status(404).send({
       success: false,
       message: '존재하지 않거나 삭제된 게시물입니다.',
     });
@@ -196,7 +196,7 @@ export const getPostSearch = async (req, res) => {
   const { age, tag, keyword } = req.query;
 
   if (!(parseInt(age) >= 60)) {
-    return res.json({
+    return res.status(404).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
     });
@@ -215,7 +215,7 @@ export const getPostSearch = async (req, res) => {
       })
   );
 
-  return res.json(postDataList);
+  return res.status(200).send(postDataList);
 };
 
 export const getMainPageLists = async (req, res) => {
