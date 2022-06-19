@@ -1,7 +1,6 @@
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Like from '../models/Like.js';
-// import Tag from '../models/Tag.js';
 
 // 게시물 생성(Post Create)
 export const postPostCreate = async (req, res) => {
@@ -31,6 +30,10 @@ export const postPostCreate = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
   }
 };
 
@@ -39,15 +42,6 @@ export const putPostEdit = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const exist = await Post.exists({ _id: id, being: true });
-
-    if (!exist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
     await Post.findByIdAndUpdate(id, { ...req.body });
     return res.status(201).send({
       success: true,
@@ -57,25 +51,17 @@ export const putPostEdit = async (req, res) => {
     console.log(error);
     return res.status(500).send({
       success: false,
-      message: '게시물의 아이디가 올바르지 않습니다.',
+      message: '내부 서버 오류입니다.',
     });
   }
 };
 // 게시물 보기(Post Detail Read)
 export const getPostDetail = async (req, res) => {
   const { id: postId } = req.params;
+  const post = req.post;
 
   try {
-    const postData = await Post.findById(postId);
-
-    if (!postData) {
-      return res.status(404).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    const owner = await User.findById(String(postData.owner));
+    const owner = await User.findById(String(post.owner));
     const like = await Like.findOne({ post_id: postId });
 
     if (Object.keys(req.body).includes('user')) {
@@ -85,7 +71,7 @@ export const getPostDetail = async (req, res) => {
       } = req.body;
       const user = await User.findOne({ _id: _id });
       return res.status(200).send({
-        ...postData._doc,
+        ...post._doc,
         bookmark: user.bookmarks.includes(postId),
         like: like.user_array.includes(_id),
         owner: {
@@ -98,7 +84,7 @@ export const getPostDetail = async (req, res) => {
     }
     // 로그인 안했을 때
     return res.status(200).send({
-      ...postData._doc,
+      ...post._doc,
       owner: {
         _id: owner._id,
         userId: owner.userId,
@@ -110,7 +96,7 @@ export const getPostDetail = async (req, res) => {
     console.log(error);
     return res.status(500).send({
       success: false,
-      message: '에러가 발생했습니다.',
+      message: '내부 서버 오류입니다.',
     });
   }
 };
@@ -148,19 +134,8 @@ export const getPostList = async (req, res) => {
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
-  const {
-    user: { _id },
-  } = req.body; // user id
+
   try {
-    const postData = await Post.find({ _id: id, owner: _id, being: true });
-
-    if (postData.length === 0) {
-      return res.status(404).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
     await Post.findByIdAndUpdate(id, { being: false });
     return res.status(200).send({
       success: true,
@@ -169,26 +144,32 @@ export const deletePost = async (req, res) => {
   } catch {
     return res.status(500).send({
       success: false,
-      message: '게시물의 아이디가 올바르지 않습니다.',
+      message: '내부 서버 오류입니다.',
     });
   }
 };
 
 // 게시물 조회수
 export const getPostView = async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.find({ _id: id, being: true });
+  try {
+    const post = req.post;
 
-  if (post.length === 0) {
-    return res.status(404).send({
+    post.meta.views += 1;
+    await post.save();
+    return res.status(200).send({
+      success: true,
+      message: '게시글을 조회했습니다.',
+      data: {
+        views: post.meta.views,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
       success: false,
-      message: '존재하지 않거나 삭제된 게시물입니다.',
+      message: '내부 서버 오류입니다.',
     });
   }
-
-  post.meta.views += 1;
-  await post.save();
-  return res.status(200).send('succes');
 };
 
 // 게시글 검색
