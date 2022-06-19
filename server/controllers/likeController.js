@@ -19,7 +19,7 @@ export const getPostLike = async (req, res) => {
     }
 
     if (like.user_array.includes(_id)) {
-      return res.json({
+      return res.status(404).send({
         success: false,
         message: '이미 좋아요한 게시물입니다.',
       });
