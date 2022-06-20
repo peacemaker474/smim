@@ -51,7 +51,7 @@ export const postCommentCreate = async (req, res) => {
         message: 'post_id가 undefined입니다.',
       });
     } else if (!content) {
-      return res.json({
+      return res.status(400).send({
         success: false,
         message: 'content가 undefined입니다.',
       });
