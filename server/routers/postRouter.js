@@ -12,12 +12,12 @@ import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
 import { getBookmark, deleteBookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 import { postCommentCreate, getCommentList } from '../controllers/commentController.js';
-import { fieldCheck } from '../middlewares/fieldCheck.js';
 import {
-  existPostCheckAndData,
   existPostAndOwnerCheck,
+  existPostCheckAndData,
   existPostCheck,
-} from '../middlewares/existCheck.js';
+  fieldCheck,
+} from '../middlewares.js';
 
 export const postRouter = express.Router();
 
