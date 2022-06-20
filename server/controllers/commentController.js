@@ -143,23 +143,6 @@ export const getCommentList = async (req, res) => {
 
       await repeat(commentList, 0);
 
-      // const commentDataList = await Promise.all(
-      //   commentList.map(async (el) => {
-      //     const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
-      //     const writer = await User.findOne({ _id: el.writer });
-
-      //     return {
-      //       ...el._doc,
-      //       children,
-      //       writer: {
-      //         userId: writer.userId,
-      //         _id: writer._id,
-      //         nickname: writer.nickname,
-      //       },
-      //     };
-      //   })
-      // );
-
       return res.status(200).send({
         success: true,
         data: DATA,
