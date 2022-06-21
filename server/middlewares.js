@@ -49,7 +49,7 @@ export const existPostCheckAndData = async (req, res, next) => {
   }
 };
 
-// post id가 DB에 존재하는지 체크하는 미들웨어
+// User와 상관없이 DB에 존재하는 게시글인지 체크하는 미들웨어
 export const existPostCheck = async (req, res, next) => {
   const { id } = req.params;
   try {
