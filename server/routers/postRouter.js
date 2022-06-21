@@ -11,7 +11,11 @@ import {
 import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
 import { getBookmark, deleteBookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
-import { postCommentCreate, getCommentList } from '../controllers/commentController.js';
+import {
+  postCommentCreate,
+  getCommentList,
+  postCommentPinned,
+} from '../controllers/commentController.js';
 import {
   existPostAndOwnerCheck,
   existPostCheckAndData,
@@ -25,6 +29,7 @@ postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
 postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
 postRouter.route('/comment').get(getCommentList).post(verifyToken, postCommentCreate);
+postRouter.post('/pinnedComment', verifyToken, postCommentPinned);
 
 postRouter
   .route('/:id')

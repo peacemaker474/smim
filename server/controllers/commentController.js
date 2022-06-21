@@ -155,3 +155,67 @@ export const getCommentList = async (req, res) => {
     });
   }
 };
+
+export const postCommentPinned = async (req, res) => {
+  const { post_id, comment_id } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
+
+  try {
+    if (!post_id) {
+      return res.status(400).send({
+        success: false,
+        message: 'post_id가 undefined입니다.',
+      });
+    } else if (!comment_id) {
+      return res.status(400).send({
+        success: false,
+        message: 'comment_id가 undefined입니다.',
+      });
+    }
+
+    const userExist = await User.exists({ _id: _id });
+    const post = await Post.findOne({ _id: post_id, being: true, owner: _id });
+    const commentExist = await Comment.exists({
+      post_id: post_id,
+      state: true,
+      _id: comment_id,
+      parent_id: null,
+    });
+
+    if (!commentExist) {
+      return res.status(400).send({
+        success: false,
+        message: '고정할 수 없는 댓글입니다.',
+      });
+    }
+
+    if (!post) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    if (!userExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
+    post.meta.pinnedCmnt = comment_id;
+    await post.save();
+
+    return res.status(201).send({
+      success: true,
+      message: '댓글 고정을 성공했습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
