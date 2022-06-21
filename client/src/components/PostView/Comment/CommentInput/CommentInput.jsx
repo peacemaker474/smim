@@ -1,18 +1,31 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate } from '../../../../network/comment/http';
 import { getCookie } from '../../../../utils/cookie';
 import { createComment } from '../../../../redux/slice/commentSlice';
 import CommentInputPresenter from './CommentInput.style';
 
-export default function CommentInput({ postId, parentId, groupId, handleClickShow }) {
+export default function CommentInput({
+  postId,
+  parentId,
+  groupId,
+  handleClickShow,
+  isTargetVisible,
+}) {
   const loginState = useSelector((state) => state.user);
   const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
   const tkn = getCookie('users');
   const dispatch = useDispatch();
 
-  const handleCommentCreate = async () => {
+  useEffect(() => {
+    if (isTargetVisible) {
+      inputRef.current && inputRef.current.focus();
+    }
+  }, [isTargetVisible]);
+
+  const handleCommentCreate = async (e) => {
+    e.preventDefault();
     const response = await postCommentCreate(
       { post_id: postId, content: inputText, parent_id: parentId },
       {
@@ -26,22 +39,23 @@ export default function CommentInput({ postId, parentId, groupId, handleClickSho
     if (response.data.success) {
       const date = String(new Date());
       dispatch(
-        createComment({
-          text: inputText,
-          _id: response.data.comment_id,
-          createAt: date,
-          writer: {
+        createComment(
+          response.data.comment_id,
+          {
             userId: loginState.id,
             nickname: loginState.name,
           },
-          parent_id: parentId,
-          group_id: groupId,
-          post_id: postId,
-        })
+          date,
+          parentId,
+          groupId,
+          postId,
+          inputText
+        )
       );
     } else {
       console.log(response.data.success);
     }
+
     inputRef.current.value = '';
     if (parentId) {
       handleClickShow(false);
@@ -58,7 +72,7 @@ export default function CommentInput({ postId, parentId, groupId, handleClickSho
       handleCommentWrite={handleCommentWrite}
       loginState={loginState}
       inputText={inputText}
-      inputRef={inputRef}
+      ref={inputRef}
     />
   );
 }

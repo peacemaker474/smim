@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-export default function CommentInputPresenter({
-  loginState,
-  handleCommentCreate,
-  handleCommentWrite,
-  inputText,
-  inputRef,
-}) {
+export default forwardRef(function CommentInputPresenter(
+  { loginState, handleCommentCreate, handleCommentWrite, inputText },
+  ref
+) {
   return (
-    <CmntInputBox>
+    <CmntForm>
       <CmntImg src={`http://localhost:4000/${loginState.imgUrl}`}></CmntImg>
       <CmntInput
         type='text'
         placeholder='답변을 기다립니다.'
         onChange={handleCommentWrite}
         value={inputText}
-        ref={inputRef}
+        ref={ref}
       />
-      <CmntBtn onClick={handleCommentCreate}>게시</CmntBtn>
-    </CmntInputBox>
+      <CmntBtn type='submit' onClick={handleCommentCreate}>
+        게시
+      </CmntBtn>
+    </CmntForm>
   );
-}
+});
 
-const CmntInputBox = styled.div`
+const CmntForm = styled.form`
   width: 794px;
   // height: 59px;
   // border: 1px solid #c4c4c4;
