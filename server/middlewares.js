@@ -73,7 +73,7 @@ export const existPostCheck = async (req, res, next) => {
 };
 
 // 보낸 데이터에서 누락한 field의 유무를 체크하는 미들웨어
-export const fieldCheck = async (req, res) => {
+export const fieldCheck = async (req, res, next) => {
   const { title, content, hashtag, targetAge } = req.body;
 
   if (!title) {

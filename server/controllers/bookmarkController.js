@@ -31,7 +31,7 @@ export const getBookmark = async (req, res) => {
   }
 };
 
-export const deleteBookmark = async (req, res) => {
+export const getUnbookmark = async (req, res) => {
   const { id } = req.params;
   const {
     user: { _id },
