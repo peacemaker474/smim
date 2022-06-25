@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { putChangePassWord } from '../../../network/mypage/http';
+import { getCookie } from '../../../utils/cookie';
 import { pwValidation } from '../../../utils/validation';
 import PasswordChangeStyle from './PasswordChange.style';
 
@@ -28,6 +29,7 @@ function PasswordChange () {
         oldPassword: password.oldPassword,
         newPassword: password.newPassword,
         newPassword2: password.newPassword2,
+        token: getCookie("users"),
       };
       putChangePassWord(body);
     }

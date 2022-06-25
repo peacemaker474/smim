@@ -1,13 +1,18 @@
-import jwt from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
-export const createToken = (userId) => {
-  const token = jwt.sign({ user_id: userId.toString() }, SECRET_KEY, {
-    expiresIn: '2h',
+export const createAccessToken = ( userId ) => {
+  return jwt.sign({ user_id: userId.toString() }, SECRET_KEY, {
+    expiresIn: '10m',
   });
-  return token;
+};
+
+export const createRefreshToken = ( userId ) => {
+  return jwt.sign({ user_id: userId.toString() }, SECRET_KEY, {
+    expiresIn: '30 days',
+  });
 };
 
 export const verifyToken = async (req, res, next) => {
@@ -18,9 +23,7 @@ export const verifyToken = async (req, res, next) => {
 
   jwt.verify(token, SECRET_KEY, async (err, decoded) => {
     if (err) return res.status(500).json({ result: err });
-
     if (!decoded) {
-      console.log(exist);
       return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
     }
     // console.log(decoded)
@@ -31,3 +34,19 @@ export const verifyToken = async (req, res, next) => {
 
   // return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
 }; // jwt token decoding
+
+export const reissueAccessToken = (req, res) => {
+  const { refreshToken } = req.body;
+
+  jwt.verify(refreshToken, SECRET_KEY, async (err, decoded) => {
+    if (err) console.log(err);
+    if (!decoded) return res.status(403).json({ success: false, message: "유효하지 않은 토큰입니다. "});
+
+    return res.status(201).json({
+      success: true,
+      accessToken: jwt.sign({ userid: decoded.user_id.toString() }, SECRET_KEY, {
+        expiresIn: '10m',
+      }),
+    })
+  })
+}

@@ -8,6 +8,8 @@ import postCreateSlice from './slice/postCreateSlice';
 import postFormCheckSlice from './slice/postFormCheckSlice';
 import commentSlice from './slice/commentSlice';
 
+import { tokenSlice } from './auth';
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -17,6 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userSlice.reducer,
   toggle: toggleSlice.reducer,
+  authToken: tokenSlice.reducer,
   postCreate: postCreateSlice,
   postFormCheck: postFormCheckSlice,
   comment: commentSlice,
