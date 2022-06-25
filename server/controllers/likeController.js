@@ -74,3 +74,40 @@ export const getPostUnlike = async (req, res) => {
     });
   }
 };
+
+export const getCommentLike = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.body;
+  const { id: postId } = req.params;
+  try {
+    const like = await Like.findOne({ post_id: post._id });
+
+    if (like.user_array.includes(_id)) {
+      return res.status(404).send({
+        success: false,
+        message: '이미 좋아요한 게시물입니다.',
+      });
+    }
+
+    post.meta.likes += 1;
+    await post.save();
+
+    like.user_array.push(_id);
+    await like.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 눌렀습니다.',
+      data: {
+        likes: post.meta.likes,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};

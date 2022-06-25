@@ -9,22 +9,22 @@ import {
   getPostSearch,
 } from '../controllers/postController.js';
 import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
-import { getBookmark, deleteBookmark } from '../controllers/bookmarkController.js';
+import { getBookmark, getUnbookmark } from '../controllers/bookmarkController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 import { postCommentCreate, getCommentList } from '../controllers/commentController.js';
-import { fieldCheck } from '../middlewares/fieldCheck.js';
 import {
-  existPostCheckAndData,
   existPostAndOwnerCheck,
+  existPostCheckAndData,
   existPostCheck,
-} from '../middlewares/existCheck.js';
+  fieldCheck,
+} from '../middlewares.js';
 
 export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
 postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
-postRouter.route('/comment').get(getCommentList).post(verifyToken, postCommentCreate);
+postRouter.post('/comment', verifyToken, postCommentCreate);
 
 postRouter
   .route('/:id')
@@ -32,9 +32,11 @@ postRouter
   .put(verifyToken, fieldCheck, existPostAndOwnerCheck, putPostEdit)
   .delete(verifyToken, existPostAndOwnerCheck, deletePost);
 
-postRouter.route('/:id/detail').get(verifyToken, existPostCheckAndData, getPostDetail);
-postRouter.route('/:id/view').get(existPostCheckAndData, getPostView);
-postRouter.route('/:id/bookmark').get(verifyToken, existPostCheck, getBookmark);
-postRouter.route('/:id/unbookmark').get(verifyToken, existPostCheck, deleteBookmark);
-postRouter.route('/:id/like').get(verifyToken, existPostCheckAndData, getPostLike);
-postRouter.route('/:id/unlike').get(verifyToken, existPostCheckAndData, getPostUnlike);
+postRouter.get('/:id/detail', verifyToken, existPostCheckAndData, getPostDetail);
+postRouter.get('/:id/view', existPostCheckAndData, getPostView);
+postRouter.get('/:id/bookmark', verifyToken, existPostCheck, getBookmark);
+postRouter.get('/:id/unbookmark', verifyToken, existPostCheck, getUnbookmark);
+postRouter.get('/:id/like', verifyToken, existPostCheckAndData, getPostLike);
+postRouter.get('/:id/unlike', verifyToken, existPostCheckAndData, getPostUnlike);
+postRouter.get('/:id/comment', getCommentList);
+postRouter.get('/:id/detailComment', verifyToken, getCommentList);

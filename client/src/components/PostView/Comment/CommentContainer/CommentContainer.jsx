@@ -10,15 +10,12 @@ export default function CommentContainer({ postId }) {
   const createdComments = useSelector((state) => state.comment);
 
   const loadComments = useCallback(async () => {
-    const response = await getCommentListRead(
-      { post_id: postId },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      }
-    );
+    const response = await getCommentListRead(postId, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tkn}`,
+      },
+    });
 
     if (response.data.success) {
       setLoadedComments(response.data.data);
