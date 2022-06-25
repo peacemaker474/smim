@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import Post from '../models/Post.js';
 import bcrypt from 'bcrypt';
-import { createToken } from './tokenControllers.js';
+import { createAccessToken } from './tokenControllers.js';
 
 /*
 
@@ -62,7 +62,7 @@ export const putChangeUserInfo = async (req, res) => {
     userId,
     nickname,
   }, {new: true});
-  const token = createToken(user._id);
+  const token = createAccessToken(user._id);
   
   return res.status(201).json({
     id: updateUser.userId,

@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from 'bcrypt';
-import { createToken } from "./tokenControllers.js";
+import { createAccessToken, createRefreshToken } from "./tokenControllers.js";
 
 export const postLogin = async (req, res) => {
   const {userId, password} = req.body;
@@ -13,13 +13,16 @@ export const postLogin = async (req, res) => {
     if (!ok) return res.status(401).json({ success: false, message: "비밀번호가 일치하지 않습니다." });
   }
 
-  const token = createToken(user._id);
+  const accessToken = createAccessToken(user._id);
+  const refreshToekn = createRefreshToken(user._id);
+
   return res.status(200).json({
     id: user.userId,
     name: user.nickname,
     email: user.email,
     social: user.socialOnly,
-    accessToken: token,
+    accessToken,
+    refreshToekn,
     success: true,
     imageUrl: user.imageUrl ? user.imageUrl : "",
     message: "",

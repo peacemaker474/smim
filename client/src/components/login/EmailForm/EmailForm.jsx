@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postUserLogin } from '../../../redux/services/UserService';
 import EmailFormStyle from './EmailForm.style';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
+import { DELETE_TOKEN } from '../../../redux/auth';
 
 function EmailForm () {
   const state = useSelector((state) => state.user);
@@ -38,8 +39,12 @@ function EmailForm () {
       userId,
       password: userPw,
     }
+    
     dispatch(postUserLogin(body));
     dispatch(loginToggle());
+    setTimeout(() => {
+      dispatch(DELETE_TOKEN());
+    }, 10000);
   }
 
   return (

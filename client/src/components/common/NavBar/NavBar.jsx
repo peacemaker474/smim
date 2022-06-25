@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
+import { DELETE_TOKEN } from '../../../redux/auth';
 import NavBarStyle from './NavBar.style';
 
 function NavBar() {
@@ -18,6 +19,7 @@ function NavBar() {
 
   const handleLogoutClick = () => {
     dispatch(getUserLogOut());
+    dispatch(DELETE_TOKEN());
     navigate('/');
   };
 

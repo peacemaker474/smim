@@ -1,6 +1,15 @@
 import axios from 'axios';
+import { getCookie } from '../../utils/cookie';
 
 const http = "http://localhost:4000";
+const tkn = getCookie("users");
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${tkn}`,
+  },
+};
 
 export const getMyWriteLists = (data) => {
   return axios.get(`${http}/my/writeLists?userId=${data}`).then(res => {
@@ -28,7 +37,7 @@ export const getCheckMyName = (data) => {
 
 export const putChangePassWord = (data) => {
   return axios
-    .put(`${http}/my/changepw`, data)
+    .put(`${http}/my/changepw`, data, config)
     .then(({data}) => {
       alert(data.message);
     })

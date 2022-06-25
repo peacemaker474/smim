@@ -6,6 +6,7 @@ import { postRouter } from './routers/postRouter.js';
 import rootRouter from './routers/rootRouter.js';
 import loginRouter from './routers/loginRouter.js';
 import myRouter from './routers/myRouter.js';
+import { reissueAccessToken } from './controllers/tokenControllers.js';
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use('/post', postRouter);
 app.use('/login', loginRouter);
 app.use('/my', myRouter);
 app.get('/logout', getLogout);
+app.post('/token', reissueAccessToken);
 
 export default app;
