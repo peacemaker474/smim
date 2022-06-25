@@ -34,6 +34,7 @@ export default function CommentItemPresenter({
             postId={cmntData.post_id}
             parentId={cmntData._id}
             handleClickShow={handleClickShow}
+            isTargetVisible={isTargetVisible}
           />
         )}
       </CommentContent>
