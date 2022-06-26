@@ -5,6 +5,7 @@ import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
 import NavBarStyle from './NavBar.style';
+import { deleteCookie } from '../../../utils/cookie';
 
 function NavBar() {
   const menuToggled = useSelector((state) => state.toggle.menuToggled);
@@ -18,6 +19,7 @@ function NavBar() {
   };
 
   const handleLogoutClick = () => {
+    deleteCookie("users");
     dispatch(getUserLogOut());
     dispatch(DELETE_TOKEN());
     navigate('/');
@@ -26,8 +28,6 @@ function NavBar() {
   const handleToggleClick = () => {
     dispatch(menuToggle());
   }
-
-  console.log(loginState);
   return (
     <NavBarStyle
       menuToggled={menuToggled}

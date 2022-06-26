@@ -11,14 +11,23 @@ import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
 import { getUserLogOut } from './redux/services/UserService';
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const { loginCheck } = useSelector((state) => state.user);
   const { authenticated } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const pathCheck = pathname.split('/')[2];
 
   useEffect(() => {
-    if (!authenticated && getCookie() !== undefined) {
+    let startTimer = setTimeout(() => {
+      dispatch(DELETE_TOKEN());
+    }, 10000);
+
+    if (!authenticated) return clearTimeout(startTimer);
+
+  }, [authenticated, dispatch])
+
+  useEffect(() => {
+    if (!authenticated && getCookie() !== undefined && loginCheck) {
       if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
         let data = {
           refreshToken: getCookie(),
@@ -26,22 +35,19 @@ function App() {
         postCreateAccessToken(data).then((res) => {
           if (res.data.success) {
             dispatch(SET_TOKEN(res.data.accessToken));
-            setTimeout(() => {
-              dispatch(DELETE_TOKEN());
-            }, 600 * 1000)
           }
         })
       } else {
         dispatch(getUserLogOut());
       }
     }
-  }, [user.id, authenticated])
+  }, [authenticated, dispatch, loginCheck])
 
   return (
     <>
       <NavBar />
-      {user.isLogin && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
-      {user.isLogin ? <PublicRoute /> : <PrivateRoute />}
+      {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
+      {authenticated ? <PublicRoute /> : <PrivateRoute />}
     </>
   );
 }
