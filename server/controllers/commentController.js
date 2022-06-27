@@ -262,7 +262,82 @@ export const getCommentLike = async (req, res) => {
 export const getCommentUnlike = () => {};
 
 // 댓글 수정하기
-export const putCommentEdit = () => {};
+export const putCommentEdit = async (req, res) => {
+  const { id: commentId } = req.params;
+  const { post_id: postId, content: content } = req.body;
+  const {
+    user: { _id },
+  } = req.body;
+
+  if (!postId) {
+    return res.status(400).send({
+      success: false,
+      message: 'postId가 undefined입니다.',
+    });
+  }
+  if (!content) {
+    return res.status(400).send({
+      success: false,
+      message: 'content가 undefined입니다.',
+    });
+  }
+
+  try {
+    const userExist = await User.exists({ _id: _id });
+    const postExist = await Post.exists({ _id: postId, being: true });
+
+    const commentData = await Comment.exists({ _id: commentId, being: true });
+
+    if (!commentData) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않는 댓글입니다.',
+      });
+    }
+
+    if (!postExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    if (!userExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
+
+    await Comment.findByIdAndUpdate(commentId, { text: content });
+
+    return res.status(200).send({
+      success: true,
+      message: '댓글 수정이 완료되었습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // 댓글 삭제하기
-export const deleteComment = () => {};
+export const deleteComment = async (req, res) => {
+  const { id: commentId } = req.params; // comment id
+
+  try {
+    await Comment.findByIdAndUpdate(commentId, { being: false });
+    return res.status(200).send({
+      success: true,
+      message: '댓글 삭제가 완료되었습니다.',
+    });
+  } catch {
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
