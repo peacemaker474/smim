@@ -4,7 +4,7 @@ import Post from '../models/Post.js';
 
 // 댓글 생성(Comment Create)
 export const postCommentCreate = async (req, res) => {
-  const { postId, content, parent_id } = req.body;
+  const { post_id: postId, content, parent_id: parentId } = req.body;
   const {
     user: { _id },
   } = req.body;
@@ -13,15 +13,15 @@ export const postCommentCreate = async (req, res) => {
     const userExist = await User.exists({ _id: _id });
     const postExist = await Post.exists({ _id: postId, being: true });
 
-    if (parent_id != null) {
-      if (parent_id === undefined) {
+    if (parentId != null) {
+      if (parentId === undefined) {
         return res.status(400).send({
           success: false,
-          message: 'parent_id가 undefined입니다.',
+          message: 'parentId가 undefined입니다.',
         });
       }
 
-      const commentExist = await Comment.exists({ _id: parent_id, being: true });
+      const commentExist = await Comment.exists({ _id: parentId, being: true });
 
       if (!commentExist) {
         return res.status(400).send({
@@ -59,12 +59,12 @@ export const postCommentCreate = async (req, res) => {
       const comment = await Comment.create({
         text: content,
         writer: _id,
-        postId,
-        parent_id,
+        post_id: postId,
+        parent_id: parentId,
       });
 
-      if (parent_id != null) {
-        const parentComment = await Comment.findOne({ _id: parent_id });
+      if (parentId != null) {
+        const parentComment = await Comment.findOne({ _id: parentId });
         parentComment.children.push(comment._id);
         await parentComment.save();
       }
@@ -106,7 +106,7 @@ export const getCommentList = async (req, res) => {
     } else {
       const commentList = await Comment.find({
         postId,
-        parent_id: null,
+        parentId: null,
       });
 
       const DATA = [];
@@ -117,7 +117,7 @@ export const getCommentList = async (req, res) => {
         }
         const commentDataList = await Promise.all(
           comment.map(async (el) => {
-            const children = await Comment.find({ parent_id: el._id, postId: el.postId });
+            const children = await Comment.find({ parent_id: el._id, post_id: el.postId });
             const writer = await User.findOne({ _id: el.writer });
 
             return {
@@ -134,7 +134,7 @@ export const getCommentList = async (req, res) => {
         );
 
         for (let i = 0; i < commentDataList.length; i++) {
-          if (commentDataList[i].parent_id == null) {
+          if (commentDataList[i].parentId == null) {
             check = i;
             DATA[check] = [];
           }
@@ -160,24 +160,24 @@ export const getCommentList = async (req, res) => {
 
 // 댓글 고정하기
 export const getCommentPinned = async (req, res) => {
-  const { id: comment_id } = req.params;
+  const { id: commentId } = req.params;
 
   const {
     user: { _id },
   } = req.body;
 
   try {
-    if (!comment_id) {
+    if (!commentId) {
       return res.status(400).send({
         success: false,
-        message: 'comment_id가 undefined입니다.',
+        message: 'commentId가 undefined입니다.',
       });
     }
 
     const userExist = await User.exists({ _id: _id });
     const comment = await Comment.exists({
       state: true,
-      _id: comment_id,
+      _id: commentId,
       parent_id: null,
     });
 
@@ -203,7 +203,7 @@ export const getCommentPinned = async (req, res) => {
         message: '존재하지 않거나 탈퇴한 사용자입니다.',
       });
     }
-    post.meta.pinnedCmnt = comment_id;
+    post.meta.pinnedCmnt = commentId;
     await post.save();
 
     return res.status(201).send({
