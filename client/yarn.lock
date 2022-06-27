@@ -7350,6 +7350,11 @@ react-scripts@5.0.0:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-spinners@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.1.tgz#c485ff9020d6840c0d6d3639d74e4fb4348bbc1e"
+  integrity sha512-iWeSx0kwJoHu5bgEdGcG5q8NYklX2jraJ+WacoidH9GUx5XeFqBXCbG6W37ciy0VahioDS9N6KK9DUoZ6m6Zlg==
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"

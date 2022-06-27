@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getCookie, deleteCookie, setRefreshToken } from "../../utils/cookie";
+import { getCookie, setRefreshToken } from "../../utils/cookie";
 
 /* 
   추후에 catch 부분 추가해야 할 부분이 있음.
@@ -64,7 +64,7 @@ export const getUserLogOut = createAsyncThunk(
   async () => {
     try {
       const { data } = await axios.get(`${http}/logout`, {crossDomain: true});
-      if (data.success) deleteCookie("users");
+      return data;
     } catch (err) {
       console.log(err);
     }

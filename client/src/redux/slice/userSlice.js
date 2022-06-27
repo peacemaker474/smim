@@ -15,6 +15,7 @@ const initialLoginState = {
   social: false,
   imgUrl: "",
   success: false,
+  loginCheck: false,
 };
 
 const userSlice = createSlice({
@@ -32,6 +33,7 @@ const userSlice = createSlice({
           social: payload.social,
           imgUrl: payload.imageUrl,
           message: payload.message,
+          loginCheck: true,
         }
       })
       .addCase(postUserLogin.rejected, (state, { payload }) => {
