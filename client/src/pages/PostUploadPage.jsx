@@ -49,6 +49,7 @@ function PostUploadPage() {
   };
 
   const uploadPost = async (tkn) => {
+    console.log(tkn);
     if (pathValue === 'create') {
       postCreatePost(
         {
@@ -71,7 +72,6 @@ function PostUploadPage() {
         })
         .catch((err) => console.log(err));
     } else if (pathValue === 'edit') {
-      console.log('action');
       putPostEdit(
         postId,
         {

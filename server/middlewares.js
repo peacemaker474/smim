@@ -93,11 +93,11 @@ export const fieldCheck = async (req, res, next) => {
     });
   } else if (
     !(
-      targetAge === 10 ||
-      targetAge === 20 ||
-      targetAge === 30 ||
-      targetAge === 40 ||
-      targetAge === 50
+      targetAge === '10' ||
+      targetAge === '20' ||
+      targetAge === '30' ||
+      targetAge === '40' ||
+      targetAge === '50'
     )
   ) {
     return res.status(400).send({
