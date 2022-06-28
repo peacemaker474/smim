@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
@@ -13,15 +12,14 @@ import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
+  const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const postData = useSelector((state) => state.postCreate);
-  // const postForm = useSelector((state) => state.postFormCheck);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
 
   const loadCreatedPost = useCallback(async () => {
     try {
@@ -47,12 +45,7 @@ function PostUploadPage() {
     dispatch(resetCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
 
-  const showModal = () => {
-    setIsVisible(!isVisible);
-  };
-
-  const uploadPost = async () => {
-    const tkn = getCookie('users');
+  const uploadPost = async (tkn) => {
     console.log(pathValue);
     if (pathValue === 'create') {
       postCreatePost(
@@ -103,15 +96,15 @@ function PostUploadPage() {
 
   return (
     <>
-      {isVisible && (
-        <Modal showModal={showModal} actionfunc={uploadPost}>
+      {modalVisible && (
+        <Modal actionfunc={() => uploadPost(tkn)}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}
       <PostCreateContainer>
         <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <PostForm />
-        <PostBottomBtn formState={pathValue} showModal={showModal} isVisible={isVisible} />
+        <PostBottomBtn formState={pathValue} />
       </PostCreateContainer>
     </>
   );

@@ -10,8 +10,9 @@ import {
   resetCheck,
 } from '../../../redux/slice/postFormCheckSlice';
 import PostBottomBtnPresenter from './PostBottomBtn.style';
+import { modalToggle } from '../../../redux/slice/toggleSlice';
 
-function PostBottomBtn({ formState, showModal }) {
+function PostBottomBtn({ formState }) {
   const navigate = useNavigate();
   const postData = useSelector((state) => state.postCreate);
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function PostBottomBtn({ formState, showModal }) {
       dispatch(contentCheck());
     } else {
       dispatch(resetCheck());
-      showModal();
+      dispatch(modalToggle());
     }
   };
 
