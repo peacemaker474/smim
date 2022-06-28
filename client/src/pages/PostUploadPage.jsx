@@ -6,8 +6,8 @@ import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
-import { postCreatePost } from '../network/post/http';
-import { postReadPostDetail } from '../network/post/http';
+import { postCreatePost, putPostEdit, postReadPostDetail } from '../network/post/http';
+
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
@@ -42,7 +42,7 @@ function PostUploadPage() {
     if (pathValue === 'edit') {
       loadCreatedPost();
     } else {
-      dispatch(postReset()); // post data reset
+      dispatch(postReset()); // when pathValue is "create", post data reset
     }
     dispatch(resetCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
@@ -53,36 +53,60 @@ function PostUploadPage() {
 
   const uploadPost = async () => {
     const tkn = getCookie('users');
-    postCreatePost(
-      {
-        title: postData.title,
-        content: postData.content,
-        hashtag: postData.hashtag,
-        targetAge: postData.targetAge,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+    console.log(pathValue);
+    if (pathValue === 'create') {
+      postCreatePost(
+        {
+          title: postData.title,
+          content: postData.content,
+          hashtag: postData.hashtag,
+          targetAge: postData.targetAge,
         },
-      }
-    )
-      .then((res) => {
-        console.log(res.data);
-        dispatch(postReset());
-        navigate('/');
-      })
-      .catch((err) => console.log(err));
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        }
+      )
+        .then((res) => {
+          console.log(res.data);
+          dispatch(postReset());
+          navigate('/');
+        })
+        .catch((err) => console.log(err));
+    } else if (pathValue === 'edit') {
+      console.log('action');
+      putPostEdit(
+        postId,
+        {
+          title: postData.title,
+          content: postData.content,
+          hashtag: postData.hashtag,
+          targetAge: postData.targetAge,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        }
+      )
+        .then((res) => {
+          console.log(res.data);
+          dispatch(postReset());
+          navigate(-1);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
     <>
-      {isVisible ? (
+      {isVisible && (
         <Modal showModal={showModal} actionfunc={uploadPost}>
-          게시물을 등록하시겠습니까?
+          {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
-      ) : (
-        false
       )}
       <PostCreateContainer>
         <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
