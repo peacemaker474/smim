@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
-import { postCreatePost, putPostEdit, postReadPostDetail } from '../network/post/http';
+import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
 
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
@@ -23,7 +23,7 @@ function PostUploadPage() {
 
   const loadCreatedPost = useCallback(async () => {
     try {
-      const response = await postReadPostDetail(postId, {
+      const response = await getReadPostDetail(postId, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${tkn}`,

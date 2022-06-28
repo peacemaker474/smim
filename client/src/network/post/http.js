@@ -18,7 +18,7 @@ export const getPostListRead = (targetAge, header) => {
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
 
-export const postReadPostDetail = (id, header = undefined) => {
+export const getReadPostDetail = (id, header = undefined) => {
   if (header) {
     return axios.get(`${http}/post/${id}/detail`, header);
   } else {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { postReadPostDetail } from '../../../../network/post/http';
+import { getReadPostDetail } from '../../../../network/post/http';
 import { getCookie } from '../../../../utils/cookie';
 import PostPostPresenter from './PostPost.style';
 
@@ -20,7 +20,7 @@ export default function PostPost({ postId }) {
   const loadPostDetail = useCallback(async () => {
     try {
       if (tkn) {
-        const response = await postReadPostDetail(postId, {
+        const response = await getReadPostDetail(postId, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
@@ -28,7 +28,7 @@ export default function PostPost({ postId }) {
         });
         setPostDetail(response.data);
       } else {
-        const response = await postReadPostDetail(postId);
+        const response = await getReadPostDetail(postId);
         setPostDetail(response.data);
       }
     } catch (error) {
