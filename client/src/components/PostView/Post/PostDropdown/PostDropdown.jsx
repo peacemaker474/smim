@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { deletePost } from '../../../../network/post/http';
-import { getCookie } from '../../../../utils/cookie';
 import PostDropdownPresenter from './PostDropdown.style';
 
 function Dropdown({ postId }, ref) {
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   let navigate = useNavigate();
 
   const handlePostEdit = (e) => {
