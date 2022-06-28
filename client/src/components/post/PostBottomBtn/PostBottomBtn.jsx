@@ -32,7 +32,7 @@ function PostBottomBtn({ formState }) {
       dispatch(contentCheck());
     } else {
       dispatch(resetCheck());
-      dispatch(modalToggle());
+      dispatch(modalToggle(true));
     }
   };
 

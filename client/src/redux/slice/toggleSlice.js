@@ -20,8 +20,17 @@ const toggleSlice = createSlice({
     inputToggle(state) {
       state.inputToggled = !state.inputToggled;
     },
-    modalToggle(state) {
-      state.modalToggled = !state.modalToggled;
+    modalToggle: {
+      reducer(state, action) {
+        state.modalToggled = action.payload.modal;
+      },
+      prepare(modal) {
+        return {
+          payload: {
+            modal,
+          },
+        };
+      },
     },
   },
 });

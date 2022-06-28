@@ -14,7 +14,7 @@ function Dropdown({ postId }, ref) {
   };
   const handlePostDel = async (e) => {
     e.preventDefault();
-    dispatch(modalToggle());
+    dispatch(modalToggle(true));
   };
   return (
     <PostDropdownPresenter
