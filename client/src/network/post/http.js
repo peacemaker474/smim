@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const http = 'http://localhost:4000';
 
-
 export const postCreatePost = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);
 };
@@ -11,14 +10,13 @@ export const deletePost = (id, header) => {
   return axios.delete(`${http}/post/${id}`, header);
 };
 
-export const postPostEdit = (id, header) => {
-  return axios.post(`${http}/post/${id}`, header);
+export const putPostEdit = (id, data, header) => {
+  return axios.put(`${http}/post/${id}`, data, header);
 };
 
 export const getPostListRead = (targetAge, header) => {
   return axios.get(`${http}/post/target?age=${targetAge}`, header);
 };
-
 
 export const postReadPostDetail = (id, header = undefined) => {
   if (header) {
