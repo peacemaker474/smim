@@ -2,12 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCookie } from '../utils/cookie';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
 import { postCreatePost, putPostEdit, postReadPostDetail } from '../network/post/http';
-
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
@@ -21,8 +19,7 @@ function PostUploadPage() {
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
-  const tkn = getCookie('users');
-
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const loadCreatedPost = useCallback(async () => {
     try {
       const response = await postReadPostDetail(postId, {
@@ -51,9 +48,8 @@ function PostUploadPage() {
     setIsVisible(!isVisible);
   };
 
-  const uploadPost = async () => {
-    const tkn = getCookie('users');
-    console.log(pathValue);
+  const uploadPost = async (tkn) => {
+    console.log(tkn);
     if (pathValue === 'create') {
       postCreatePost(
         {
@@ -76,7 +72,6 @@ function PostUploadPage() {
         })
         .catch((err) => console.log(err));
     } else if (pathValue === 'edit') {
-      console.log('action');
       putPostEdit(
         postId,
         {
@@ -104,7 +99,7 @@ function PostUploadPage() {
   return (
     <>
       {isVisible && (
-        <Modal showModal={showModal} actionfunc={uploadPost}>
+        <Modal showModal={showModal} actionfunc={() => uploadPost(tkn)}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}

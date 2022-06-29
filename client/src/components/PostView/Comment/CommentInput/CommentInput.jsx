@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate } from '../../../../network/comment/http';
-import { getCookie } from '../../../../utils/cookie';
 import { createComment } from '../../../../redux/slice/commentSlice';
 import CommentInputPresenter from './CommentInput.style';
 
@@ -15,7 +14,7 @@ export default function CommentInput({
   const loginState = useSelector((state) => state.user);
   const [inputText, setInputText] = useState('');
   const inputRef = useRef('');
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
 
   useEffect(() => {

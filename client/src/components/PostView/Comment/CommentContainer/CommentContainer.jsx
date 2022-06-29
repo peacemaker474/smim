@@ -1,11 +1,10 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCommentListRead } from '../../../../network/comment/http';
-import { getCookie } from '../../../../utils/cookie';
 import CommentContainerPresenter from './CommentContainer.style';
 
 export default function CommentContainer({ postId }) {
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const [loadedComments, setLoadedComments] = useState();
   const createdComments = useSelector((state) => state.comment);
 
