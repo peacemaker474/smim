@@ -44,9 +44,9 @@ function PostUploadPage() {
     dispatch(resetCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
 
-  const showModal = () => {
-    setIsVisible(!isVisible);
-  };
+  // const showModal = () => {
+  //   setIsVisible(!isVisible);
+  // };
 
   const uploadPost = async (tkn) => {
     if (pathValue === 'create') {

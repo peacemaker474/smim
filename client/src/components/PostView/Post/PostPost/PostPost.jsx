@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { postReadPostDetail } from '../../../../network/post/http';
+import { getReadPostDetail } from '../../../../network/post/http';
 import { useSelector } from 'react-redux';
 import PostPostPresenter from './PostPost.style';
 
