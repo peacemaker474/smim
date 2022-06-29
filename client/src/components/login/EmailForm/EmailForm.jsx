@@ -7,7 +7,9 @@ import { postUserLogin } from '../../../redux/services/UserService';
 import EmailFormStyle from './EmailForm.style';
 
 function EmailForm () {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: "onChange"
+  });
   const state = useSelector((state) => state.user);
   const { isLogin, message } = state;
   const dispatch = useDispatch();

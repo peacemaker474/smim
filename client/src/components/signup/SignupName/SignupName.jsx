@@ -3,28 +3,35 @@ import { getCheckName } from '../../../network/signup/http';
 import { nameValidation } from '../../../utils/validation';
 import SignupNameStyle from './SignupName.style';
 
-function SignupName ({message, setMessage, valid, setValid, onInputChange}) {
-  const handleNameBlur = (evt) => {
+function SignupName ({ register, errors, setError, valid, setValid }) {
+  
+  const handleNameBlur = () => (evt) => {
     if (!nameValidation(evt.target.value)) {
-      setMessage({ ...message, nickName: "3~8 자리의 한글, 영문, 숫자만 가능합니다. "});
       setValid({ ...valid, nickName: false});
+      setError("nickName", {
+        type: 'Empty name',
+        message: "닉네임을 입력하세요",
+      })
     } else {
       getCheckName(evt.target.value)
         .then(({data}) => {
-          setMessage({...message, nickName: data.message});
           setValid({...valid, nickName: data.success});
         })
         .catch(({ response: { data }}) => {
-          setMessage({...message, nickName: data.message});
           setValid({...valid, nickName: data.success});
-        })
+          setError('nickName', {
+            type: 'already exists nickname',
+            message: data.message,
+          })
+        });
     }
   }
   return (
     <SignupNameStyle
-      message={message}
+      register={register}
+      errors={errors}
+      setError={setError}
       valid={valid}
-      onInputChange={onInputChange}
       onNameBlur={handleNameBlur}
     />
   );

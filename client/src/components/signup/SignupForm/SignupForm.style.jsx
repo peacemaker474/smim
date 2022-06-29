@@ -16,43 +16,45 @@ const SignupFormBox = styled.form`
   align-items: center;
 `;
 
-function SignupFormStyle ({message, setMessage, valid, setValid, inputs, setInputs, onInputChange, onSignupSubmit}) {
+function SignupFormStyle ({register, errors, setError, getValues, onSubmit, valid, setValid, onSignupSubmit}) {
   return (
-    <SignupFormBox method='POST'>
-      <SignupId 
-        message={message}
-        setMessage={setMessage}
+    <SignupFormBox method='POST' onSubmit={onSubmit(onSignupSubmit)}>
+      <SignupId
+        register={register}
+        errors={errors}
+        setError={setError}
         valid={valid}
         setValid={setValid}
-        onInputChange={onInputChange}
       />
-      <SignupEmail 
-        message={message}
-        setMessage={setMessage}
+      <SignupEmail
+        register={register}
+        errors={errors}
+        setError={setError}
         valid={valid}
         setValid={setValid}
-        onInputChange={onInputChange}
       />
-      <SignupName 
-        message={message}
-        setMessage={setMessage}
+      <SignupName
+        register={register}
+        errors={errors}
+        setError={setError}
         valid={valid}
         setValid={setValid}
-        onInputChange={onInputChange}
       />
       <SignupBirth
-        inputs={inputs}
-        setInputs={setInputs}
+        register={register}
+        errors={errors}
+        setError={setError}
+        getValues={getValues}
       />
-      <SignupPw 
-        message={message}
-        setMessage={setMessage}
+      <SignupPw
+        register={register}
+        errors={errors}
+        setError={setError}
+        getValues={getValues}
         valid={valid}
         setValid={setValid}
-        inputs={inputs}
-        onInputChange={onInputChange}
       />
-      <SignupBtns onSignupSubmit={onSignupSubmit} />
+      <SignupBtns />
     </SignupFormBox>
   )
 }
