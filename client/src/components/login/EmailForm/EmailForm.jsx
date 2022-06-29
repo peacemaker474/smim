@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { loginToggle } from '../../../redux/slice/toggleSlice';
 import { postUserLogin } from '../../../redux/services/UserService';
 import EmailFormStyle from './EmailForm.style';
-import { loginToggle } from '../../../redux/slice/toggleSlice';
 
 function EmailForm () {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const state = useSelector((state) => state.user);
   const { isLogin, message } = state;
-  const [userId, setUserId] = useState('');
-  const [userPw, setUserPw] = useState('');
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -19,35 +19,28 @@ function EmailForm () {
     }
   }, [isLogin, navigate]);
 
-  const handleIdChange = (evt) => {
-    setUserId(evt.target.value);
-  };
-
-  const handlePwChange = (evt) => {
-    setUserPw(evt.target.value);
-  };
-
   const handleLoginClose = () => {
     dispatch(loginToggle());
   }
 
-  const handleLoginSubmit = (evt) => {
-    evt.preventDefault();
-
+  const handleLoginSubmit = ({ userId, password }) => {
     let body = {
       userId,
-      password: userPw,
-    }
-    
-    dispatch(postUserLogin(body));
-    dispatch(loginToggle());
+      password
+    };
+
+    dispatch(postUserLogin(body))
+      .then((res) => {
+        if (res.payload.success) return dispatch(loginToggle());
+      });
   }
 
   return (
     <EmailFormStyle
+      register={register}
       message={message}
-      onIdChange={handleIdChange}
-      onPwChange={handlePwChange}
+      errors={errors}
+      onSubmit={handleSubmit}
       onLoginClose={handleLoginClose}
       onLoginSubmit={handleLoginSubmit}
     />

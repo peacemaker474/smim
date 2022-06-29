@@ -19,29 +19,41 @@ function App() {
   const pathCheck = pathname.split('/')[2];
 
   useEffect(() => {
-    if (authenticated) {
+    if ( authenticated ) {
       timer.current = setTimeout(() => {
         dispatch(DELETE_TOKEN());
+        if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
+          let data = {
+            refreshToken: getCookie(),
+          };
+          postCreateAccessToken(data).then((res) => {
+            if (res.data.success) {
+              dispatch(SET_TOKEN(res.data.accessToken));
+            }
+          })
+        } else {
+          dispatch(getUserLogOut());
+        }
       }, 10000);
     }
 
-    if (!authenticated && loginCheck && getCookie() !== undefined) {
-      if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
-        let data = {
-          refreshToken: getCookie(),
-        };
-        postCreateAccessToken(data).then((res) => {
-          if (res.data.success) {
-            dispatch(SET_TOKEN(res.data.accessToken));
-          }
-        })
-      } else {
-        dispatch(getUserLogOut());
-      }
-    }
+    // if (!authenticated && loginCheck && getCookie() !== undefined) {
+    //   if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
+    //     let data = {
+    //       refreshToken: getCookie(),
+    //     };
+    //     postCreateAccessToken(data).then((res) => {
+    //       if (res.data.success) {
+    //         dispatch(SET_TOKEN(res.data.accessToken));
+    //       }
+    //     })
+    //   } else {
+    //     dispatch(getUserLogOut());
+    //   }
+    // }
 
     return () => clearTimeout(timer.current);
-  }, [authenticated, dispatch, loginCheck])
+  }, [authenticated, dispatch, loginCheck, timer])
 
   return (
     <>

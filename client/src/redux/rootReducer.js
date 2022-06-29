@@ -13,11 +13,18 @@ import { tokenSlice } from './auth';
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['user'],
+  blacklist: ['user'],
 };
 
+const userPersistConfig = {
+  key: 'user',
+  storage,
+  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social']
+};
+
+
 const rootReducer = combineReducers({
-  user: userSlice.reducer,
+  user: persistReducer(userPersistConfig, userSlice.reducer),
   toggle: toggleSlice.reducer,
   authToken: tokenSlice.reducer,
   postCreate: postCreateSlice,

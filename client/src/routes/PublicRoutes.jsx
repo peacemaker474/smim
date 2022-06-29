@@ -15,8 +15,9 @@ function PublicRoute () {
   useEffect(() => {
     if (
       (
-        pathname !== '/posts' ||
-        pathname !== '/my'
+        pathname === '/posts/create' ||
+        pathname.includes("/my") ||
+        pathname.includes("/posts/edit")
       )
     ) {
       navigate('/');
