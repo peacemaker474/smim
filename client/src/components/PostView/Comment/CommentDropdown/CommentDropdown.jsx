@@ -11,7 +11,7 @@ function Dropdown({ setIsEditing }, ref) {
   };
   return (
     <CommentDropdownPresenter
-      ref={ref}
+      forwardRef={ref}
       handleCommentEdit={handleCommentEdit}
       handleCommentDel={handleCommentDel}
     />

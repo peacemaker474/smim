@@ -6,9 +6,13 @@ import {
   DropdownItemBtn,
 } from '../../../../styles/common/dropdown';
 
-export default function CommentDropdownPresenter({ ref, handleCommentEdit, handleCommentDel }) {
+export default function CommentDropdownPresenter({
+  forwardRef,
+  handleCommentEdit,
+  handleCommentDel,
+}) {
   return (
-    <CommentDropdownContainer ref={ref}>
+    <CommentDropdownContainer ref={forwardRef}>
       <CommentDropdownBox>
         <CommentDropdownBtn onClick={handleCommentEdit}>수정</CommentDropdownBtn>
         <CommentDropdownBtn onClick={handleCommentDel}>삭제</CommentDropdownBtn>
