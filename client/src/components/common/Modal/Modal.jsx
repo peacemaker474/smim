@@ -5,12 +5,15 @@ import { modalToggle } from '../../../redux/slice/toggleSlice';
 
 function Modal({ children, actionfunc }) {
   const dispatch = useDispatch();
-  const handleModalCancle = () => {
-    dispatch(modalToggle(false));
+  const handleModalCancle = (e) => {
+    e.stopPropagation();
+    console.log('action');
+    dispatch(modalToggle());
   };
-  const handleModalConfirm = () => {
+  const handleModalConfirm = (e) => {
+    e.stopPropagation();
     actionfunc();
-    dispatch(modalToggle(false));
+    dispatch(modalToggle());
   };
   return (
     <ModalPresenter handleModalCancle={handleModalCancle} handleModalConfirm={handleModalConfirm}>
