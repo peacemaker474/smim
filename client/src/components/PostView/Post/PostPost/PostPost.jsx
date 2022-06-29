@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getReadPostDetail } from '../../../../network/post/http';
-import { getCookie } from '../../../../utils/cookie';
+import { postReadPostDetail } from '../../../../network/post/http';
+import { useSelector } from 'react-redux';
 import PostPostPresenter from './PostPost.style';
 
 export default function PostPost({ postId }) {
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const [postDetail, setPostDetail] = useState({
     targetAge: '',
     content: '',

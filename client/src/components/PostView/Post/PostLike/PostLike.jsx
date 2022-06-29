@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { getPostLike, getPostUnlike } from '../../../../network/post/http';
-import { getCookie } from '../../../../utils/cookie';
 import PostLikePresenter from './PostLike.style';
 
 export default function PostLike({ quantity, like }) {
   const [isLikeChecked, setIsLikeChecked] = useState(like);
   const location = useLocation();
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const id = location.pathname.split('view/')[1];
   const [likeValue, setLikeValue] = useState(quantity);
 

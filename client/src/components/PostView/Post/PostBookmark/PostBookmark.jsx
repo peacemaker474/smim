@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { getBookmark, getUnbookmark } from '../../../../network/post/http';
-import { getCookie } from '../../../../utils/cookie';
 import PostBookmarkPresenter from './PostBookmark.style';
 
 export default function PostBookmark({ bookmark }) {
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmark);
   const location = useLocation();
-  const tkn = getCookie('users');
+  const tkn = useSelector((state) => state.authToken).accessToken;
   const id = location.pathname.split('view/')[1];
 
   useEffect(() => {

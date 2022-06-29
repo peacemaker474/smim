@@ -6,7 +6,6 @@ import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
 import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
-
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
@@ -45,8 +44,11 @@ function PostUploadPage() {
     dispatch(resetCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
 
+  const showModal = () => {
+    setIsVisible(!isVisible);
+  };
+
   const uploadPost = async (tkn) => {
-    console.log(pathValue);
     if (pathValue === 'create') {
       postCreatePost(
         {
@@ -69,7 +71,6 @@ function PostUploadPage() {
         })
         .catch((err) => console.log(err));
     } else if (pathValue === 'edit') {
-      console.log('action');
       putPostEdit(
         postId,
         {
