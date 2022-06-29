@@ -23,17 +23,15 @@ const FindIdPwd = styled.span`
   cursor: pointer;
 `;
 
-function EmailFormStyle ({ message, onIdChange, onPwChange, onLoginClose, onLoginSubmit}) {
+function EmailFormStyle ({ message, register, errors, onSubmit, onLoginClose, onLoginSubmit }) {
   return (
-    <FormBox method='POST'>
-      <LoginId 
-        onIdChange={onIdChange}
-      />
-      <LoginPw
-        onPwChange={onPwChange}
-      />
-      {message !== undefined && <LoginValid validLogin={message}> {message} </LoginValid>}
-      <LoginBtn onClick={onLoginSubmit}> 로그인 </LoginBtn>
+    <FormBox method='POST' onSubmit={onSubmit(onLoginSubmit)}>
+      <LoginId register={register} />
+      {errors.userId?.message && <LoginValid validLogin={errors.userId.message}> {errors.userId.message} </LoginValid>}
+      <LoginPw register={register} />
+      {errors.password?.message && <LoginValid validLogin={errors.password.message}> {errors.password.message} </LoginValid>}
+      {Object.keys(errors).length === 0 && message !== undefined && <LoginValid validLogin={message}> {message} </LoginValid>}
+      <LoginBtn> 로그인 </LoginBtn>
       <SignupLink
         onLoginClose={onLoginClose}
       />
