@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { deletePost } from '../../../../network/post/http';
 import PostDropdownPresenter from './PostDropdown.style';
+import { useDispatch } from 'react-redux';
+import { modalToggle } from '../../../../redux/slice/toggleSlice';
 
 function Dropdown({ postId }, ref) {
-  const tkn = useSelector((state) => state.authToken).accessToken;
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePostEdit = (e) => {
     e.preventDefault();
@@ -14,12 +14,7 @@ function Dropdown({ postId }, ref) {
   };
   const handlePostDel = async (e) => {
     e.preventDefault();
-    await deletePost(postId, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
-      },
-    });
+    dispatch(modalToggle(true));
   };
   return (
     <PostDropdownPresenter

@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
-import { postCreatePost, putPostEdit, postReadPostDetail } from '../network/post/http';
+import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
+  const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const postData = useSelector((state) => state.postCreate);
-  // const postForm = useSelector((state) => state.postFormCheck);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
   const tkn = useSelector((state) => state.authToken).accessToken;
+
   const loadCreatedPost = useCallback(async () => {
     try {
-      const response = await postReadPostDetail(postId, {
+      const response = await getReadPostDetail(postId, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${tkn}`,
@@ -49,7 +49,6 @@ function PostUploadPage() {
   };
 
   const uploadPost = async (tkn) => {
-    console.log(tkn);
     if (pathValue === 'create') {
       postCreatePost(
         {
@@ -98,15 +97,15 @@ function PostUploadPage() {
 
   return (
     <>
-      {isVisible && (
-        <Modal showModal={showModal} actionfunc={() => uploadPost(tkn)}>
+      {modalVisible && (
+        <Modal actionfunc={() => uploadPost(tkn)}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}
       <PostCreateContainer>
         <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <PostForm />
-        <PostBottomBtn formState={pathValue} showModal={showModal} isVisible={isVisible} />
+        <PostBottomBtn formState={pathValue} />
       </PostCreateContainer>
     </>
   );

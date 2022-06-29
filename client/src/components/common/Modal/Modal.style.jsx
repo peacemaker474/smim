@@ -4,7 +4,7 @@ import { ColorBtn } from '../../../styles/common/buttons';
 
 function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
   return (
-    <ModalContainer>
+    <ModalContainer onClick={handleModalCancle}>
       <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
@@ -19,11 +19,13 @@ export default ModalPresenter;
 
 const ModalContainer = styled.div`
   z-index: 4;
-  background: #cacaca;
-  postiion: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
   top: 0;
   left: 0;
-  widht: 100%;
+  bottom: 0;
+  right: 0;
+  width: 100%;
   height: 100%;
 `;
 const ModalBox = styled.div`
@@ -32,12 +34,17 @@ const ModalBox = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  padding: 65px 0;
   background: #fff;
   transform: translateX(-50%) translateY(-50%);
 `;
-const ModalText = styled.h2``;
+const ModalText = styled.h2`
+  margin: 0 auto;
+  width: 235px;
+`;
 const BtnBox = styled.div`
   width: 160px;
+  margin: 25px auto;
 `;
 
 const Btn = styled(ColorBtn)`
