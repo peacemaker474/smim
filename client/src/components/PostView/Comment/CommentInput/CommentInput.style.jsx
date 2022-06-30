@@ -15,6 +15,7 @@ export default forwardRef(function CommentInputPresenter(
         value={inputText}
         ref={ref}
       />
+      <CmntBtn type='button'>취소</CmntBtn>
       <CmntBtn type='submit' onClick={handleCommentCreate}>
         게시
       </CmntBtn>
@@ -42,7 +43,7 @@ const CmntImg = styled.img`
 `;
 
 const CmntInput = styled.input`
-  width: 700px;
+  width: 688px;
   height: 35px;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.lightGray};
