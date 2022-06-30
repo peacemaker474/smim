@@ -6,8 +6,8 @@ import userSlice from './slice/userSlice';
 import toggleSlice from './slice/toggleSlice';
 import postCreateSlice from './slice/postCreateSlice';
 import postFormCheckSlice from './slice/postFormCheckSlice';
-import commentSlice from './slice/commentSlice';
-
+import commentCreateSlice from './slice/commentCreateSlice';
+import commentDataSlice from './slice/commentDataSlice';
 import { tokenSlice } from './auth';
 
 const persistConfig = {
@@ -19,9 +19,8 @@ const persistConfig = {
 const userPersistConfig = {
   key: 'user',
   storage,
-  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social']
+  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social'],
 };
-
 
 const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userSlice.reducer),
@@ -29,7 +28,8 @@ const rootReducer = combineReducers({
   authToken: tokenSlice.reducer,
   postCreate: postCreateSlice,
   postFormCheck: postFormCheckSlice,
-  comment: commentSlice,
+  commentCreate: commentCreateSlice,
+  comment: commentDataSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

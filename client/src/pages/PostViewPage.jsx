@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetComment } from '../redux/slice/commentSlice';
+import { resetComment } from '../redux/slice/commentCreateSlice';
 import PostPost from '../components/postview/Post/PostPost/PostPost';
 import PostComment from '../components/postview/Comment/PostComment/PostComment';
 import styled from 'styled-components';
 import Modal from '../components/common/Modal/Modal';
 import { deletePost } from '../network/post/http';
-
+import { modalToggle } from '../redux/slice/toggleSlice';
 const PostViewContainer = styled.div`
   margin-top: 10vh;
   padding-top: 70px;
@@ -39,7 +39,15 @@ export default function PostViewPage() {
   return (
     <PostViewContainer>
       {modalVisible && (
-        <Modal actionfunc={() => requestDelete(id, tkn)}>게시물을 삭제하시겠습니까/</Modal>
+        <Modal
+          actionfunc={() => {
+            requestDelete(id, tkn);
+            dispatch(modalToggle());
+          }}
+          cancelFunc={() => dispatch(modalToggle())}
+        >
+          게시물을 삭제하시겠습니까/
+        </Modal>
       )}
       <PostPost postId={id} />
       <PostComment postId={id} />

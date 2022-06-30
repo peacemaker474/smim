@@ -2,14 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import CommentInput from '../CommentInput/CommentInput';
 import CommentContainer from '../CommentContainer/CommentContainer';
+import Modal from '../../../common/Modal/Modal';
 
-export default function PostCommentPresenter({ postId }) {
+export default function PostCommentPresenter({
+  commentModalVisible,
+  handleCommentDelete,
+  postId,
+  cancelFunc,
+}) {
   return (
-    <CommentSection>
-      <CommentH2>답변하기</CommentH2>
-      <CommentInput postId={postId} parentId={null} />
-      <CommentContainer postId={postId} />
-    </CommentSection>
+    <>
+      {commentModalVisible && (
+        <Modal actionfunc={handleCommentDelete} cancelFunc={cancelFunc}>
+          댓글을 삭제하시겠습니까?
+        </Modal>
+      )}
+      <CommentSection>
+        <CommentH2>답변하기</CommentH2>
+        <CommentInput postId={postId} parentId={null} />
+        <CommentContainer postId={postId} />
+      </CommentSection>
+    </>
   );
 }
 

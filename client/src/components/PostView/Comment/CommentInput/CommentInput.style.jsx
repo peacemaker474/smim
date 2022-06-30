@@ -2,7 +2,15 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 export default forwardRef(function CommentInputPresenter(
-  { loginState, handleCommentCreate, handleCommentWrite, inputText },
+  {
+    loginState,
+    handleCommentCreate,
+    handleCommentWrite,
+    inputText,
+    handleClickCancel = undefined,
+    handleCommentEdit,
+    id,
+  },
   ref
 ) {
   return (
@@ -15,10 +23,25 @@ export default forwardRef(function CommentInputPresenter(
         value={inputText}
         ref={ref}
       />
-      <CmntBtn type='button'>취소</CmntBtn>
-      <CmntBtn type='submit' onClick={handleCommentCreate}>
-        게시
-      </CmntBtn>
+      {id ? (
+        <>
+          <CmntBtn type='button' onClick={handleClickCancel}>
+            취소
+          </CmntBtn>
+          <CmntBtn type='submit' onClick={handleCommentEdit}>
+            수정
+          </CmntBtn>
+        </>
+      ) : (
+        <>
+          <CmntBtn type='button' onClick={handleClickCancel}>
+            취소
+          </CmntBtn>
+          <CmntBtn type='submit' onClick={handleCommentCreate}>
+            게시
+          </CmntBtn>
+        </>
+      )}
     </CmntForm>
   );
 });

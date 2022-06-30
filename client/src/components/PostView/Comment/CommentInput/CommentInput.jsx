@@ -1,18 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { postCommentCreate } from '../../../../network/comment/http';
-import { createComment } from '../../../../redux/slice/commentSlice';
+import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
+import { createComment } from '../../../../redux/slice/commentCreateSlice';
 import CommentInputPresenter from './CommentInput.style';
 
 export default function CommentInput({
   postId,
   parentId,
   groupId,
-  handleClickShow,
   isTargetVisible,
+  handleClickCancel,
+  handleTextChange,
+  text = '',
+  id,
 }) {
   const loginState = useSelector((state) => state.user);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState(text);
   const inputRef = useRef('');
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
@@ -56,9 +59,34 @@ export default function CommentInput({
     }
 
     inputRef.current.value = '';
+    inputRef.current.blur();
     if (parentId) {
-      handleClickShow(false);
+      handleClickCancel();
     }
+  };
+
+  const handleCommentEdit = async (e) => {
+    e.preventDefault();
+    const response = await putCommentEdit(
+      id,
+      { post_id: postId, content: inputText },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      }
+    );
+
+    if (response.data.success) {
+      console.log(response.data.success);
+      handleTextChange(inputText);
+    } else {
+      console.log(response.data.success);
+    }
+
+    inputRef.current.value = '';
+    handleClickCancel();
   };
 
   const handleCommentWrite = (e) => {
@@ -72,6 +100,12 @@ export default function CommentInput({
       loginState={loginState}
       inputText={inputText}
       ref={inputRef}
+      handleClickCancel={() => {
+        inputRef.current.value = '';
+        handleClickCancel();
+      }}
+      handleCommentEdit={handleCommentEdit}
+      id={id}
     />
   );
 }
