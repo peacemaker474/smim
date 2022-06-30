@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { postSignupSubmit } from '../../../network/signup/http';
 import SignupFormStyle from './SignupForm.style';
 
 function SignupForm() {
-  const [message, setMessage] = useState({
-    userId: '',
-    email: '',
-    nickName: '',
-    password: '',
-    check: '',
+  const { register, handleSubmit, setError, formState: { errors }, getValues } = useForm({
+    mode: "onChange"
   });
 
   const [valid, setValid] = useState({
@@ -20,59 +17,35 @@ function SignupForm() {
     check: false,
   });
 
-  const [inputs, setInputs] = useState({
-    userId: '',
-    email: '',
-    nickName: '',
-    birthday: '',
-    password: '',
-    check: '',
-  });
-
-  const handleInputChange = (evt) => {
-    const name = evt.target.name;
-    setInputs({ ...inputs, [name]: evt.target.value });
-  };
-
   const navigate = useNavigate();
 
-  const handleSignupSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSignupSubmit = (data) => {
+    let day = data.dd < 10 ? `0${data.dd}` : data.dd;
 
-    let result = [];
-
-    for (let key in valid) {
-      if (valid[key] === false) {
-        result.push(key);
+    let body = {
+      userId: data.userId,
+      email: data.email,
+      nickname: data.nickName,
+      birthday: data.yy + data.mm + day,
+      password: data.password
+    };
+    
+    postSignupSubmit(body).then((res) => {
+      if (res.data.success) {
+        navigate('/');
       }
-    }
-
-    if (result.length === 0) {
-      let body = {
-        userId: inputs.userId,
-        email: inputs.email,
-        nickname: inputs.nickName,
-        birthday: inputs.birthday,
-        password: inputs.password,
-      };
-
-      postSignupSubmit(body).then((res) => {
-        if (res.data.success) {
-          navigate('/');
-        }
-      });
-    }
+    });
   };
 
   return (
     <SignupFormStyle
-      message={message}
-      setMessage={setMessage}
+      register={register}
+      errors={errors}
+      setError={setError}
+      onSubmit={handleSubmit}
+      getValues={getValues}
       valid={valid}
       setValid={setValid}
-      inputs={inputs}
-      setInputs={setInputs}
-      onInputChange={handleInputChange}
       onSignupSubmit={handleSignupSubmit}
     />
   );

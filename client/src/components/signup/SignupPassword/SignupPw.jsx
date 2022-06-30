@@ -2,19 +2,26 @@ import React from 'react';
 import { pwValidation } from '../../../utils/validation';
 import SignupPwStyle from './SignupPw.style';
 
-function SignupPw ({message, setMessage, valid, setValid, inputs, onInputChange}) {
-  const handlePwBlur = (evt) => {
+function SignupPw ({register, errors, setError, getValues, message, setMessage, valid, setValid, inputs, onInputChange}) {
+  const handlePwBlur = () => (evt) => {
     if (!pwValidation(evt.target.value)) {
-      setMessage({ ...message, password: "8~16자, 최소 하나의 숫자와 특수문자가 필요합니다."});
+      setError("password", {
+        type: "Enter password",
+        message: "비밀번호를 입력하세요."
+      })
       setValid({ ...valid, password: false});
     } else {
       setValid({ ...valid, password: true});
     }
   }
 
-  const handleCheckBlur = (evt) => {
-    if (inputs.password !== evt.target.value) {
-      setMessage({ ...message, check: "비밀번호가 서로 다릅니다."});
+  const handleCheckBlur = () => (evt) => {
+    console.log(getValues("password"));
+    if (getValues("password") !== evt.target.value) {
+      setError("check", {
+        type: "diffrent password",
+        message: "비밀번호가 서로 다릅니다."
+      })
       setValid({ ...valid, check: false});
     } else {
       setValid({ ...valid, check: true});
@@ -22,7 +29,11 @@ function SignupPw ({message, setMessage, valid, setValid, inputs, onInputChange}
   }
   return (
     <SignupPwStyle
+      register={register}
+      errors={errors}
+      setError={setError}
       message={message}
+      valid={valid}
       onInputChange={onInputChange}
       onPwBlur={handlePwBlur}
       onCheckBlur={handleCheckBlur}

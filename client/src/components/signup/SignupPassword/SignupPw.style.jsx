@@ -1,21 +1,58 @@
 import React from 'react';
+import { ErrorMessage } from '@hookform/error-message';
 import { SignupInput } from '../../../styles/common/input';
 import { ValidCheck } from '../../../styles/common/validtext';
-import { InputBox } from '../../../styles/signup/container';
+import { CheckBox, InputBox } from '../../../styles/signup/container';
 import { SignupTitle } from '../../../styles/signup/title';
 
-function SignupPwStyle ({ message, onInputChange, onPwBlur, onCheckBlur}) {
+function SignupPwStyle ({register, errors, valid, onPwBlur, onCheckBlur}) {
   return (
     <>
       <InputBox>
         <SignupTitle> 비밀번호 </SignupTitle>
-        <SignupInput type="password" name="password" onChange={onInputChange} onBlur={onPwBlur} />
-        {message.password !== "" && <ValidCheck> {message.password} </ValidCheck>}
+        <SignupInput
+          {
+            ...register("password", {
+              required: "비밀번호를 입력하세요.",
+              pattern: {
+                value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/,
+                message: "8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.",
+              },
+              onBlur: onPwBlur(),
+            })
+          }
+          type="password"
+        />
+        {
+          valid.password ?
+            <CheckBox /> :
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => <ValidCheck> {message} </ValidCheck>}
+            />
+        }
       </InputBox>
       <InputBox>
         <SignupTitle> 비밀번호 재확인 </SignupTitle>
-        <SignupInput type="password" name="check" onChange={onInputChange} onBlur={onCheckBlur} />
-        {message.check !== "" && <ValidCheck> {message.check} </ValidCheck>}
+        <SignupInput
+          {
+            ...register("check", {
+              required: "비밀번호를 입력하세요.",
+              onBlur: onCheckBlur(),
+            })
+          }
+          type="password"
+        />
+        {
+          valid.check && !errors.check?.message ?
+            <CheckBox /> :
+            <ErrorMessage
+              errors={errors}
+              name="check"
+              render={({ message }) => <ValidCheck> {message} </ValidCheck>}
+            />
+        }
       </InputBox>
     </>
   );

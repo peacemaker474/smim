@@ -3,31 +3,36 @@ import { getCheckId } from '../../../network/signup/http';
 import { idValidation } from '../../../utils/validation';
 import SignupIdStyle from './SignupId.style';
 
-function SignupId ({message, setMessage, valid, setValid, onInputChange}) {
-  const handleIdBlur = (evt) => {
+function SignupId ({register, errors, setError, valid, setValid}) {
+  
+  const handleIdBlur = () => (evt) => {
     if (!idValidation(evt.target.value)) {
-      setMessage({...message, userId: '4~12자리의 영문, 숫자만 가능합니다.'});
       setValid({ ...valid, userId: false});
+      setError('userId', {
+        type: 'Empty id',
+        message: '아이디 형식의 맞게 입력해주세요.',
+      })
     } else {
       getCheckId(evt.target.value)
         .then(({data}) => {
-          console.log(message, valid);
-          setMessage({ ...message, userId: data.message});
           setValid({ ...valid, userId: data.success });
         })
         .catch(({ response: { data } }) => {
-          setMessage({ ...message, userId: data.message});
           setValid({ ...valid, userId: data.success });
-        })
-        ;
+          setError('userId', {
+            type: 'already exists id',
+            message: data.message,
+          });
+        });
     }
   }
 
   return (
     <SignupIdStyle
-      message={message}
+      register={register}
+      errors={errors}
+      setError={setError}
       valid={valid}
-      onInputChange={onInputChange}
       onIdBlur={handleIdBlur}
     />
   )

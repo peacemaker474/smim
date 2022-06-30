@@ -1,15 +1,34 @@
 import React from 'react';
 import { SignupInput } from '../../../styles/common/input';
 import { ValidCheck } from '../../../styles/common/validtext';
-import { InputBox } from '../../../styles/signup/container';
+import { CheckBox, InputBox } from '../../../styles/signup/container';
+import { ErrorMessage } from '@hookform/error-message';
 import { SignupTitle } from '../../../styles/signup/title';
 
-function SignupEmailStyle ({ message, valid, onInputChange, onEmailBlur}) {
+function SignupEmailStyle ({ register, errors, valid, onEmailBlur}) {
   return (
     <InputBox>
       <SignupTitle> 이메일 </SignupTitle>
-      <SignupInput type="email" name="email" onChange={onInputChange} onBlur={onEmailBlur} />
-      {message.email !== "" && <ValidCheck current={valid.email}> {message.email} </ValidCheck> }
+      <SignupInput
+        {
+          ...register("email", {
+            required: "이메일을 입력하세요",
+            pattern: {
+              value: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
+              message: "이메일 형식의 맞춰서 작성해주세요."
+            },
+            onBlur: onEmailBlur(),
+          })
+        }
+        type="email"
+      />
+      { valid.email ?
+          <CheckBox /> :
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => <ValidCheck current={valid.email}> { message } </ValidCheck>}
+          /> }
     </InputBox>
   );
 }
