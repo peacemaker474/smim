@@ -3,43 +3,25 @@ import SignupBirthStyle from './SignupBirth.style';
 
 // 오류 메세지 출력하는 과정에서 문제가 있음
 
-function SignupBirth ({register, errors, setError, getValues, inputs, setInputs}) {
+function SignupBirth ({register, errors, getValues }) {
 
-  const handleBirthYearInput = () => (evt) => {
-    const myYear = evt.target.value;
+  const handleBirthYearInput = () => (value) => {
+    const myYear = value;
     const nowYear = new Date().getFullYear();
-    if (nowYear - parseInt(myYear) >= 100 && myYear.length !== 4) {
-      setError("yy", {
-        type: 'choice year',
-        message: "정말이세요?"
-      });
+    if (nowYear - parseInt(myYear) >= 100 && myYear.length === 4) {
+      return "정말이세요?";
     }
   }
 
-  const handleBirthMonthInput = () => (evt) => {
-    if (evt.target.value === "") {
-      setError("mm", {
-        type: 'choice month',
-        message: "태어난 월을 선택해주세요."
-      })
-    }
-  }
-
-  const handleBirthDayInput = () => (evt) => {
+  const handleBirthDayInput = () => (value) => {
     const month = parseInt(getValues("mm"));
-    let day = parseInt(evt.target.value);
+    let day = parseInt(value);
 
     if (day < 1 || day > 31) {
-      setError("dd", {
-        type: 'choice day',
-        message: "생년월일을 다시 확인해주세요."
-      })
+      return "생년월일을 다시 확인해주세요.";
     }
     if ((month === 4 || month === 6 || month === 9 || month === 11) && day === 31) {
-      setError("dd", {
-        type: 'choice day',
-        message: "생년월일을 다시 확인해주세요."
-      })
+      return "생년월일을 다시 확인해주세요.";
     }
   }
 
@@ -47,9 +29,7 @@ function SignupBirth ({register, errors, setError, getValues, inputs, setInputs}
     <SignupBirthStyle
       register={register}
       errors={errors}
-      setError={setError}
       onBirthYearInput={handleBirthYearInput}
-      onBirthMonthInput={handleBirthMonthInput}
       onBirthDayInput={handleBirthDayInput}
     />
   )

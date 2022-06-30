@@ -5,8 +5,9 @@ import { postSignupSubmit } from '../../../network/signup/http';
 import SignupFormStyle from './SignupForm.style';
 
 function SignupForm() {
-  const { register, handleSubmit, setError, formState: { errors }, getValues } = useForm({
-    mode: "onChange"
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm({
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
 
   const [valid, setValid] = useState({
@@ -41,7 +42,6 @@ function SignupForm() {
     <SignupFormStyle
       register={register}
       errors={errors}
-      setError={setError}
       onSubmit={handleSubmit}
       getValues={getValues}
       valid={valid}
