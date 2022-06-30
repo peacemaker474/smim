@@ -37,40 +37,23 @@ const UserInfoWrapper = styled.div`
   gap: 25px;
 `;
 
-function MyInfoStyle ({ myMessage, success, userInfo, fileName, setMyMessage, setSuccess, onInputChange, onInfoUpdate, onFileUpload, onFileRemove}) {
+function MyInfoStyle ({ register, encodeImg, onSubmit, fileName, onInfoUpdate, onFileUpload, onFileRemove}) {
   return (
-    <MyInfoForm method='POST' encType='multipart/form-data'>
+    <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={onSubmit(onInfoUpdate)}>
       <UserImageWrapper>
-        <UserImage 
-          userInfo={userInfo}
-        />
-        <ImgInput 
+        <UserImage encodeImg={encodeImg} />
+        <ImgInput
+          register={register}
           fileName={fileName}
           onFileUpload={onFileUpload}
           onFileRemove={onFileRemove}
         />
       </UserImageWrapper>
       <UserInfoWrapper>
-        <IdInput
-          userId={userInfo.id}
-          onInputChange={onInputChange}
-          myMessage={myMessage}
-          setMyMessage={setMyMessage}
-          success={success}
-          setSuccess={setSuccess}
-        />
-        <NameInput
-          userName={userInfo.nickname}
-          onInputChange={onInputChange}
-          myMessage={myMessage}
-          setMyMessage={setMyMessage}
-          success={success}
-          setSuccess={setSuccess}
-        />
-        <EmailInput 
-          userEmail={userInfo.email}
-        />
-        <UpdateBtn type="submit" onClick={onInfoUpdate}> 수정 </UpdateBtn>
+        <IdInput register={register} />
+        <NameInput register={register} />
+        <EmailInput register={register} />
+        <UpdateBtn> 수정 </UpdateBtn>
       </UserInfoWrapper>
     </MyInfoForm>
   );
