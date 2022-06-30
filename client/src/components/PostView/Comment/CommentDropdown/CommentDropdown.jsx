@@ -1,10 +1,10 @@
 import React from 'react';
 import CommentDropdownPresenter from './CommentDropdown.style';
 
-function Dropdown({ setIsEditing }, ref) {
+function Dropdown({ handleClickShow, writer }, ref) {
   const handleCommentEdit = (e) => {
     e.preventDefault();
-    setIsEditing(true);
+    handleClickShow(true);
   };
   const handleCommentDel = (e) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ function Dropdown({ setIsEditing }, ref) {
       forwardRef={ref}
       handleCommentEdit={handleCommentEdit}
       handleCommentDel={handleCommentDel}
+      writer={writer}
     />
   );
 }

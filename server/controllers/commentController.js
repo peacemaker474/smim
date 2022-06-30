@@ -105,8 +105,8 @@ export const getCommentList = async (req, res) => {
       });
     } else {
       const commentList = await Comment.find({
-        postId,
-        parentId: null,
+        post_id: postId,
+        parent_id: null,
       });
 
       const DATA = [];
@@ -117,7 +117,7 @@ export const getCommentList = async (req, res) => {
         }
         const commentDataList = await Promise.all(
           comment.map(async (el) => {
-            const children = await Comment.find({ parent_id: el._id, post_id: el.postId });
+            const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
             const writer = await User.findOne({ _id: el.writer });
 
             return {
@@ -134,7 +134,7 @@ export const getCommentList = async (req, res) => {
         );
 
         for (let i = 0; i < commentDataList.length; i++) {
-          if (commentDataList[i].parentId == null) {
+          if (commentDataList[i].parent_id == null) {
             check = i;
             DATA[check] = [];
           }

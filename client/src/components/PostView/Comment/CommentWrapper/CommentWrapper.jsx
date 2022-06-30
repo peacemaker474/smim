@@ -10,6 +10,7 @@ export default function CommentWrapper({ cmntData }) {
   const parentData = Array.isArray(cmntData)
     ? cmntData && cmntData.find((el) => el.parent_id == null)
     : cmntData;
+
   const childrenData = Array.isArray(cmntData) ? cmntData && cmntData.slice(1) : [];
 
   const uploadingReplies = createdComments.filter((el) => el.group_id === parentData._id);

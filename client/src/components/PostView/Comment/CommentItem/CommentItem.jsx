@@ -10,13 +10,13 @@ export default function CommentItem({ cmntData, groupId }) {
   return (
     <CommentItemPresenter
       cmntData={cmntData}
-      handleClickShow={handleClickShow}
-      isTargetVisible={isTargetVisible}
       btnRef={btnRef}
       handleDropdownShow={handleDropdownShow}
       isDropdownVisible={isDropdownVisible}
       dropdownRef={dropdownRef}
       groupId={groupId}
+      isTargetVisible={isTargetVisible}
+      handleClickShow={handleClickShow}
     />
   );
 }
