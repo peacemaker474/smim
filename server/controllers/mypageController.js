@@ -3,12 +3,34 @@ import Post from '../models/Post.js';
 import bcrypt from 'bcrypt';
 
 /*
-
 // 유저 정보 수정 부분은 추후에 코드 수정이 필요
 // 서버 응답코드 넣어야 함
 
-
 */
+
+export const getCheckMyId = (req, res) => {
+  const { userId } = req.query;
+  User.findOne({userId})
+    .then((data) => {
+      if (data) {
+        return res.status(409).json({ success: false, message: "이미 사용중이거나 탈퇴한 아이디입니다."});
+      } else {
+        return res.status(200).json({ success: true, message: "사용 가능한 아이디입니다."});
+      }
+    })
+}
+
+export const getCheckMyName = (req, res) => {
+  const { userName } = req.query;
+  User.findOne({nickname: userName})
+    .then((data) => {
+      if (data) {
+        return res.status(409).json({ success: false, message: "이미 사용중인 닉네임입니다."});
+      } else {
+        return res.status(200).json({ success: true, message: "사용이 가능한 닉네임입니다."});
+      }
+    })
+}
 
 export const getWriteLists = async (req, res) => {
   const { userId } = req.query;
@@ -92,5 +114,5 @@ export const putChangePassword = async (req, res) => {
   }
   user.password = newPassword;
   await user.save();
-  return res.status(201).send("성공적으로 비밀번호를 변경하였습니다.");
+  return res.status(201).json({ success: true, message: "성공적으로 비밀번호를 변경하였습니다."});
 };
