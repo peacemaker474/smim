@@ -8,6 +8,7 @@ import Modal from '../components/common/Modal/Modal';
 import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
 import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
 import { resetCheck } from '../redux/slice/postFormCheckSlice';
+import { modalToggle } from '../redux/slice/toggleSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
@@ -98,7 +99,13 @@ function PostUploadPage() {
   return (
     <>
       {modalVisible && (
-        <Modal actionfunc={() => uploadPost(tkn)}>
+        <Modal
+          actionfunc={() => {
+            uploadPost(tkn);
+            dispatch(modalToggle());
+          }}
+          cancelFunc={() => dispatch(modalToggle())}
+        >
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}

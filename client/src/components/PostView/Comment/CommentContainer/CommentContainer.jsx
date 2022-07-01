@@ -6,7 +6,7 @@ import CommentContainerPresenter from './CommentContainer.style';
 export default function CommentContainer({ postId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [loadedComments, setLoadedComments] = useState();
-  const createdComments = useSelector((state) => state.comment);
+  const createdComments = useSelector((state) => state.commentCreate);
 
   const loadComments = useCallback(async () => {
     const response = await getCommentListRead(postId, {

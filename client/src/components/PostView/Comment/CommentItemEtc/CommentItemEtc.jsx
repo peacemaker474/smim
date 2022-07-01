@@ -5,6 +5,10 @@ import CommentItemEtcPresenter from './CommentItemEtc.style';
 export default function CommentItemEtc({ cmntData, groupId }) {
   const [isTargetVisible, handleClickShow] = useVisible(false);
 
+  const handleClickCancel = () => {
+    handleClickShow(!isTargetVisible);
+  };
+
   return (
     <CommentItemEtcPresenter
       isTargetVisible={isTargetVisible}
@@ -14,6 +18,7 @@ export default function CommentItemEtc({ cmntData, groupId }) {
       groupId={groupId}
       postId={cmntData.post_id}
       parentId={cmntData._id}
+      handleClickCancel={handleClickCancel}
     />
   );
 }

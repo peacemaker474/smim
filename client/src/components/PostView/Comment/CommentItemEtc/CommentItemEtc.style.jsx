@@ -12,6 +12,7 @@ export default function CommentItemEtcPresenter({
   postId,
   parentId,
   isTargetVisible,
+  handleClickCancel,
 }) {
   return (
     <CommentEtcContainer>
@@ -25,8 +26,8 @@ export default function CommentItemEtcPresenter({
           groupId={groupId}
           postId={postId}
           parentId={parentId}
-          handleClickShow={handleClickShow}
           isTargetVisible={isTargetVisible}
+          handleClickCancel={handleClickCancel}
         />
       )}
     </CommentEtcContainer>

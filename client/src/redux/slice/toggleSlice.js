@@ -5,6 +5,7 @@ const initialToggleState = {
   loginToggled: false,
   inputToggled: false,
   modalToggled: false,
+  commentToggled: false,
 };
 
 const toggleSlice = createSlice({
@@ -23,6 +24,9 @@ const toggleSlice = createSlice({
     modalToggle(state) {
       state.modalToggled = !state.modalToggled;
     },
+    commentModalToggle(state) {
+      state.commentToggled = !state.commentToggled;
+    },
   },
 });
 
@@ -30,5 +34,6 @@ export const loginToggle = toggleSlice.actions.loginToggle;
 export const menuToggle = toggleSlice.actions.menuToggle;
 export const inputToggle = toggleSlice.actions.inputToggle;
 export const modalToggle = toggleSlice.actions.modalToggle;
+export const commentModalToggle = toggleSlice.actions.commentModalToggle;
 
 export default toggleSlice;
