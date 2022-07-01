@@ -2,7 +2,7 @@ import React from 'react';
 import { MyInfoInput } from '../../../../styles/common/input';
 import { InfoLabel, InfoBox } from '../../../../styles/mypage/myinfo';
 
-function IdInput ({userId, onInputChange, myMessage, setMyMessage, success, setSuccess}) {
+function IdInput ({register, userId, onInputChange, myMessage, setMyMessage, success, setSuccess}) {
   // const handleCheckId = (evt) => {
   //   if (!idValidation(evt.target.value)) {
   //     setMyMessage({ ...myMessage, id: '4~12자리의 영문, 숫자만 가능합니다.'});
@@ -20,11 +20,9 @@ function IdInput ({userId, onInputChange, myMessage, setMyMessage, success, setS
     <InfoBox>
       <InfoLabel> 아이디 </InfoLabel>
       <MyInfoInput
+        {...register("id")}
         type="text"
-        name="id"
         placeholder="아이디"
-        value={userId}
-        onChange={onInputChange}
       />
     </InfoBox>
   );

@@ -3,7 +3,7 @@ import { MyInfoInput } from '../../../../styles/common/input';
 import { InfoBox, InfoLabel } from '../../../../styles/mypage/myinfo';
 
 
-function NameInput ({userName, onInputChange, myMessage, setMyMessage, success, setSuccess}) {
+function NameInput ({register, userName, onInputChange, myMessage, setMyMessage, success, setSuccess}) {
   // const handleCheckName = (evt) => {
   //   if (!nameValidation(evt.target.value)) {
   //     setMyMessage({ ...myMessage, nickname: "3~8 자리의 한글, 영문, 숫자만 가능합니다. "});
@@ -21,11 +21,9 @@ function NameInput ({userName, onInputChange, myMessage, setMyMessage, success, 
     <InfoBox>
       <InfoLabel> 닉네임 </InfoLabel>
       <MyInfoInput
+        {...register("nickname")}
         type="text"
-        name="nickname"
         placeholder="닉네임"
-        value={userName}
-        onChange={onInputChange}
       />
     </InfoBox>
   );

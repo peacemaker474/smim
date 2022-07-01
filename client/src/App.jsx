@@ -34,7 +34,7 @@ function App() {
         } else {
           dispatch(getUserLogOut());
         }
-      }, 10000);
+      }, 600 * 1000);
     }
 
     // if (!authenticated && loginCheck && getCookie() !== undefined) {

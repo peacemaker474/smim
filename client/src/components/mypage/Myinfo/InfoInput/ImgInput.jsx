@@ -48,14 +48,14 @@ const InputFileValue = styled.input`
   border-radius: 5px;
 `;
 
-function ImgInput ({ fileName, onFileUpload, onFileRemove}) {
+function ImgInput ({ register, fileName, onFileUpload, onFileRemove}) {
 
   return (
     <InputWrapper>
       <InputFileCustom>
         <ImgUpdateBtn for="user-imgAdd"> 이미지 추가 </ImgUpdateBtn>
         <InputFile id="user-imgAdd" type="file" accept='image/*' onChange={onFileUpload} />
-        <InputFileValue value={fileName} />
+        <InputFileValue {...register("fileName")} />
       </InputFileCustom>
       <ImgUpdateBtn onClick={onFileRemove}> 이미지 제거 </ImgUpdateBtn>
     </InputWrapper>

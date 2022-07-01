@@ -10,7 +10,8 @@ import { deleteCookie } from '../../../utils/cookie';
 function NavBar() {
   const menuToggled = useSelector((state) => state.toggle.menuToggled);
   const loginToggled = useSelector((state) => state.toggle.loginToggled);
-  const loginState = useSelector((state) => state.user);
+  const { authenticated } = useSelector((state) => state.authToken);
+  const { social } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,7 +33,8 @@ function NavBar() {
     <NavBarStyle
       menuToggled={menuToggled}
       loginToggled={loginToggled}
-      loginState={loginState}
+      authenticated={authenticated}
+      social={social}
       onLoginClick={handleLoginClick}
       onLogoutClick={handleLogoutClick}
       onToggleClick={handleToggleClick}

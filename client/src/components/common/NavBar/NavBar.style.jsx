@@ -78,7 +78,7 @@ const SignLink = styled.span`
   cursor: pointer;
 `;
 
-function NavBarStyle ({ menuToggled, loginToggled, loginState, onLoginClick, onLogoutClick, onToggleClick}) {
+function NavBarStyle ({ menuToggled, loginToggled, authenticated, social, onLoginClick, onLogoutClick, onToggleClick}) {
   const { pathname } = useLocation(null);
 
   return (
@@ -119,13 +119,13 @@ function NavBarStyle ({ menuToggled, loginToggled, loginState, onLoginClick, onL
                 60대에게
               </ListLink>
             </NavList>
-            {!loginState.isLogin ? (
+            {!authenticated ? (
               <NavList>
                 <SignLink onClick={onLoginClick}> 로그인/회원가입 </SignLink>
               </NavList>
             ) : (
               <>
-                {!loginState.social ? (
+                {!social ? (
                   <NavList>
                     <ListLink to='/my'> 마이페이지 </ListLink>
                   </NavList>
