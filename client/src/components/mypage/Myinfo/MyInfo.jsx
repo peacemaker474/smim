@@ -7,8 +7,9 @@ import MyInfoStyle from './MyInfo.style';
 function MyInfo () {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { register, setValue, handleSubmit } = useForm({
-    mode: 'onSubmit',
+  const { register, setValue, handleSubmit, formState: {errors} } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     defaultValues: {
       id: user.id,
       nickname: user.name,
@@ -30,7 +31,6 @@ function MyInfo () {
       if (base64) {
         setValue("imgFiles", imgFiles);
         setEncodeImg(base64);
-        // setUserInfo({ ...userInfo, imgFiles, encodeImg: base64 })
       }
     };
     reader.readAsDataURL(imgFiles[0]);
@@ -67,6 +67,7 @@ function MyInfo () {
     <MyInfoStyle
       register={register}
       onSubmit={handleSubmit}
+      errors={errors}
       encodeImg={encodeImg}
       onInfoUpdate={handleInfoUpdate}
       onFileUpload={handleFileUpload}

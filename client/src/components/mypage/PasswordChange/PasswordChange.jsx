@@ -1,41 +1,60 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { putChangePassWord } from '../../../network/mypage/http';
-import { getCookie } from '../../../utils/cookie';
-import { pwValidation } from '../../../utils/validation';
 import PasswordChangeStyle from './PasswordChange.style';
+import { getUserLogOut } from '../../../redux/services/UserService';
+import { DELETE_TOKEN } from '../../../redux/auth';
 
 function PasswordChange () {
   const user = useSelector((state) => state.user);
-  const [password, setPassword] = useState({
-    oldPassword: '',
-    newPassword: '',
-    newPassword2: '',
-  });
+  const { accessToken } = useSelector((state) => state.authToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, getValues, formState: {errors} } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      userId: user.id,
+      oldPassword: '',
+      newPassword: '',
+      newPassword2: '',
+      accessToken,
+    }
+  })
 
-  const handleInputChange = (evt) => {
-    const name = evt.target.name;
-    setPassword({ ...password, [name]: evt.target.value });
-  };
+  const handleCheckNewPwBlur = () => (value) => {
+    const { newPassword } = getValues();
+    return newPassword === value || "새로운 비밀번호가 서로 다릅니다."
+  }
 
-  const handlePwSubmit = (evt) => {
-    evt.preventDefault();
-
-    if (!pwValidation(password.oldPassword) && !pwValidation(password.newPassword)) {
-      return alert('8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.');
-    } else {
-      let body = {
-        userId: user.id,
-        oldPassword: password.oldPassword,
-        newPassword: password.newPassword,
-        newPassword2: password.newPassword2,
-        token: getCookie("users"),
-      };
-      putChangePassWord(body);
+  const handlePwSubmit = async (body) => {
+    try {
+      const { data } = await putChangePassWord(body);
+      if (data.success) {
+        alert(data.message);
+        dispatch(getUserLogOut());
+        dispatch(DELETE_TOKEN());
+      }
+    } catch (err) {
+      if (err) alert(err.response.data.message);
     }
   };
 
-  return <PasswordChangeStyle onInputChange={handleInputChange} onPwSubmit={handlePwSubmit} />;
+  const handleCancelClick = () => {
+    navigate("/my");
+  }
+
+  return (
+    <PasswordChangeStyle
+      register={register}
+      errors={errors}
+      onSubmit={handleSubmit}
+      onCheckNewPwBlur={handleCheckNewPwBlur}
+      onPwSubmit={handlePwSubmit}
+      onCancelClick={handleCancelClick}
+    />
+  );
 }
 
 export default PasswordChange;

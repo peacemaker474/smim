@@ -40,3 +40,5 @@ export const Writer = styled.p`
   margin-right: 5px;
   height: 10%;
 `;
+
+export const NotWriteLists = styled.h2``;

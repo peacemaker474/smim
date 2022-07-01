@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ListsUl, Listli, Title, ListContent } from '../../../styles/mypage/writeList';
+import { ListsUl, Listli, Title, ListContent, NotWriteLists } from '../../../styles/mypage/writeList';
 
 const MyWriteWrapper = styled.div`
   width: 50vw;
@@ -20,15 +20,21 @@ const MyWritePageNumber = styled.p`
 function MyWriteListsStyle ({ writeList, onMoveDetail }) {
   return (
     <MyWriteWrapper>
-      <ListsUl>
-        {writeList && writeList.map(item => 
-          <Listli key={item.createAt} id={item._id} onClick={onMoveDetail}>
-            <Title> {item.title} </Title>
-            <ListContent> {item.content} </ListContent>
-        </Listli>
-        )}
-      </ListsUl>
-      <MyWritePageNumber> 1 </MyWritePageNumber>
+      {
+        writeList === undefined ?
+        <NotWriteLists> 작성한 게시글이 없습니다. </NotWriteLists> :
+        <>
+          <ListsUl>
+            {writeList.map(item => 
+              <Listli key={item.createAt} id={item._id} onClick={onMoveDetail} >
+                <Title> {item.title} </Title>
+                <ListContent dangerouslySetInnerHTML={{ __html: item.content}} />
+            </Listli>
+            )}
+          </ListsUl>
+          <MyWritePageNumber> 1 </MyWritePageNumber>
+        </>
+      }
     </MyWriteWrapper>
   );
 }

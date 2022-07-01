@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ListsUl, Listli, Title, ListContent, Writer } from '../../../styles/mypage/writeList';
+import { ListsUl, Listli, Title, ListContent, Writer, NotWriteLists } from '../../../styles/mypage/writeList';
 
 const BookMarkWrapper = styled.div`
   width: 50vw;
@@ -20,16 +20,22 @@ const BookMarkPageNumber = styled.p`
 function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
   return (
     <BookMarkWrapper>
-      <ListsUl>
-        {bookMarkList && bookMarkList.map(item => 
-          <Listli key={item.createAt} id={item._id} onClick={onBookMarkMove}>
-            <Title> {item.title} </Title>
-            <ListContent> {item.content} </ListContent>
-            <Writer> {item.owner} </Writer>
-        </Listli>
-        )}
-      </ListsUl>
-      <BookMarkPageNumber> 1 </BookMarkPageNumber>
+      {
+        bookMarkList === undefined ?
+          <NotWriteLists> 즐겨찾기한 게시글이 없습니다.</NotWriteLists> :
+          <>
+            <ListsUl>
+              {bookMarkList.map(item => 
+                <Listli key={item.createAt} id={item._id} onClick={onBookMarkMove}>
+                  <Title> {item.title} </Title>
+                  <ListContent dangerouslySetInnerHTML={{__html: item.content}} />
+                  <Writer> {item.owner} </Writer>
+              </Listli>
+              )}
+            </ListsUl>
+            <BookMarkPageNumber> 1 </BookMarkPageNumber>
+          </>
+      }
     </BookMarkWrapper>
   );
 }
