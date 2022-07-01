@@ -1,7 +1,6 @@
 import User from '../models/User.js';
 import Post from '../models/Post.js';
 import bcrypt from 'bcrypt';
-import { createAccessToken } from './tokenControllers.js';
 
 /*
 
@@ -49,12 +48,14 @@ export const putChangeUserInfo = async (req, res) => {
     file
   } = req;
   const user = await User.findOne({email});
-  const checkId = await User.findOne({ userId });
-  const checkName = await User.findOne({ nickname });
   const updateImage = await User.findByIdAndUpdate(user._id, {
     imageUrl: file ? file.path : user.imageUrl,
-  });
-  if (file !== undefined && checkId === null && checkName === null) return res.status(201).json({ success: true, imageUrl: updateImage.imageUrl})
+  }, {new: true});
+  if (file !== undefined && userId === undefined && nickname === undefined) return res.status(201).json({ success: true, imageUrl: updateImage.imageUrl})
+
+  // 위에는 이미지만 변경, 아래는 이미지와 유저 정보 변경
+  const checkId = await User.findOne({ userId });
+  const checkName = await User.findOne({ nickname });
   if (checkId !== null) return res.status(409).json({ success: false, message: "이미 존재하는 아이디입니다."})
   if (checkName !== null) return res.status(409).json({ success: false, message: "이미 존재하는 닉네임입니다."})
   
@@ -62,16 +63,14 @@ export const putChangeUserInfo = async (req, res) => {
     userId,
     nickname,
   }, {new: true});
-  const token = createAccessToken(user._id);
   
   return res.status(201).json({
     id: updateUser.userId,
     name: updateUser.nickname,
     email: updateUser.email,
-    accessToken: token,
     success: true,
     imageUrl: file !== undefined ? updateImage.imageUrl : updateUser.imageUrl,
-    message: "성공적으로 정보를 변경하였습니다.",
+    message: "성공적으로 유저 정보를 변경하였습니다.",
   })
 }
 
