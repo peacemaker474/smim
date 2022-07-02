@@ -37,7 +37,7 @@ const UserInfoWrapper = styled.div`
   gap: 25px;
 `;
 
-function MyInfoStyle ({ register, encodeImg, onSubmit, fileName, onInfoUpdate, onFileUpload, onFileRemove}) {
+function MyInfoStyle ({ register, encodeImg, errors, onSubmit, fileName, onInfoUpdate, onFileUpload, onFileRemove}) {
   return (
     <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={onSubmit(onInfoUpdate)}>
       <UserImageWrapper>
@@ -50,8 +50,8 @@ function MyInfoStyle ({ register, encodeImg, onSubmit, fileName, onInfoUpdate, o
         />
       </UserImageWrapper>
       <UserInfoWrapper>
-        <IdInput register={register} />
-        <NameInput register={register} />
+        <IdInput register={register} errors={errors} />
+        <NameInput register={register} errors={errors} />
         <EmailInput register={register} />
         <UpdateBtn> 수정 </UpdateBtn>
       </UserInfoWrapper>
