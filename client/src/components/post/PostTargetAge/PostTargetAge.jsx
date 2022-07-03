@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { targetAgeAdd } from '../../../redux/slice/postCreateSlice';
-import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
+import { resetPostCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTargetAgePresenter from './PostTargetAge.style';
 
 function PostTargetAge() {
@@ -15,7 +15,7 @@ function PostTargetAge() {
       // when targetAge state is false
       ageInput.current && ageInput.current.focus();
       console.log('나이를 입력해주세요'); // refactoring - 나중에 css 처리해야함
-      dispatch(resetCheck());
+      dispatch(resetPostCheck());
     }
   }, [postCheck.age, dispatch]);
 

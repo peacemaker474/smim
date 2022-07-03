@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { tagAdd, tagDelete } from '../../../redux/slice/postCreateSlice';
-import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
+import { resetPostCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTagPresenter from './PostTag.style';
 
 function PostTag() {
@@ -15,7 +15,7 @@ function PostTag() {
     if (postCheck.hashtag) {
       // when hashtag state is false
       tagInput.current && tagInput.current.focus();
-      dispatch(resetCheck());
+      dispatch(resetPostCheck());
     }
   }, [postCheck.hashtag, dispatch]);
 

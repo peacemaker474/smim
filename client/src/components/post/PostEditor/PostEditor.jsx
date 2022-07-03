@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
+import { resetPostCheck } from '../../../redux/slice/postFormCheckSlice';
 import { contentAdd } from '../../../redux/slice/postCreateSlice';
 import PostEditorPresenter from './PostEditor.style';
 
@@ -16,7 +16,7 @@ function PostEditor() {
     if (postCheck.content) {
       // when content state is false
       contentInput.current && contentInput.current.focus();
-      dispatch(resetCheck());
+      dispatch(resetPostCheck());
     }
   }, [postCheck.content, dispatch]);
 
