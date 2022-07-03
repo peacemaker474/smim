@@ -6,8 +6,8 @@ import PostBottomBtn from '../components/post/PostBottomBtn/PostBottomBtn';
 import PostForm from '../components/post/PostForm/PostForm';
 import Modal from '../components/common/Modal/Modal';
 import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
-import { totalAdd, postReset } from '../redux/slice/postCreateSlice';
-import { resetCheck } from '../redux/slice/postFormCheckSlice';
+import { totalAdd, resetPostCreate } from '../redux/slice/postCreateSlice';
+import { resetPostCheck } from '../redux/slice/postFormCheckSlice';
 import { modalToggle } from '../redux/slice/toggleSlice';
 
 function PostUploadPage() {
@@ -40,9 +40,9 @@ function PostUploadPage() {
     if (pathValue === 'edit') {
       loadCreatedPost();
     } else {
-      dispatch(postReset()); // when pathValue is "create", post data reset
+      dispatch(resetPostCreate()); // when pathValue is "create", post data reset
     }
-    dispatch(resetCheck()); // post state reset - all false
+    dispatch(resetPostCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
 
   // const showModal = () => {
@@ -67,7 +67,7 @@ function PostUploadPage() {
       )
         .then((res) => {
           console.log(res.data);
-          dispatch(postReset());
+          dispatch(resetPostCreate());
           navigate('/');
         })
         .catch((err) => console.log(err));
@@ -89,7 +89,7 @@ function PostUploadPage() {
       )
         .then((res) => {
           console.log(res.data);
-          dispatch(postReset());
+          dispatch(resetPostCreate());
           navigate(-1);
         })
         .catch((err) => console.log(err));

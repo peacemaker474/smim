@@ -37,10 +37,15 @@ export default function CommentContainer({ postId }) {
       return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
     });
 
+  const pinnedComment = useSelector((state) => state.comment).pinnedData;
+  const pinnedId = useSelector((state) => state.comment).pinnedId;
+
   return (
     <CommentContainerPresenter
       uploadingComments={uploadingComments}
       sortedLoadedComments={sortedLoadedComments}
+      pinnedComment={pinnedComment}
+      pinnedId={pinnedId}
     />
   );
 }

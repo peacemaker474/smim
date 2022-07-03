@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetComment } from '../redux/slice/commentCreateSlice';
+import { resetCommentCreate } from '../redux/slice/commentCreateSlice';
+import { resetComment } from '../redux/slice/commentSlice';
 import PostPost from '../components/postview/Post/PostPost/PostPost';
 import PostComment from '../components/postview/Comment/PostComment/PostComment';
 import styled from 'styled-components';
@@ -22,6 +23,7 @@ export default function PostViewPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch(resetCommentCreate());
     dispatch(resetComment());
   }, [dispatch]);
 

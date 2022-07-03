@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema({
   like_count: { type: Number, required: true, default: 0 },
   like_users: [{ type: String, default: null, required: true }],
   complain_count: { type: Number, required: true, default: 0 },
-  state: { type: Boolean, required: true, default: true }, // 삭제유무
+  being: { type: Boolean, required: true, default: true }, // 삭제유무
 });
 
 const Comment = mongoose.model('Comment', commentSchema);

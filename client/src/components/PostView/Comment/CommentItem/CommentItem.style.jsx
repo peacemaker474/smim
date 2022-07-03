@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CommentDropdown } from '../CommentDropdown/CommentDropdown';
 import { DropdownBtn } from '../../../../styles/common/dropdown';
-import CommentItemText from '../CommentItemText/CommentItemText';
 import CommentItemEtc from '../CommentItemEtc/CommentItemEtc';
 import CommentInput from '../CommentInput/CommentInput';
 
@@ -18,6 +17,7 @@ export default function CommentItemPresenter({
   handleClickCancel,
   handleTextChange,
   itemText,
+  deleteState,
 }) {
   return (
     <>
@@ -36,23 +36,34 @@ export default function CommentItemPresenter({
         <CommentItemInner>
           <ProfileImg />
           <CommentItemContent>
-            <CommentItemText
-              cmntData={cmntData}
-              text={itemText}
-              isTargetVisible={isTargetVisible}
-            />
-            <CommentItemEtc cmntData={cmntData} groupId={groupId} />
-          </CommentItemContent>
-          <CommentDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-            {isDropdownVisible && (
-              <CommentDropdown
-                ref={dropdownRef}
-                writer={cmntData.writer.nickname}
-                handleClickShow={handleClickShow}
-                commentId={cmntData._id}
-              />
+            {deleteState || !cmntData.being ? (
+              <CommentText>
+                <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
+                {'삭제된 댓글입니다.'}
+              </CommentText>
+            ) : (
+              <>
+                <CommentText>
+                  <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
+                  {itemText}
+                </CommentText>
+                <CommentItemEtc cmntData={cmntData} groupId={groupId} />
+              </>
             )}
-          </CommentDropdownBtn>
+          </CommentItemContent>
+          {deleteState || !cmntData.being ? null : (
+            <CommentDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
+              {isDropdownVisible && (
+                <CommentDropdown
+                  ref={dropdownRef}
+                  writer={cmntData.writer.nickname}
+                  handleClickShow={handleClickShow}
+                  commentId={cmntData._id}
+                  parentId={cmntData.parent_id}
+                />
+              )}
+            </CommentDropdownBtn>
+          )}
         </CommentItemInner>
       )}
     </>
@@ -78,4 +89,15 @@ const CommentDropdownBtn = styled(DropdownBtn)``;
 
 const CommentItemContent = styled.div`
   width: 709px;
+`;
+
+const CommentText = styled.span`
+  display: block;
+  margin: 0;
+  margin-bottom: 12px;
+  line-height: 23px;
+`;
+
+const CommentStrongName = styled.strong`
+  font-weight: 600;
 `;

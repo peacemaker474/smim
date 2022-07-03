@@ -9,6 +9,9 @@ export default function CommentItem({ cmntData, groupId }) {
   const [itemText, setItemText] = useState(cmntData.text);
   const [isTargetVisible, handleClickShow] = useVisible(false);
   const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
+  const delComment = useSelector((state) => state.comment).deletedIdArray.find(
+    (el) => el === cmntData._id
+  );
 
   const handleClickCancel = () => handleClickShow(false);
 
@@ -30,6 +33,7 @@ export default function CommentItem({ cmntData, groupId }) {
       handleTextChange={handleTextChange}
       itemText={itemText}
       commentModalVisible={commentModalVisible}
+      deleteState={Boolean(delComment)}
     />
   );
 }
