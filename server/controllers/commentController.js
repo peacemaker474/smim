@@ -175,13 +175,13 @@ export const getCommentPinned = async (req, res) => {
     }
 
     const userExist = await User.exists({ _id: _id });
-    const comment = await Comment.exists({
+    const comment = await Comment.findOne({
       state: true,
       _id: commentId,
       parent_id: null,
     });
 
-    const post = await Post.findOne({ _id: comment.postId, being: true, owner: _id });
+    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
 
     if (!comment) {
       return res.status(400).send({
