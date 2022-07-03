@@ -35,7 +35,7 @@ const postFormCheckSlice = createSlice({
       state.hashtag = false;
       state.content = true;
     },
-    resetCheck(state) {
+    resetPostCheck(state) {
       state.title = false;
       state.age = false;
       state.hashtag = false;
@@ -44,7 +44,7 @@ const postFormCheckSlice = createSlice({
   },
 });
 
-export const { titleCheck, ageCheck, hashtagCheck, contentCheck, resetCheck } =
+export const { titleCheck, ageCheck, hashtagCheck, contentCheck, resetPostCheck } =
   postFormCheckSlice.actions;
 
 export default postFormCheckSlice.reducer;

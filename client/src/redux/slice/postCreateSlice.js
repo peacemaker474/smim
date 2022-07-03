@@ -89,7 +89,7 @@ const postCreateSlice = createSlice({
         };
       },
     },
-    postReset(state) {
+    resetPostCreate(state) {
       state.title = '';
       state.content = '';
       state.targetAge = 0;
@@ -98,7 +98,7 @@ const postCreateSlice = createSlice({
   },
 });
 
-export const { titleAdd, targetAgeAdd, contentAdd, tagAdd, totalAdd, tagDelete, postReset } =
+export const { titleAdd, targetAgeAdd, contentAdd, tagAdd, totalAdd, tagDelete, resetPostCreate } =
   postCreateSlice.actions;
 
 export default postCreateSlice.reducer;
