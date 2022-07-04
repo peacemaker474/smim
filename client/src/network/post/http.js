@@ -47,3 +47,7 @@ export const getSearchPost = (data) => {
     `${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`
   );
 };
+
+export const getPostView = (id) => {
+  return axios.get(`${http}/post/${id}/view`);
+};
