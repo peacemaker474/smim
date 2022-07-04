@@ -87,6 +87,20 @@ export const postCommentCreate = async (req, res) => {
 // 댓글 리스트 가져오기
 export const getCommentList = async (req, res) => {
   const { id: postId } = req.params;
+  const userData = {
+    _id: undefined,
+    nickname: undefined,
+    userId: undefined,
+  };
+  if (Object.keys(req.body).includes('user')) {
+    // 로그인 했을 때
+    const {
+      user: { _id, nickname, userId },
+    } = req.body;
+    userData._id = _id;
+    userData.nickname = nickname;
+    userData.userId = userId;
+  }
 
   try {
     const postExist = await Post.exists({ _id: postId, being: true });
@@ -120,16 +134,28 @@ export const getCommentList = async (req, res) => {
             const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
             const writer = await User.findOne({ _id: el.writer });
 
-            return {
-              ...el._doc,
-              children,
-              writer: {
-                userId: writer.userId,
-                _id: writer._id,
-                nickname: writer.nickname,
-              },
-              // like : el._doc.like_users.includes()
-            };
+            if (userData._id) {
+              return {
+                ...el._doc,
+                children,
+                writer: {
+                  userId: writer.userId,
+                  _id: writer._id,
+                  nickname: writer.nickname,
+                },
+                like: el._doc.like_users.includes(userData._id),
+              };
+            } else {
+              return {
+                ...el._doc,
+                children,
+                writer: {
+                  userId: writer.userId,
+                  _id: writer._id,
+                  nickname: writer.nickname,
+                },
+              };
+            }
           })
         );
 
@@ -226,29 +252,33 @@ export const getCommentLike = async (req, res) => {
   } = req.body;
   const { id: commentId } = req.params;
   try {
-    const user = await User.findOne({ id: _id });
-    console.log(user);
+    const comment = await Comment.findById(commentId);
 
-    // if (like.user_array.includes(_id)) {
-    //   return res.status(404).send({
-    //     success: false,
-    //     message: '이미 좋아요한 게시물입니다.',
-    //   });
-    // }
+    if (!commentId) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않는 댓글입니다.',
+      });
+    }
 
-    // post.meta.likes += 1;
-    // await post.save();
+    if (comment.like_users.includes(_id)) {
+      return res.status(404).send({
+        success: false,
+        message: '이미 좋아요한 댓글입니다.',
+      });
+    }
 
-    // like.user_array.push(_id);
-    // await like.save();
+    comment.like_count += 1;
+    comment.like_users.push(_id);
+    await comment.save();
 
-    // return res.status(200).send({
-    //   success: true,
-    //   message: '좋아요를 눌렀습니다.',
-    //   data: {
-    //     likes: post.meta.likes,
-    //   },
-    // });
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 눌렀습니다.',
+      data: {
+        likes: comment.like_count,
+      },
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -259,7 +289,47 @@ export const getCommentLike = async (req, res) => {
 };
 
 // 댓글 좋아요 취소
-export const getCommentUnlike = () => {};
+export const getCommentUnlike = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.body;
+  const { id: commentId } = req.params;
+  try {
+    const comment = await Comment.findById(commentId);
+
+    if (!commentId) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않는 댓글입니다.',
+      });
+    }
+
+    if (!comment.like_users.includes(_id)) {
+      return res.status(404).send({
+        success: false,
+        message: '좋아요를 하지않은 댓글입니다.',
+      });
+    }
+
+    comment.like_count -= 1;
+    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
+    await comment.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 취소하였습니다.',
+      data: {
+        likes: comment.like_count,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
 
 // 댓글 수정하기
 export const putCommentEdit = async (req, res) => {
