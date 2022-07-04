@@ -39,4 +39,5 @@ postRouter.get('/:id/unbookmark', verifyToken, existPostCheck, getUnbookmark);
 postRouter.get('/:id/like', verifyToken, existPostCheckAndData, getPostLike);
 postRouter.get('/:id/unlike', verifyToken, existPostCheckAndData, getPostUnlike);
 postRouter.get('/:id/comment', getCommentList);
+postRouter.get('/:id/comment/detail', verifyToken, getCommentList);
 postRouter.get('/:id/detailComment', verifyToken, getCommentList);
