@@ -22,7 +22,7 @@ export default function CommentDropdownPresenter({
     <CommentDropdownContainer ref={forwardRef}>
       <CommentDropdownBox>
         {userNickname === postWriter && !parentId ? (
-          <CommentDropdownBtn onClick={handleCommentPinned}>댓글고정</CommentDropdownBtn>
+          <CommentDropdownBtn onClick={handleCommentPinned}>고정</CommentDropdownBtn>
         ) : null}
         {userNickname === writer ? (
           <>

@@ -15,7 +15,7 @@ export const DropdownBtn = styled.span`
 `;
 
 export const DropdownContainer = styled.div`
-  width: ${({ width }) => width || '88px'};
+  width: ${({ width }) => width || '72px'};
   height: ${({ height }) => height || 'auto'};
   background: #ffffff;
   filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));

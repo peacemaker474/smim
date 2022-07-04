@@ -18,7 +18,6 @@ export default function CommentWrapper({ cmntData }) {
     if (parentData._id === pinnedComment) {
       dispatch(getPinnedCommentData(cmntData));
     }
-    console.log(parentData._id);
   }, [dispatch, cmntData, parentData._id, pinnedComment]);
 
   const childrenData = Array.isArray(cmntData) ? cmntData && cmntData.slice(1) : [];
