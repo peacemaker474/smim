@@ -8,17 +8,15 @@ import PostViewPage from '../pages/PostViewPage';
 import LoadingPage from '../pages/LoadingPage';
 import NotFound from '../pages/NotFound';
 
-function PublicRoute () {
+function PublicRoute() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
     if (
-      (
-        pathname === '/posts/create' ||
-        pathname.includes("/my") ||
-        pathname.includes("/posts/edit")
-      )
+      pathname === '/posts/create' ||
+      pathname.includes('/my') ||
+      pathname.includes('/posts/edit')
     ) {
       navigate('/');
     }
@@ -26,15 +24,15 @@ function PublicRoute () {
 
   return (
     <Routes>
-      <Route path='/intro' element={<Intro/>} />
-      <Route path='/signup' element={<SignupPage/>} />
-      <Route path='/' element={<MainPage/>} />
-      <Route path='/generation' element={<PostsPage/>} />
-      <Route path='/posts/view/:id' element={<PostViewPage/>} />
-      <Route path='/loading' element={<LoadingPage/>} />
-      <Route path='/notfound' element={<NotFound/>} />
+      <Route path='/intro' element={<Intro />} />
+      <Route path='/signup' element={<SignupPage />} />
+      <Route path='/' element={<MainPage />} />
+      <Route path='/generation' element={<PostsPage />} />
+      <Route path='/posts/view/:id' element={<PostViewPage />} />
+      <Route path='/loading' element={<LoadingPage />} />
+      <Route path='/*' element={<NotFound />} />
     </Routes>
-  )
+  );
 }
 
 export default PublicRoute;
