@@ -4,7 +4,6 @@ const initialState = {
   commentId: undefined,
   deletedIdArray: [],
   pinnedId: undefined,
-  pinnedData: undefined,
   check: undefined,
 };
 
@@ -62,18 +61,25 @@ const commentSlice = createSlice({
         };
       },
     },
-    getPinnedCommentData: {
+
+    getUnpinnedCommentId: {
       reducer(state, action) {
-        state.pinnedData = action.payload.pinnedData;
+        state.commentId = action.payload.commentId;
+        state.check = 'unpinned';
       },
-      prepare(pinnedData) {
+      prepare(commentId) {
         return {
           payload: {
-            pinnedData,
+            commentId,
           },
         };
       },
     },
+    unpinnedCommentId(state, action) {
+      state.pinnedData = undefined;
+      state.pinnedId = undefined;
+    },
+
     resetComment(state) {
       Object.assign(state, initialState);
     },
@@ -85,7 +91,8 @@ export const {
   deleteCommentId,
   getPinnedCommentId,
   pinnedCommentId,
-  getPinnedCommentData,
+  getUnpinnedCommentId,
+  unpinnedCommentId,
   resetComment,
 } = commentSlice.actions;
 

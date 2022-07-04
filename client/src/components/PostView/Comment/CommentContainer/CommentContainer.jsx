@@ -7,7 +7,7 @@ export default function CommentContainer({ postId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [loadedComments, setLoadedComments] = useState();
   const createdComments = useSelector((state) => state.commentCreate);
-  // const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
+  const pinnedId = useSelector((state) => state.comment).pinnedId;
 
   const loadComments = useCallback(async () => {
     let response;
@@ -19,12 +19,7 @@ export default function CommentContainer({ postId }) {
         },
       });
     } else {
-      response = await getCommentListRead(postId, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
+      response = await getCommentListRead(postId);
     }
 
     if (response.data.success) {
@@ -38,24 +33,29 @@ export default function CommentContainer({ postId }) {
 
   const uploadingComments = createdComments
     .filter((el) => el.parent_id == null)
+    .filter((el) => String(el._id) !== pinnedId)
     .sort((a, b) => {
       return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
     });
 
   const sortedLoadedComments =
     loadedComments &&
-    loadedComments.sort((a, b) => {
-      return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
-    });
+    loadedComments
+      .filter((el) => String(el[0]._id) !== pinnedId)
+      .sort((a, b) => {
+        return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
+      });
 
-  const pinnedComment = useSelector((state) => state.comment).pinnedData;
-  const pinnedId = useSelector((state) => state.comment).pinnedId;
+  const pinnedLoadedComment =
+    loadedComments && loadedComments.filter((el) => String(el[0]._id) === pinnedId);
+  const pinnedUploadingComment = createdComments.filter((el) => String(el._id) === pinnedId);
 
   return (
     <CommentContainerPresenter
       uploadingComments={uploadingComments}
       sortedLoadedComments={sortedLoadedComments}
-      pinnedComment={pinnedComment}
+      pinnedLoadedComment={pinnedLoadedComment}
+      pinnedUploadingComment={pinnedUploadingComment}
       pinnedId={pinnedId}
     />
   );
