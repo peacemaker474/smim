@@ -17,6 +17,8 @@ const commentCreateSlice = createSlice({
           post_id: action.payload.post_id,
           text: action.payload.text,
           being: action.payload.being,
+          like: false,
+          like_count: 0,
         });
       },
       prepare(_id, writer, createAt, parent_id, group_id, post_id, text) {

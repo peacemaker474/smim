@@ -2,8 +2,12 @@ import axios from 'axios';
 
 const http = 'http://localhost:4000';
 
-export const getCommentListRead = (id) => {
-  return axios.get(`${http}/post/${id}/comment`);
+export const getCommentListRead = (id, header = undefined) => {
+  if (header) {
+    return axios.get(`${http}/post/${id}/comment/detail`, header);
+  } else {
+    return axios.get(`${http}/post/${id}/comment`);
+  }
 };
 
 export const postCommentCreate = (data, header) => {
@@ -20,4 +24,12 @@ export const deleteComment = (id, header) => {
 
 export const getCommentPinned = (id, header) => {
   return axios.get(`${http}/comment/${id}/pinned`, header);
+};
+
+export const getCommentLike = (id, header) => {
+  return axios.get(`${http}/comment/${id}/like`, header);
+};
+
+export const getCommentUnlike = (id, header) => {
+  return axios.get(`${http}/comment/${id}/unlike`, header);
 };

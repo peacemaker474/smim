@@ -7,14 +7,25 @@ export default function CommentContainer({ postId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [loadedComments, setLoadedComments] = useState();
   const createdComments = useSelector((state) => state.commentCreate);
+  // const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
 
   const loadComments = useCallback(async () => {
-    const response = await getCommentListRead(postId, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
-      },
-    });
+    let response;
+    if (tkn) {
+      response = await getCommentListRead(postId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+    } else {
+      response = await getCommentListRead(postId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+    }
 
     if (response.data.success) {
       setLoadedComments(response.data.data);

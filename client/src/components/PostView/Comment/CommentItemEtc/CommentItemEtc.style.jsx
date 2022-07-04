@@ -13,13 +13,17 @@ export default function CommentItemEtcPresenter({
   parentId,
   isTargetVisible,
   handleClickCancel,
+  like,
+  handleCommentLike,
 }) {
   return (
     <CommentEtcContainer>
       <CommentEtc>
         <CommentDate>{createAt}</CommentDate>
         <CommentReBtn onClick={handleClickShow}>답글 달기</CommentReBtn>
-        <CommentLike>{likeCount}</CommentLike>
+        <CommentLike like={like} onClick={handleCommentLike}>
+          {likeCount}
+        </CommentLike>
       </CommentEtc>
       {isTargetVisible && (
         <CommentInput
