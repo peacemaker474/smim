@@ -12,8 +12,11 @@ export default function CommentDropdownPresenter({
   handleCommentEdit,
   handleCommentDel,
   handleCommentPinned,
+  handleCommentUnpinned,
   writer,
   parentId,
+  commentId,
+  pinnedId,
 }) {
   const userNickname = useSelector((state) => state.user).name;
   const postWriter = useSelector((state) => state.post).postWriter;
@@ -21,7 +24,9 @@ export default function CommentDropdownPresenter({
   return (
     <CommentDropdownContainer ref={forwardRef}>
       <CommentDropdownBox>
-        {userNickname === postWriter && !parentId ? (
+        {userNickname === postWriter && !parentId && commentId === pinnedId ? (
+          <CommentDropdownBtn onClick={handleCommentUnpinned}>고정해제</CommentDropdownBtn>
+        ) : userNickname === postWriter && !parentId ? (
           <CommentDropdownBtn onClick={handleCommentPinned}>고정</CommentDropdownBtn>
         ) : null}
         {userNickname === writer ? (
