@@ -9,46 +9,6 @@ const GOOGLE_AUTH_TOKEN_URL = 'https://oauth2.googleapis.com/token';
   클라이언트 단에서 처리할 것인지 정해야 한다.
 */
 
-
-export const getIdCheck = (req, res) => {
-  const { userId } = req.query;
-  User.findOne({ userId })
-    .then((data) => {
-      if (data) {
-        return res.status(409).json({ success: false, message: '이미 사용중이거나 탈퇴한 아이디입니다.' });
-      } else {
-        return res.status(200).json({ success: true, message: '사용이 가능한 아이디입니다.' });
-      }
-    })
-    .catch((err) => console.log(err));
-};
-
-export const getEmailCheck = (req, res) => {
-  const { email } = req.query;
-  User.findOne({ email })
-    .then((data) => {
-      if (data) {
-        return res.status(409).json({ success: false, message: '이미 사용중이거나 탈퇴한 이메일입니다.' });
-      } else {
-        return res.status(200).json({ success: true, message: '사용이 가능한 이메일입니다.' });
-      }
-    })
-    .catch((err) => console.log(err));
-};
-
-export const getNameCheck = (req, res) => {
-  const { nickname } = req.query;
-  User.findOne({ nickname })
-    .then((data) => {
-      if (data) {
-        return res.status(409).json({ success: false, message: '이미 사용중인 닉네임입니다.' });
-      } else {
-        return res.status(200).json({ success: true, message: '사용이 가능한 닉네임입니다.' });
-      }
-    })
-    .catch((err) => console.log(err));
-};
-
 export const postSignup = async (req, res) => {
   const { userId, email, nickname, birthday, password } = req.body;
   try {

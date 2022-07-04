@@ -8,67 +8,54 @@ import bcrypt from 'bcrypt';
 
 */
 
-export const getCheckMyId = (req, res) => {
-  const { userId } = req.query;
-  User.findOne({userId})
-    .then((data) => {
-      if (data) {
-        return res.status(409).json({ success: false, message: "이미 사용중이거나 탈퇴한 아이디입니다."});
-      } else {
-        return res.status(200).json({ success: true, message: "사용 가능한 아이디입니다."});
-      }
-    })
-}
-
-export const getCheckMyName = (req, res) => {
-  const { userName } = req.query;
-  User.findOne({nickname: userName})
-    .then((data) => {
-      if (data) {
-        return res.status(409).json({ success: false, message: "이미 사용중인 닉네임입니다."});
-      } else {
-        return res.status(200).json({ success: true, message: "사용이 가능한 닉네임입니다."});
-      }
-    })
-}
-
 export const getWriteLists = async (req, res) => {
   const { userId } = req.query;
-  const { posts } = await User.findOne({userId});
-  if (posts.length === 0) return res.status(204).send("작성한 게시글이 없습니다.");
-  
-  const writeLists = await Promise.all(
-    posts.map(async (list) => {
-      const post = await Post.findById(list);
-      return post;
-    })
-  );
-  
-  return res.status(200).json({ success: true, writeLists});
+  try {
+    const { posts } = await User.findOne({userId});
+    if (posts.length === 0) return res.status(204).send("작성한 게시글이 없습니다.");
+    
+    const writeLists = await Promise.all(
+      posts.map(async (list) => {
+        const post = await Post.findById(list);
+        return post;
+      })
+    );
+    
+    return res.status(200).json({ success: true, writeLists});
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("잠시 후 다시 시도해주세요.");
+  }
 };
 
 export const getFavoriteLists = async (req, res) => {
   const { userId } = req.query;
-  const { bookmarks } = await User.findOne({userId});
-  if (bookmarks.length === 0) return res.status(204).send("즐겨찾기한 게시글이 없습니다.");
+  try {
+    const { bookmarks } = await User.findOne({userId});
+    if (bookmarks.length === 0) return res.status(204).send("즐겨찾기한 게시글이 없습니다.");
 
-  const favoriteLists = await Promise.all(
-    bookmarks.map(async (list) => {
-      const post = await Post.findById(list);
-      return post;
-    })
-  );
-  
-  return res.status(200).json({ success: true, favoriteLists});
+    const favoriteLists = await Promise.all(
+      bookmarks.map(async (list) => {
+        const post = await Post.findById(list);
+        return post;
+      })
+    );
+    
+    return res.status(200).json({ success: true, favoriteLists});
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("잠시 후에 다시 시도해주세요.");
+  }
 };
 
 // REFACOTRING 필요
 
 export const putChangeUserInfo = async (req, res) => {
   const { 
-    body: { userId, nickname, email},
+    body: { userId, nickname, email },
     file
   } = req;
+  console.log(file);
   const user = await User.findOne({email});
   const updateImage = await User.findByIdAndUpdate(user._id, {
     imageUrl: file ? file.path : user.imageUrl,
@@ -98,6 +85,7 @@ export const putChangeUserInfo = async (req, res) => {
 
 export const putChangePassword = async (req, res) => {
   const { userId, oldPassword, newPassword, newPassword2} = req.body;
+
   const user = await User.findOne({userId});
   const checkPassword = await bcrypt.compare(oldPassword, user.password);
   if (!checkPassword) {

@@ -36,6 +36,19 @@ export const verifyToken = async (req, res, next) => {
   // return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
 }; // jwt token decoding
 
+export const verifyAccessToken = (req, res, next) => {
+  if (!req.headers.authorization) return res.json({ success: false, message: "토큰이 존재하지 않습니다."});
+
+  const token = req.headers.authorization.split('Bearer ')[1];
+
+  jwt.verify(token, ACCESS_KEY, (err, decoded) => {
+    if (err) return res.status(401).json({ success: false, message: "유효하지 않은 토큰입니다."});
+    if (!decoded) return res.status(401).json({ success: false, message: "유효하지 않은 토큰입니다."});
+
+    next();
+  })
+}
+
 export const reissueAccessToken = (req, res) => {
   const { refreshToken } = req.body;
 
