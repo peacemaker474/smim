@@ -8,7 +8,7 @@ import Modal from '../components/common/Modal/Modal';
 import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
 import { totalAdd, resetPostCreate } from '../redux/slice/postCreateSlice';
 import { resetPostCheck } from '../redux/slice/postFormCheckSlice';
-import { modalToggle } from '../redux/slice/toggleSlice';
+import { modalToggle, resetToggle } from '../redux/slice/toggleSlice';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
@@ -37,6 +37,7 @@ function PostUploadPage() {
   }, [postId, tkn, dispatch]);
 
   useEffect(() => {
+    dispatch(resetToggle());
     if (pathValue === 'edit') {
       loadCreatedPost();
     } else {
@@ -44,10 +45,6 @@ function PostUploadPage() {
     }
     dispatch(resetPostCheck()); // post state reset - all false
   }, [dispatch, loadCreatedPost, pathValue]);
-
-  // const showModal = () => {
-  //   setIsVisible(!isVisible);
-  // };
 
   const uploadPost = async (tkn) => {
     if (pathValue === 'create') {
