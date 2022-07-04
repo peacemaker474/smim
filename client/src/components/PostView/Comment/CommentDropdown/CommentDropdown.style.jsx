@@ -11,13 +11,19 @@ export default function CommentDropdownPresenter({
   forwardRef,
   handleCommentEdit,
   handleCommentDel,
+  handleCommentPinned,
   writer,
+  parentId,
 }) {
   const userNickname = useSelector((state) => state.user).name;
+  const postWriter = useSelector((state) => state.post).postWriter;
 
   return (
     <CommentDropdownContainer ref={forwardRef}>
       <CommentDropdownBox>
+        {userNickname === postWriter && !parentId ? (
+          <CommentDropdownBtn onClick={handleCommentPinned}>고정</CommentDropdownBtn>
+        ) : null}
         {userNickname === writer ? (
           <>
             <CommentDropdownBtn onClick={handleCommentEdit}>수정</CommentDropdownBtn>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { titleAdd } from '../../../redux/slice/postCreateSlice';
-import { resetCheck } from '../../../redux/slice/postFormCheckSlice';
+import { resetPostCheck } from '../../../redux/slice/postFormCheckSlice';
 import PostTitlePresenter from './PostTitle.style';
 
 function PostTitle() {
@@ -14,7 +14,7 @@ function PostTitle() {
     if (postCheck.title) {
       // when title state is false
       titleInput.current && titleInput.current.focus();
-      dispatch(resetCheck);
+      dispatch(resetPostCheck);
     }
   }, [postCheck.title, dispatch]);
 

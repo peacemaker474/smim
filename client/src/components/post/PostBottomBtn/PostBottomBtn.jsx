@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { postReset } from '../../../redux/slice/postCreateSlice';
+import { resetPostCreate } from '../../../redux/slice/postCreateSlice';
 import {
   titleCheck,
   ageCheck,
   hashtagCheck,
   contentCheck,
-  resetCheck,
+  resetPostCheck,
 } from '../../../redux/slice/postFormCheckSlice';
 import PostBottomBtnPresenter from './PostBottomBtn.style';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
@@ -31,14 +31,14 @@ function PostBottomBtn({ formState }) {
       console.log('내용을 입력해주세요');
       dispatch(contentCheck());
     } else {
-      dispatch(resetCheck());
+      dispatch(resetPostCheck());
       dispatch(modalToggle());
     }
   };
 
   const handleFormCancle = () => {
-    dispatch(postReset());
-    dispatch(resetCheck());
+    dispatch(resetPostCreate());
+    dispatch(resetPostCheck());
     navigate(-1);
   };
 

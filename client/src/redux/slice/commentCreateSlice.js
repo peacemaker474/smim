@@ -16,6 +16,9 @@ const commentCreateSlice = createSlice({
           group_id: action.payload.group_id,
           post_id: action.payload.post_id,
           text: action.payload.text,
+          being: action.payload.being,
+          like: false,
+          like_count: 0,
         });
       },
       prepare(_id, writer, createAt, parent_id, group_id, post_id, text) {
@@ -25,6 +28,7 @@ const commentCreateSlice = createSlice({
             writer,
             createAt,
             like_count: 0,
+            being: true,
             parent_id,
             group_id,
             post_id,
@@ -33,12 +37,12 @@ const commentCreateSlice = createSlice({
         };
       },
     },
-    resetComment(state, action) {
+    resetCommentCreate(state, action) {
       state.length = 0;
     },
   },
 });
 
-export const { createComment, resetComment } = commentCreateSlice.actions;
+export const { createComment, resetCommentCreate } = commentCreateSlice.actions;
 
 export default commentCreateSlice.reducer;

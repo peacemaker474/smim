@@ -6,15 +6,16 @@ import Modal from '../../../common/Modal/Modal';
 
 export default function PostCommentPresenter({
   commentModalVisible,
-  handleCommentDelete,
   postId,
+  actionFunc,
   cancelFunc,
+  modalText,
 }) {
   return (
     <>
       {commentModalVisible && (
-        <Modal actionfunc={handleCommentDelete} cancelFunc={cancelFunc}>
-          댓글을 삭제하시겠습니까?
+        <Modal actionfunc={actionFunc} cancelFunc={cancelFunc}>
+          {modalText}
         </Modal>
       )}
       <CommentSection>

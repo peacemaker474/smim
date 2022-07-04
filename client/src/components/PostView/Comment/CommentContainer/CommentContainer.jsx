@@ -7,14 +7,25 @@ export default function CommentContainer({ postId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [loadedComments, setLoadedComments] = useState();
   const createdComments = useSelector((state) => state.commentCreate);
+  // const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
 
   const loadComments = useCallback(async () => {
-    const response = await getCommentListRead(postId, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
-      },
-    });
+    let response;
+    if (tkn) {
+      response = await getCommentListRead(postId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+    } else {
+      response = await getCommentListRead(postId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${tkn}`,
+        },
+      });
+    }
 
     if (response.data.success) {
       setLoadedComments(response.data.data);
@@ -37,10 +48,15 @@ export default function CommentContainer({ postId }) {
       return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
     });
 
+  const pinnedComment = useSelector((state) => state.comment).pinnedData;
+  const pinnedId = useSelector((state) => state.comment).pinnedId;
+
   return (
     <CommentContainerPresenter
       uploadingComments={uploadingComments}
       sortedLoadedComments={sortedLoadedComments}
+      pinnedComment={pinnedComment}
+      pinnedId={pinnedId}
     />
   );
 }
