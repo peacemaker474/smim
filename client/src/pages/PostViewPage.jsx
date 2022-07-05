@@ -7,8 +7,9 @@ import PostPost from '../components/postview/Post/PostPost/PostPost';
 import PostComment from '../components/postview/Comment/PostComment/PostComment';
 import styled from 'styled-components';
 import Modal from '../components/common/Modal/Modal';
+import { modalToggle, resetToggle } from '../redux/slice/toggleSlice';
 import { deletePost, getPostView } from '../network/post/http';
-import { modalToggle } from '../redux/slice/toggleSlice';
+
 const PostViewContainer = styled.div`
   margin-top: 10vh;
   padding-top: 70px;
@@ -34,6 +35,7 @@ export default function PostViewPage() {
   useEffect(() => {
     dispatch(resetCommentCreate());
     dispatch(resetComment());
+    dispatch(resetToggle());
     viewPost();
   }, [dispatch, viewPost]);
 

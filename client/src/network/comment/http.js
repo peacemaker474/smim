@@ -26,6 +26,10 @@ export const getCommentPinned = (id, header) => {
   return axios.get(`${http}/comment/${id}/pinned`, header);
 };
 
+export const getCommentUnpinned = (id, header) => {
+  return axios.get(`${http}/comment/${id}/unpinned`, header);
+};
+
 export const getCommentLike = (id, header) => {
   return axios.get(`${http}/comment/${id}/like`, header);
 };

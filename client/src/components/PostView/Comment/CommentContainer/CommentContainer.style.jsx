@@ -4,14 +4,18 @@ import CommentWrapper from '../CommentWrapper/CommentWrapper';
 export default function CommentContainerPresenter({
   uploadingComments,
   sortedLoadedComments,
-  pinnedComment,
+  pinnedLoadedComment,
+  pinnedUploadingComment,
   pinnedId,
 }) {
   return (
     <>
-      {pinnedId && pinnedComment ? (
+      {pinnedId ? (
         <CommentPinnedDiv>
-          <CommentWrapper cmntData={pinnedComment} />
+          {pinnedUploadingComment.length !== 0 &&
+            pinnedUploadingComment.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
+          {pinnedLoadedComment &&
+            pinnedLoadedComment.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
         </CommentPinnedDiv>
       ) : null}
       <CommentList>

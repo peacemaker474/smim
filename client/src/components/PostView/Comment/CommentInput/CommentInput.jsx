@@ -60,6 +60,7 @@ export default function CommentInput({
 
     inputRef.current.value = '';
     inputRef.current.blur();
+    setInputText('');
     if (parentId) {
       handleClickCancel();
     }
@@ -86,6 +87,7 @@ export default function CommentInput({
     }
 
     inputRef.current.value = '';
+    setInputText('');
     handleClickCancel();
   };
 

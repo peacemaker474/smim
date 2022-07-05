@@ -27,6 +27,9 @@ const toggleSlice = createSlice({
     commentModalToggle(state) {
       state.commentToggled = !state.commentToggled;
     },
+    resetToggle(state) {
+      Object.assign(state, initialToggleState);
+    },
   },
 });
 
@@ -35,5 +38,6 @@ export const menuToggle = toggleSlice.actions.menuToggle;
 export const inputToggle = toggleSlice.actions.inputToggle;
 export const modalToggle = toggleSlice.actions.modalToggle;
 export const commentModalToggle = toggleSlice.actions.commentModalToggle;
+export const resetToggle = toggleSlice.actions.resetToggle;
 
 export default toggleSlice;
