@@ -232,9 +232,70 @@ export const getCommentPinned = async (req, res) => {
     post.meta.pinnedCmnt = commentId;
     await post.save();
 
-    return res.status(201).send({
+    return res.status(200).send({
       success: true,
       message: '댓글 고정을 성공했습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// 댓글 고정하기
+export const getCommentUnpinned = async (req, res) => {
+  const { id: commentId } = req.params;
+
+  const {
+    user: { _id },
+  } = req.body;
+
+  try {
+    if (!commentId) {
+      return res.status(400).send({
+        success: false,
+        message: 'commentId가 undefined입니다.',
+      });
+    }
+
+    const userExist = await User.exists({ _id: _id });
+    const comment = await Comment.findOne({
+      state: true,
+      _id: commentId,
+      parent_id: null,
+    });
+
+    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
+
+    if (!comment) {
+      return res.status(400).send({
+        success: false,
+        message: '고정할 수 없는 댓글입니다.',
+      });
+    }
+
+    if (!post) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    if (!userExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
+    post.meta.pinnedCmnt = null;
+    await post.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '고정댓글을 해제했습니다.',
     });
   } catch (error) {
     console.log(error);
