@@ -2,51 +2,57 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { putUpdateUser, putUserImage } from '../../../redux/services/UserService';
+import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import MyInfoStyle from './MyInfo.style';
 
 function MyInfo () {
   const user = useSelector((state) => state.user);
+  const [encodeImg, setEncodeImg] = useState("");
+  const [files, setFiles] = useState("");
   const dispatch = useDispatch();
-  const { register, setValue, handleSubmit, formState: {errors} } = useForm({
+  const { register, handleSubmit, formState: {errors} } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
       id: user.id,
       nickname: user.name,
       email: user.email,
-      imgFiles: '',
-      fileName: '파일선택',
     }
   });
-  const [encodeImg, setEncodeImg] = useState("");
-
 
   // 이벰트 영역
   const handleFileUpload = (evt) => {
     const imgFiles = evt.target.files;
-    setValue("fileName", evt.target.value);
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result;
       if (base64) {
-        setValue("imgFiles", imgFiles);
         setEncodeImg(base64);
+        setFiles(imgFiles);
       }
     };
     reader.readAsDataURL(imgFiles[0]);
   };
 
+  const handleImageModalOpen = () => {
+    dispatch(userImageToggle());
+  }
+
   const handleFileRemove = () => {
-    setValue("fileName", "파일선택");
     setEncodeImg("");
   };
 
-  const handleInfoUpdate = (userInfo) => {
-
+  const handleImageUpdate = () => {
     const formdata = new FormData();
-    formdata.append('email', userInfo.email);
-    if (userInfo.imgFiles !== '') formdata.append('file', userInfo.imgFiles[0]);
+    formdata.append('email', user.email);
+    if (files !== "") {
+      formdata.append('file', files[0]);
+      dispatch(putUserImage(formdata));
+      dispatch(userImageToggle());
+    }
+  }
 
+  const handleInfoUpdate = (userInfo) => {
     const lastIdCheck = userInfo.id.indexOf('\b');
     const lastNameCheck = userInfo.nickname.indexOf('\b');
     
@@ -55,11 +61,12 @@ function MyInfo () {
       lastIdCheck !== 0 &&
       lastNameCheck !== 0
     ) {
-      formdata.append('userId', userInfo.id);
-      formdata.append('nickname', userInfo.nickname);
-      dispatch(putUpdateUser(formdata));
-    } else {
-      dispatch(putUserImage(formdata));
+      let body = {
+        userId: userInfo.id,
+        nickname: userInfo.nickname,
+        email: userInfo.email,
+      }
+      dispatch(putUpdateUser(body));
     }
   };
 
@@ -72,6 +79,8 @@ function MyInfo () {
       onInfoUpdate={handleInfoUpdate}
       onFileUpload={handleFileUpload}
       onFileRemove={handleFileRemove}
+      onImageModalOpen={handleImageModalOpen}
+      onImageUpdate={handleImageUpdate}
     />
   );
 }

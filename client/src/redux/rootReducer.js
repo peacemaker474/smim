@@ -14,7 +14,7 @@ import { tokenSlice } from './auth';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['user'],
+  blacklist: ['user', 'toggle'],
 };
 
 const userPersistConfig = {

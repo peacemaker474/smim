@@ -45,7 +45,7 @@ function LoginSectionStyle ({ onLoginClose }) {
     <LoginContainer>
       <LoginOverlay onClick={onLoginClose} />
       <LoginWrapper>
-        <LoginHeader />
+        <LoginHeader onLoginClose={onLoginClose}/>
         <LoginBox>
           <EmailForm />
           <SocialForm />

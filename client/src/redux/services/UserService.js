@@ -39,7 +39,7 @@ export const putUpdateUser = createAsyncThunk(
   "PUT_UPDATE/USER",
   async (userData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`${http}/my`, userData, config);
+      const { data } = await axios.put(`${http}/my/update-user`, userData);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -51,7 +51,7 @@ export const putUserImage = createAsyncThunk(
   "PUT_UPDATE/IMAGE",
   async (imageData) => {
     try {
-      const { data } = await axios.put(`${http}/my`, imageData, config);
+      const { data } = await axios.put(`${http}/my/update-image`, imageData, config);
       return data;
     } catch (err) {
       console.log(err);
