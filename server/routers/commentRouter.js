@@ -5,6 +5,7 @@ import {
   getCommentLike,
   getCommentUnlike,
   getCommentPinned,
+  getCommentUnpinned,
 } from '../controllers/commentController.js';
 import { verifyToken } from '../controllers/tokenControllers.js';
 
@@ -14,5 +15,6 @@ export const commentRouter = express.Router();
 
 commentRouter.route('/:id').put(verifyToken, putCommentEdit).delete(verifyToken, deleteComment);
 commentRouter.get('/:id/pinned', verifyToken, getCommentPinned);
+commentRouter.get('/:id/unpinned', verifyToken, getCommentUnpinned);
 commentRouter.get('/:id/like', verifyToken, getCommentLike);
 commentRouter.get('/:id/unlike', verifyToken, getCommentUnlike);

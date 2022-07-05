@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCommentCreate } from '../redux/slice/commentCreateSlice';
@@ -7,8 +7,9 @@ import PostPost from '../components/postview/Post/PostPost/PostPost';
 import PostComment from '../components/postview/Comment/PostComment/PostComment';
 import styled from 'styled-components';
 import Modal from '../components/common/Modal/Modal';
-import { deletePost } from '../network/post/http';
 import { modalToggle, resetToggle } from '../redux/slice/toggleSlice';
+import { deletePost, getPostView } from '../network/post/http';
+
 const PostViewContainer = styled.div`
   margin-top: 10vh;
   padding-top: 70px;
@@ -22,11 +23,21 @@ export default function PostViewPage() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const navigate = useNavigate();
 
+  const viewPost = useCallback(async () => {
+    try {
+      const response = await getPostView(id);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [id]);
+
   useEffect(() => {
     dispatch(resetCommentCreate());
     dispatch(resetComment());
     dispatch(resetToggle());
-  }, [dispatch]);
+    viewPost();
+  }, [dispatch, viewPost]);
 
   const requestDelete = async (id, tkn) => {
     const response = await deletePost(id, {
