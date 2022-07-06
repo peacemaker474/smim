@@ -47,13 +47,13 @@ const userSlice = createSlice({
         return initialLoginState;
       })
       .addCase(putUpdateUser.fulfilled, (state, { payload }) => {
+        alert(payload.message);
         return {
           ...state,
           id: payload.id,
           name: payload.name,
           email: payload.email,
           message: payload.message,
-          imgUrl: payload.imageUrl,
           success: payload.success
         }
       })
@@ -65,9 +65,17 @@ const userSlice = createSlice({
         }
       })
       .addCase(putUserImage.fulfilled, (state, { payload }) => {
+        alert(payload.message);
         return {
           ...state,
           imgUrl: payload.imageUrl
+        }
+      })
+      .addCase(putUserImage.rejected, (state, { payload }) => {
+        return {
+          ...state,
+          success: payload.success,
+          message: payload.message
         }
       })
   }

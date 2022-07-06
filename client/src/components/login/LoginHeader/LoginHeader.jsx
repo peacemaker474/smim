@@ -1,6 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { loginToggle } from '../../../redux/slice/toggleSlice';
 import LoginHeaderStyle from './LoginHeader.style';
 
 /* 
@@ -8,15 +6,10 @@ import LoginHeaderStyle from './LoginHeader.style';
 2. 반응형을 고려한 각각의 디테일
 */
 
-function LoginHeader () {
-  const dispatch = useDispatch();
-
-  const handleLoginClose = () => {
-    dispatch(loginToggle());
-  }
+function LoginHeader ({onLoginClose}) {
   return (
     <LoginHeaderStyle
-      onLoginClose={handleLoginClose}
+      onLoginClose={onLoginClose}
     />
   );
 }
