@@ -9,7 +9,7 @@ import PostForm from '../components/post/PostForm/PostForm';
 // import { postCreatePost, putPostEdit, getReadPostDetail } from '../network/post/http';
 // import { totalAdd, resetPostCreate } from '../redux/slice/postCreateSlice';
 // import { resetPostCheck } from '../redux/slice/postFormCheckSlice';
-// import { modalToggle, resetToggle } from '../redux/slice/toggleSlice';
+// import { modalToggle } from '../redux/slice/toggleSlice';
 
 function PostUploadPage() {
   return (
@@ -84,7 +84,6 @@ const PostCreateContainer = styled.div`
 // }, [postId, tkn, dispatch]);
 
 // useEffect(() => {
-//   dispatch(resetToggle());
 //   if (pathValue === 'edit') {
 //     loadCreatedPost();
 //   } else {

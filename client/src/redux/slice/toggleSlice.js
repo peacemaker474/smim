@@ -31,9 +31,6 @@ const toggleSlice = createSlice({
     userImageToggle(state) {
       state.imageToggled = !state.imageToggled;
     },
-    resetToggle(state) {
-      Object.assign(state, initialToggleState);
-    },
   },
 });
 
@@ -43,8 +40,7 @@ export const {
   inputToggle,
   modalToggle,
   commentModalToggle,
-  resetToggle,
-  userImageToggle
+  userImageToggle,
 } = toggleSlice.actions;
 
 export default toggleSlice;
