@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function PostTitlePresenter({ handleTitleWrite, postData, titleInput }) {
-  // ref 대신 value={title}을 쓰는 이유
+function PostTitlePresenter({ register, errors }) {
   return (
     <TitleWrap>
       <TitleInput
         placeholder='제목'
         palette='yellow'
-        onChange={handleTitleWrite}
-        value={postData.title}
-        ref={titleInput}
+        error={errors.title}
+        {...register('title', { required: 'This is required' })}
       />
     </TitleWrap>
   );
@@ -27,7 +25,7 @@ const TitleInput = styled.input`
   width: 500px;
   height: 40px;
   border: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
+    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
   border-radius: 3px;
   @media screen and (max-width: 550px) {
     width: 400px;

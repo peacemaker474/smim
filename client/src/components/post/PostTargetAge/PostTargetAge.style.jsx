@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function PostTargetAgePresenter({ handleAgeSelect, postData }) {
+function PostTargetAgePresenter({ register, errors }) {
   return (
     <TargetWrap>
-      <TargetAgeInput palette='yellow' onChange={handleAgeSelect} value={postData.targetAge}>
+      <TargetAgeSelect
+        palette='yellow'
+        error={errors.age}
+        {...register('age', { required: 'This is required' })}
+      >
         <option value=''>질문하고 싶은 연령층을 선택해주세요.</option>
         <option value='10'>10대에게</option>
         <option value='20'>20대에게</option>
@@ -12,7 +16,7 @@ function PostTargetAgePresenter({ handleAgeSelect, postData }) {
         <option value='40'>40대에게</option>
         <option value='50'>50대에게</option>
         <option value='60'>60대 이상에게</option>
-      </TargetAgeInput>
+      </TargetAgeSelect>
     </TargetWrap>
   );
 }
@@ -24,11 +28,11 @@ const TargetWrap = styled.div`
   margin-top: 30px;
 `;
 
-const TargetAgeInput = styled.select`
+const TargetAgeSelect = styled.select`
   width: 250px;
   height: 40px;
   border: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
+    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
   border-radius: 3px;
   @media screen and (max-width: 550px) {
     width: 400px;

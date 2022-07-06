@@ -1,19 +1,27 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Controller } from 'react-hook-form';
 import styled from 'styled-components';
 
-function PostEditorPresenter({ modules, formats, handleEditorWrite, contentInput, postData }) {
+function PostEditorPresenter({ modules, formats, register, control }) {
   return (
     <PostEditorWrap>
-      <ReactQuill
-        style={{ height: '85%', marginBottom: '6%' }}
-        modules={modules}
-        formats={formats}
-        theme='snow'
-        onChange={handleEditorWrite}
-        ref={contentInput}
-        value={postData.content}
+      <Controller
+        control={control}
+        name='test'
+        render={({ onChange, onBlur, value, name, ref }, { invalid, isTouched, isDirty }) => (
+          <ReactQuill
+            name='editor'
+            style={{ height: '85%', marginBottom: '6%' }}
+            modules={modules}
+            formats={formats}
+            theme='snow'
+            value={value}
+            inputRef={ref}
+            onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+          />
+        )}
       />
     </PostEditorWrap>
   );
