@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import Post from '../models/Post.js';
 import bcrypt from 'bcrypt';
+import { isAuthorized } from './functions/user.js';
 
 /*
 // 유저 정보 수정 부분은 추후에 코드 수정이 필요
@@ -86,8 +87,11 @@ export const putChangeUserInfo = async (req, res) => {
 }
 
 export const putChangePassword = async (req, res) => {
-  const { userId, oldPassword, newPassword, newPassword2} = req.body;
-
+  const { userId, oldPassword, newPassword, newPassword2, accessToken} = req.body;
+  
+  const verifyToken = isAuthorized(accessToken);
+  if (typeof(verifyToken) !== "object") return res.status(401).json({ success: false, message: verifyToken});
+  
   const user = await User.findOne({userId});
   const checkPassword = await bcrypt.compare(oldPassword, user.password);
   if (!checkPassword) {
