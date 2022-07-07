@@ -15,6 +15,7 @@ export default function CommentItemEtcPresenter({
   handleClickCancel,
   like,
   handleCommentLike,
+  id,
 }) {
   return (
     <CommentEtcContainer>

@@ -1,50 +1,40 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-export default forwardRef(function CommentInputPresenter(
-  {
-    loginState,
-    handleCommentCreate,
-    handleCommentWrite,
-    inputText,
-    handleClickCancel = undefined,
-    handleCommentEdit,
-    id,
-  },
-  ref
-) {
+export default function CommentInputPresenter({
+  loginState,
+  handleSubmit,
+  register,
+  handleClickCancel,
+  onSubmit,
+  id,
+}) {
   return (
-    <CmntForm>
+    <CmntForm onSubmit={handleSubmit(onSubmit)}>
       <CmntImg src={`http://localhost:4000/${loginState.imgUrl}`}></CmntImg>
       <CmntInput
         type='text'
         placeholder='답변을 기다립니다.'
-        onChange={handleCommentWrite}
-        value={inputText}
-        ref={ref}
+        {...register('comment', { required: true })}
       />
       {id ? (
         <>
           <CmntBtn type='button' onClick={handleClickCancel}>
             취소
           </CmntBtn>
-          <CmntBtn type='submit' onClick={handleCommentEdit}>
-            수정
-          </CmntBtn>
+          <CmntBtn type='submit'>수정</CmntBtn>
         </>
       ) : (
         <>
           <CmntBtn type='button' onClick={handleClickCancel}>
             취소
           </CmntBtn>
-          <CmntBtn type='submit' onClick={handleCommentCreate}>
-            게시
-          </CmntBtn>
+          <CmntBtn type='submit'>게시</CmntBtn>
         </>
       )}
     </CmntForm>
   );
-});
+}
 
 const CmntForm = styled.form`
   width: 794px;

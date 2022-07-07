@@ -28,7 +28,6 @@ export default function CommentItemPresenter({
           groupId={groupId}
           isTargetVisible={isTargetVisible}
           handleClickCancel={handleClickCancel}
-          text={itemText}
           id={cmntData._id}
           handleTextChange={handleTextChange}
         />

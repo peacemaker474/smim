@@ -7,7 +7,7 @@ import CommentItemPresenter from './CommentItem.style';
 export default function CommentItem({ cmntData, groupId }) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
   const [itemText, setItemText] = useState(cmntData.text);
-  const [isTargetVisible, handleClickShow] = useVisible(false);
+  const [isTargetVisible, handleClickShow] = useVisible(false); // comment input visible for Edit
   const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(
     (el) => el === cmntData._id

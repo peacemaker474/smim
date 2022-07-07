@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
 import { createComment } from '../../../../redux/slice/commentCreateSlice';
@@ -11,25 +12,32 @@ export default function CommentInput({
   isTargetVisible,
   handleClickCancel,
   handleTextChange,
-  text = '',
   id,
 }) {
   const loginState = useSelector((state) => state.user);
-  const [inputText, setInputText] = useState(text);
-  const inputRef = useRef('');
+  const { register, handleSubmit, setValue, setFocus } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
 
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    if (id) {
+      handleCommentEdit(data);
+    } else {
+      handleCommentCreate(data);
+    }
+    setValue('comment', '');
+  };
+
   useEffect(() => {
     if (isTargetVisible) {
-      inputRef.current && inputRef.current.focus();
+      setFocus('comment');
     }
-  }, [isTargetVisible]);
+  }, [isTargetVisible, setFocus]);
 
-  const handleCommentCreate = async (e) => {
-    e.preventDefault();
+  const handleCommentCreate = async (data) => {
     const response = await postCommentCreate(
-      { post_id: postId, content: inputText, parent_id: parentId },
+      { post_id: postId, content: data.comment, parent_id: parentId },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -51,26 +59,21 @@ export default function CommentInput({
           parentId,
           groupId,
           postId,
-          inputText
+          data.comment
         )
       );
+      if (parentId) {
+        handleClickCancel();
+      }
     } else {
       console.log(response.data.success);
     }
-
-    inputRef.current.value = '';
-    inputRef.current.blur();
-    setInputText('');
-    if (parentId) {
-      handleClickCancel();
-    }
   };
 
-  const handleCommentEdit = async (e) => {
-    e.preventDefault();
+  const handleCommentEdit = async (data) => {
     const response = await putCommentEdit(
       id,
-      { post_id: postId, content: inputText },
+      { post_id: postId, content: data.comment },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -81,33 +84,21 @@ export default function CommentInput({
 
     if (response.data.success) {
       console.log(response.data.success);
-      handleTextChange(inputText);
+      handleTextChange(data.comment);
+      handleClickCancel();
     } else {
       console.log(response.data.success);
     }
-
-    inputRef.current.value = '';
-    setInputText('');
-    handleClickCancel();
-  };
-
-  const handleCommentWrite = (e) => {
-    setInputText(e.target.value);
   };
 
   return (
     <CommentInputPresenter
-      handleCommentCreate={handleCommentCreate}
-      handleCommentWrite={handleCommentWrite}
       loginState={loginState}
-      inputText={inputText}
-      ref={inputRef}
-      handleClickCancel={() => {
-        inputRef.current.value = '';
-        handleClickCancel();
-      }}
-      handleCommentEdit={handleCommentEdit}
+      handleSubmit={handleSubmit}
+      register={register}
+      handleClickCancel={handleClickCancel}
       id={id}
+      onSubmit={onSubmit}
     />
   );
 }
