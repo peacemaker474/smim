@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import PostForm from '../components/post/PostForm/PostForm';
 import { getReadPostDetail } from '../network/post/http';
 
+
 function PostUploadPage() {
   const tkn = useSelector((state) => state.authToken).accessToken;
 
@@ -56,6 +57,7 @@ const PostCreateContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 
 const PostHeader = styled.h2`
   position: relative;
