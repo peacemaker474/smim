@@ -21,12 +21,14 @@ export default function CommentInput({
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    if (id) {
-      handleCommentEdit(data);
-    } else {
-      handleCommentCreate(data);
+    if (tkn) {
+      if (id) {
+        handleCommentEdit(data);
+      } else {
+        handleCommentCreate(data);
+      }
+      setValue('comment', '');
     }
-    setValue('comment', '');
   };
 
   useEffect(() => {
