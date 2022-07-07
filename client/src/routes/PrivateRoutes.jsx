@@ -19,7 +19,7 @@ function PrivateRoute() {
       <Route path='/generation' element={<PostsPage />} />
       <Route path='/posts/view/:id' element={<PostViewPage />} />
       <Route path='/posts/create' element={<PostUploadPage />} />
-      {/* <Route path='/posts/edit/:id' element={<PostUploadPage />} /> */}
+      <Route path='/posts/edit/:id' element={<PostUploadPage />} />
       <Route path='/my/*' element={<MyPage />} />
       <Route path='/loading' element={<LoadingPage />} />
       <Route path='/*' element={<NotFound />} />

@@ -4,19 +4,19 @@ import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icon/icon-del.svg';
 
 function PostTagPresenter({
-  hashtag,
+  preValue,
+  handleTagDelete,
   handleKeyUp,
   handleTagWrite,
   handleInputReset,
-  handleTagDelete,
   text,
-  tagInput,
+  errors,
 }) {
   return (
-    <HashContainer palette='yellow'>
+    <HashContainer error={errors.tagArray} palette='yellow'>
       <HashWrapBox>
-        {hashtag &&
-          hashtag.map((el, idx) => (
+        {preValue &&
+          preValue.map((el, idx) => (
             <HashItem key={idx + el}>
               <span>{el}</span>
               <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
@@ -30,7 +30,6 @@ function PostTagPresenter({
         onChange={handleTagWrite}
         onBlur={handleInputReset}
         value={text}
-        ref={tagInput}
       />
     </HashContainer>
   );
@@ -48,8 +47,7 @@ const HashContainer = styled.div`
   letter-spacing: -0.6px;
   color: #444241;
   border: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
-  border-radius: 3px;
+    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
   padding: 2px 2px 2px 2px;
 `;
 

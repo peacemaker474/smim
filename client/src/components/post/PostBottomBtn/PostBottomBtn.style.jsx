@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColorBtn } from '../../../styles/common/buttons';
 
-function PostBottomBtnPresenter({ formState, handleFormCancle, handleFormSubmit }) {
+function PostBottomBtnPresenter({ formState, handleFormCancle }) {
   return (
     <BtnWrap>
       <BtnDiv>
@@ -11,13 +11,7 @@ function PostBottomBtnPresenter({ formState, handleFormCancle, handleFormSubmit 
             <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
               작성 취소
             </ColorBtn>
-            <ColorBtn
-              width={'5rem'}
-              palette={'yellow'}
-              type='button'
-              form='upload'
-              onClick={handleFormSubmit}
-            >
+            <ColorBtn width={'5rem'} palette={'yellow'} type='submit' form='upload'>
               게시물 등록
             </ColorBtn>
           </>
@@ -26,13 +20,7 @@ function PostBottomBtnPresenter({ formState, handleFormCancle, handleFormSubmit 
             <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
               수정 취소
             </ColorBtn>
-            <ColorBtn
-              width={'5rem'}
-              palette={'yellow'}
-              type='button'
-              form='upload'
-              onClick={handleFormSubmit}
-            >
+            <ColorBtn width={'5rem'} palette={'yellow'} type='submit'>
               재등록
             </ColorBtn>
           </>
