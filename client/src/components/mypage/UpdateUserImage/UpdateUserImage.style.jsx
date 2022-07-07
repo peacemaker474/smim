@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserImage from '../../../common/UserImage/UserImage';
+import UserImage from '../../common/UserImage/UserImage';
 
 const UpdateImageModalWrapper = styled.div`
   width: 100vw;
@@ -89,8 +89,7 @@ const ImageUpdateInput = styled.input`
   padding: 0;
 `;
 
-function ImgInput ({ encodeImg, onFileUpload, onFileRemove, onImageModalOpen, onImageUpdate}) {
-
+function UpdateUserImageStyle ({ encodeImg, onFileUpload, onFileRemove, onImageModalOpen, onImageUpdate}) {
   return (
     <UpdateImageModalWrapper>
       <UpdateImageModalOverlay onClick={onImageModalOpen}/>
@@ -114,7 +113,7 @@ function ImgInput ({ encodeImg, onFileUpload, onFileRemove, onImageModalOpen, on
         </InputFileWrapper>
       </ImageModalContainer>
     </UpdateImageModalWrapper>
-  );
+  )
 }
 
-export default ImgInput;
+export default UpdateUserImageStyle;

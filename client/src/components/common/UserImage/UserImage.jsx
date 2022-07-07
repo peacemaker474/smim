@@ -13,10 +13,12 @@ function UserImage ({width, height, encodeImg}) {
   const user = useSelector((state) => state.user);
   const encoded = encodeURI(user.imgUrl);
   const decoded = decodeURI(encoded);
+
+  console.log(encodeImg);
   
   return (
     <MyImg 
-      src={encodeImg !== "" ? encodeImg : "http://localhost:4000/" + decoded}
+      src={encodeImg ? encodeImg : "http://localhost:4000/" + decoded}
       width={width}
       height={height}
     />

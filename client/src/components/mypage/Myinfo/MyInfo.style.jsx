@@ -4,9 +4,8 @@ import NameInput from './InfoInput/NameInput';
 import IdInput from './InfoInput/IdInput';
 import EmailInput from './InfoInput/EmailInput';
 import UserImage from '../../common/UserImage/UserImage';
-import ImgInput from './InfoInput/ImgInput';
 import { UpdateBtn } from '../../../styles/common/buttons';
-import { useSelector } from 'react-redux';
+import UpdateUserImage from '../UpdateUserImage/UpdateUserImage';
 
 const MyInfoForm = styled.form`
   width: 80%;
@@ -50,9 +49,7 @@ const UserInfoWrapper = styled.div`
   gap: 25px;
 `;
 
-function MyInfoStyle ({ register, encodeImg, errors, onSubmit, onInfoUpdate, onFileUpload, onFileRemove, onImageModalOpen, onImageUpdate}) {
-  const { imageToggled } = useSelector((state) => state.toggle);
-
+function MyInfoStyle ({ register, imageToggled, errors, onSubmit, onInfoUpdate, onImageModalOpen}) {
   return (
     <>
       <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={onSubmit(onInfoUpdate)}>
@@ -63,7 +60,6 @@ function MyInfoStyle ({ register, encodeImg, errors, onSubmit, onInfoUpdate, onF
             <UserImage
               width={"10%"}
               height={"90%"}
-              encodeImg={encodeImg}
             />
           </UserImageWrapper>
           <IdInput register={register} errors={errors} />
@@ -72,14 +68,7 @@ function MyInfoStyle ({ register, encodeImg, errors, onSubmit, onInfoUpdate, onF
           <UpdateBtn> 수정 </UpdateBtn>
         </UserInfoWrapper>
       </MyInfoForm>
-      { imageToggled &&
-        <ImgInput
-          onFileUpload={onFileUpload}
-          onFileRemove={onFileRemove}
-          encodeImg={encodeImg}
-          onImageModalOpen={onImageModalOpen}
-          onImageUpdate={onImageUpdate}
-        /> }
+      {imageToggled && <UpdateUserImage onImageModalOpen={onImageModalOpen} /> }
     </>
   );
 }
