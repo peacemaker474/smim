@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import LoginSectionStyle from './LoginSection.style';
@@ -6,9 +6,9 @@ import LoginSectionStyle from './LoginSection.style';
 
 function LoginSection() {
   const dispatch = useDispatch();
-  const handleLoginClose = () => {
+  const handleLoginClose = useCallback(() => {
     dispatch(loginToggle());
-  };
+  }, [dispatch]);
 
   return (
     <LoginSectionStyle 

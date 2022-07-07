@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,12 +8,16 @@ import EmailFormStyle from './EmailForm.style';
 
 function EmailForm () {
   const { register, handleSubmit, formState: { errors } } = useForm({
-    mode: "onChange"
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    defaultValues: {
+      userId: "",
+      password: "",
+    }
   });
-  const state = useSelector((state) => state.user);
-  const { isLogin, message } = state;
+  const { isLogin, message } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLogin) {
@@ -21,11 +25,11 @@ function EmailForm () {
     }
   }, [isLogin, navigate]);
 
-  const handleLoginClose = () => {
+  const handleLoginClose = useCallback(() => {
     dispatch(loginToggle());
-  }
+  }, [dispatch]);
 
-  const handleLoginSubmit = ({ userId, password }) => {
+  const handleLoginSubmit = useCallback(({ userId, password }) => {
     let body = {
       userId,
       password
@@ -35,7 +39,7 @@ function EmailForm () {
       .then((res) => {
         if (res.payload.success) return dispatch(loginToggle());
       });
-  }
+  }, [dispatch]);
 
   return (
     <EmailFormStyle
@@ -49,4 +53,4 @@ function EmailForm () {
   );
 }
 
-export default EmailForm;
+export default React.memo(EmailForm);

@@ -23,4 +23,4 @@ function LoginId ({ register }) {
   )
 }
 
-export default LoginId;
+export default React.memo(LoginId);
