@@ -9,4 +9,4 @@ function SignupLink ({ onLoginClose }) {
   )
 }
 
-export default SignupLink;
+export default React.memo(SignupLink);

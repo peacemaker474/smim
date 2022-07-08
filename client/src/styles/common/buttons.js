@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 export const BorderBtn = styled.button`
@@ -29,7 +30,7 @@ export const ColorBtn = styled.button`
   }
 `;
 
-export const LoginBtn = styled(ColorBtn)`
+export const LoginBtn = React.memo(styled(ColorBtn)`
   width: 120px;
   height: 30px;
   background-color: #FFC306;
@@ -39,7 +40,7 @@ export const LoginBtn = styled(ColorBtn)`
   border-radius: 5px;
   font-size: 16px;
   margin: 0 20px 10px 0;
-`;
+`);
 
 export const UpdateBtn = styled(ColorBtn)`
   width: 100px;

@@ -55,4 +55,4 @@ function LoginSectionStyle ({ onLoginClose }) {
   );
 }
 
-export default LoginSectionStyle;
+export default React.memo(LoginSectionStyle);

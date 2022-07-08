@@ -23,4 +23,4 @@ function LoginPw ({ register }) {
   )
 }
 
-export default LoginPw;
+export default React.memo(LoginPw);

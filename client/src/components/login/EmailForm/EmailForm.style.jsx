@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LoginValid } from '../../../styles/common/validtext';
-import { LoginBtn } from '../../../styles/common/buttons';
 import SignupLink from '../SignupLink/SignupLink';
 import LoginId from '../LoginId';
 import LoginPw from '../LoginPw';
+import { LoginBtn } from '../../../styles/common/buttons';
 
 export const FormBox = styled.form`
   width: 100%;
@@ -17,11 +17,12 @@ export const FormBox = styled.form`
   margin-top: 40px;
 `;
 
-const FindIdPwd = styled.span`
+const FindIdPwd = React.memo(styled.span`
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;
-`;
+`);
+
 
 function EmailFormStyle ({ message, register, errors, onSubmit, onLoginClose, onLoginSubmit }) {
   return (
@@ -30,7 +31,7 @@ function EmailFormStyle ({ message, register, errors, onSubmit, onLoginClose, on
       {errors.userId?.message && <LoginValid validLogin={errors.userId.message}> {errors.userId.message} </LoginValid>}
       <LoginPw register={register} />
       {errors.password?.message && <LoginValid validLogin={errors.password.message}> {errors.password.message} </LoginValid>}
-      {Object.keys(errors).length === 0 && message !== undefined && <LoginValid validLogin={message}> {message} </LoginValid>}
+      {Object.keys(errors).length === 0 && message && <LoginValid validLogin={message}> {message} </LoginValid>}
       <LoginBtn> 로그인 </LoginBtn>
       <SignupLink
         onLoginClose={onLoginClose}
