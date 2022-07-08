@@ -48,6 +48,7 @@ export default function CommentItemEtc({ cmntData, groupId }) {
       handleClickCancel={handleClickCancel}
       like={like}
       handleCommentLike={handleCommentLike}
+      id={cmntData._id}
     />
   );
 }
