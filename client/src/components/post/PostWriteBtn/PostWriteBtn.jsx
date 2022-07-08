@@ -5,7 +5,7 @@ import PostWriteBtnPresenter from './PostWriteBtn.style';
 function PostWriteBtn() {
   const navigate = useNavigate();
   const handleBtnClick = () => {
-    navigate('/posts/create');
+    navigate('/post/create');
   };
   return <PostWriteBtnPresenter handleBtnClick={handleBtnClick} />;
 }
