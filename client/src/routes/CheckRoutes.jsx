@@ -1,38 +1,32 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoutes';
+import PostUploadPage from '../pages/PostUploadPage';
 import Intro from '../pages/Intro';
-import MainPage from '../pages/MainPage';
 import SignupPage from '../pages/SignupPage';
+import MainPage from '../pages/MainPage';
 import PostsPage from '../pages/PostsPage';
 import PostViewPage from '../pages/PostViewPage';
 import LoadingPage from '../pages/LoadingPage';
+import MyPage from '../pages/MyPage';
 import NotFound from '../pages/NotFound';
 
-function PublicRoute() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    if (
-      pathname === '/posts/create' ||
-      pathname.includes('/my') ||
-      pathname.includes('/posts/edit')
-    ) {
-      navigate('/');
-    }
-  }, [pathname, navigate]);
-
+function CheckRoute() {
   return (
     <Routes>
+      <Route element={<PrivateRoute />}>
+        <Route path='/post/create' element={<PostUploadPage />} />
+        <Route path='/post/edit/:id' element={<PostUploadPage />} />
+        <Route path='/my/*' element={<MyPage />} />
+      </Route>
       <Route path='/intro' element={<Intro />} />
       <Route path='/signup' element={<SignupPage />} />
       <Route path='/' element={<MainPage />} />
       <Route path='/generation' element={<PostsPage />} />
-      <Route path='/posts/view/:id' element={<PostViewPage />} />
+      <Route path='/post/view/:id' element={<PostViewPage />} />
       <Route path='/loading' element={<LoadingPage />} />
       <Route path='/*' element={<NotFound />} />
     </Routes>
   );
 }
-
-export default PublicRoute;
+export default CheckRoute;
