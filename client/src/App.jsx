@@ -5,14 +5,17 @@ import { getCookie } from './utils/cookie';
 import { postCreateAccessToken } from './network/main/http';
 import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
 import { getUserLogOut } from './redux/services/UserService';
+import { isLoginCheckToggle, loginToggle } from './redux/slice/toggleSlice';
 import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
 import CheckRoute from './routes/CheckRoutes';
+import Modal from './components/common/Modal/Modal';
 
 function App() {
   const timer = useRef(null);
   const { loginCheck } = useSelector((state) => state.user);
   const { authenticated } = useSelector((state) => state.authToken);
+  const { isLoginCheckToggled } = useSelector((state) => state.toggle);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const pathCheck = pathname.split('/')[2];
@@ -56,8 +59,19 @@ function App() {
 
   return (
     <>
+      {isLoginCheckToggled ? (
+        <Modal
+          actionfunc={() => {
+            dispatch(isLoginCheckToggle());
+            dispatch(loginToggle());
+          }}
+          cancelFunc={() => dispatch(isLoginCheckToggle())}
+        >
+          {'로그인이 필요한 기능입니다.로그인하시겠습니까?'}
+        </Modal>
+      ) : null}
       <NavBar />
-      {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
+      {pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <CheckRoute />
     </>
   );

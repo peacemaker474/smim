@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
 import { createComment } from '../../../../redux/slice/commentCreateSlice';
 import CommentInputPresenter from './CommentInput.style';
+import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
 export default function CommentInput({
   postId,
@@ -18,6 +19,11 @@ export default function CommentInput({
   const { register, handleSubmit, setValue, setFocus } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
+  const { isLogin } = useSelector((state) => state.user);
+
+  if (!handleClickCancel) {
+    handleClickCancel = () => setValue('comment', '');
+  }
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -93,6 +99,15 @@ export default function CommentInput({
     }
   };
 
+  const loginCheck = (e) => {
+    e.preventDefault();
+    // e.target.disabled = false;
+    if (!isLogin) {
+      e.target.disabled = true;
+      dispatch(isLoginCheckToggle());
+    }
+  };
+
   return (
     <CommentInputPresenter
       loginState={loginState}
@@ -101,6 +116,8 @@ export default function CommentInput({
       handleClickCancel={handleClickCancel}
       id={id}
       onSubmit={onSubmit}
+      loginCheck={loginCheck}
+      isLogin={isLogin}
     />
   );
 }

@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import useVisible from '../../../../hooks/useVisible';
 import CommentItemEtcPresenter from './CommentItemEtc.style';
 import { getCommentLike, getCommentUnlike } from '../../../../network/comment/http';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
 export default function CommentItemEtc({ cmntData, groupId }) {
   const [isTargetVisible, handleClickShow] = useVisible(false);
   const [like, setLike] = useState(cmntData.like);
   const [likeCount, setLikeCount] = useState(cmntData.like_count);
   const tkn = useSelector((state) => state.authToken).accessToken;
+  const { isLogin } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleClickCancel = () => {
     handleClickShow(!isTargetVisible);
   };
 
   const handleCommentLike = () => {
+    if (!isLogin) {
+      dispatch(isLoginCheckToggle());
+      console.log('check');
+      return;
+    }
     if (like) {
       getCommentUnlike(cmntData._id, {
         headers: {
