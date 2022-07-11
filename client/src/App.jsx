@@ -8,7 +8,7 @@ import { getUserLogOut } from './redux/services/UserService';
 import { isLoginCheckToggle, loginToggle } from './redux/slice/toggleSlice';
 import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
-import CheckRoute from './routes/CheckRoutes';
+import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
 
 function App() {
@@ -72,7 +72,7 @@ function App() {
       ) : null}
       <NavBar />
       {pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
-      <CheckRoute />
+      <AppRoute />
     </>
   );
 }
