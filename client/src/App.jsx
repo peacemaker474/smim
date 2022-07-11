@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { ReactQueryDevtools} from 'react-query/devtools';
 import { getCookie } from './utils/cookie';
 import { postCreateAccessToken } from './network/main/http';
 import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
@@ -37,21 +38,6 @@ function App() {
       }, 600 * 1000);
     }
 
-    // if (!authenticated && loginCheck && getCookie() !== undefined) {
-    //   if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
-    //     let data = {
-    //       refreshToken: getCookie(),
-    //     };
-    //     postCreateAccessToken(data).then((res) => {
-    //       if (res.data.success) {
-    //         dispatch(SET_TOKEN(res.data.accessToken));
-    //       }
-    //     })
-    //   } else {
-    //     dispatch(getUserLogOut());
-    //   }
-    // }
-
     return () => clearTimeout(timer.current);
   }, [authenticated, dispatch, loginCheck, timer])
 
@@ -60,6 +46,7 @@ function App() {
       <NavBar />
       {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       {authenticated ? <PrivateRoute /> : <PublicRoute />}
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }
