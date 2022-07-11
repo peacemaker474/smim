@@ -34,7 +34,6 @@ function MainPage() {
     return <LoadingPage />
   }
 
-  console.log("확인");
   return (
     <MainBody>
       <MainContainer>
@@ -49,4 +48,4 @@ function MainPage() {
   );
 }
 
-export default React.memo(MainPage);
+export default MainPage;

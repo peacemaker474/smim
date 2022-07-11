@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
@@ -14,27 +14,30 @@ function NavBar() {
   const { social } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation(null);
 
-  const handleLoginClick = () => {
+  const handleLoginClick = useCallback(() => {
     dispatch(loginToggle());
-  };
+  }, [dispatch]);
 
-  const handleLogoutClick = () => {
+  const handleLogoutClick = useCallback(() => {
     deleteCookie("users");
     dispatch(getUserLogOut());
     dispatch(DELETE_TOKEN());
     navigate('/');
-  };
+  }, [dispatch, navigate]);
 
-  const handleToggleClick = () => {
+  const handleToggleClick = useCallback(() => {
     dispatch(menuToggle());
-  }
+  }, [dispatch]);
+
   return (
     <NavBarStyle
       menuToggled={menuToggled}
       loginToggled={loginToggled}
       authenticated={authenticated}
       social={social}
+      pathname={pathname}
       onLoginClick={handleLoginClick}
       onLogoutClick={handleLogoutClick}
       onToggleClick={handleToggleClick}

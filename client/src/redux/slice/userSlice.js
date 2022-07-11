@@ -7,7 +7,6 @@ import {
 } from "../services/UserService";
 
 const initialLoginState = {
-  isLogin: false,
   message: "",
   id: "",
   name: "",
@@ -26,20 +25,20 @@ const userSlice = createSlice({
       .addCase(postUserLogin.fulfilled, (state, { payload }) => {
         return {
           ...state,
-          isLogin: payload.success,
           id: payload.id,
           name: payload.name,
           email: payload.email,
           social: payload.social,
           imgUrl: payload.imageUrl,
           message: payload.message,
+          success: payload.success,
           loginCheck: true,
         }
       })
       .addCase(postUserLogin.rejected, (state, { payload }) => {
         return {
           ...state,
-          isLogin: payload.success,
+          success: payload.success,
           message: payload.message,
         }
       })
