@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from 'react-query';
 import App from "./App";
 import GlobalStyle from "./styles/globalstyles";
 import reportWebVitals from "./reportWebVitals";
@@ -14,17 +15,21 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const persistor = persistStore(store);
+const queryClient = new QueryClient();
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <App />
-          </ThemeProvider>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <ThemeProvider theme={theme}>
+              <GlobalStyle />
+              <App />
+            </ThemeProvider>
+          </BrowserRouter>
+        </QueryClientProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

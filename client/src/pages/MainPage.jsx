@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import QuestionList from '../components/postmain/QuestionList/QuestionList';
+import MainLists from '../components/postmain/MainLists/MainLists';
 import LoadingPage from './LoadingPage';
 import { getMainPostLists } from '../network/main/http';
 
@@ -20,33 +21,32 @@ const MainContainer = styled.div`
   grid-template-rows: repeat(3, 363px);
 `;
 
-export default function MainPage() {
-  const [postLists, setPostLists] = useState();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    getMainPostLists()
-      .then((res) => {
-        if (res.data.success) {
-          setPostLists(res.data.lists);
-          setTimeout(() => {
-            setLoading(false);
-          }, 2000);
-        }
-    });
-  }, []);
+function MainPage() {
+  const { isLoading, data } = useQuery(
+    ['mainLists'],
+    getMainPostLists,
+    {
+      staleTime: 60 * 1000,
+    }
+  );
+
+  if (isLoading) {
+    return <LoadingPage />
+  }
+
+  console.log("확인");
   return (
-      loading ? 
-        <LoadingPage />
-        :
-        <MainBody>
-          <MainContainer>
-            <QuestionList age='10' post={postLists && postLists['10']} />
-            <QuestionList age='20' post={postLists && postLists['20']} />
-            <QuestionList age='30' post={postLists && postLists['30']} />
-            <QuestionList age='40' post={postLists && postLists['40']} />
-            <QuestionList age='50' post={postLists && postLists['50']} />
-            <QuestionList age='60' post={postLists && postLists['60']} />
-          </MainContainer>
-        </MainBody>
+    <MainBody>
+      <MainContainer>
+        <MainLists age='10' posts={data?.lists['10']} />
+        <MainLists age='20' posts={data?.lists['20']} />
+        <MainLists age='30' posts={data?.lists['30']} />
+        <MainLists age='40' posts={data?.lists['40']} />
+        <MainLists age='50' posts={data?.lists['50']} />
+        <MainLists age='60' posts={data?.lists['60']} />
+      </MainContainer>
+    </MainBody>
   );
 }
+
+export default React.memo(MainPage);

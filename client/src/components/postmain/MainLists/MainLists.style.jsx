@@ -2,37 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 
-function QuestionListPresenter({ age, post }) {
-  return (
-    <ListContainer>
-      <ListHead>
-        <h2>{age}대에게 질문하세요</h2>
-        <MoreBtn>더보기</MoreBtn>
-      </ListHead>
-      <ListBody>
-        {post &&
-          post.map((item, index) => (
-            <ListItem key={index}>
-              <ItemH3>{item.title}</ItemH3>
-              <ItemContent>
-                <ItemSpan>{item.owner}</ItemSpan>
-                <ItemLike>{item.meta.likes}</ItemLike>
-                <ItemSpan>{item.createAt.slice(0, 10).replaceAll('-', '.')}</ItemSpan>
-              </ItemContent>
-            </ListItem>
-          ))}
-      </ListBody>
-    </ListContainer>
-  );
-}
-
-export default QuestionListPresenter;
-
-const ListContainer = styled.div`
+const MainPostsContainer = styled.div`
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 14px;
 `;
-const ListHead = styled.div`
+const PostsTitle = styled.div`
   display: flex;
   padding: 0 15px;
   justify-content: space-between;
@@ -51,9 +25,9 @@ const MoreBtn = styled.button`
   color: #ffffff;
 `;
 
-const ListBody = styled.div``;
+const PostsContent = styled.div``;
 
-const ListItem = styled.div`
+const PostsList = styled.div`
   height: 60px;
   width: 100%;
   padding: 10px;
@@ -62,17 +36,17 @@ const ListItem = styled.div`
   }
 `;
 
-const ItemH3 = styled.h3`
+const ListTitle = styled.h3`
   margin-bottom: 6px;
 `;
 
-const ItemContent = styled.div`
+const ListContent = styled.div`
   display: flex;
 `;
 
-const ItemSpan = styled.span``;
+const PostOwner = styled.span``;
 
-const ItemLike = styled.span`
+const PostLike = styled.span`
   display: flex;
   color: ${({ theme }) => theme.color.red};
   &::before {
@@ -89,3 +63,29 @@ const ItemLike = styled.span`
   margin-left: 10px;
   margin-right: 10px;
 `;
+
+function MainListsStyle({ age, posts }) {
+  return (
+    <MainPostsContainer>
+      <PostsTitle>
+        <h2>{age}대에게 질문하세요</h2>
+        <MoreBtn>더보기</MoreBtn>
+      </PostsTitle>
+      <PostsContent>
+        {posts &&
+          posts.map((post) => (
+            <PostsList key={post._id}>
+              <ListTitle>{post.title}</ListTitle>
+              <ListContent>
+                <PostOwner>{post.owner}</PostOwner>
+                <PostLike>{post.meta.likes}</PostLike>
+                <PostOwner>{post.createAt.slice(0, 10).replaceAll('-', '.')}</PostOwner>
+              </ListContent>
+            </PostsList>
+          ))}
+      </PostsContent>
+    </MainPostsContainer>
+  );
+}
+
+export default MainListsStyle;
