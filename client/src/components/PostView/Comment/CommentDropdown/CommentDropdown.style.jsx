@@ -13,6 +13,7 @@ export default function CommentDropdownPresenter({
   handleCommentDel,
   handleCommentPinned,
   handleCommentUnpinned,
+  handleCommentDeclaration,
   writer,
   parentId,
   commentId,
@@ -35,7 +36,7 @@ export default function CommentDropdownPresenter({
             <CommentDropdownBtn onClick={handleCommentDel}>삭제</CommentDropdownBtn>
           </>
         ) : (
-          <CommentDropdownBtn onClick={handleCommentEdit}>신고</CommentDropdownBtn>
+          <CommentDropdownBtn onClick={handleCommentDeclaration}>신고</CommentDropdownBtn>
         )}
       </CommentDropdownBox>
     </CommentDropdownContainer>

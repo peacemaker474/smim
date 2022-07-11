@@ -1,30 +1,33 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import PostUploadPage from '../pages/PostUploadPage';
 import Intro from '../pages/Intro';
-import MainPage from '../pages/MainPage';
 import SignupPage from '../pages/SignupPage';
+import MainPage from '../pages/MainPage';
 import PostsPage from '../pages/PostsPage';
 import PostViewPage from '../pages/PostViewPage';
-import PostUploadPage from '../pages/PostUploadPage';
-import MyPage from '../pages/MyPage';
 import LoadingPage from '../pages/LoadingPage';
+import MyPageRoute from './MyPageRoute';
 import NotFound from '../pages/NotFound';
 
-function PrivateRoute() {
+function AppRoute() {
   return (
     <Routes>
+      <Route element={<PrivateRoute />}>
+        <Route path='/post/create' element={<PostUploadPage />} />
+        <Route path='/post/edit/:id' element={<PostUploadPage />} />
+        <Route path='/my/*' element={<MyPageRoute />} />
+      </Route>
+      <Route path='/' element={<MainPage />} />
       <Route path='/intro' element={<Intro />} />
       <Route path='/signup' element={<SignupPage />} />
-      <Route path='/' element={<MainPage />} />
       <Route path='/generation' element={<PostsPage />} />
-      <Route path='/posts/view/:id' element={<PostViewPage />} />
-      <Route path='/posts/create' element={<PostUploadPage />} />
-      <Route path='/posts/edit/:id' element={<PostUploadPage />} />
-      <Route path='/my/*' element={<MyPage />} />
+      <Route path='/post/view/:id' element={<PostViewPage />} />
+      <Route path='/post/*' element={<NotFound />} />
       <Route path='/loading' element={<LoadingPage />} />
       <Route path='/*' element={<NotFound />} />
     </Routes>
   );
 }
-
-export default PrivateRoute;
+export default AppRoute;

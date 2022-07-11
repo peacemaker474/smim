@@ -3,28 +3,22 @@ import { getMyWriteLists } from '../../../network/mypage/http';
 import { useNavigate } from 'react-router-dom';
 import MyWriteListsStyle from './MyWriteLists.style';
 
-function MyWriteLists ({userId}) {
+function MyWriteLists({ userId }) {
   const [writeList, setWriteList] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     getMyWriteLists(userId).then((res) => {
       setWriteList(res.writeLists);
-    })
+    });
   }, [userId]);
 
   const handleMoveDetail = (evt) => {
     const url = evt.currentTarget.id;
-    navigate(`/posts/view/${url}`);
-  }
+    navigate(`/post/view/${url}`);
+  };
 
-
-  return (
-    <MyWriteListsStyle
-      writeList={writeList}
-      onMoveDetail={handleMoveDetail}
-    />
-  );
+  return <MyWriteListsStyle writeList={writeList} onMoveDetail={handleMoveDetail} />;
 }
 
 export default MyWriteLists;

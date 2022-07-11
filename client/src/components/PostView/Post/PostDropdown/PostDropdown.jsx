@@ -10,7 +10,7 @@ function Dropdown({ postId }, ref) {
 
   const handlePostEdit = (e) => {
     e.preventDefault();
-    navigate(`/posts/edit/${postId}`);
+    navigate(`/post/edit/${postId}`);
   };
   const handlePostDel = async (e) => {
     e.preventDefault();

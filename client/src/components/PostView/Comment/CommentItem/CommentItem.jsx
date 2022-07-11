@@ -13,7 +13,10 @@ export default function CommentItem({ cmntData, groupId }) {
     (el) => el === cmntData._id
   );
 
-  const handleClickCancel = () => handleClickShow(false);
+  const handleClickCancel = (e) => {
+    e.target.value = '';
+    handleClickShow(false);
+  };
 
   const handleTextChange = (text) => {
     setItemText(text);

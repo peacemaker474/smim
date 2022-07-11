@@ -7,6 +7,7 @@ const initialToggleState = {
   modalToggled: false,
   commentToggled: false,
   imageToggled: false,
+  isLoginCheckToggled: false,
 };
 
 const toggleSlice = createSlice({
@@ -25,6 +26,9 @@ const toggleSlice = createSlice({
     modalToggle(state) {
       state.modalToggled = !state.modalToggled;
     },
+    isLoginCheckToggle(state) {
+      state.isLoginCheckToggled = !state.isLoginCheckToggled;
+    },
     commentModalToggle(state) {
       state.commentToggled = !state.commentToggled;
     },
@@ -41,6 +45,7 @@ export const {
   modalToggle,
   commentModalToggle,
   userImageToggle,
+  isLoginCheckToggle,
 } = toggleSlice.actions;
 
 export default toggleSlice;

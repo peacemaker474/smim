@@ -6,24 +6,26 @@ import { getCookie } from './utils/cookie';
 import { postCreateAccessToken } from './network/main/http';
 import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
 import { getUserLogOut } from './redux/services/UserService';
-import PrivateRoute from './routes/PrivateRoutes';
+import { isLoginCheckToggle, loginToggle } from './redux/slice/toggleSlice';
 import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
-import PublicRoute from './routes/PublicRoutes';
+import AppRoute from './routes/AppRoute';
+import Modal from './components/common/Modal/Modal';
 
 function App() {
   const timer = useRef(null);
   const { loginCheck } = useSelector((state) => state.user);
   const { authenticated } = useSelector((state) => state.authToken);
+  const { isLoginCheckToggled } = useSelector((state) => state.toggle);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const pathCheck = pathname.split('/')[2];
 
   useEffect(() => {
-    if ( authenticated ) {
+    if (authenticated) {
       timer.current = setTimeout(() => {
         dispatch(DELETE_TOKEN());
-        if (window.confirm("로그인이 만료되었습니다. 유지하겠습니까?")) {
+        if (window.confirm('로그인이 만료되었습니다. 유지하겠습니까?')) {
           let data = {
             refreshToken: getCookie(),
           };
@@ -31,7 +33,7 @@ function App() {
             if (res.data.success) {
               dispatch(SET_TOKEN(res.data.accessToken));
             }
-          })
+          });
         } else {
           dispatch(getUserLogOut());
         }
@@ -39,13 +41,24 @@ function App() {
     }
 
     return () => clearTimeout(timer.current);
-  }, [authenticated, dispatch, loginCheck, timer])
+  }, [authenticated, dispatch, loginCheck, timer]);
 
   return (
     <>
+      {isLoginCheckToggled ? (
+        <Modal
+          actionfunc={() => {
+            dispatch(isLoginCheckToggle());
+            dispatch(loginToggle());
+          }}
+          cancelFunc={() => dispatch(isLoginCheckToggle())}
+        >
+          {'로그인이 필요한 기능입니다.로그인하시겠습니까?'}
+        </Modal>
+      ) : null}
       <NavBar />
-      {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
-      {authenticated ? <PrivateRoute /> : <PublicRoute />}
+      {pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
+      <AppRoute />
       <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
