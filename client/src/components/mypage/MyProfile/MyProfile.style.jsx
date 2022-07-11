@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MyProfileWrapper = styled.div`
   width: 30%;
@@ -22,16 +22,14 @@ const ProfileList = styled.li`
 `;
 
 const MyProfileLink = styled(Link)`
-  font-size: 20px;
+  font-size: 1.3em;
   color: gray;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
     ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
 `;
 
-function MyProfileStyle ({ social }) {
-  const { pathname } = useLocation(null);
-
+function MyProfileStyle ({ social, pathname }) {
   return (
     <MyProfileWrapper>
       <MyProfileLists>

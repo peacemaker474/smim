@@ -22,7 +22,7 @@ const MainContainer = styled.div`
 `;
 
 function MainPage() {
-  const { isLoading, data } = useQuery(
+  const { isLoading, data, isFetching } = useQuery(
     ['mainLists'],
     getMainPostLists,
     {
@@ -30,7 +30,7 @@ function MainPage() {
     }
   );
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingPage />
   }
 

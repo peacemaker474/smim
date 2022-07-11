@@ -12,7 +12,7 @@ export const getWriteLists = async (req, res) => {
   const { userId } = req.query;
   try {
     const { posts } = await User.findOne({userId});
-    if (posts.length === 0) return res.status(204).send("작성한 게시글이 없습니다.");
+    if (posts.length === 0) return res.status(200).send("작성한 게시글이 없습니다.");
     
     const writeLists = await Promise.all(
       posts.map(async (list) => {
@@ -32,7 +32,7 @@ export const getFavoriteLists = async (req, res) => {
   const { userId } = req.query;
   try {
     const { bookmarks } = await User.findOne({userId});
-    if (bookmarks.length === 0) return res.status(204).send("즐겨찾기한 게시글이 없습니다.");
+    if (bookmarks.length === 0) return res.status(200).send("즐겨찾기한 게시글이 없습니다.");
 
     const favoriteLists = await Promise.all(
       bookmarks.map(async (list) => {

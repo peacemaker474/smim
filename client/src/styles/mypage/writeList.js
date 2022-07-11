@@ -41,4 +41,6 @@ export const Writer = styled.p`
   height: 10%;
 `;
 
-export const NotWriteLists = styled.h2``;
+export const NotWriteLists = styled.h2`
+  text-decoration: underline;
+`;

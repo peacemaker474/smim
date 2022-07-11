@@ -42,7 +42,7 @@ export const LoginBtn = React.memo(styled(ColorBtn)`
   margin: 0 20px 10px 0;
 `);
 
-export const UpdateBtn = styled(ColorBtn)`
+export const UpdateBtn = React.memo(styled(ColorBtn)`
   width: 100px;
   height: 50px;
   background-color: orange;
@@ -51,7 +51,7 @@ export const UpdateBtn = styled(ColorBtn)`
   border-radius: 5px;
   margin-right: 20px;
   align-self: flex-end;
-`;
+`);
 
 export const ChangePwBtn = styled(ColorBtn)`
   width: 70%;

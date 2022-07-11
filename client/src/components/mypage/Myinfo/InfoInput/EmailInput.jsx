@@ -15,4 +15,4 @@ function EmailInput ({register, userEmail}) {
   );
 }
 
-export default EmailInput;
+export default React.memo(EmailInput);

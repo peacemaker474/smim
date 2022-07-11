@@ -43,4 +43,4 @@ function NameInput ({ register, errors }) {
   );
 }
 
-export default NameInput;
+export default React.memo(NameInput);
