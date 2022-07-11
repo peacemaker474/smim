@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getBookmark, getUnbookmark } from '../../../../network/post/http';
+import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import PostBookmarkPresenter from './PostBookmark.style';
 
 export default function PostBookmark({ bookmark }) {
@@ -9,6 +10,7 @@ export default function PostBookmark({ bookmark }) {
   const location = useLocation();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const id = location.pathname.split('view/')[1];
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsBookmarkChecked(bookmark);
@@ -16,6 +18,7 @@ export default function PostBookmark({ bookmark }) {
 
   const handleBookmarkClick = async () => {
     if (!tkn) {
+      dispatch(isLoginCheckToggle());
       return;
     }
 

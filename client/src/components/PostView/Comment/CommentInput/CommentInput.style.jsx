@@ -8,6 +8,7 @@ export default function CommentInputPresenter({
   handleClickCancel,
   onSubmit,
   id,
+  loginCheck,
 }) {
   return (
     <CmntForm onSubmit={handleSubmit(onSubmit)}>
@@ -16,6 +17,7 @@ export default function CommentInputPresenter({
         type='text'
         placeholder='답변을 기다립니다.'
         {...register('comment', { required: true })}
+        onClick={loginCheck}
       />
       {id ? (
         <>
