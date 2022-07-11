@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ReactQueryDevtools} from 'react-query/devtools';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { getCookie } from './utils/cookie';
 import { postCreateAccessToken } from './network/main/http';
 import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
@@ -57,7 +57,7 @@ function App() {
         </Modal>
       ) : null}
       <NavBar />
-      {pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
+      {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <AppRoute />
       <ReactQueryDevtools initialIsOpen={true} />
     </>

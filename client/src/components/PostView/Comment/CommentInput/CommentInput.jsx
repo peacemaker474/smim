@@ -19,7 +19,6 @@ export default function CommentInput({
   const { register, handleSubmit, setValue, setFocus } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
-  const { isLogin } = useSelector((state) => state.user);
 
   if (!handleClickCancel) {
     handleClickCancel = () => setValue('comment', '');
@@ -102,7 +101,7 @@ export default function CommentInput({
   const loginCheck = (e) => {
     e.preventDefault();
     // e.target.disabled = false;
-    if (!isLogin) {
+    if (!tkn) {
       e.target.disabled = true;
       dispatch(isLoginCheckToggle());
     }
@@ -117,7 +116,7 @@ export default function CommentInput({
       id={id}
       onSubmit={onSubmit}
       loginCheck={loginCheck}
-      isLogin={isLogin}
+      isLogin={tkn}
     />
   );
 }

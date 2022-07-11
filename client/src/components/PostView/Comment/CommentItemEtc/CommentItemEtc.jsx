@@ -10,7 +10,6 @@ export default function CommentItemEtc({ cmntData, groupId }) {
   const [like, setLike] = useState(cmntData.like);
   const [likeCount, setLikeCount] = useState(cmntData.like_count);
   const tkn = useSelector((state) => state.authToken).accessToken;
-  const { isLogin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleClickCancel = () => {
@@ -18,7 +17,7 @@ export default function CommentItemEtc({ cmntData, groupId }) {
   };
 
   const handleCommentLike = () => {
-    if (!isLogin) {
+    if (!tkn) {
       dispatch(isLoginCheckToggle());
       console.log('check');
       return;
