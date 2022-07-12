@@ -9,9 +9,10 @@ function SignupPwStyle ({register, errors, valid, onCheckPwBlur }) {
   return (
     <>
       <InputBox>
-        <SignupTitle> 비밀번호 </SignupTitle>
+        <SignupTitle for="password"> 비밀번호 </SignupTitle>
         <SignupInput
           type="password"
+          id="password"
           {...register("password", {
             required: "비밀번호를 입력하세요.",
             pattern: {
@@ -29,9 +30,10 @@ function SignupPwStyle ({register, errors, valid, onCheckPwBlur }) {
         }
       </InputBox>
       <InputBox>
-        <SignupTitle> 비밀번호 재확인 </SignupTitle>
+        <SignupTitle for="check"> 비밀번호 재확인 </SignupTitle>
         <SignupInput
           type="password"
+          id="check"
           {...register("check", {
             required: "비밀번호를 입력하세요.",
             validate: {

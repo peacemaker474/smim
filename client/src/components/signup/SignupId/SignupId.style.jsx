@@ -8,9 +8,10 @@ import { ValidCheck } from '../../../styles/common/validtext';
 function SignupIdStyle ({ register, errors, valid, onExistedId}) {
   return (
     <InputBox>
-      <SignupTitle> 아이디 </SignupTitle>
+      <SignupTitle for="userId"> 아이디 </SignupTitle>
       <SignupInput
         type="text"
+        id="userId"
         {...register("userId", {
           required: "아이디를 입력하세요",
           pattern: {

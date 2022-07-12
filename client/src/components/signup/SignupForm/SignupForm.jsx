@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { postSignupSubmit } from '../../../network/signup/http';
@@ -20,7 +20,7 @@ function SignupForm() {
 
   const navigate = useNavigate();
 
-  const handleSignupSubmit = (data) => {
+  const handleSignupSubmit = useCallback((data) => {
     let day = data.dd < 10 ? `0${data.dd}` : data.dd;
 
     let body = {
@@ -36,7 +36,7 @@ function SignupForm() {
         navigate('/');
       }
     });
-  };
+  }, [navigate]);
 
   return (
     <SignupFormStyle

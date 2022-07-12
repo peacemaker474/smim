@@ -7,9 +7,10 @@ import { SignupTitle } from '../../../styles/signup/title';
 function SignupBirthStyle ({ register, errors, onBirthYearInput, onBirthDayInput}) {
   return (
     <InputBox>
-      <SignupTitle> 생년월일 </SignupTitle>
+      <SignupTitle for="yy"> 생년월일 </SignupTitle>
       <BirthBox>
         <BirthYear
+          id="yy"
           type="text"
           placeholder='년(4자)'
           maxLength={4}

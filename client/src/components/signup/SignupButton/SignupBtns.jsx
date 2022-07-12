@@ -9,4 +9,4 @@ function SignupBtns ({ onSignupSubmit }) {
   );
 }
 
-export default SignupBtns;
+export default React.memo(SignupBtns);
