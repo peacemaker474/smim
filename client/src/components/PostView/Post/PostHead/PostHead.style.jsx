@@ -1,27 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DropdownBtn } from '../../../../styles/common/dropdown';
-import { PostDropdown } from '../PostDropdown/PostDropdown';
-
-export default function PostHeadPresenter({
-  author,
-  btnRef,
-  handleDropdownShow,
-  isDropdownVisible,
-  dropdownRef,
-  postId,
-  userId,
-  postDate,
-}) {
+import PostDropdownBtn from '../PostDropdownBtn/PostDropdownBtn';
+export default function PostHeadPresenter({ author, userId, postDate }) {
   return (
     <PostHeadDiv>
       <PostAuthor>{author}</PostAuthor>
       <PostDate>{postDate}</PostDate>
-      {author === userId && (
-        <PostDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-          {isDropdownVisible && <PostDropdown ref={dropdownRef} postId={postId} />}
-        </PostDropdownBtn>
-      )}
+      {author === userId && <PostDropdownBtn />}
     </PostHeadDiv>
   );
 }
@@ -55,5 +40,3 @@ const PostDate = styled.span`
   font-size: 11px;
   color: ${({ theme }) => theme.color.gray};
 `;
-
-const PostDropdownBtn = styled(DropdownBtn)``;
