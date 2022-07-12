@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import { postUserLogin } from '../../../redux/services/UserService';
 import EmailFormStyle from './EmailForm.style';
@@ -15,15 +15,21 @@ function EmailForm () {
       password: "",
     }
   });
-  const { isLogin, message } = useSelector((state) => state.user);
+  const { success, message } = useSelector(
+     state => ({
+        success: state.user.success,
+        message: state.user.message,
+    }),
+      shallowEqual
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogin) {
+    if (success) {
       navigate('/');
     }
-  }, [isLogin, navigate]);
+  }, [success, navigate]);
 
   const handleLoginClose = useCallback(() => {
     dispatch(loginToggle());

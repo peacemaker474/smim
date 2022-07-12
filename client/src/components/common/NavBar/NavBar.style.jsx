@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router';
 import Toggle from './Toggle';
 import MobileNavBar from './MobileNavBar';
 import LoginSection from '../../login/LoginSection/LoginSection';
@@ -34,6 +33,7 @@ const NavTitle = styled(Link)`
   font-size: 28px;
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
+  cursor: pointer;
   @media screen and (max-width: 320px) {
     font-size: 20px;
   }
@@ -78,15 +78,13 @@ const SignLink = styled.span`
   cursor: pointer;
 `;
 
-function NavBarStyle ({ menuToggled, loginToggled, authenticated, social, onLoginClick, onLogoutClick, onToggleClick}) {
-  const { pathname } = useLocation(null);
-
+function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, social, onLoginClick, onLogoutClick, onToggleClick}) {
   return (
     <>
       <NavContainer>
         <NavBox>
           <NavLogo>
-            <NavTitle to='/'> 스며들다 </NavTitle>
+            <NavTitle to="/"> 스며들다 </NavTitle>
           </NavLogo>
           <NavLists>
             <NavList>
@@ -152,4 +150,4 @@ function NavBarStyle ({ menuToggled, loginToggled, authenticated, social, onLogi
   );
 }
 
-export default NavBarStyle;
+export default React.memo(NavBarStyle);

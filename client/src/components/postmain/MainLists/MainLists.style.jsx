@@ -88,4 +88,4 @@ function MainListsStyle({ age, posts }) {
   );
 }
 
-export default MainListsStyle;
+export default React.memo(MainListsStyle);
