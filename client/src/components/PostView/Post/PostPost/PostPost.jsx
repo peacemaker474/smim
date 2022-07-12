@@ -1,26 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
+// import React, { useState, useEffect, useCallback } from 'react';
 import { getReadPostDetail } from '../../../../network/post/http';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostData } from '../../../../redux/slice/postSlice';
+import LoadingPage from '../../../../pages/LoadingPage';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getPostData } from '../../../../redux/slice/postSlice';
 import { pinnedCommentId } from '../../../../redux/slice/commentSlice';
 import PostPostPresenter from './PostPost.style';
+import NotFound from '../../../../pages/NotFound';
 
 export default function PostPost({ postId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
-  const [postDetail, setPostDetail] = useState({
-    targetAge: '',
-    content: '',
-    title: '',
-    owner: { nickname: '', _id: '' },
-    createAt: '',
-    hashtag: [],
-    like: false,
-    bookmark: false,
-    meta: { likes: 0, views: 0 },
-  });
   const dispatch = useDispatch();
 
-  const loadPostDetail = useCallback(async () => {
+  const getDetail = async () => {
     try {
       if (tkn) {
         const response = await getReadPostDetail(postId, {
@@ -29,24 +23,35 @@ export default function PostPost({ postId }) {
             Authorization: `Bearer ${tkn}`,
           },
         });
-        setPostDetail(response.data);
-        dispatch(getPostData(postId, response.data.owner.nickname));
+        return response.data;
       } else {
         const response = await getReadPostDetail(postId);
-        setPostDetail(response.data);
-        dispatch(getPostData(postId, response.data.owner.nickname));
+        return response.data;
       }
     } catch (error) {
       console.error(error);
     }
-  }, [postId, tkn, dispatch]);
+  };
 
-  useEffect(() => {
-    if (postDetail.meta.pinnedCmnt) {
-      dispatch(pinnedCommentId(postDetail.meta.pinnedCmnt));
-    }
-    loadPostDetail();
-  }, [loadPostDetail, dispatch, postDetail.meta.pinnedCmnt]);
+  const { data: postDetail, isLoading, isError, status } = useQuery('postDetail', getDetail);
+
+  console.log(status);
+
+  console.log(isLoading, isError);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <NotFound />;
+  }
+
+  console.log(postDetail);
+
+  if (postDetail.meta.pinnedCmnt) {
+    dispatch(pinnedCommentId(postDetail.meta.pinnedCmnt));
+  }
 
   const date = new Date(postDetail.createAt);
 
