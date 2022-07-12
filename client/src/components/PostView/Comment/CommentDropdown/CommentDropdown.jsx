@@ -10,7 +10,7 @@ import CommentDropdownPresenter from './CommentDropdown.style';
 
 function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   const dispatch = useDispatch();
-  const { isLogin } = useSelector((state) => state.user);
+  const tkn = useSelector((state) => state.authToken).accessToken;
 
   const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
 
@@ -37,7 +37,7 @@ function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   };
 
   const handleCommentDeclaration = () => {
-    if (!isLogin) {
+    if (!tkn) {
       dispatch(isLoginCheckToggle());
     } else {
       console.log('declaration');
