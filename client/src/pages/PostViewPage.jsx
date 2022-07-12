@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCommentCreate } from '../redux/slice/commentCreateSlice';
 import { resetComment } from '../redux/slice/commentSlice';
@@ -17,10 +17,9 @@ const PostViewContainer = styled.div`
 
 export default function PostViewPage() {
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
-  const location = useLocation();
-  const id = location.pathname.split('view/')[1];
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const viewPost = useCallback(async () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostLike, getPostUnlike } from '../../../../network/post/http';
 import PostLikePresenter from './PostLike.style';
@@ -7,9 +7,8 @@ import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
 export default function PostLike({ quantity, like }) {
   const [isLikeChecked, setIsLikeChecked] = useState(like);
-  const location = useLocation();
   const tkn = useSelector((state) => state.authToken).accessToken;
-  const id = location.pathname.split('view/')[1];
+  const { id } = useParams();
   const [likeValue, setLikeValue] = useState(quantity);
   const dispatch = useDispatch();
 
