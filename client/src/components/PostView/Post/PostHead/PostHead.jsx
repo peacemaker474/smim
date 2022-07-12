@@ -8,7 +8,5 @@ export default function PostHead({ author, date, postId }) {
 
   const postDate = date.toLocaleDateString();
 
-  console.log('rendering postHead');
-
   return <PostHeadPresenter author={author} postId={postId} userId={userId} postDate={postDate} />;
 }
