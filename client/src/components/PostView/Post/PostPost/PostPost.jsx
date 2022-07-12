@@ -12,9 +12,9 @@ function PostPost() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
   const { id: postId } = useParams();
-  console.log('rendering post');
 
-  const getDetail = async () => {
+  const fetchAPI = async () => {
+    let post;
     try {
       if (tkn) {
         const response = await getReadPostDetail(postId, {
@@ -23,36 +23,28 @@ function PostPost() {
             Authorization: `Bearer ${tkn}`,
           },
         });
-        const post = response.data;
-        console.log(post);
-        const viewResponse = await getPostView(postId);
-        const view = viewResponse.data;
-        console.log(view);
-
-        return post;
+        post = response.data;
       } else {
         const response = await getReadPostDetail(postId);
-        const post = response.data;
-        const viewResponse = await getPostView(postId);
-        const view = viewResponse.data;
-        console.log(view);
-
-        return post;
+        post = response.data;
       }
+      await getPostView(postId);
+
+      return post;
     } catch (error) {
       console.error(error);
       alert('Token Error');
+      return error;
     }
   };
 
-  const { data: postDetail, isLoading, isError } = useQuery('postDetail', getDetail);
+  const { data: postDetail, isLoading, isError } = useQuery('postDetail', fetchAPI);
 
   if (isLoading) {
     return <LoadingPage />;
   }
 
   if (isError) {
-    alert('Token Error');
     return <NotFound />;
   }
 

@@ -19,7 +19,6 @@ export default function PostViewPage() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log('rendering post page');
 
   const requestDelete = async (id, tkn) => {
     const response = await deletePost(id, {
