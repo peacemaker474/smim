@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { putChangePassWord } from '../../../network/mypage/http';
-import PasswordChangeStyle from './PasswordChange.style';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
+import PasswordChangeStyle from './PasswordChange.style';
 
 function PasswordChange () {
-  const user = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.user);
   const { accessToken } = useSelector((state) => state.authToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit, getValues, formState: {errors} } = useForm({
     mode: 'onBlur',
     defaultValues: {
-      userId: user.id,
+      userId: id,
       oldPassword: '',
       newPassword: '',
       newPassword2: '',
@@ -41,9 +41,9 @@ function PasswordChange () {
     }
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = useCallback(() => {
     navigate("/my");
-  }
+  }, [navigate]);
 
   return (
     <PasswordChangeStyle

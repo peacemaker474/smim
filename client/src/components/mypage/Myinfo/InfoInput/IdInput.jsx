@@ -41,4 +41,4 @@ function IdInput ({ register, errors }) {
   );
 }
 
-export default IdInput;
+export default React.memo(IdInput);

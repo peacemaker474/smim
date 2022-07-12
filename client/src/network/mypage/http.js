@@ -11,16 +11,14 @@ const config = {
   },
 };
 
-export const getMyWriteLists = (data) => {
-  return axios.get(`${http}/my/writeLists?userId=${data}`).then(res => {
-    return res.data;
-  });
+export const getMyWriteLists = async (userId) => {
+  const { data } = await axios.get(`${http}/my/writeLists?userId=${userId}`);
+  return data;
 }
 
-export const getBookMarkLists = (data) => {
-  return axios.get(`${http}/my/bookmarkLists?userId=${data}`).then(res => {
-    return res.data;
-  });
+export const getBookMarkLists = async (userId) => {
+  const data = await axios.get(`${http}/my/bookmarkLists?userId=${userId}`);
+  return data;
 }
 
 export const getCheckMyId = (data) => {

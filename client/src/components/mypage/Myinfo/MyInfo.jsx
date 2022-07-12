@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { putUpdateUser } from '../../../redux/services/UserService';
 import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import MyInfoStyle from './MyInfo.style';
 
 function MyInfo () {
-  const user = useSelector((state) => state.user);
+  const { id, name: nickname, email } = useSelector(
+    state => ({
+      id: state.user.id,
+      name: state.user.name,
+      email: state.user.email,
+    }),
+    shallowEqual
+  );
   const { accessToken } = useSelector((state) => state.authToken);
   const { imageToggled } = useSelector((state) => state.toggle);
   const dispatch = useDispatch();
@@ -14,31 +21,31 @@ function MyInfo () {
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
-      id: user.id,
-      nickname: user.name,
-      email: user.email,
+      id,
+      nickname,
+      email,
       accessToken,
     }
   });
 
   // 이벰트 영역
 
-  const handleImageModalOpen = () => {
+  const handleImageModalOpen = useCallback(() => {
     dispatch(userImageToggle());
-  }
+  }, [dispatch]);
 
-  const handleInfoUpdate = (userInfo) => {
+  const handleInfoUpdate = useCallback((userInfo) => {
     const lastIdCheck = userInfo.id.indexOf('\b');
     const lastNameCheck = userInfo.nickname.indexOf('\b');
     
     if (
-      !(user.id === userInfo.id || user.name === userInfo.nickname) &&
+      !(id === userInfo.id || nickname === userInfo.nickname) &&
       lastIdCheck !== 0 &&
       lastNameCheck !== 0
     ) {
       dispatch(putUpdateUser(userInfo));
     }
-  };
+  }, [dispatch, id, nickname]);
 
   return (
     <MyInfoStyle

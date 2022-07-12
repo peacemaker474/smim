@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent, Writer, NotWriteLists } from '../../../styles/mypage/writeList';
 
 const BookMarkWrapper = styled.div`
-  width: 50vw;
-  height: 60vh;
-  border: 1px solid black;
+  width: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${({ bookMarkList }) => !bookMarkList ? "center" : "space-between"};
   align-items: center;
-  gap: 10px;
+  position: relative;
 `;
 
 const BookMarkPageNumber = styled.p`
@@ -19,10 +18,10 @@ const BookMarkPageNumber = styled.p`
 
 function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
   return (
-    <BookMarkWrapper>
+    <BookMarkWrapper bookMarkList={bookMarkList}>
       {
-        bookMarkList === undefined ?
-          <NotWriteLists> 즐겨찾기한 게시글이 없습니다.</NotWriteLists> :
+        !bookMarkList ?
+          <NotWriteLists> 즐겨찾기한 게시글이 없습니다. </NotWriteLists> :
           <>
             <ListsUl>
               {bookMarkList.map(item => 

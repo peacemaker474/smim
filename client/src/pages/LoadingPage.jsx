@@ -3,15 +3,15 @@ import { HashLoader } from 'react-spinners';
 import styled from 'styled-components';
 
 const LoadingWrapper = styled.section`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: ${({ position }) => `${position}` || 'fixed'};
+  top: ${({ top }) => `${top}` || "50%"};
+  left: ${({ left }) => `${left}` || '50%'};
+  transform: ${({ top, left }) =>  `translate(-${left}, -${top})`|| `translate(-50%, -50%)`};
 `;
 
-export default function LoadingPage() {
+export default function LoadingPage({position, top, left}) {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper position={position} top={top} left={left}>
       <HashLoader />
     </LoadingWrapper>
   );

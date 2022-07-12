@@ -5,21 +5,21 @@ import { MyInfoInput } from '../../../styles/common/input';
 import { ValidCheck } from '../../../styles/common/validtext';
 
 const PasswordWrapper = styled.form`
-  width: 50vw;
-  height: 60vh;
+  width: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 `;
 
-const PasswordTitle = styled.h2`
+const PasswordTitle = React.memo(styled.h2`
   width: 70%;
   height: 70px;
   line-height: 70px;
   font-size: 28px;
   font-weight: bold;
-`;
+`);
 
 const PasswordBox = styled.div`
   width: 70%;
