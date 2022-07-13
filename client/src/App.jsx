@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -13,35 +13,29 @@ import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
 
 function App() {
-  const timer = useRef(null);
-  const { loginCheck } = useSelector((state) => state.user);
-  const { authenticated } = useSelector((state) => state.authToken);
+  const { authenticated, expireTime } = useSelector((state) => state.authToken);
   const { isLoginCheckToggled } = useSelector((state) => state.toggle);
-  const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
 
   useEffect(() => {
-    if (authenticated) {
-      timer.current = setTimeout(() => {
+    if (authenticated && expireTime - new Date().getTime() < 3000) {
+      if (window.confirm("로그인 만료되셨습니다. 연장하시겠습니까?")) {
+        let data = {
+          refreshToken: getCookie(),
+        };
+        postCreateAccessToken(data).then((res) => {
+          if (res.data.success) {
+            dispatch(SET_TOKEN(res.data.accessToken));
+          }
+        });
+      } else {
         dispatch(DELETE_TOKEN());
-        if (window.confirm('로그인이 만료되었습니다. 유지하겠습니까?')) {
-          let data = {
-            refreshToken: getCookie(),
-          };
-          postCreateAccessToken(data).then((res) => {
-            if (res.data.success) {
-              dispatch(SET_TOKEN(res.data.accessToken));
-            }
-          });
-        } else {
-          dispatch(getUserLogOut());
-        }
-      }, 600 * 1000);
+        dispatch(getUserLogOut());
+      }
     }
-
-    return () => clearTimeout(timer.current);
-  }, [authenticated, dispatch, loginCheck, timer]);
+  }, [authenticated, dispatch, expireTime, pathname]);
 
   return (
     <>
