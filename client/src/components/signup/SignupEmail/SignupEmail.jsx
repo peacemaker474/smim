@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { getCheckEmail } from '../../../network/signup/http';
 import SignupEmailStyle from './SignupEmail.style';
 
 function SignupEmail ({register, errors, valid, setValid }) {
   
-  const handleCheckExistedEmail = () => async (value) => {
+  const handleCheckExistedEmail = useCallback(() => async (value) => {
     try {
       const { data } = await getCheckEmail(value);
       if (data.success) setValid({...valid, email: true});
@@ -13,7 +13,8 @@ function SignupEmail ({register, errors, valid, setValid }) {
       setValid({ ...valid, email: false});
       if (err) return `${err.response.data.message}`;
     }
-  }
+  }, [valid, setValid]);
+
   return (
     <SignupEmailStyle
       register={register}

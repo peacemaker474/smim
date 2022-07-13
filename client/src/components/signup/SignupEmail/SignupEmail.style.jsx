@@ -8,9 +8,10 @@ import { SignupTitle } from '../../../styles/signup/title';
 function SignupEmailStyle ({ register, errors, valid, onCheckExistedEmail}) {
   return (
     <InputBox>
-      <SignupTitle> 이메일 </SignupTitle>
+      <SignupTitle for="email"> 이메일 </SignupTitle>
       <SignupInput
         type="email"
+        id="email"
         {...register("email", {
           required: "이메일을 입력하세요",
           pattern: {

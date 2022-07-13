@@ -8,9 +8,10 @@ import { SignupTitle } from '../../../styles/signup/title';
 function SignupNameStyle ({ register, errors, valid, onExistedName}) {
   return (
     <InputBox>
-    <SignupTitle> 닉네임 </SignupTitle>
+    <SignupTitle for="nickName"> 닉네임 </SignupTitle>
       <SignupInput
         type="text"
+        id="nickName"
         {...register("nickName", {
           required: "닉네임을 입력하세요.",
           pattern: {

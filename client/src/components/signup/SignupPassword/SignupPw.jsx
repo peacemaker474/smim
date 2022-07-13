@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import SignupPwStyle from './SignupPw.style';
 
 function SignupPw ({register, errors, getValues, valid, setValid }) {
   
-  const handleCheckPwBlur = () => (value) => {
+  const handleCheckPwBlur = useCallback(() => (value) => {
     const { password } = getValues();
     if (password !== value) {
       setValid({...valid, check: false});
@@ -12,7 +12,8 @@ function SignupPw ({register, errors, getValues, valid, setValid }) {
       setValid({...valid, check: true});
       return true;
     }
-  }
+  }, [valid, setValid, getValues]);
+
   return (
     <SignupPwStyle
       register={register}

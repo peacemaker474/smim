@@ -8,7 +8,7 @@ const myRouter = express.Router();
 
 myRouter.get("/writeLists", getWriteLists);
 myRouter.get("/bookmarkLists", getFavoriteLists);
-myRouter.put("/update-image", verifyAccessToken, userImgUpload.single("file"), putChangeUserImage);
+myRouter.put("/update-image", userImgUpload.single("file"), verifyAccessToken, putChangeUserImage);
 myRouter.put("/update-user", verifyAccessToken, putChangeUserInfo);
 myRouter.get("/id-check", getExistedIdCheck);
 myRouter.get("/name-check", getExistedNameCheck);

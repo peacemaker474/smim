@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { getCheckId } from '../../../network/signup/http';
 import SignupIdStyle from './SignupId.style';
 
 function SignupId ({register, errors, valid, setValid}) {
   
-  const handleExistedId = () => async (value) => {
+  const handleExistedId = useCallback(() => async (value) => {
     try {
       const { data } = await getCheckId(value);
       if (data.success) setValid({...valid, userId: true});
@@ -13,7 +13,7 @@ function SignupId ({register, errors, valid, setValid}) {
       setValid({...valid, userId: false});
       if (err) return `${err.response.data.message}`;
     }
-  }
+  }, [valid, setValid]);
 
   return (
     <SignupIdStyle

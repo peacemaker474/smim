@@ -11,7 +11,7 @@ function SignupBirth ({register, errors, getValues }) {
     if (nowYear - parseInt(myYear) >= 100 && myYear.length === 4) {
       return "정말이세요?";
     }
-  }
+  };
 
   const handleBirthDayInput = () => (value) => {
     const month = parseInt(getValues("mm"));
@@ -23,7 +23,7 @@ function SignupBirth ({register, errors, getValues }) {
     if ((month === 4 || month === 6 || month === 9 || month === 11) && day === 31) {
       return "생년월일을 다시 확인해주세요.";
     }
-  }
+  };
 
   return (
     <SignupBirthStyle

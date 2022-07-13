@@ -11,8 +11,8 @@ const MyImg = styled.img`
 `;
 
 function UserImage ({width, height, encodeImg}) {
-  const user = useSelector((state) => state.user);
-  const encoded = encodeURI(user.imgUrl);
+  const { imgUrl } = useSelector((state) => state.user);
+  const encoded = encodeURI(imgUrl);
   const decoded = decodeURI(encoded);
   
   return (
