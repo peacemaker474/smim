@@ -37,12 +37,9 @@ const commentCreateSlice = createSlice({
         };
       },
     },
-    resetCommentCreate(state, action) {
-      state.length = 0;
-    },
   },
 });
 
-export const { createComment, resetCommentCreate } = commentCreateSlice.actions;
+export const { createComment } = commentCreateSlice.actions;
 
 export default commentCreateSlice.reducer;

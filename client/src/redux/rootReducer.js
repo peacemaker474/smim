@@ -12,7 +12,7 @@ import { tokenSlice } from './auth';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['user', 'toggle'],
+  blacklist: ['user', 'toggle', 'comment', 'commentCreate'],
 };
 
 const userPersistConfig = {

@@ -1,20 +1,20 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-// import React, { useState, useEffect, useCallback } from 'react';
-import { getReadPostDetail } from '../../../../network/post/http';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingPage from '../../../../pages/LoadingPage';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getPostData } from '../../../../redux/slice/postSlice';
+import { getPostView, getReadPostDetail } from '../../../../network/post/http';
 import { pinnedCommentId } from '../../../../redux/slice/commentSlice';
-import PostPostPresenter from './PostPost.style';
+import LoadingPage from '../../../../pages/LoadingPage';
 import NotFound from '../../../../pages/NotFound';
+import PostPostPresenter from './PostPost.style';
 
-export default function PostPost({ postId }) {
+function PostPost() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
+  const { id: postId } = useParams();
 
-  const getDetail = async () => {
+  const fetchAPI = async () => {
+    let post;
     try {
       if (tkn) {
         const response = await getReadPostDetail(postId, {
@@ -23,21 +23,22 @@ export default function PostPost({ postId }) {
             Authorization: `Bearer ${tkn}`,
           },
         });
-        return response.data;
+        post = response.data;
       } else {
         const response = await getReadPostDetail(postId);
-        return response.data;
+        post = response.data;
       }
+      await getPostView(postId);
+
+      return post;
     } catch (error) {
       console.error(error);
+      alert('Token Error');
+      return error;
     }
   };
 
-  const { data: postDetail, isLoading, isError, status } = useQuery('postDetail', getDetail);
-
-  console.log(status);
-
-  console.log(isLoading, isError);
+  const { data: postDetail, isLoading, isError } = useQuery('postDetail', fetchAPI);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -47,8 +48,6 @@ export default function PostPost({ postId }) {
     return <NotFound />;
   }
 
-  console.log(postDetail);
-
   if (postDetail.meta.pinnedCmnt) {
     dispatch(pinnedCommentId(postDetail.meta.pinnedCmnt));
   }
@@ -57,3 +56,5 @@ export default function PostPost({ postId }) {
 
   return <PostPostPresenter postDetail={postDetail} postId={postId} date={date} />;
 }
+
+export default PostPost;

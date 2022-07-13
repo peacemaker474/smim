@@ -79,10 +79,6 @@ const commentSlice = createSlice({
       state.pinnedData = undefined;
       state.pinnedId = undefined;
     },
-
-    resetComment(state) {
-      Object.assign(state, initialState);
-    },
   },
 });
 
@@ -93,7 +89,6 @@ export const {
   pinnedCommentId,
   getUnpinnedCommentId,
   unpinnedCommentId,
-  resetComment,
 } = commentSlice.actions;
 
 export default commentSlice.reducer;
