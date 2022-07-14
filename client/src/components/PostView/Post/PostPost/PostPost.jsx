@@ -13,6 +13,8 @@ function PostPost() {
   const dispatch = useDispatch();
   const { id: postId } = useParams();
 
+  console.log('rendering PostPost');
+
   const fetchAPI = async () => {
     let post;
     try {

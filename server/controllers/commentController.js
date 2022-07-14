@@ -142,6 +142,7 @@ export const getCommentList = async (req, res) => {
                   userId: writer.userId,
                   _id: writer._id,
                   nickname: writer.nickname,
+                  imageUrl: writer.imageUrl,
                 },
                 like: el._doc.like_users.includes(userData._id),
               };
@@ -229,6 +230,7 @@ export const getCommentPinned = async (req, res) => {
         message: '존재하지 않거나 탈퇴한 사용자입니다.',
       });
     }
+
     post.meta.pinnedCmnt = commentId;
     await post.save();
 
@@ -382,6 +384,64 @@ export const getCommentUnlike = async (req, res) => {
       data: {
         likes: comment.like_count,
       },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
+
+// 댓글 가져오기
+export const getComment = async (req, res) => {
+  const { id: commentId } = req.params; // comment id
+  const userData = {
+    _id: undefined,
+    nickname: undefined,
+    userId: undefined,
+  };
+
+  if (Object.keys(req.body).includes('user')) {
+    // 로그인 했을 때
+    const {
+      user: { _id, nickname, userId },
+    } = req.body;
+    userData._id = _id;
+    userData.nickname = nickname;
+    userData.userId = userId;
+  }
+
+  if (!commentId) {
+    return res.status(400).send({
+      success: false,
+      message: 'comment Id가 undefined입니다.',
+    });
+  }
+
+  try {
+    const comment = await Comment.findOne({ _id: commentId, being: true });
+    console.log('hey');
+    const userExist = await User.exists({ _id: userData._id, being: true });
+
+    if (!comment) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않는 댓글입니다.',
+      });
+    }
+
+    if (!userExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      data: comment,
     });
   } catch (error) {
     console.log(error);
