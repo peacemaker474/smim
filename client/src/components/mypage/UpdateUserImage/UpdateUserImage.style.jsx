@@ -89,7 +89,7 @@ const ImageUpdateInput = styled.input`
   padding: 0;
 `;
 
-function UpdateUserImageStyle ({ encodeImg, onFileUpload, onFileRemove, onImageModalOpen, onImageUpdate}) {
+function UpdateUserImageStyle ({ encodeImg, imgUrl, onFileUpload, onFileRemove, onImageModalOpen, onImageUpdate}) {
   return (
     <UpdateImageModalWrapper>
       <UpdateImageModalOverlay onClick={onImageModalOpen}/>
@@ -101,6 +101,7 @@ function UpdateUserImageStyle ({ encodeImg, onFileUpload, onFileRemove, onImageM
         </ImageIntroduceBox>
         <UserImage
           encodeImg={encodeImg}
+          imgUrl={imgUrl}
           width={"60%"}
           height={"40%"}
         />

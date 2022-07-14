@@ -6,11 +6,12 @@ import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import MyInfoStyle from './MyInfo.style';
 
 function MyInfo () {
-  const { id, name: nickname, email } = useSelector(
+  const { id, name: nickname, email, imgUrl } = useSelector(
     state => ({
       id: state.user.id,
       name: state.user.name,
       email: state.user.email,
+      imgUrl: state.user.imgUrl,
     }),
     shallowEqual
   );
@@ -51,6 +52,7 @@ function MyInfo () {
     <MyInfoStyle
       register={register}
       errors={errors}
+      imgUrl={imgUrl}
       imageToggled={imageToggled}
       onSubmit={handleSubmit}
       onInfoUpdate={handleInfoUpdate}

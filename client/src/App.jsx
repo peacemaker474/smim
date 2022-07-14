@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { getCookie } from './utils/cookie';
@@ -13,7 +13,14 @@ import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
 
 function App() {
-  const { authenticated, expireTime } = useSelector((state) => state.authToken);
+  const { authenticated, expireTime } = useSelector(
+    state => ({
+      authenticated: state.authToken.authenticated,
+      expireTime: state.authToken.expireTime,
+    }),
+    shallowEqual
+  );
+  
   const { isLoginCheckToggled } = useSelector((state) => state.toggle);
   const { pathname } = useLocation();
   const dispatch = useDispatch();

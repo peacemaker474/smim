@@ -17,7 +17,7 @@ export const getMyWriteLists = async (userId) => {
 }
 
 export const getBookMarkLists = async (userId) => {
-  const data = await axios.get(`${http}/my/bookmarkLists?userId=${userId}`);
+  const { data } = await axios.get(`${http}/my/bookmarkLists?userId=${userId}`);
   return data;
 }
 
