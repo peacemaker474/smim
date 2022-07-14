@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserImage from '../../../common/UserImage/UserImage';
 
 export default function CommentInputPresenter({
   loginState,
@@ -12,7 +13,7 @@ export default function CommentInputPresenter({
 }) {
   return (
     <CmntForm onSubmit={handleSubmit(onSubmit)}>
-      <CmntImg src={`http://localhost:4000/${loginState.imgUrl}`}></CmntImg>
+      <UserImage width={'38px'} height={'38px'} />
       <CmntInput
         type='text'
         placeholder='답변을 기다립니다.'
@@ -46,15 +47,6 @@ const CmntForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const CmntImg = styled.img`
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #091d3e;
-  margin-right: 11px;
-  // background-image: url('${({ url }) => url}');
 `;
 
 const CmntInput = styled.input`

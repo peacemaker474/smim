@@ -1,34 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentWrapper from '../CommentWrapper/CommentWrapper';
-export default function CommentContainerPresenter({
-  uploadingComments,
-  sortedLoadedComments,
-  pinnedLoadedComment,
-  pinnedUploadingComment,
-  pinnedId,
-}) {
+// import CommentWrapper from '../CommentWrapper/CommentWrapper';
+import CommentCreated from '../CommentCreated/CommentCreated';
+import CommentUploaded from '../CommentUploaded/CommentUploaded';
+export default function CommentContainerPresenter() {
+  // uploadingComments,
+  // sortedLoadedComments,
+  // pinnedLoadedComment,
+  // pinnedUploadingComment,
+  // pinnedId,
   return (
     <>
-      {pinnedId ? (
+      {/* {pinnedId ? (
         <CommentPinnedDiv>
           {pinnedUploadingComment.length !== 0 &&
             pinnedUploadingComment.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
           {pinnedLoadedComment &&
             pinnedLoadedComment.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
         </CommentPinnedDiv>
-      ) : null}
+      ) : null} */}
       <CommentList>
-        {uploadingComments.length !== 0 &&
-          uploadingComments.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
-        {sortedLoadedComments &&
-          sortedLoadedComments.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
+        <CommentCreated />
+        <CommentUploaded />
       </CommentList>
     </>
   );
 }
 
-const CommentPinnedDiv = styled.div`
-  border: solid 1px red;
-`;
+// const CommentPinnedDiv = styled.div`
+//   border: solid 1px red;
+// `;
 const CommentList = styled.div``;

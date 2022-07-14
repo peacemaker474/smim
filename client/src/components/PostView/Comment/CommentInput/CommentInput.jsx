@@ -11,7 +11,7 @@ export default function CommentInput({
   parentId,
   groupId,
   isTargetVisible,
-  handleClickCancel,
+  handleClickCancel = undefined,
   handleTextChange,
   id,
 }) {
@@ -28,7 +28,7 @@ export default function CommentInput({
     e.preventDefault();
     if (tkn) {
       if (id) {
-        handleCommentEdit(data);
+        handleCommentEdit(e, data);
       } else {
         handleCommentCreate(data);
       }
@@ -77,7 +77,7 @@ export default function CommentInput({
     }
   };
 
-  const handleCommentEdit = async (data) => {
+  const handleCommentEdit = async (e, data) => {
     const response = await putCommentEdit(
       id,
       { post_id: postId, content: data.comment },
@@ -92,7 +92,7 @@ export default function CommentInput({
     if (response.data.success) {
       console.log(response.data.success);
       handleTextChange(data.comment);
-      handleClickCancel();
+      handleClickCancel(e);
     } else {
       console.log(response.data.success);
     }

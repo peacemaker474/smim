@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import PostCommentPresenter from './PostComment.style';
 import {
   deleteComment,
@@ -13,12 +14,15 @@ import {
   unpinnedCommentId,
 } from '../../../../redux/slice/commentSlice';
 
-export default function PostComment({ postId }) {
+function PostComment() {
   const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
   const commentId = useSelector((state) => state.comment).commentId;
   const modalState = useSelector((state) => state.comment).check;
+  const { id: postId } = useParams();
+
+  console.log('rendering PostComment');
 
   const handleCommentDelete = async () => {
     const response = await deleteComment(commentId, {
@@ -64,7 +68,6 @@ export default function PostComment({ postId }) {
   return (
     <>
       <PostCommentPresenter
-        postId={postId}
         actionFunc={
           modalState === 'delete'
             ? handleCommentDelete
@@ -81,7 +84,9 @@ export default function PostComment({ postId }) {
             ? '이 댓글을 고정하시겠습니까?이미 고정한 댓글이 있으면 이 댓글로 바뀝니다.'
             : '고정 댓글을 해제하시겠습니까? '
         }
+        postId={postId}
       />
     </>
   );
 }
+export default PostComment;

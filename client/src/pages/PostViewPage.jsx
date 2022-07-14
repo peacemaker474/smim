@@ -13,12 +13,14 @@ const PostViewContainer = styled.div`
   padding-top: 70px;
 `;
 
-export default function PostViewPage() {
+function PostViewPage() {
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const { id } = useParams();
   const navigate = useNavigate();
+
+  console.log('rendering PostViewPage');
 
   const requestDelete = async (id, tkn) => {
     const response = await deletePost(id, {
@@ -49,3 +51,5 @@ export default function PostViewPage() {
     </PostViewContainer>
   );
 }
+
+export default PostViewPage;

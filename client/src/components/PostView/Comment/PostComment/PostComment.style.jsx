@@ -6,10 +6,10 @@ import Modal from '../../../common/Modal/Modal';
 
 export default function PostCommentPresenter({
   commentModalVisible,
-  postId,
   actionFunc,
   cancelFunc,
   modalText,
+  postId,
 }) {
   return (
     <>
