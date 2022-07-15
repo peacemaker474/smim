@@ -8,11 +8,7 @@ import {
   getCommentUnpinned,
 } from '../../../../network/comment/http';
 import { commentModalToggle } from '../../../../redux/slice/toggleSlice';
-import {
-  deleteCommentId,
-  pinnedCommentId,
-  unpinnedCommentId,
-} from '../../../../redux/slice/commentSlice';
+import { deleteCommentId, unpinnedCommentId } from '../../../../redux/slice/commentSlice';
 import { getPinnedCommentData } from '../../../../redux/services/comment';
 
 function PostComment() {
@@ -22,8 +18,6 @@ function PostComment() {
   const commentId = useSelector((state) => state.comment).commentId;
   const modalState = useSelector((state) => state.comment).check;
   const { id: postId } = useParams();
-
-  console.log('rendering PostComment');
 
   const handleCommentDelete = async () => {
     const response = await deleteComment(commentId, {
@@ -46,7 +40,6 @@ function PostComment() {
       },
     });
     console.log(response.data);
-    dispatch(pinnedCommentId(commentId));
     dispatch(getPinnedCommentData({ pinnedId: commentId, tkn }));
     dispatch(commentModalToggle());
   };

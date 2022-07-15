@@ -14,8 +14,6 @@ function PostUploadPage() {
   const postId = pathArr[3];
   const [postData, setPostData] = useState();
 
-  console.log('rendering PostUploadPage');
-
   const loadPost = useCallback(async () => {
     try {
       const response = await getReadPostDetail(postId, {

@@ -11,13 +11,8 @@ export default function CommentWrapperPresenter({
 }) {
   return (
     <CommentInner>
-      <CommentItem
-        key={parentData._id}
-        cmntData={parentData}
-        groupId={parentData._id}
-      ></CommentItem>
-
-      {(childrenData.length !== 0 || uploadingReplies.length !== 0) && (
+      <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
+      {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
         <ReplyContainer>
           <ReplyShowingBtn onClick={handleTargetShow}>
             답글 {isTargetVisible ? '닫기' : '보기'}
@@ -26,7 +21,7 @@ export default function CommentWrapperPresenter({
             childrenData.map((el) => (
               <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
             ))}
-          {isTargetVisible &&
+          {uploadingReplies &&
             uploadingReplies.length !== 0 &&
             uploadingReplies.map((el) => (
               <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />

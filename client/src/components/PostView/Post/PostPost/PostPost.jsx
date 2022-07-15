@@ -3,18 +3,17 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostView, getReadPostDetail } from '../../../../network/post/http';
-import { pinnedCommentId } from '../../../../redux/slice/commentSlice';
 import LoadingPage from '../../../../pages/LoadingPage';
 import NotFound from '../../../../pages/NotFound';
 import PostPostPresenter from './PostPost.style';
 import { getPinnedCommentData } from '../../../../redux/services/comment';
+import { getPostData } from '../../../../redux/slice/postSlice';
 
 function PostPost() {
   const tkn = useSelector((state) => state.authToken).accessToken;
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const { id: postId } = useParams();
-
-  console.log('rendering PostPost');
+  const dispatch = useDispatch();
 
   const fetchAPI = async () => {
     let post;
@@ -31,7 +30,13 @@ function PostPost() {
         const response = await getReadPostDetail(postId);
         post = response.data;
       }
-      await getPostView(postId);
+      const view = await getPostView(postId);
+      console.log(view.data.data);
+      if (post.meta.pinnedCmnt) {
+        dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt, tkn }));
+      }
+
+      dispatch(getPostData(post._id, post.owner.nickname));
 
       return post;
     } catch (error) {
@@ -51,15 +56,9 @@ function PostPost() {
     return <NotFound />;
   }
 
-  if (postDetail.meta.pinnedCmnt) {
-    dispatch(pinnedCommentId(postDetail.meta.pinnedCmnt));
-    console.log(tkn);
-    dispatch(getPinnedCommentData({ pinnedId: postDetail.meta.pinnedCmnt, tkn }));
-  }
-
   const date = new Date(postDetail.createAt);
 
-  return <PostPostPresenter postDetail={postDetail} postId={postId} date={date} />;
+  return <PostPostPresenter postDetail={postDetail} postId={postId} date={date} user={user} />;
 }
 
 export default PostPost;
