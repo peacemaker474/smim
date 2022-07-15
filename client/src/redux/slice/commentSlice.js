@@ -87,6 +87,7 @@ const commentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getPinnedCommentData.fulfilled, (state, action) => {
+        state.pinnedId = action.payload[0]._id;
         state.pinnedData = action.payload;
       })
       .addCase(getPinnedCommentData.rejected, (state, action) => {
@@ -99,7 +100,6 @@ export const {
   getDeleteCommentId,
   deleteCommentId,
   getPinnedCommentId,
-  pinnedCommentId,
   getUnpinnedCommentId,
   unpinnedCommentId,
 } = commentSlice.actions;

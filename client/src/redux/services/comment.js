@@ -9,7 +9,6 @@ export const getPinnedCommentData = createAsyncThunk(
     let commentData;
     try {
       if (tkn) {
-        console.log(tkn);
         const { data } = await axios.get(`${http}/comment/${pinnedId}/detail`, {
           headers: {
             'Content-Type': 'application/json',

@@ -23,9 +23,13 @@ const postSlice = createSlice({
         };
       },
     },
+    resetPost(state) {
+      state.postId = undefined;
+      state.postWriter = undefined;
+    },
   },
 });
 
-export const { getPostData } = postSlice.actions;
+export const { getPostData, resetPost } = postSlice.actions;
 
 export default postSlice.reducer;
