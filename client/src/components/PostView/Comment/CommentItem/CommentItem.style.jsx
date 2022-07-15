@@ -29,7 +29,7 @@ export default function CommentItemPresenter({
         />
       ) : (
         <CommentItemInner>
-          <UserImage width={'38px'} height={'38px'} img={cmntData.writer.imageUrl} />
+          <UserImage width={'38px'} height={'38px'} imgUrl={cmntData.writer.imageUrl} />
           <CommentItemContent>
             {deleteState || !cmntData.being ? (
               <CommentText>

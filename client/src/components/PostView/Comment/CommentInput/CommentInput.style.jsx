@@ -13,7 +13,7 @@ export default function CommentInputPresenter({
 }) {
   return (
     <CmntForm onSubmit={handleSubmit(onSubmit)}>
-      <UserImage width={'38px'} height={'38px'} />
+      <UserImage width={'38px'} height={'38px'} imgUrl={loginState.imgUrl} />
       <CmntInput
         type='text'
         placeholder='답변을 기다립니다.'
