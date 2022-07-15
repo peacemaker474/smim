@@ -3,15 +3,13 @@ import styled from 'styled-components';
 import CommentWrapper from '../CommentWrapper/CommentWrapper';
 
 export default function CommentPinnedPresenter({ pinnedComment, pinnedId }) {
-  console.log(pinnedComment);
   return (
     <>
       {pinnedId ? (
         <CommentPinnedDiv>
-          {pinnedComment &&
-            pinnedComment.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
+          <CommentWrapper cmntData={pinnedComment} />
         </CommentPinnedDiv>
-      ) : null}{' '}
+      ) : null}
     </>
   );
 }
