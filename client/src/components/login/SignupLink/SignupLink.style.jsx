@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const SignBox = styled.div`
+  padding-top: 5px;
 `;
 
 const SignText = styled.span`
-  font-size: 13px;
+  font-size: 0.8em;
   color: ${({theme}) => theme.color.gray};
 `;
 
 const SignLink = styled(Link)`
-  font-size: 15px;
+  font-size: 0.9em;
   color: ${({theme}) => theme.color.black};
   font-weight: bold;
 `;

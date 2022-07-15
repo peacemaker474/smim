@@ -31,15 +31,15 @@ export const ColorBtn = styled.button`
 `;
 
 export const LoginBtn = React.memo(styled(ColorBtn)`
-  width: 120px;
-  height: 30px;
+  width: 95%;
+  height: 10%;
   background-color: #FFC306;
   font-weight: bold;
-  align-self: flex-end;
+  align-self: center;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-  margin: 0 20px 10px 0;
+  margin: 15px 0;
+  font-size: 1em;
 `);
 
 export const UpdateBtn = React.memo(styled(ColorBtn)`

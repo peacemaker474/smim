@@ -11,10 +11,8 @@ export const ValidCheck = React.memo(styled.span`
 `);
 
 export const LoginValid = styled(ValidCheck)`
-  opacity: ${({validLogin}) => validLogin !== undefined ? "1" : "0"};
   align-self: flex-end;
-  padding-right: 20px;
-  margin-top: 5px;
+  padding: 0.3em 0.5em 0 0;
 `;
 
 export const MyPageValid = styled(ValidCheck)`

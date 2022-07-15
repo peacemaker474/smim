@@ -1,9 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import { LoginValid } from '../../styles/common/validtext';
 import { LoginInput, LoginLabel } from '../../styles/login/LoginInput';
 
-function LoginId ({ register }) {
+const InputWrapper = styled.div`
+  width: 95%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+`;
+
+function LoginId ({ register, errors }) {
   return (
-    <>
+    <InputWrapper>
       <LoginLabel> 아이디 </LoginLabel>
       <LoginInput 
         {
@@ -19,8 +29,9 @@ function LoginId ({ register }) {
         type="text"
         placeholder='아이디를 입력하세요.'
       />
-    </>
+      {errors?.userId && <LoginValid> {errors.userId?.message} </LoginValid>}
+    </InputWrapper>
   )
 }
 
-export default React.memo(LoginId);
+export default LoginId;

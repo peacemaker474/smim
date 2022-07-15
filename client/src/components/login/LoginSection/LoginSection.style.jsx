@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import EmailForm from '../EmailForm/EmailForm';
-import SocialForm from '../SocialForm/SocialForm';
 import LoginHeader from '../LoginHeader/LoginHeader';
 
 const LoginContainer = styled.div`
@@ -23,8 +22,8 @@ const LoginOverlay = styled.div`
 `;
 
 const LoginWrapper = styled.section`
-  width: 40%;
-  height: 80%;
+  width: 25%;
+  height: 50%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -48,7 +47,6 @@ function LoginSectionStyle ({ onLoginClose }) {
         <LoginHeader onLoginClose={onLoginClose}/>
         <LoginBox>
           <EmailForm />
-          <SocialForm />
         </LoginBox>
       </LoginWrapper>
     </LoginContainer>

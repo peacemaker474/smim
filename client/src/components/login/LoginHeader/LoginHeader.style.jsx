@@ -14,6 +14,7 @@ const Header = styled.div`
 const LoginTitle = styled.h2`
   margin-left: 15px;
   color: ${({theme}) => theme.color.yellow};
+  font-size: 1em;
 `;
 
 const CancelBtn = styled.button`
@@ -21,7 +22,7 @@ const CancelBtn = styled.button`
   width: 50px;
   height: 50px;
   text-align: center;
-  font-size: 20px;
+  font-size: 0.95em;
   cursor: pointer;
 `;
 
