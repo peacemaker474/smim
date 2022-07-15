@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const MyImg = styled.img`
@@ -10,8 +9,7 @@ const MyImg = styled.img`
   border: 1px solid black; // 추후에 지울것
 `;
 
-function UserImage ({width, height, encodeImg}) {
-  const { imgUrl } = useSelector((state) => state.user);
+function UserImage ({width, height, encodeImg, imgUrl}) {
   const encoded = encodeURI(imgUrl);
   const decoded = decodeURI(encoded);
   

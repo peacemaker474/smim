@@ -49,7 +49,7 @@ const UserInfoWrapper = styled.div`
   gap: 25px;
 `;
 
-function MyInfoStyle ({ register, imageToggled, errors, onSubmit, onInfoUpdate, onImageModalOpen}) {
+function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfoUpdate, onImageModalOpen}) {
   return (
     <>
       <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={onSubmit(onInfoUpdate)}>
@@ -60,6 +60,7 @@ function MyInfoStyle ({ register, imageToggled, errors, onSubmit, onInfoUpdate, 
             <UserImage
               width={"10%"}
               height={"90%"}
+              imgUrl={imgUrl}
             />
           </UserImageWrapper>
           <IdInput register={register} errors={errors} />
@@ -68,7 +69,7 @@ function MyInfoStyle ({ register, imageToggled, errors, onSubmit, onInfoUpdate, 
           <UpdateBtn> 수정 </UpdateBtn>
         </UserInfoWrapper>
       </MyInfoForm>
-      {imageToggled && <UpdateUserImage onImageModalOpen={onImageModalOpen} /> }
+      {imageToggled && <UpdateUserImage onImageModalOpen={onImageModalOpen} imgUrl={imgUrl}/> }
     </>
   );
 }
