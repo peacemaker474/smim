@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getPinnedCommentData } from '../services/comment';
 
 const initialState = {
   commentId: undefined,
   deletedIdArray: [],
   pinnedId: undefined,
+  pinnedData: undefined,
   check: undefined,
+  result: undefined,
 };
 
 const commentSlice = createSlice({
@@ -49,6 +52,7 @@ const commentSlice = createSlice({
         };
       },
     },
+
     pinnedCommentId: {
       reducer(state, action) {
         state.pinnedId = action.payload.commentId;
@@ -79,6 +83,15 @@ const commentSlice = createSlice({
       state.pinnedData = undefined;
       state.pinnedId = undefined;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPinnedCommentData.fulfilled, (state, action) => {
+        state.pinnedData = action.payload;
+      })
+      .addCase(getPinnedCommentData.rejected, (state, action) => {
+        state.result = action.payload;
+      });
   },
 });
 

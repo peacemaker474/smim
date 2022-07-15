@@ -42,7 +42,5 @@ export default function CommentUploaded() {
         return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
       });
 
-  console.log(sortedLoadedComments);
-
   return <CommentUploadedPresenter sortedLoadedComments={sortedLoadedComments} />;
 }
