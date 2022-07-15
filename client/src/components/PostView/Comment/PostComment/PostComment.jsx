@@ -13,6 +13,7 @@ import {
   pinnedCommentId,
   unpinnedCommentId,
 } from '../../../../redux/slice/commentSlice';
+import { getPinnedCommentData } from '../../../../redux/services/comment';
 
 function PostComment() {
   const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
@@ -46,6 +47,7 @@ function PostComment() {
     });
     console.log(response.data);
     dispatch(pinnedCommentId(commentId));
+    dispatch(getPinnedCommentData({ pinnedId: commentId, tkn }));
     dispatch(commentModalToggle());
   };
 

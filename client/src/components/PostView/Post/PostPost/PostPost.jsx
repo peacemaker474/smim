@@ -7,6 +7,7 @@ import { pinnedCommentId } from '../../../../redux/slice/commentSlice';
 import LoadingPage from '../../../../pages/LoadingPage';
 import NotFound from '../../../../pages/NotFound';
 import PostPostPresenter from './PostPost.style';
+import { getPinnedCommentData } from '../../../../redux/services/comment';
 
 function PostPost() {
   const tkn = useSelector((state) => state.authToken).accessToken;
@@ -52,6 +53,8 @@ function PostPost() {
 
   if (postDetail.meta.pinnedCmnt) {
     dispatch(pinnedCommentId(postDetail.meta.pinnedCmnt));
+    console.log(tkn);
+    dispatch(getPinnedCommentData({ pinnedId: postDetail.meta.pinnedCmnt, tkn }));
   }
 
   const date = new Date(postDetail.createAt);

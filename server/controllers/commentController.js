@@ -154,6 +154,7 @@ export const getCommentList = async (req, res) => {
                   userId: writer.userId,
                   _id: writer._id,
                   nickname: writer.nickname,
+                  imageUrl: writer.imageUrl,
                 },
               };
             }
@@ -171,6 +172,7 @@ export const getCommentList = async (req, res) => {
       }
 
       await repeat(commentList, 0);
+      // console.log(DATA);
 
       return res.status(200).send({
         success: true,
@@ -422,8 +424,16 @@ export const getComment = async (req, res) => {
 
   try {
     const comment = await Comment.findOne({ _id: commentId, being: true });
-    console.log('hey');
-    const userExist = await User.exists({ _id: userData._id, being: true });
+
+    if (userData._id) {
+      const user = await User.findOne({ _id: userData._id, being: true });
+      if (!user) {
+        return res.status(400).send({
+          success: false,
+          message: '존재하지 않거나 탈퇴한 사용자입니다.',
+        });
+      }
+    }
 
     if (!comment) {
       return res.status(400).send({
@@ -432,16 +442,60 @@ export const getComment = async (req, res) => {
       });
     }
 
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+    const DATA = [];
+    const parentWriter = await User.findOne({ _id: comment.writer });
+    DATA.push({
+      ...comment._doc,
+      writer: {
+        userId: parentWriter.userId,
+        _id: parentWriter._id,
+        nickname: parentWriter.nickname,
+        imageUrl: parentWriter.imageUrl,
+      },
+    });
+
+    async function repeat(children, check) {
+      if (children.length === 0) {
+        return;
+      }
+      children.forEach(async (el) => {
+        const child = await Comment.findById(el);
+        const writer = await User.findOne({ _id: child.writer });
+        console.log(writer);
+        if (userData._id) {
+          DATA.push({
+            ...el._doc,
+
+            writer: {
+              userId: writer.userId,
+              _id: writer._id,
+              nickname: writer.nickname,
+              imageUrl: writer.imageUrl,
+            },
+            like: el._doc.like_users.includes(userData._id),
+          });
+        } else {
+          DATA.push({
+            ...el._doc,
+            writer: {
+              userId: writer.userId,
+              _id: writer._id,
+              nickname: writer.nickname,
+              imageUrl: writer.imageUrl,
+            },
+          });
+        }
+        await repeat(el.children);
       });
     }
 
+    await repeat(comment.children);
+
+    console.log(DATA);
+
     return res.status(200).send({
       success: true,
-      data: comment,
+      data: DATA,
     });
   } catch (error) {
     console.log(error);

@@ -10,6 +10,14 @@ export const getCommentListRead = (id, header = undefined) => {
   }
 };
 
+export const getCommentRead = (id, header = undefined) => {
+  if (header) {
+    return axios.get(`${http}/comment/${id}/detail`, header);
+  } else {
+    return axios.get(`${http}/comment/${id}`);
+  }
+};
+
 export const postCommentCreate = (data, header) => {
   return axios.post(`${http}/post/comment`, data, header);
 };

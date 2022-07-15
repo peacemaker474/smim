@@ -5,9 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import userSlice from './slice/userSlice';
 import toggleSlice from './slice/toggleSlice';
 import commentCreateSlice from './slice/commentCreateSlice';
-import commentSlice from './slice/commentSlice';
 import postSlice from './slice/postSlice';
 import { tokenSlice } from './auth';
+import commentSlice from './slice/commentSlice';
 
 const persistConfig = {
   key: 'root',
