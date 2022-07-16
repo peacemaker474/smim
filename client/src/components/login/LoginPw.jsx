@@ -1,9 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import { LoginValid } from '../../styles/common/validtext';
 import { LoginInput, LoginLabel } from '../../styles/login/LoginInput';
 
-function LoginPw ({ register }) {
+const InputWrapper = styled.div`
+  width: 95%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`;
+
+function LoginPw ({ register, errors, message }) {
   return (
-    <>
+    <InputWrapper>
       <LoginLabel> 비밀번호 </LoginLabel>
       <LoginInput 
         {
@@ -19,8 +29,10 @@ function LoginPw ({ register }) {
         placeholder='비밀번호를 입력하세요.'
         autoComplete='off'
       />
-    </>
+      {errors?.password && <LoginValid> {errors.password?.message} </LoginValid>}
+      {Object.keys(errors).length === 0 && message && <LoginValid> {message} </LoginValid>}
+    </InputWrapper>
   )
 }
 
-export default React.memo(LoginPw);
+export default LoginPw;
