@@ -14,7 +14,7 @@ function NavBar() {
   const { social } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { pathname } = useLocation(null);
+  const { pathname, search } = useLocation(null);
 
   const handleLoginClick = useCallback(() => {
     dispatch(loginToggle());
@@ -37,7 +37,7 @@ function NavBar() {
       loginToggled={loginToggled}
       authenticated={authenticated}
       social={social}
-      pathname={pathname}
+      pathname={search ? `${pathname}${search}` : `${pathname}`}
       onLoginClick={handleLoginClick}
       onLogoutClick={handleLogoutClick}
       onToggleClick={handleToggleClick}

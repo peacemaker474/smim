@@ -16,8 +16,8 @@ const NavContainer = styled.nav`
   z-index: 2;
 `;
 
-const NavBox = styled.div`
-  width: 95%;
+const NavWrapper = styled.div`
+  width: 90%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -25,12 +25,11 @@ const NavBox = styled.div`
   align-items: center;
 `;
 
-const NavLogo = styled.div`
-  margin-left: 10px;
+const NavLogoBox = styled.div`
 `;
 
-const NavTitle = styled(Link)`
-  font-size: 28px;
+const NavMainTitle = styled(Link)`
+  font-size: 1.7rem;
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
   cursor: pointer;
@@ -40,11 +39,11 @@ const NavTitle = styled(Link)`
 `;
 
 const NavLists = styled.ul`
-  width: 70%;
+  width: ${({ login }) => login ? "70%" : "63%"};
   height: 100%;
   display: grid;
-  grid-template-columns: 110px 110px 110px 110px 110px 110px 150px;
-  grid-gap: 1.5%;
+  grid-template-columns: repeat(7, 120px);
+  grid-gap: 0.5%;
   align-items: center;
   @media screen and (max-width: 1065px) {
     grid-template-columns: 80px 80px 80px 80px 80px 80px 150px;
@@ -58,7 +57,7 @@ const NavList = styled.li`
   padding-left: 5px;
 `;
 
-const ListLink = styled(Link)`
+const GenerationLink = styled(Link)`
   font-size: 17px;
   text-decoration: none;
   color: ${({ theme }) => theme.color.gray};
@@ -71,7 +70,7 @@ const ListLink = styled(Link)`
     ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
 `;
 
-const SignLink = styled.span`
+const LoginLink = styled.span`
   font-size: 18px;
   color: ${({ theme }) => theme.color.black};
   font-weight: bold;
@@ -82,58 +81,53 @@ function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, soci
   return (
     <>
       <NavContainer>
-        <NavBox>
-          <NavLogo>
-            <NavTitle to="/"> 스며들다 </NavTitle>
-          </NavLogo>
-          <NavLists>
+        <NavWrapper>
+          <NavLogoBox>
+            <NavMainTitle to="/"> 스며들다 </NavMainTitle>
+          </NavLogoBox>
+          <NavLists login={authenticated}>
             <NavList>
-              <ListLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
+              <GenerationLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
                 10대에게
-              </ListLink>
+              </GenerationLink>
             </NavList>
             <NavList>
-              <ListLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
+              <GenerationLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
                 20대에게
-              </ListLink>
+              </GenerationLink>
             </NavList>
             <NavList>
-              <ListLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
+              <GenerationLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
                 30대에게
-              </ListLink>
+              </GenerationLink>
             </NavList>
             <NavList>
-              <ListLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
+              <GenerationLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
                 40대에게
-              </ListLink>
+              </GenerationLink>
             </NavList>
             <NavList>
-              <ListLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
+              <GenerationLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
                 50대에게
-              </ListLink>
-            </NavList>
-            <NavList>
-              <ListLink to='/generation?age=60' current={pathname === '/generation?age=60'}>
-                60대에게
-              </ListLink>
+              </GenerationLink>
             </NavList>
             {!authenticated ? (
               <NavList>
-                <SignLink onClick={onLoginClick}> 로그인/회원가입 </SignLink>
+                <LoginLink onClick={onLoginClick}> 로그인/회원가입 </LoginLink>
               </NavList>
             ) : (
               <>
                 {!social ? (
                   <NavList>
-                    <ListLink to='/my'> 마이페이지 </ListLink>
+                    <GenerationLink to='/my' current={pathname === "/my"}> 마이페이지 </GenerationLink>
                   </NavList>
                 ) : (
                   <NavList>
-                    <ListLink to='/my/writeLists'> 마이페이지 </ListLink>
+                    <GenerationLink to='/my/writeLists'> 마이페이지 </GenerationLink>
                   </NavList>
                 )}
                 <NavList>
-                  <SignLink onClick={onLogoutClick}> 로그아웃 </SignLink>
+                  <LoginLink onClick={onLogoutClick}> 로그아웃 </LoginLink>
                 </NavList>
               </>
             )}
@@ -142,7 +136,7 @@ function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, soci
             menuToggled={menuToggled}
             onToggleClick={onToggleClick}
           />
-        </NavBox>
+        </NavWrapper>
       </NavContainer>
       {loginToggled && <LoginSection />}
       {menuToggled && <MobileNavBar />}
