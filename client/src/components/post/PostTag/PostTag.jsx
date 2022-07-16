@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PostTagPresenter from './PostTag.style';
 
 function PostTag({ register, setValue, watch, errors }) {
   const [text, setText] = useState('');
-  const preValue = watch('tagArray');
+  const tagArray = watch('tagArray');
+
+  const preValue = useMemo(() => {
+    console.log('tag 렌더링');
+    return tagArray;
+  }, [tagArray]);
 
   useEffect(() => {
     register('tagArray', { required: true });
