@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import CommentInput from '../CommentInput/CommentInput';
-import CommentContainer from '../CommentContainer/CommentContainer';
 import Modal from '../../../common/Modal/Modal';
+import CommentCreated from '../CommentCreated/CommentCreated';
+import CommentPinned from '../CommentPinned/CommentPinned';
+import CommentUploaded from '../CommentUploaded/CommentUploaded';
 
 export default function PostCommentPresenter({
   commentModalVisible,
@@ -21,7 +23,11 @@ export default function PostCommentPresenter({
       <CommentSection>
         <CommentH2>답변하기</CommentH2>
         <CommentInput postId={postId} parentId={null} />
-        <CommentContainer postId={postId} />
+        <CommentContainer>
+          <CommentPinned />
+          <CommentCreated />
+          <CommentUploaded />
+        </CommentContainer>
       </CommentSection>
     </>
   );
@@ -47,3 +53,5 @@ const CommentH2 = styled.h2`
   //   margin-top: 9px;
   // }
 `;
+
+const CommentContainer = styled.div``;

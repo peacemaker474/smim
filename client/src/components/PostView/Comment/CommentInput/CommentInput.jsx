@@ -61,6 +61,7 @@ export default function CommentInput({
           {
             userId: loginState.id,
             nickname: loginState.name,
+            imageUrl: loginState.imgUrl,
           },
           date,
           parentId,

@@ -4,8 +4,13 @@ import { ColorBtn } from '../../../styles/common/buttons';
 
 function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
   return (
-    <ModalContainer onClick={handleModalCancle}>
-      <ModalBox>
+    <ModalContainer>
+      <ModalOverlay onClick={handleModalCancle} />
+      <ModalBox
+        onClick={(e) => {
+          console.log(e);
+        }}
+      >
         <ModalText>{children}</ModalText>
         <BtnBox>
           <Btn onClick={handleModalCancle}>취소</Btn>
@@ -17,8 +22,10 @@ function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
 }
 export default ModalPresenter;
 
-const ModalContainer = styled.div`
-  z-index: 4;
+const ModalContainer = styled.div``;
+
+const ModalOverlay = styled.div`
+  z-index: 2;
   background: rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 0;
@@ -29,6 +36,7 @@ const ModalContainer = styled.div`
   height: 100%;
 `;
 const ModalBox = styled.div`
+  z-index: 2;
   width: 410px;
   height: 197px;
   position: absolute;

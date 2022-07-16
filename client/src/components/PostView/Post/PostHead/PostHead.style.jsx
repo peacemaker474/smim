@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserImage from '../../../common/UserImage/UserImage';
 import PostDropdownBtn from '../PostDropdownBtn/PostDropdownBtn';
 export default function PostHeadPresenter({ author, userId, postDate }) {
   return (
     <PostHeadDiv>
-      <PostAuthor>{author}</PostAuthor>
+      <PostAuthor>
+        <UserImage width={'42px'} height={'42px'} imgUrl={author.imageUrl} />
+        <UserName>{author.userId}</UserName>
+      </PostAuthor>
       <PostDate>{postDate}</PostDate>
-      {author === userId && <PostDropdownBtn />}
+      {author.userId === userId && <PostDropdownBtn />}
     </PostHeadDiv>
   );
 }
@@ -26,16 +30,12 @@ const PostAuthor = styled.h4`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.color.black};
-  &::before {
-    display: block;
-    content: '';
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: #25a0fc;
-    margin-right: 14px;
-  }
 `;
+
+const UserName = styled.span`
+  margin: 0 10px;
+`;
+
 const PostDate = styled.span`
   font-size: 11px;
   color: ${({ theme }) => theme.color.gray};

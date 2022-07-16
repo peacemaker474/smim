@@ -444,54 +444,67 @@ export const getComment = async (req, res) => {
 
     const DATA = [];
     const parentWriter = await User.findOne({ _id: comment.writer });
-    DATA.push({
-      ...comment._doc,
-      writer: {
-        userId: parentWriter.userId,
-        _id: parentWriter._id,
-        nickname: parentWriter.nickname,
-        imageUrl: parentWriter.imageUrl,
-      },
-    });
-
-    async function repeat(children, check) {
-      if (children.length === 0) {
-        return;
-      }
-      children.forEach(async (el) => {
-        const child = await Comment.findById(el);
-        const writer = await User.findOne({ _id: child.writer });
-        console.log(writer);
-        if (userData._id) {
-          DATA.push({
-            ...el._doc,
-
-            writer: {
-              userId: writer.userId,
-              _id: writer._id,
-              nickname: writer.nickname,
-              imageUrl: writer.imageUrl,
-            },
-            like: el._doc.like_users.includes(userData._id),
-          });
-        } else {
-          DATA.push({
-            ...el._doc,
-            writer: {
-              userId: writer.userId,
-              _id: writer._id,
-              nickname: writer.nickname,
-              imageUrl: writer.imageUrl,
-            },
-          });
-        }
-        await repeat(el.children);
+    if (userData._id) {
+      DATA.push({
+        ...comment._doc,
+        writer: {
+          userId: parentWriter.userId,
+          _id: parentWriter._id,
+          nickname: parentWriter.nickname,
+          imageUrl: parentWriter.imageUrl,
+        },
+        like: comment.like_users.includes(userData._id),
+      });
+    } else {
+      DATA.push({
+        ...comment._doc,
+        writer: {
+          userId: parentWriter.userId,
+          _id: parentWriter._id,
+          nickname: parentWriter.nickname,
+          imageUrl: parentWriter.imageUrl,
+        },
       });
     }
 
-    await repeat(comment.children);
+    async function repeat(children) {
+      if (children.length === 0) {
+        return;
+      }
 
-    console.log(DATA);
+      await Promise.all(
+        children.map(async (el) => {
+          const child = await Comment.findById(el);
+
+          const writer = await User.findOne({ _id: child.writer });
+          if (userData._id) {
+            DATA.push({
+              ...child._doc,
+              writer: {
+                userId: writer.userId,
+                _id: writer._id,
+                nickname: writer.nickname,
+                imageUrl: writer.imageUrl,
+              },
+              like: child.like_users.includes(userData._id),
+            });
+          } else {
+            DATA.push({
+              ...el._doc,
+              writer: {
+                userId: writer.userId,
+                _id: writer._id,
+                nickname: writer.nickname,
+                imageUrl: writer.imageUrl,
+              },
+            });
+          }
+          await repeat(child.children);
+        })
+      );
+    }
+
+    await repeat(comment.children);
 
     return res.status(200).send({
       success: true,

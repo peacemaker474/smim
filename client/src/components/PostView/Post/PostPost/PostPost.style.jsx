@@ -5,12 +5,12 @@ import PostBookmark from '../PostBookmark/PostBookmark';
 import { Tag } from '../../../../styles/common/tag';
 import PostHead from '../PostHead/PostHead';
 
-export default function PostPostPresenter({ postDetail, postId, date }) {
+export default function PostPostPresenter({ postDetail, postId, date, user }) {
   return (
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead author={postDetail.owner.nickname} date={date} postId={postId} />
+      <PostHead author={postDetail.owner} date={date} postId={postId} />
       <PostBody>
         <PostContent>
           <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
@@ -24,7 +24,9 @@ export default function PostPostPresenter({ postDetail, postId, date }) {
         </PostTagBox>
         <PostLikeBox>
           <PostLike quantity={postDetail.meta.likes} like={postDetail.like} />
-          <PostBookmark bookmark={postDetail.bookmark} />
+          {postDetail.owner.userId !== user.id ? (
+            <PostBookmark bookmark={postDetail.bookmark} />
+          ) : null}
         </PostLikeBox>
       </PostBody>
     </PostBox>

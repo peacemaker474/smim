@@ -5,7 +5,7 @@ import CommentWrapperPresenter from './CommentWrapper.style';
 
 export default function CommentWrapper({ cmntData }) {
   const [isTargetVisible, handleTargetShow] = useVisible(false);
-  const createdComments = useSelector((state) => state.commentCreate);
+  const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
   const parentData = Array.isArray(cmntData)
     ? cmntData && cmntData.find((el) => el.parent_id == null)

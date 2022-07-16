@@ -4,7 +4,7 @@ import CommentCreatedPresenter from './CommentCreated.style';
 
 export default function CommentCreated() {
   const pinnedId = useSelector((state) => state.comment).pinnedId;
-  const createdComments = useSelector((state) => state.commentCreate);
+  const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
   const uploadingComments = createdComments
     .filter((el) => el.parent_id == null)

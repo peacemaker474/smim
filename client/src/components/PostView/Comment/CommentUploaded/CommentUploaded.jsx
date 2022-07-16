@@ -11,8 +11,6 @@ export default function CommentUploaded() {
   const pinnedId = useSelector((state) => state.comment).pinnedId;
   const { id: postId } = useParams();
 
-  console.log('rendering uploaded');
-
   const loadComments = async () => {
     let response;
     if (tkn) {

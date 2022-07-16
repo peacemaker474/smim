@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = {
+  commentArray: [],
+};
 
 const commentCreateSlice = createSlice({
   name: 'commentCreate',
@@ -8,7 +10,7 @@ const commentCreateSlice = createSlice({
   reducers: {
     createComment: {
       reducer(state, action) {
-        state.push({
+        state.commentArray.push({
           _id: action.payload._id,
           writer: action.payload.writer,
           createAt: action.payload.createAt,
@@ -37,9 +39,12 @@ const commentCreateSlice = createSlice({
         };
       },
     },
+    resetComment(state) {
+      state.commentArray = [];
+    },
   },
 });
 
-export const { createComment } = commentCreateSlice.actions;
+export const { createComment, resetComment } = commentCreateSlice.actions;
 
 export default commentCreateSlice.reducer;

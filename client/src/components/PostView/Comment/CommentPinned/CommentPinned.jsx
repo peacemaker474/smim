@@ -11,7 +11,5 @@ export default function CommentPinned() {
     shallowEqual
   );
 
-  console.log(pinnedId, pinnedData);
-
   return <CommentPinnedPresenter pinnedComment={pinnedData} pinnedId={pinnedId} />;
 }
