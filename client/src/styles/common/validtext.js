@@ -11,8 +11,10 @@ export const ValidCheck = React.memo(styled.span`
 `);
 
 export const LoginValid = styled(ValidCheck)`
+  font-size: 0.65em;
   align-self: flex-end;
-  padding: 0.3em 0.5em 0 0;
+  margin: 0;
+  padding: 0.9em 0.5em 0 0;
 `;
 
 export const MyPageValid = styled(ValidCheck)`
