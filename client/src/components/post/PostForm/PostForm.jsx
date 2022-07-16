@@ -14,7 +14,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: { tagArray: [] } });
+  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [] } });
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
@@ -101,9 +101,6 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         errors={errors}
         modalVisible={modalVisible}
         pathValue={pathValue}
-        modalOpen={() => {
-          dispatch(modalToggle());
-        }}
       />
     </>
   );

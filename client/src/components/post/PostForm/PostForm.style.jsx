@@ -5,30 +5,15 @@ import PostTag from '../PostTag/PostTag';
 import PostEditor from '../PostEditor/PostEditor';
 import PostBottomBtn from '../../../components/post/PostBottomBtn/PostBottomBtn';
 
-function PostFormPresenter({
-  register,
-  handleSubmit,
-  errors,
-  setValue,
-  watch,
-  pathValue,
-  modalOpen,
-}) {
+function PostFormPresenter({ register, handleSubmit, errors, setValue, watch, pathValue }) {
   return (
-    <form
-      id='upload'
-      onSubmit={handleSubmit((data, e) => {
-        e.preventDefault();
-        console.log(data);
-        modalOpen();
-      })}
-    >
+    <div id='upload'>
       <PostTitle register={register} errors={errors} />
       <PostTargetAge register={register} errors={errors} />
       <PostTag register={register} errors={errors} setValue={setValue} watch={watch} />
       <PostEditor register={register} errors={errors} setValue={setValue} watch={watch} />
-      <PostBottomBtn formState={pathValue} errors={errors} />
-    </form>
+      <PostBottomBtn formState={pathValue} errors={errors} handleSubmit={handleSubmit} />
+    </div>
   );
 }
 export default PostFormPresenter;
