@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Toggle from './Toggle';
 import MobileNavBar from './MobileNavBar';
 import LoginSection from '../../login/LoginSection/LoginSection';
+import UserImage from '../UserImage/UserImage';
+import DownArrow from '../../../asset/icon/icon-down.svg';
 
 const NavContainer = styled.nav`
   width: 100vw;
@@ -39,12 +41,12 @@ const NavMainTitle = styled(Link)`
 `;
 
 const NavLists = styled.ul`
-  width: ${({ login }) => login ? "70%" : "63%"};
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 120px);
-  grid-gap: 0.5%;
+  grid-template-columns: ${({ login }) => login ? "5em 5em 5em 5em 5em 5em;" : "5em 5em 5em 5em 5em 5em;"}
+  grid-gap: 3.5em;
   align-items: center;
+  position: relative;
   @media screen and (max-width: 1065px) {
     grid-template-columns: 80px 80px 80px 80px 80px 80px 150px;
   }
@@ -55,10 +57,16 @@ const NavLists = styled.ul`
 
 const NavList = styled.li`
   padding-left: 5px;
+
+  &:nth-child(6) {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const GenerationLink = styled(Link)`
-  font-size: 17px;
+  font-size: 1.1em;
   text-decoration: none;
   color: ${({ theme }) => theme.color.gray};
   &:hover {
@@ -77,7 +85,44 @@ const LoginLink = styled.span`
   cursor: pointer;
 `;
 
-function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, social, onLoginClick, onLogoutClick, onToggleClick}) {
+const MyPageModalWrraper = styled.div`
+  width: 100px;
+  height: 70px;
+  background-color: white;
+  position: absolute;
+  top: 90%;
+  left: 86%;
+  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
+`;
+
+const MyPageModalLists = styled.ul`
+  width: 100%;
+  height: 100%;
+`;
+
+const MyPageModalList = styled.li`
+  padding: 0.6em 0;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+`;
+
+const MyPageLink = styled(Link)`
+`;
+
+const LogOutButton = styled.p`
+  cursor: pointer;
+`;
+
+const DownButton = styled.div`
+  width: 25px;
+  height: 25px;
+  background-image: url(${DownArrow});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
+function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
   return (
     <>
       <NavContainer>
@@ -85,7 +130,7 @@ function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, soci
           <NavLogoBox>
             <NavMainTitle to="/"> 스며들다 </NavMainTitle>
           </NavLogoBox>
-          <NavLists login={authenticated}>
+          <NavLists>
             <NavList>
               <GenerationLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
                 10대에게
@@ -113,24 +158,30 @@ function NavBarStyle ({ menuToggled, pathname, loginToggled, authenticated, soci
             </NavList>
             {!authenticated ? (
               <NavList>
-                <LoginLink onClick={onLoginClick}> 로그인/회원가입 </LoginLink>
+                <LoginLink onClick={onLoginClick}> 로그인 </LoginLink>
               </NavList>
             ) : (
-              <>
-                {!social ? (
-                  <NavList>
-                    <GenerationLink to='/my' current={pathname === "/my"}> 마이페이지 </GenerationLink>
-                  </NavList>
-                ) : (
-                  <NavList>
-                    <GenerationLink to='/my/writeLists'> 마이페이지 </GenerationLink>
-                  </NavList>
-                )}
-                <NavList>
-                  <LoginLink onClick={onLogoutClick}> 로그아웃 </LoginLink>
-                </NavList>
-              </>
+              <NavList onClick={onMyPageClick}>
+                <UserImage
+                  width={"60%"}
+                  height={"60%"}
+                  imgUrl={imgUrl}
+                />
+                <DownButton />
+              </NavList>
             )}
+            {myPageToggled && 
+              <MyPageModalWrraper>
+                <MyPageModalLists>
+                  <MyPageModalList>
+                    <MyPageLink to="/my" onClick={onMyPageClick}> 마이페이지 </MyPageLink>
+                  </MyPageModalList>
+                  <MyPageModalList>
+                    <LogOutButton onClick={onLogoutClick}> 로그아웃 </LogOutButton>
+                  </MyPageModalList>
+                </MyPageModalLists>
+              </MyPageModalWrraper>
+            }
           </NavLists>
           <Toggle
             menuToggled={menuToggled}

@@ -6,7 +6,7 @@ const MyImg = styled.img`
   height: ${({ height }) => height};
   border-radius: 100%;
   object-fit: contain;
-  border: 1px solid black; // 추후에 지울것
+  border: 1px solid rgba(7, 7, 7, .6); // 추후에 지울것
 `;
 
 function UserImage ({width, height, encodeImg, imgUrl}) {
