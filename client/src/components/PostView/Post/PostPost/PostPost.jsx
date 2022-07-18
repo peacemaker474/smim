@@ -15,7 +15,8 @@ function PostPost() {
   const { id: postId } = useParams();
   const dispatch = useDispatch();
 
-  const fetchAPI = async () => {
+  const fetchAPI = async ({ queryKey }) => {
+    const [{ postId }] = queryKey;
     let post;
     try {
       if (tkn) {
@@ -45,7 +46,9 @@ function PostPost() {
     }
   };
 
-  const { data: postDetail, isLoading, isError } = useQuery('postDetail', fetchAPI);
+  const { data: postDetail, isLoading, isError } = useQuery([('postDetail', { postId })], fetchAPI);
+
+  console.log('PostPost render');
 
   if (isLoading) {
     return <LoadingPage />;
