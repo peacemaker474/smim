@@ -15,10 +15,12 @@ function PostsPage() {
   const age = useMemo(() => {
     return postAge;
   }, [postAge]);
+
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [postArray, setPostArray] = useState();
 
-  const settingData = async () => {
+  const settingData = async ({ queryKey }) => {
+    const [{ age }] = queryKey;
     try {
       const response = await getPostListRead(age, {
         headers: {
@@ -26,13 +28,14 @@ function PostsPage() {
           Authorization: `Bearer ${tkn}`,
         },
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { data, isLoading } = useQuery('postArray', settingData);
+  const { data, isLoading } = useQuery([('postArray', { age })], settingData);
 
   if (isLoading) {
     return <LoadingPage />;

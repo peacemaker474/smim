@@ -41,7 +41,6 @@ function PostPost() {
       return post;
     } catch (error) {
       console.error(error);
-      alert('Token Error');
       return error;
     }
   };
