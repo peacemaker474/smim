@@ -175,7 +175,7 @@ export const getPostView = async (req, res) => {
 // 게시글 검색
 export const getPostSearch = async (req, res) => {
   const { age, tag, keyword } = req.query;
-  if (!(parseInt(age) >= 60)) {
+  if (parseInt(age) >= 50) {
     return res.status(404).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
@@ -197,7 +197,7 @@ export const getPostSearch = async (req, res) => {
     return res.status(200).send(postDataList);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ success: false, message: "잠시 후에 다시 시도해주세요."});
+    return res.status(500).json({ success: false, message: '잠시 후에 다시 시도해주세요.' });
   }
 };
 
@@ -221,6 +221,6 @@ export const getMainPageLists = async (req, res) => {
     return res.status(200).send({ success: true, lists: postLists });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ success: false, message: "다시 시도해주세요."});
+    return res.status(500).json({ success: false, message: '다시 시도해주세요.' });
   }
 };

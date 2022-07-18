@@ -25,7 +25,7 @@ export default function PostListHead({ setPostArray, age }) {
   const handleSearchPost = useCallback(
     (evt) => {
       evt.preventDefault();
-      if (!searchList.option !== '' && !searchList.inputs !== '') {
+      if (searchList.option !== '' && searchList.inputs !== '') {
         let body = {
           option: searchList.option,
           search: searchList.inputs,
