@@ -6,6 +6,7 @@ import MobileNavBar from './MobileNavBar';
 import LoginSection from '../../login/LoginSection/LoginSection';
 import UserImage from '../UserImage/UserImage';
 import DownArrow from '../../../asset/icon/icon-down.svg';
+import MyPageModal from './MyPageModal';
 
 const NavContainer = styled.nav`
   width: 100vw;
@@ -85,35 +86,6 @@ const LoginLink = styled.span`
   cursor: pointer;
 `;
 
-const MyPageModalWrraper = styled.div`
-  width: 100px;
-  height: 70px;
-  background-color: white;
-  position: absolute;
-  top: 90%;
-  left: 86%;
-  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
-`;
-
-const MyPageModalLists = styled.ul`
-  width: 100%;
-  height: 100%;
-`;
-
-const MyPageModalList = styled.li`
-  padding: 0.6em 0;
-  text-align: center;
-  font-size: 0.9em;
-  font-weight: bold;
-`;
-
-const MyPageLink = styled(Link)`
-`;
-
-const LogOutButton = styled.p`
-  cursor: pointer;
-`;
-
 const DownButton = styled.div`
   width: 25px;
   height: 25px;
@@ -171,17 +143,10 @@ function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgU
               </NavList>
             )}
             {myPageToggled && 
-              <MyPageModalWrraper>
-                <MyPageModalLists>
-                  <MyPageModalList>
-                    <MyPageLink to="/my" onClick={onMyPageClick}> 마이페이지 </MyPageLink>
-                  </MyPageModalList>
-                  <MyPageModalList>
-                    <LogOutButton onClick={onLogoutClick}> 로그아웃 </LogOutButton>
-                  </MyPageModalList>
-                </MyPageModalLists>
-              </MyPageModalWrraper>
-            }
+              <MyPageModal 
+                onMyPageClick={onMyPageClick}
+                onLogoutClick={onLogoutClick}
+              />}
           </NavLists>
           <Toggle
             menuToggled={menuToggled}

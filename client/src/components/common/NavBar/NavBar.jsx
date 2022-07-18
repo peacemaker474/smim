@@ -1,16 +1,21 @@
 import React, { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { loginToggle, menuToggle, myPageToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
-import NavBarStyle from './NavBar.style';
 import { deleteCookie } from '../../../utils/cookie';
+import NavBarStyle from './NavBar.style';
 
 function NavBar() {
-  const menuToggled = useSelector((state) => state.toggle.menuToggled);
-  const loginToggled = useSelector((state) => state.toggle.loginToggled);
-  const myPageToggled = useSelector((state) => state.toggle.myPageToggled);
+  const { menuToggled, loginToggled, myPageToggled} = useSelector(
+    state => ({
+      menuToggled: state.toggle.menuToggled,
+      loginToggled: state.toggle.loginToggled,
+      myPageToggled: state.toggle.myPageToggled,
+    }),
+    shallowEqual
+  );
   const { authenticated } = useSelector((state) => state.authToken);
   const { imgUrl } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -33,9 +38,9 @@ function NavBar() {
     dispatch(menuToggle());
   }, [dispatch]);
 
-  const handleMyPageClick = useCallback((evt) => {
+  const handleMyPageClick = useCallback(() => {
     dispatch(myPageToggle());
-  })
+  }, [dispatch]);
 
   return (
     <NavBarStyle

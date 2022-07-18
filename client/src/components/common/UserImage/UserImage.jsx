@@ -23,4 +23,4 @@ function UserImage ({width, height, encodeImg, imgUrl}) {
   );
 }
 
-export default UserImage;
+export default React.memo(UserImage);

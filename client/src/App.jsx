@@ -20,7 +20,7 @@ function App() {
     }),
     shallowEqual
   );
-  
+
   const { isLoginCheckToggled } = useSelector((state) => state.toggle);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
