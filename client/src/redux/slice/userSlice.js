@@ -71,6 +71,8 @@ const userSlice = createSlice({
         }
       })
       .addCase(putUserImage.rejected, (state, { payload }) => {
+        alert(payload.message);
+        window.location.replace("/my");
         return {
           ...state,
           success: payload.success,

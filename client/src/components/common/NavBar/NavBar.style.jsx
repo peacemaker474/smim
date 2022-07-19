@@ -58,7 +58,8 @@ const NavLists = styled.ul`
 
 const NavList = styled.li`
   padding-left: 5px;
-
+  height: 100%;
+  line-height: 5em;
   &:nth-child(6) {
     cursor: pointer;
     display: flex;

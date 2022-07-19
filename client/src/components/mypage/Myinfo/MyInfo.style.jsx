@@ -29,15 +29,15 @@ const UserImageWrapper = styled.div`
   border-radius: 10px;
 `;
 
-const UserImageTitle = styled.h2`
+const UserImageTitle = React.memo(styled.h2`
   width: 20%;
   font-size: 0.9rem;
-`;
+`);
 
-const UserImageText = styled.p`
+const UserImageText = React.memo(styled.p`
   width: 60%;
   font-size: 1rem;
-`;
+`);
 
 const UserInfoWrapper = styled.div`
   width: 80%;

@@ -49,12 +49,12 @@ export const putUpdateUser = createAsyncThunk(
 
 export const putUserImage = createAsyncThunk(
   "PUT_UPDATE/IMAGE",
-  async (imageData) => {
+  async (imageData, { rejectWithValue }) => {
     try {
       const { data } = await axios.put(`${http}/my/update-image`, imageData, config);
       return data;
     } catch (err) {
-      console.log(err);
+      return rejectWithValue(err.response.data);
     }
   }
 );
