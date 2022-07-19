@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ function PostPost() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const user = useSelector((state) => state.user);
   const { id: postId } = useParams();
+  const [view, setView] = useState(0);
   const dispatch = useDispatch();
 
   const fetchAPI = async ({ queryKey }) => {
@@ -32,7 +33,7 @@ function PostPost() {
         post = response.data;
       }
       const view = await getPostView(postId);
-      console.log(view.data.data);
+      setView(view.data.data);
       if (post.meta.pinnedCmnt) {
         dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt, tkn }));
       }
@@ -60,7 +61,15 @@ function PostPost() {
 
   const date = new Date(postDetail.createAt);
 
-  return <PostPostPresenter postDetail={postDetail} postId={postId} date={date} user={user} />;
+  return (
+    <PostPostPresenter
+      postDetail={postDetail}
+      postId={postId}
+      date={date}
+      user={user}
+      view={view}
+    />
+  );
 }
 
 export default PostPost;

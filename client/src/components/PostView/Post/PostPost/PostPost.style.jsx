@@ -5,12 +5,12 @@ import PostBookmark from '../PostBookmark/PostBookmark';
 import { Tag } from '../../../../styles/common/tag';
 import PostHead from '../PostHead/PostHead';
 
-export default function PostPostPresenter({ postDetail, postId, date, user }) {
+export default function PostPostPresenter({ postDetail, date, user, view }) {
   return (
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead author={postDetail.owner} date={date} postId={postId} />
+      <PostHead postDetail={postDetail} date={date} view={view} />
       <PostBody>
         <PostContent>
           <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
