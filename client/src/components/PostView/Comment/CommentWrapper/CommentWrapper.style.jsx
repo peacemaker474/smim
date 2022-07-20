@@ -15,12 +15,22 @@ export default function CommentWrapperPresenter({
       {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
         <ReplyContainer>
           <ReplyShowingBtn onClick={handleTargetShow}>
-            답글 {isTargetVisible ? '닫기' : '보기'}
+            ----- 답글 {isTargetVisible ? '닫기' : '보기'}
           </ReplyShowingBtn>
-          {isTargetVisible &&
-            childrenData.map((el) => (
-              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-            ))}
+
+          {isTargetVisible && (
+            <ReplyListBox>
+              {childrenData.map((el) => (
+                <CommentItem
+                  key={el._id}
+                  cmntData={el}
+                  groupId={parentData._id}
+                  width={'678px'}
+                  childWidth={'638px'}
+                />
+              ))}
+            </ReplyListBox>
+          )}
           {uploadingReplies &&
             uploadingReplies.length !== 0 &&
             uploadingReplies.map((el) => (
@@ -35,10 +45,14 @@ export default function CommentWrapperPresenter({
 const CommentInner = styled.div``;
 
 const ReplyContainer = styled.div`
-  margin-left: 50px;
-  margin-bottom: 38px;
+  margin-left: 63px;
+  margin-bottom: 20px;
+`;
+
+const ReplyListBox = styled.div`
+  margin-top: 16px;
 `;
 
 const ReplyShowingBtn = styled.button`
-  margin-left: 49px;
+  margin-left: 10px;
 `;

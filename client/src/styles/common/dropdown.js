@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import moreIcon from '../../asset/icon/icon-more.svg';
+import moreIcon from '../../asset/icon/icon-more-vertical.svg';
 
 export const DropdownBtn = styled.span`
   width: ${({ width }) => width || '24px'};
   height: ${({ height }) => height || '24px'};
-  background: url(${moreIcon});
+  background: url(${({ iconUrl }) => iconUrl || moreIcon});
+  display: inline-block;
   position: relative;
   cursor: pointer;
   &::after {
@@ -20,7 +21,7 @@ export const DropdownContainer = styled.div`
   background: #ffffff;
   filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
   position: absolute;
-  top: ${({ top }) => top || '31px'};
+  top: ${({ top }) => top || '35px'};
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import UserImage from '../../../common/UserImage/UserImage';
 import PostDropdownBtn from '../PostDropdownBtn/PostDropdownBtn';
 export default function PostHeadPresenter({ author, userId, postDate, postViews }) {
-  console.log(userId === author.userId);
   return (
     <PostHeadDiv>
       <PostAuthor>
@@ -36,7 +35,10 @@ const PostAuthor = styled.h4`
   color: ${({ theme }) => theme.color.black};
 `;
 
-const PostAddOns = styled.div``;
+const PostAddOns = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const UserName = styled.span`
   margin: 0 10px;

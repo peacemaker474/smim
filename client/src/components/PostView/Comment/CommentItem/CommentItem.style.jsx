@@ -12,8 +12,11 @@ export default function CommentItemPresenter({
   handleClickCancel,
   handleTextChange,
   itemText,
-  deleteState,
   handleClickShow,
+  width,
+  childWidth,
+  inputVisible,
+  setInputVisible,
 }) {
   return (
     <>
@@ -28,51 +31,76 @@ export default function CommentItemPresenter({
           handleTextChange={handleTextChange}
         />
       ) : (
-        <CommentItemInner>
-          <UserImage width={'38px'} height={'38px'} imgUrl={cmntData.writer.imageUrl} />
-          <CommentItemContent>
-            {deleteState || !cmntData.being ? (
-              <CommentText>
-                <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
-                {'삭제된 댓글입니다.'}
-              </CommentText>
-            ) : (
-              <>
+        <CommentItemContainer>
+          <CommentItemInner>
+            <UserImage width={'45px'} height={'45px'} imgUrl={cmntData.writer.imageUrl} />
+            <CommentItemContent width={width}>
+              <CommentContentBox childWidth={childWidth}>
                 <CommentText>
                   <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
                   {itemText}
                 </CommentText>
-                <CommentItemEtc cmntData={cmntData} groupId={groupId} />
-              </>
-            )}
-          </CommentItemContent>
-          {deleteState || !cmntData.being ? null : (
-            <CommentDropdownBtn cmntData={cmntData} handleClickShow={handleClickShow} />
+                <CommentItemEtc
+                  cmntData={cmntData}
+                  groupId={groupId}
+                  setInputVisible={setInputVisible}
+                />
+              </CommentContentBox>
+              <CommentDropdownBtn cmntData={cmntData} handleClickShow={handleClickShow} />
+            </CommentItemContent>
+          </CommentItemInner>
+          {inputVisible && (
+            <CommentItemInput>
+              <CommentInput
+                groupId={groupId}
+                postId={cmntData.post_id}
+                parentId={cmntData.parent_id}
+                isTargetCommentInputVisible={isTargetVisible}
+                handleClickCancel={() => {
+                  handleClickCancel();
+                  setInputVisible(false);
+                }}
+              />
+            </CommentItemInput>
           )}
-        </CommentItemInner>
+        </CommentItemContainer>
       )}
     </>
   );
 }
 
-const CommentItemInner = styled.div`
+const CommentItemContainer = styled.div`
   margin-bottom: 15px;
-  display: flex;
+`;
+
+const CommentItemInner = styled.div`
   position: relative;
+  display: flex;
   //   margin-left: ${(props) => (props.extend === 'reply' ? '49px' : '0')};
 `;
 
 const CommentItemContent = styled.div`
-  width: 709px;
+  width: 753px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: ${({ width }) => `${width}` || '798px'};
+`;
+
+const CommentItemInput = styled.div``;
+
+const CommentContentBox = styled.div`
+  width: ${({ childWidth }) => `${childWidth}` || '693px'};
 `;
 
 const CommentText = styled.span`
   display: block;
   margin: 0;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   line-height: 23px;
 `;
 
 const CommentStrongName = styled.strong`
   font-weight: 600;
+  margin-right: 7px;
 `;
