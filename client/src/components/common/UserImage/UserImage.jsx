@@ -6,6 +6,7 @@ const MyImg = styled.img`
   height: ${({ height }) => height};
   border-radius: 100%;
   object-fit: contain;
+  background-color: white;
   border: 1px solid rgba(7, 7, 7, .6); // 추후에 지울것
 `;
 
