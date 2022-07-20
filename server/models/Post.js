@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
   meta: {
     views: { type: Number, default: 0, required: true },
     likes: { type: Number, default: 0, required: true },
-    pinnedCmnt: { type: String, required: false },
+    pinnedCmnt: { type: Boolean, default: false },
   },
   // comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
   createAt: { type: Date, required: true, default: Date.now },

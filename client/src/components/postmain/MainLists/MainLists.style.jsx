@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 
 const MainPostsContainer = styled.div`
+  width: 100%;
+  height: 100%;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 14px;
 `;
@@ -12,7 +14,7 @@ const PostsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
-  height: 60px;
+  height: 17%;
 `;
 
 const MoreBtn = styled.button`
@@ -25,28 +27,49 @@ const MoreBtn = styled.button`
   color: #ffffff;
 `;
 
-const PostsContent = styled.div``;
+const PostsContent = styled.ul`
+  width: 100%;
+  height: 100%;
+`;
 
-const PostsList = styled.div`
-  height: 60px;
+const PostsList = styled.li`
+  height: 16.6%;
   width: 100%;
   padding: 10px;
-  & + div {
-    border-top: 2px solid ${({ theme }) => theme.color.lightGray};
+  border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
+  &:last-child {
+    border: none;
   }
 `;
 
+const ListHeader = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+`;
+
+const ListisAnswer = styled.p`
+  width: 25%;
+  color: #038cfc;
+`;
+
 const ListTitle = styled.h3`
-  margin-bottom: 6px;
+  width: 80%;
 `;
 
 const ListContent = styled.div`
   display: flex;
+  font-size: 0.8em;
 `;
 
-const PostOwner = styled.span``;
+const PostOwner = styled.p`
+  width: 23%;
+`;
 
-const PostLike = styled.span`
+const PostLike = styled.p`
   display: flex;
   color: ${({ theme }) => theme.color.red};
   &::before {
@@ -75,11 +98,14 @@ function MainListsStyle({ age, posts }) {
         {posts &&
           posts.map((post) => (
             <PostsList key={post._id}>
-              <ListTitle>{post.title}</ListTitle>
+              <ListHeader>
+                <ListisAnswer> {!post.meta.pinnedCmnt ? "답변 대기" : "답변 완료"} </ListisAnswer>
+                <ListTitle>{post.title}</ListTitle>
+              </ListHeader>
               <ListContent>
-                <PostOwner>{post.owner}</PostOwner>
+                <PostOwner>{post.owner.nickname}</PostOwner>
+                <PostOwner>{post.createAt.slice(5, 10).replaceAll('-', '.')}</PostOwner>
                 <PostLike>{post.meta.likes}</PostLike>
-                <PostOwner>{post.createAt.slice(0, 10).replaceAll('-', '.')}</PostOwner>
               </ListContent>
             </PostsList>
           ))}
