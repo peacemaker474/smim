@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { DropdownBtn } from '../../../../styles/common/dropdown';
 import { PostDropdown } from '../PostDropdown/PostDropdown';
+import moreIcon from '../../../../asset/icon/icon-more-horizontal.svg';
 
 export default function PostDropdownBtnPresenter({
   isDropdownVisible,
@@ -17,4 +18,6 @@ export default function PostDropdownBtnPresenter({
   );
 }
 
-const PostDropdownBtn = styled(DropdownBtn)``;
+const PostDropdownBtn = styled(DropdownBtn)`
+  background: url(${moreIcon});
+`;

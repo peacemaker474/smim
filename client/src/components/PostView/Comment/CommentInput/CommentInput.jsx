@@ -118,6 +118,8 @@ export default function CommentInput({
       onSubmit={onSubmit}
       loginCheck={loginCheck}
       isLogin={tkn}
+      groupId={groupId}
+      parentId={parentId}
     />
   );
 }

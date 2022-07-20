@@ -3,13 +3,11 @@ import { useSelector } from 'react-redux';
 import useVisible from '../../../../hooks/useVisible';
 import CommentItemPresenter from './CommentItem.style';
 
-function CommentItem({ cmntData, groupId }) {
+function CommentItem({ cmntData, groupId, width, childWidth }) {
   const [itemText, setItemText] = useState(cmntData.text);
   const [isTargetVisible, handleClickShow] = useVisible(false); // comment input visible for Edit
   const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
-  const delComment = useSelector((state) => state.comment).deletedIdArray.find(
-    (el) => el === cmntData._id
-  );
+  const [inputVisible, setInputVisible] = useState(false);
 
   const handleClickCancel = (e) => {
     e.target.value = '';
@@ -30,9 +28,12 @@ function CommentItem({ cmntData, groupId }) {
       handleTextChange={handleTextChange}
       itemText={itemText}
       commentModalVisible={commentModalVisible}
-      deleteState={Boolean(delComment)}
+      width={width}
+      childWidth={childWidth}
+      inputVisible={inputVisible}
+      setInputVisible={setInputVisible}
     />
   );
 }
 
-export default React.memo(CommentItem);
+export default CommentItem;

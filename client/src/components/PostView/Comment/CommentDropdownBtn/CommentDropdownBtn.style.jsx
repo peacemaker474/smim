@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { CommentDropdown } from '../CommentDropdown/CommentDropdown';
 import { DropdownBtn } from '../../../../styles/common/dropdown';
+import moreIcon from '../../../../asset/icon/icon-more-vertical.svg';
 
 export default function CommentDropdownBtnPresenter({
   cmntData,
@@ -26,4 +27,9 @@ export default function CommentDropdownBtnPresenter({
   );
 }
 
-const CommentDropdownBtn = styled(DropdownBtn)``;
+export const CommentDropdownBtn = styled(DropdownBtn)`
+  background: none;
+  &:hover {
+    background: url(${moreIcon});
+  }
+`;
