@@ -14,6 +14,7 @@ export default function CommentInput({
   handleClickCancel = undefined,
   handleTextChange,
   id,
+  main,
 }) {
   const loginState = useSelector((state) => state.user);
   const { register, handleSubmit, setValue, setFocus } = useForm();
@@ -30,7 +31,7 @@ export default function CommentInput({
       if (id) {
         handleCommentEdit(e, data);
       } else {
-        handleCommentCreate(data);
+        handleCommentCreate(e, data);
       }
       setValue('comment', '');
     }
@@ -42,7 +43,7 @@ export default function CommentInput({
     }
   }, [isTargetVisible, setFocus]);
 
-  const handleCommentCreate = async (data) => {
+  const handleCommentCreate = async (e, data) => {
     const response = await postCommentCreate(
       { post_id: postId, content: data.comment, parent_id: parentId },
       {
@@ -71,7 +72,7 @@ export default function CommentInput({
         )
       );
       if (parentId) {
-        handleClickCancel();
+        handleClickCancel(e);
       }
     } else {
       console.log(response.data.success);
@@ -120,6 +121,7 @@ export default function CommentInput({
       isLogin={tkn}
       groupId={groupId}
       parentId={parentId}
+      main={main}
     />
   );
 }

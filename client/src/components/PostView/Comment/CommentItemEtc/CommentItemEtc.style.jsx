@@ -1,8 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import CommentLikeBtn from '../CommentLikeBtn/CommentLikeBtn';
+import CommentInput from '../CommentInput/CommentInput';
 
-export default function CommentItemEtcPresenter({ createAt, handleClickShow, cmntData }) {
+export default function CommentItemEtcPresenter({
+  createAt,
+  handleClickShow,
+  groupId,
+  postId,
+  parentId,
+  handleClickCancel,
+  cmntData,
+  isTargetVisible,
+}) {
   return (
     <CommentEtcContainer>
       <CommentEtc>
@@ -10,6 +20,14 @@ export default function CommentItemEtcPresenter({ createAt, handleClickShow, cmn
         <CommentReBtn onClick={handleClickShow}>답글 달기</CommentReBtn>
         <CommentLikeBtn cmntData={cmntData} />
       </CommentEtc>
+      {isTargetVisible && (
+        <CommentInput
+          groupId={groupId}
+          postId={postId}
+          parentId={parentId}
+          handleClickCancel={handleClickCancel}
+        />
+      )}
     </CommentEtcContainer>
   );
 }

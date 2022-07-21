@@ -2,16 +2,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import CommentItemEtcPresenter from './CommentItemEtc.style';
+import useVisible from '../../../../hooks/useVisible';
 
-export default function CommentItemEtc({ cmntData, groupId, setInputVisible }) {
+export default function CommentItemEtc({ cmntData, groupId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
+  const [isTargetVisible, handleTargetShow] = useVisible(false);
   const dispatch = useDispatch();
+
+  const handleClickCancel = (e) => {
+    e.target.value = '';
+    handleTargetShow(false);
+  };
 
   return (
     <CommentItemEtcPresenter
       handleClickShow={() => {
         if (tkn) {
-          setInputVisible(true);
+          handleTargetShow(true);
         } else {
           dispatch(isLoginCheckToggle());
         }
@@ -22,6 +29,8 @@ export default function CommentItemEtc({ cmntData, groupId, setInputVisible }) {
       parentId={cmntData._id}
       id={cmntData._id}
       cmntData={cmntData}
+      isTargetVisible={isTargetVisible}
+      handleClickCancel={handleClickCancel}
     />
   );
 }

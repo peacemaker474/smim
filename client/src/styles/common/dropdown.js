@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import moreIcon from '../../asset/icon/icon-more-vertical.svg';
 
-export const DropdownBtn = styled.span`
+export const DropdownBtn = styled.button`
   width: ${({ width }) => width || '24px'};
   height: ${({ height }) => height || '24px'};
   background: url(${({ iconUrl }) => iconUrl || moreIcon});
+  background-repeat: no-repeat;
   display: inline-block;
   position: relative;
   cursor: pointer;
-  &::after {
-    content: '';
-    display: block;
-    clear: both;
-  }
 `;
 
 export const DropdownContainer = styled.div`

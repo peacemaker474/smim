@@ -4,7 +4,6 @@ import CommentWrapper from '../CommentWrapper/CommentWrapper';
 import pinIcon from '../../../../asset/icon/icon-pin.svg';
 
 export default function CommentPinnedPresenter({ pinnedComment, pinnedId, postWriter }) {
-  // console.log(pinnedComment);
   return (
     <>
       {pinnedId ? (
