@@ -58,6 +58,7 @@ export const ChangePwBtn = styled(ColorBtn)`
   height: 50px;
   background-color: orange;
   font-size: 18px;
+  border-radius: 5px;
   &:hover {
     font-weight: bold;
   }
@@ -69,6 +70,7 @@ export const CancelBtn = styled(ColorBtn)`
   background-color: white;
   font-size: 18px;
   color: black;
+  border-radius: 5px;
   &:hover {
     font-weight: bold;
   }

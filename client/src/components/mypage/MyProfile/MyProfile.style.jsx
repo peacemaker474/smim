@@ -3,26 +3,25 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const MyProfileWrapper = styled.div`
-  width: 30%;
-  height: 90%;
+  width: 25%;
+  height: 75%;
 `;
 
 const MyProfileLists = styled.ul`
   width: 90%;
   height: 50%;
-  margin: 0 auto;
 `;
 
 const ProfileList = styled.li`
   width: 100%;
   height: 30%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding-left: 3em;
 `;
 
 const MyProfileLink = styled(Link)`
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: gray;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid

@@ -51,7 +51,7 @@ const ImageCancelButton = styled.button`
 `;
 
 const ImageTilte = styled.h2`
-  font-size: 1.3em;
+  font-size: 1.2em;
   padding-bottom: 1.2em;
 `;
 
