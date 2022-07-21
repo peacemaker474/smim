@@ -7,6 +7,7 @@ import LoadingPage from '../../../../pages/LoadingPage';
 import NotFound from '../../../../pages/NotFound';
 import PostPostPresenter from './PostPost.style';
 import { getPinnedCommentData } from '../../../../redux/services/comment';
+import { pinnedInitCommentId } from '../../../../redux/slice/commentSlice';
 import { getPostData } from '../../../../redux/slice/postSlice';
 
 function PostPost() {
@@ -36,6 +37,8 @@ function PostPost() {
       setView(view.data.data);
       if (post.meta.pinnedCmnt) {
         dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt, tkn }));
+      } else {
+        dispatch(pinnedInitCommentId());
       }
 
       dispatch(getPostData(post._id, post.owner.nickname));
