@@ -7,7 +7,7 @@ import { getMainPostLists } from '../network/main/http';
 
 const MainBody = styled.main`
   width: 100%;
-  padding: 15em 0;
+  padding: 13em 0;
 `;
 
 const MainContainer = styled.div`
@@ -32,6 +32,8 @@ function MainPage() {
   if (isLoading || isFetching) {
     return <LoadingPage />
   }
+
+  console.log(data);
 
   return (
     <MainBody>
