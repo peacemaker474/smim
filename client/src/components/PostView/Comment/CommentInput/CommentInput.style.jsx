@@ -13,6 +13,7 @@ export default function CommentInputPresenter({
   groupId,
   parentId,
 }) {
+  console.log(groupId, id);
   return (
     <CmntForm onSubmit={handleSubmit(onSubmit)} groupId={groupId} parentId={parentId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
@@ -22,6 +23,8 @@ export default function CommentInputPresenter({
         {...register('comment', { required: true })}
         onClick={loginCheck}
         groupId={groupId}
+        parentId={parentId}
+        id={id}
       />
       {id ? (
         <>
@@ -43,10 +46,10 @@ export default function CommentInputPresenter({
 }
 
 const CmntForm = styled.form`
-  width: ${({ groupId }) => (groupId ? '704px' : '794px')};
+  width: auto;
   margin-bottom: ${({ groupId }) => (groupId ? '0' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};
-  margin-left: ${({ parentId, groupId }) =>
+  // margin-left: ${({ parentId, groupId }) =>
     parentId && groupId ? '0' : parentId || groupId ? '63px' : '0'};
   display: flex;
   align-items: center;
@@ -54,7 +57,7 @@ const CmntForm = styled.form`
 `;
 
 const CmntInput = styled.input`
-  width: ${({ groupId }) => (groupId ? '562px' : '635px')};
+  width: ${({ groupId, id }) => (!groupId ? '80%' : groupId === id ? '80%' : '75%')};
   height: 35px;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.lightGray};

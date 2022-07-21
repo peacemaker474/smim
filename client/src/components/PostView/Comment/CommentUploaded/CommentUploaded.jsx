@@ -9,25 +9,32 @@ import LoadingPage from '../../../../pages/LoadingPage';
 export default function CommentUploaded() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const pinnedId = useSelector((state) => state.comment).pinnedId;
-  const { id: postId } = useParams();
+  const { id: postid } = useParams();
 
-  const loadComments = async () => {
-    let response;
-    if (tkn) {
-      response = await getCommentListRead(postId, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-    } else {
-      response = await getCommentListRead(postId);
+  const loadComments = async ({ queryKey }) => {
+    const [{ postid }] = queryKey;
+    try {
+      let response;
+      if (tkn) {
+        response = await getCommentListRead(postid, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tkn}`,
+          },
+        });
+      } else {
+        response = await getCommentListRead(postid);
+      }
+      return response.data.data;
+    } catch (error) {
+      console.error(error);
     }
-
-    return response.data.data;
   };
 
-  const { data: loadedComments, isLoading } = useQuery('commentArray', loadComments);
+  const { data: loadedComments, isLoading } = useQuery(
+    [('commentArray', { postid })],
+    loadComments
+  );
   if (isLoading) {
     return <LoadingPage />;
   }

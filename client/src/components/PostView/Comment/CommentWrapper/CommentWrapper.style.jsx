@@ -21,13 +21,7 @@ export default function CommentWrapperPresenter({
           {isTargetVisible && (
             <ReplyListBox>
               {childrenData.map((el) => (
-                <CommentItem
-                  key={el._id}
-                  cmntData={el}
-                  groupId={parentData._id}
-                  width={'678px'}
-                  childWidth={'638px'}
-                />
+                <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
               ))}
             </ReplyListBox>
           )}
@@ -45,7 +39,7 @@ export default function CommentWrapperPresenter({
 const CommentInner = styled.div``;
 
 const ReplyContainer = styled.div`
-  margin-left: 63px;
+  margin-left: 65px;
   margin-bottom: 20px;
 `;
 
