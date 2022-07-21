@@ -234,6 +234,7 @@ export const getCommentPinned = async (req, res) => {
     }
 
     post.meta.pinnedCmnt = commentId;
+    post.meta.answer = true;
     await post.save();
 
     return res.status(200).send({
@@ -249,7 +250,7 @@ export const getCommentPinned = async (req, res) => {
   }
 };
 
-// 댓글 고정하기
+// 댓글 고정 취소하기
 export const getCommentUnpinned = async (req, res) => {
   const { id: commentId } = req.params;
 
@@ -295,6 +296,7 @@ export const getCommentUnpinned = async (req, res) => {
       });
     }
     post.meta.pinnedCmnt = null;
+    post.meta.answer = false;
     await post.save();
 
     return res.status(200).send({
