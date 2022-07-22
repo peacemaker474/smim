@@ -1,23 +1,24 @@
 import React, { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { loginToggle, menuToggle, myPageToggle } from '../../../redux/slice/toggleSlice';
+import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
 import { deleteCookie } from '../../../utils/cookie';
 import NavBarStyle from './NavBar.style';
+import useDropdown from '../../../hooks/useDropdown';
 
 function NavBar() {
-  const { menuToggled, loginToggled, myPageToggled} = useSelector(
+  const { menuToggled, loginToggled} = useSelector(
     state => ({
       menuToggled: state.toggle.menuToggled,
       loginToggled: state.toggle.loginToggled,
-      myPageToggled: state.toggle.myPageToggled,
     }),
     shallowEqual
   );
   const { authenticated } = useSelector((state) => state.authToken);
   const { imgUrl } = useSelector((state) => state.user);
+  const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ] = useDropdown();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname, search } = useLocation(null);
@@ -30,7 +31,7 @@ function NavBar() {
     deleteCookie("users");
     dispatch(getUserLogOut());
     dispatch(DELETE_TOKEN());
-    dispatch(myPageToggle());
+    handleDropdownShow();
     navigate('/');
   }, [dispatch, navigate]);
 
@@ -38,17 +39,19 @@ function NavBar() {
     dispatch(menuToggle());
   }, [dispatch]);
 
-  const handleMyPageClick = useCallback(() => {
-    dispatch(myPageToggle());
-  }, [dispatch]);
+  const handleMyPageClick = () => {
+    handleDropdownShow();
+  };
 
   return (
     <NavBarStyle
       menuToggled={menuToggled}
       loginToggled={loginToggled}
-      myPageToggled={myPageToggled}
       authenticated={authenticated}
       imgUrl={imgUrl}
+      isDropdownVisible={isDropdownVisible}
+      dropdownRef={dropdownRef}
+      btnRef={btnRef}
       pathname={search ? `${pathname}${search}` : `${pathname}`}
       onLoginClick={handleLoginClick}
       onLogoutClick={handleLogoutClick}

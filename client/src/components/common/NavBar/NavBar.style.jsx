@@ -95,7 +95,7 @@ const DownButton = styled.div`
   background-size: cover;
 `;
 
-function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
+function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, btnRef, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
   return (
     <>
       <NavContainer>
@@ -134,20 +134,21 @@ function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgU
                 <LoginLink onClick={onLoginClick}> 로그인 </LoginLink>
               </NavList>
             ) : (
-              <NavList onClick={onMyPageClick}>
+              <NavList onClick={onMyPageClick} ref={btnRef}>
                 <UserImage
                   width={"60%"}
                   height={"60%"}
                   imgUrl={imgUrl}
                 />
                 <DownButton />
+                {isDropdownVisible && 
+                  <MyPageModal
+                  ref={dropdownRef}
+                  onMyPageClick={onMyPageClick}
+                  onLogoutClick={onLogoutClick}
+                />}
               </NavList>
             )}
-            {myPageToggled && 
-              <MyPageModal 
-                onMyPageClick={onMyPageClick}
-                onLogoutClick={onLogoutClick}
-              />}
           </NavLists>
           <Toggle
             menuToggled={menuToggled}
