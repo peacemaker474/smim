@@ -25,7 +25,7 @@ const TitleInput = styled.input`
   width: 500px;
   height: 40px;
   border: 2px solid
-    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
+    ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
   border-radius: 3px;
   @media screen and (max-width: 550px) {
     width: 400px;

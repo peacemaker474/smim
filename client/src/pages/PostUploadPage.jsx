@@ -37,32 +37,34 @@ function PostUploadPage() {
   }, [pathValue, loadPost]);
 
   return (
-    <>
+    <PostCreateMain>
       <PostCreateContainer>
         <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <PostForm postData={postData} pathValue={pathValue} postId={postId} />
       </PostCreateContainer>
-    </>
+    </PostCreateMain>
   );
 }
 
 export default PostUploadPage;
 
+const PostCreateMain = styled.main`
+  margin-top: 10vh;
+`;
+
 const PostCreateContainer = styled.div`
-  width: 1200px;
-  height: 80vh;
-  margin-top: 15vh;
-  margin-left: 30px;
   display: flex;
   flex-direction: column;
+  margin: 53px auto 0;
+  padding: 70px 0;
+  width: 865px;
 `;
 
 const PostHeader = styled.h2`
   position: relative;
   width: fit-content;
-  font-size: 35px;
-  border-bottom: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
+  font-size: 30px;
+  margin-bottom: 10px;
   @media screen and (max-width: 550px) {
     font-size: 25px;
     width: 100px;

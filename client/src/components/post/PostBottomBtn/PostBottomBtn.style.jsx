@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColorBtn } from '../../../styles/common/buttons';
+import { ColorBtn, BorderBtn } from '../../../styles/common/buttons';
 
 function PostBottomBtnPresenter({ formState, handleFormCancle, handleSubmit }) {
   return (
@@ -8,27 +8,21 @@ function PostBottomBtnPresenter({ formState, handleFormCancle, handleSubmit }) {
       <BtnDiv>
         {formState === 'create' ? (
           <>
-            <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
+            <PostBorderBtn palette='yellow' onClick={handleFormCancle}>
               작성 취소
-            </ColorBtn>
-            <ColorBtn
-              width={'5rem'}
-              palette={'yellow'}
-              type='button'
-              form='upload'
-              onClick={handleSubmit}
-            >
+            </PostBorderBtn>
+            <PostColorBtn type='button' form='upload' palette='yellow' onClick={handleSubmit}>
               게시물 등록
-            </ColorBtn>
+            </PostColorBtn>
           </>
         ) : (
           <>
-            <ColorBtn width={'5rem'} palette={'yellow'} onClick={handleFormCancle}>
+            <PostBorderBtn onClick={handleFormCancle} palette='yellow'>
               수정 취소
-            </ColorBtn>
-            <ColorBtn width={'5rem'} palette={'yellow'} type='button' onClick={handleSubmit}>
+            </PostBorderBtn>
+            <PostColorBtn type='button' palette='yellow' onClick={handleSubmit}>
               재등록
-            </ColorBtn>
+            </PostColorBtn>
           </>
         )}
       </BtnDiv>
@@ -55,4 +49,12 @@ const BtnDiv = styled.div`
   @media screen and (max-width: 550px) {
     width: 180px;
   }
+`;
+
+const PostColorBtn = styled(ColorBtn)`
+  width: 5rem;
+`;
+
+const PostBorderBtn = styled(BorderBtn)`
+  width: 5rem;
 `;
