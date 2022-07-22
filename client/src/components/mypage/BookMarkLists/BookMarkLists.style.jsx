@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { ListsUl, Listli, Title, ListContent, Writer, NotWriteLists } from '../../../styles/mypage/writeList';
 
 const BookMarkWrapper = styled.div`
-  width: 80%;
-  height: 90%;
+  width: 70%;
+  height: 75%;
   display: flex;
   flex-direction: column;
   justify-content: ${({ bookMarkList }) => !bookMarkList ? "center" : "space-between"};

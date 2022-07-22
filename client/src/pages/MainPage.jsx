@@ -33,8 +33,6 @@ function MainPage() {
     return <LoadingPage />
   }
 
-  console.log(data);
-
   return (
     <MainBody>
       <MainContainer>

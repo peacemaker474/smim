@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const ListsUl = styled.ul`
   width: 95%;
-  height: 85%;
+  height: 90%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 10px;
 `;
 
 export const Listli = styled.li`
@@ -21,17 +21,18 @@ export const Listli = styled.li`
 
 export const Title = styled.h2`
   align-self: flex-start;
-  font-size: 16px;
-  margin: 5px 0 0 5px;
+  font-size: 0.9em;
+  padding: 7px;
+  width: 100%;
   height: 30%;
 `;
 
 export const ListContent = styled.p`
+  width: 100%;
   height: 60%;
-  margin-left: 5px;
+  padding: 7px;
+  font-size: 0.7em;
   align-self: flex-start;
-  font-size: 12px;
-  line-height: 15px;
 `;
 
 export const Writer = styled.p`

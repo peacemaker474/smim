@@ -34,8 +34,12 @@ export const MyInfoInput = styled.input`
   width: 100%;
   height: 50%;
   border: 1px solid black;
-  font-size: 18px;
+  font-size: 1em;
   border-radius: 5px;
   padding-left: 15px;
   box-sizing: border-box;
+`;
+
+export const ChangePwInput = styled(MyInfoInput)`
+  height: 70%;
 `;

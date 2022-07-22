@@ -8,8 +8,8 @@ import { UpdateBtn } from '../../../styles/common/buttons';
 import UpdateUserImage from '../UpdateUserImage/UpdateUserImage';
 
 const MyInfoForm = styled.form`
-  width: 80%;
-  height: 90%;
+  width: 65%;
+  height: 75%;
   display: flex;
   justify-content: space-around;
 `;
@@ -27,16 +27,17 @@ const UserImageWrapper = styled.div`
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, .5);
   border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 const UserImageTitle = React.memo(styled.h2`
-  width: 20%;
+  width: 10%;
   font-size: 0.9rem;
 `);
 
 const UserImageText = React.memo(styled.p`
-  width: 60%;
-  font-size: 1rem;
+  width: 65%;
+  font-size: 0.8rem;
 `);
 
 const UserInfoWrapper = styled.div`
@@ -46,7 +47,7 @@ const UserInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 `;
 
 function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfoUpdate, onImageModalOpen}) {
@@ -59,7 +60,7 @@ function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfo
             <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
             <UserImage
               width={"10%"}
-              height={"90%"}
+              height={"70%"}
               imgUrl={imgUrl}
             />
           </UserImageWrapper>
