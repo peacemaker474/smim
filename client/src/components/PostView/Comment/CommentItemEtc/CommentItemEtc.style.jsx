@@ -26,6 +26,7 @@ export default function CommentItemEtcPresenter({
           postId={postId}
           parentId={parentId}
           handleClickCancel={handleClickCancel}
+          isTargetVisible={isTargetVisible}
         />
       )}
     </CommentEtcContainer>

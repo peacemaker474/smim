@@ -9,9 +9,9 @@ const postSchema = new mongoose.Schema({
   meta: {
     views: { type: Number, default: 0, required: true },
     likes: { type: Number, default: 0, required: true },
-    pinnedCmnt: { type: Boolean, default: false },
+    pinnedCmnt: { type: String, default: false },
+    answer: { type: Boolean, default: false, required: true },
   },
-  // comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
   createAt: { type: Date, required: true, default: Date.now },
   updateAt: { type: Date, default: Date.now, required: true },
   being: { type: Boolean, default: true }, // 게시글의 삭제 유무

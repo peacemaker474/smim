@@ -43,7 +43,11 @@ export default function CommentDropdownPresenter({
   );
 }
 
-const CommentDropdownContainer = styled(DropdownContainer)``;
+const CommentDropdownContainer = styled(DropdownContainer)`
+  top: 43px;
+  right: -67px;
+  width: 89px;
+`;
 
 const CommentDropdownBox = styled(DropdownBox)``;
 

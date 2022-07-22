@@ -210,17 +210,18 @@ export const getMainPageLists = async (req, res) => {
       40: [],
       50: [],
     };
-    const posts = await Post.find().sort({ "createAt": -1});
+    const posts = await Post.find().sort({ createAt: -1 });
     const newPosts = await Promise.all(
       posts.map(async (el) => {
-      const user = await User.findById(String(el.owner));
-      return {
-        ...el._doc,
-        owner: { nickname: user.nickname }
-      }
-    }));
+        const user = await User.findById(String(el.owner));
+        return {
+          ...el._doc,
+          owner: { nickname: user.nickname },
+        };
+      })
+    );
     newPosts.forEach((el) => {
-      if (postLists[el.targetAge].length < 5 && !el.meta.pinnedCmnt) {
+      if (postLists[el.targetAge].length < 5 && !el.meta.answer) {
         postLists[el.targetAge].push(el);
       } else if (postLists[el.targetAge].length < 5) {
         postLists[el.targetAge].push(el);

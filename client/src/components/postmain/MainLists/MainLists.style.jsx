@@ -99,7 +99,7 @@ function MainListsStyle({ age, posts }) {
           posts.map((post) => (
             <PostsList key={post._id}>
               <ListHeader>
-                <ListisAnswer> {!post.meta.pinnedCmnt ? "답변 대기" : "답변 완료"} </ListisAnswer>
+                <ListisAnswer> {!post.meta.answer ? '답변 대기' : '답변 완료'} </ListisAnswer>
                 <ListTitle>{post.title}</ListTitle>
               </ListHeader>
               <ListContent>

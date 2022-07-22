@@ -25,11 +25,13 @@ export default function CommentWrapperPresenter({
               ))}
             </ReplyListBox>
           )}
-          {uploadingReplies &&
-            uploadingReplies.length !== 0 &&
-            uploadingReplies.map((el) => (
-              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-            ))}
+          <ReplyUploadListBox>
+            {uploadingReplies &&
+              uploadingReplies.length !== 0 &&
+              uploadingReplies.map((el) => (
+                <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+              ))}
+          </ReplyUploadListBox>
         </ReplyContainer>
       )}
     </CommentInner>
@@ -44,7 +46,11 @@ const ReplyContainer = styled.div`
 `;
 
 const ReplyListBox = styled.div`
-  margin-top: 16px;
+  margin-top: 15px;
+`;
+
+const ReplyUploadListBox = styled.div`
+  margin-top: 15px;
 `;
 
 const ReplyShowingBtn = styled.button`
