@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const MyPageModalWrraper = styled.div`
   width: 100px;
-  height: 70px;
+  height: 80px;
   background-color: white;
   position: absolute;
   top: 90%;
@@ -19,8 +19,10 @@ const MyPageModalLists = styled.ul`
 `;
 
 const MyPageModalList = styled.li`
-  padding: 0.7em 0;
+  width: 100%;
+  height: 50%;
   text-align: center;
+  line-height: 40px;
   font-size: 0.9em;
   font-weight: bold;
   cursor: pointer;
@@ -31,7 +33,6 @@ const MyPageModalList = styled.li`
 
 const MyPageLink = styled(Link)`
 `;
-
 
 function MyPageModal ({ onMyPageClick, onLogoutClick }) {
   return (
