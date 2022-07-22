@@ -6,9 +6,8 @@ import styled from 'styled-components';
 function PostEditorPresenter({ modules, formats, onEditorStateChange, errors, paraData }) {
   return (
     <PostEditorWrap error={errors.para} palette='yellow'>
-      <ReactQuill
+      <CustomReactQuill
         name='editor'
-        style={{ height: '85%', marginBottom: '6%' }}
         modules={modules}
         formats={formats}
         theme='snow'
@@ -25,5 +24,9 @@ const PostEditorWrap = styled.div`
   margin-top: 30px;
   height: 400px;
   border: 2px solid
-    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
+    ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
+`;
+const CustomReactQuill = styled(ReactQuill)`
+  border: none;
+  height: 90%;
 `;

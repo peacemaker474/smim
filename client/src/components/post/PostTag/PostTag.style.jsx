@@ -47,7 +47,7 @@ const HashContainer = styled.div`
   letter-spacing: -0.6px;
   color: #444241;
   border: 2px solid
-    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
+    ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
   padding: 2px 2px 2px 2px;
 `;
 

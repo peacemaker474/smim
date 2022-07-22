@@ -33,7 +33,7 @@ export const ColorBtn = styled.button`
 export const LoginBtn = React.memo(styled(ColorBtn)`
   width: 95%;
   height: 10%;
-  background-color: #FFC306;
+  background-color: #ffc306;
   font-weight: bold;
   align-self: center;
   border: none;
@@ -62,7 +62,7 @@ export const ChangePwBtn = styled(ColorBtn)`
   &:hover {
     font-weight: bold;
   }
-`; 
+`;
 
 export const CancelBtn = styled(ColorBtn)`
   width: 70%;
