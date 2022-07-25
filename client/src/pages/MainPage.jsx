@@ -14,10 +14,17 @@ const MainContainer = styled.div`
   width: 1143px;
   height: 818px;  
   margin: 0 auto;
-  display: grid;
-  gap: 96px;
-  grid-template-columns: repeat(3, 317px);
-  grid-template-rows: repeat(2, 363px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+`;
+
+const MainWrapper = styled.div`
+  width: 1143px;
+  height: 400px;
+  display: flex;
+  justify-content: space-around;
 `;
 
 function MainPage() {
@@ -36,11 +43,15 @@ function MainPage() {
   return (
     <MainBody>
       <MainContainer>
-        <MainLists age='10' posts={data?.lists['10']} />
-        <MainLists age='20' posts={data?.lists['20']} />
-        <MainLists age='30' posts={data?.lists['30']} />
-        <MainLists age='40' posts={data?.lists['40']} />
-        <MainLists age='50' posts={data?.lists['50']} />
+        <MainWrapper>
+          <MainLists age='10' posts={data?.lists['10']} />
+          <MainLists age='20' posts={data?.lists['20']} />
+          <MainLists age='30' posts={data?.lists['30']} />
+        </MainWrapper>
+        <MainWrapper>
+          <MainLists age='40' posts={data?.lists['40']} />
+          <MainLists age='50' posts={data?.lists['50']} />
+        </MainWrapper>
       </MainContainer>
     </MainBody>
   );
