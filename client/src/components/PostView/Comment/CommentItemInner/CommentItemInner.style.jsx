@@ -30,13 +30,14 @@ export default function CommentItemInnerPresenter({
           </CommentContentBox>
         </CommentItemContent>
       </CommentItemInner>
-      <CommentDropdownBtn
+      <PostDropdownBtnDiv
         ref={btnRef}
         onClick={(e) => {
           handleDropdownShow();
           e.target.focus();
         }}
       >
+        <CommentDropdownBtn />
         {isDropdownVisible && (
           <CommentDropdown
             ref={dropdownRef}
@@ -47,7 +48,7 @@ export default function CommentItemInnerPresenter({
             isDropdownVisible={isDropdownVisible}
           />
         )}
-      </CommentDropdownBtn>
+      </PostDropdownBtnDiv>
     </>
   );
 }
@@ -77,13 +78,18 @@ const CommentStrongName = styled.strong`
   margin-right: 7px;
 `;
 
-const CommentDropdownBtn = styled(DropdownBtn)`
+const PostDropdownBtnDiv = styled.div`
+  position: relative;
   ${CommentItemInner}:hover + & {
     background: url(${moreIcon});
+    background-repeat: no-repeat;
   }
   &:hover,
   &:focus {
     background: url(${moreIcon});
+    background-repeat: no-repeat;
   }
   background: none;
 `;
+
+const CommentDropdownBtn = styled(DropdownBtn)``;

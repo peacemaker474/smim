@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 export const Tag = styled.span`
   display: inline-block;
-  width: 38px;
   height: 18px;
-  border-radius: 8px;
+  border-radius: 13px;
   color: #183347;
-  background: ${({ palette, theme }) => theme.tagColor[palette]};
-  font-size: 9px;
+  background: ${({ theme }) => theme.tagColor['yellow']};
+  font-size: 12px;
   font-weight: 500;
   line-height: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: ${({ padding }) => padding || '12px 9px'};
 `;

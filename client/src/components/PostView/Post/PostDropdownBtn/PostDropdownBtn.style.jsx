@@ -9,14 +9,18 @@ export default function PostDropdownBtnPresenter({
   dropdownRef,
   btnRef,
   handleDropdownShow,
-  postId,
 }) {
   return (
-    <PostDropdownBtn ref={btnRef} onClick={handleDropdownShow}>
-      {isDropdownVisible && <PostDropdown ref={dropdownRef} postId={postId} />}
-    </PostDropdownBtn>
+    <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
+      <PostDropdownBtn></PostDropdownBtn>
+      {isDropdownVisible && <PostDropdown ref={dropdownRef} />}
+    </PostDropdownBtnDiv>
   );
 }
+
+const PostDropdownBtnDiv = styled.div`
+  position: relative;
+`;
 
 const PostDropdownBtn = styled(DropdownBtn)`
   background: url(${moreIcon});

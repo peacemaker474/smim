@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  DropdownContainer,
-  DropdownBox,
-  DropdownItemBtn,
-} from '../../../../styles/common/dropdown';
+import { DropdownWrraper, DropdownLists, DropdownList } from '../../../../styles/common/dropdown';
 import { useSelector } from 'react-redux';
 
 export default function CommentDropdownPresenter({
@@ -23,32 +19,34 @@ export default function CommentDropdownPresenter({
   const postWriter = useSelector((state) => state.post).postWriter;
 
   return (
-    <CommentDropdownContainer ref={forwardRef}>
-      <CommentDropdownBox>
+    <CommentDropdownWrraper ref={forwardRef}>
+      <CommentDropdownLists>
         {userNickname === postWriter && !parentId && commentId === pinnedId ? (
-          <CommentDropdownBtn onClick={handleCommentUnpinned}>고정해제</CommentDropdownBtn>
+          <CommentDropdownList onClick={handleCommentUnpinned}>고정해제</CommentDropdownList>
         ) : userNickname === postWriter && !parentId ? (
-          <CommentDropdownBtn onClick={handleCommentPinned}>고정</CommentDropdownBtn>
+          <CommentDropdownList onClick={handleCommentPinned}>고정</CommentDropdownList>
         ) : null}
         {userNickname === writer ? (
           <>
-            <CommentDropdownBtn onClick={handleCommentEdit}>수정</CommentDropdownBtn>
-            <CommentDropdownBtn onClick={handleCommentDel}>삭제</CommentDropdownBtn>
+            <CommentDropdownList onClick={handleCommentEdit}>수정</CommentDropdownList>
+            <CommentDropdownList onClick={handleCommentDel}>삭제</CommentDropdownList>
           </>
         ) : (
-          <CommentDropdownBtn onClick={handleCommentDeclaration}>신고</CommentDropdownBtn>
+          <CommentDropdownList onClick={handleCommentDeclaration}>신고</CommentDropdownList>
         )}
-      </CommentDropdownBox>
-    </CommentDropdownContainer>
+      </CommentDropdownLists>
+    </CommentDropdownWrraper>
   );
 }
 
-const CommentDropdownContainer = styled(DropdownContainer)`
-  top: 43px;
-  right: -67px;
-  width: 89px;
+const CommentDropdownWrraper = styled(DropdownWrraper)`
+  width: 76px;
 `;
 
-const CommentDropdownBox = styled(DropdownBox)``;
+const CommentDropdownLists = styled(DropdownLists)`
+  font-size: 13px;
+`;
 
-const CommentDropdownBtn = styled(DropdownItemBtn)``;
+const CommentDropdownList = styled(DropdownList)`
+  line-height: 38px;
+`;

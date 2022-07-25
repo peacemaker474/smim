@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
   meta: {
     views: { type: Number, default: 0, required: true },
     likes: { type: Number, default: 0, required: true },
-    pinnedCmnt: { type: String, default: false },
+    pinnedCmnt: { type: String, default: undefined },
     answer: { type: Boolean, default: false, required: true },
   },
   createAt: { type: Date, required: true, default: Date.now },
