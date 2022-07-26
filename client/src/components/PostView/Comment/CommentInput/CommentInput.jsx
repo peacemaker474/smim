@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
@@ -15,11 +15,14 @@ export default function CommentInput({
   handleTextChange,
   id,
   main,
+  itemText,
 }) {
   const loginState = useSelector((state) => state.user);
-  const { register, handleSubmit, setValue, setFocus } = useForm();
+  const { register, handleSubmit, setValue, setFocus, watch } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
+  let data = watch('comment');
+  const inputRef = useRef();
 
   if (!handleClickCancel) {
     handleClickCancel = () => setValue('comment', '');
@@ -27,11 +30,14 @@ export default function CommentInput({
 
   const onSubmit = (data, e) => {
     e.preventDefault();
+    const addData = data.comment.replaceAll('\n', '<br>');
+    console.log(addData);
+
     if (tkn) {
       if (id) {
-        handleCommentEdit(e, data);
+        handleCommentEdit(e, addData);
       } else {
-        handleCommentCreate(e, data);
+        handleCommentCreate(e, addData);
       }
       setValue('comment', '');
     }
@@ -40,12 +46,13 @@ export default function CommentInput({
   useEffect(() => {
     if (isTargetVisible) {
       setFocus('comment');
+      setValue('comment', itemText);
     }
   }, [isTargetVisible, setFocus]);
 
   const handleCommentCreate = async (e, data) => {
     const response = await postCommentCreate(
-      { post_id: postId, content: data.comment, parent_id: parentId },
+      { post_id: postId, content: data, parent_id: parentId },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +75,7 @@ export default function CommentInput({
           parentId,
           groupId,
           postId,
-          data.comment
+          data
         )
       );
       if (parentId) {
@@ -82,7 +89,7 @@ export default function CommentInput({
   const handleCommentEdit = async (e, data) => {
     const response = await putCommentEdit(
       id,
-      { post_id: postId, content: data.comment },
+      { post_id: postId, content: data },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -92,8 +99,7 @@ export default function CommentInput({
     );
 
     if (response.data.success) {
-      console.log(response.data.success);
-      handleTextChange(data.comment);
+      handleTextChange(data);
       handleClickCancel(e);
     } else {
       console.log(response.data.success);
@@ -102,13 +108,22 @@ export default function CommentInput({
 
   const loginCheck = (e) => {
     e.preventDefault();
-    // e.target.disabled = false;
     if (!tkn) {
       e.target.disabled = true;
       dispatch(isLoginCheckToggle());
     }
   };
 
+  const keyDownCheck = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === true) {
+      e.preventDefault();
+      setValue('comment', data + '\n');
+    }
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      handleSubmit(onSubmit(watch(), e));
+    }
+  };
   return (
     <CommentInputPresenter
       loginState={loginState}
@@ -122,6 +137,8 @@ export default function CommentInput({
       groupId={groupId}
       parentId={parentId}
       main={main}
+      keyDownCheck={keyDownCheck}
+      inputRef={inputRef}
     />
   );
 }

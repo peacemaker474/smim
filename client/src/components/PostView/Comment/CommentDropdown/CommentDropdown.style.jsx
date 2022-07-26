@@ -48,5 +48,5 @@ const CommentDropdownLists = styled(DropdownLists)`
 `;
 
 const CommentDropdownList = styled(DropdownList)`
-  line-height: 38px;
+  line-height: 34px;
 `;
