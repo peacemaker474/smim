@@ -24,6 +24,7 @@ export default function CommentItemPresenter({
           id={cmntData._id}
           handleTextChange={handleTextChange}
           main={true}
+          itemText={itemText}
         />
       ) : (
         <CommentItemContainer>

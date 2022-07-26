@@ -15,6 +15,7 @@ export default function CommentItemInnerPresenter({
   cmntData,
   handleClickShow,
   itemText,
+  createText,
 }) {
   return (
     <>
@@ -24,30 +25,31 @@ export default function CommentItemInnerPresenter({
           <CommentContentBox>
             <CommentText groupId={groupId} cmntId={cmntData._id}>
               <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
-              {itemText}
+              <CommentTextPara dangerouslySetInnerHTML={createText()}></CommentTextPara>
             </CommentText>
             <CommentItemEtc cmntData={cmntData} groupId={groupId} />
           </CommentContentBox>
         </CommentItemContent>
+        <PostDropdownBtnDiv
+          ref={btnRef}
+          onClick={(e) => {
+            handleDropdownShow();
+            e.target.focus();
+          }}
+        >
+          <CommentDropdownBtn />
+          {isDropdownVisible && (
+            <CommentDropdown
+              ref={dropdownRef}
+              writer={cmntData.writer.nickname}
+              handleClickShow={handleClickShow}
+              commentId={cmntData._id}
+              parentId={cmntData.parent_id}
+              isDropdownVisible={isDropdownVisible}
+            />
+          )}
+        </PostDropdownBtnDiv>
       </CommentItemInner>
-      <CommentDropdownBtn
-        ref={btnRef}
-        onClick={(e) => {
-          handleDropdownShow();
-          e.target.focus();
-        }}
-      >
-        {isDropdownVisible && (
-          <CommentDropdown
-            ref={dropdownRef}
-            writer={cmntData.writer.nickname}
-            handleClickShow={handleClickShow}
-            commentId={cmntData._id}
-            parentId={cmntData.parent_id}
-            isDropdownVisible={isDropdownVisible}
-          />
-        )}
-      </CommentDropdownBtn>
     </>
   );
 }
@@ -77,13 +79,23 @@ const CommentStrongName = styled.strong`
   margin-right: 7px;
 `;
 
+const CommentTextPara = styled.p`
+  overflow-wrap: anywhere;
+`;
+
+const PostDropdownBtnDiv = styled.div`
+  position: relative;
+`;
+
 const CommentDropdownBtn = styled(DropdownBtn)`
-  ${CommentItemInner}:hover + & {
+  ${CommentItemInner}:hover > ${PostDropdownBtnDiv} > & {
     background: url(${moreIcon});
+    background-repeat: no-repeat;
   }
   &:hover,
   &:focus {
     background: url(${moreIcon});
+    background-repeat: no-repeat;
   }
   background: none;
 `;

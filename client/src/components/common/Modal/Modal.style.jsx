@@ -27,31 +27,32 @@ const ModalContainer = styled.div``;
 const ModalOverlay = styled.div`
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   width: 100%;
   height: 100%;
-`;
-const ModalBox = styled.div`
-  z-index: 2;
-  width: 410px;
-  height: 197px;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  padding: 65px 0;
+  transform: translate(-50%, -50%);
+`;
+const ModalBox = styled.div`
+  width: 410px;
+  padding: 60px 0 23px;
   background: #fff;
-  transform: translateX(-50%) translateY(-50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
 `;
 const ModalText = styled.h2`
   margin: 0 auto;
-  width: 235px;
+  width: 241px;
+  white-space: pre-line;
+  line-height: 25px;
+  text-align: center;
 `;
 const BtnBox = styled.div`
-  width: 160px;
+  width: 127px;
   margin: 25px auto;
 `;
 

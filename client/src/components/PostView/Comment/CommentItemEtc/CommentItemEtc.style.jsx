@@ -41,12 +41,12 @@ const CommentEtc = styled.div`
 `;
 
 const CommentDate = styled.span`
-  margin-right: 12px;
+  margin-right: 5px;
   font-size: 14px;
 `;
 
 const CommentReBtn = styled.button`
-  margin-right: 12px;
+  margin-right: 5px;
   font-size: 14px;
   font-weight: 600;
 `;

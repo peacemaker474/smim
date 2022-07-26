@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import CommentItemEtcPresenter from './CommentItemEtc.style';
 import useVisible from '../../../../hooks/useVisible';
+import { elapsedText } from '../../../../utils/elapsedText';
 
 export default function CommentItemEtc({ cmntData, groupId }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
@@ -14,6 +15,9 @@ export default function CommentItemEtc({ cmntData, groupId }) {
     handleTargetShow(false);
   };
 
+  const create = new Date(cmntData.createAt);
+  const createAt = elapsedText(create);
+
   return (
     <CommentItemEtcPresenter
       handleClickShow={() => {
@@ -23,7 +27,7 @@ export default function CommentItemEtc({ cmntData, groupId }) {
           dispatch(isLoginCheckToggle());
         }
       }}
-      createAt={cmntData.createAt}
+      createAt={createAt}
       groupId={groupId}
       postId={cmntData.post_id}
       parentId={cmntData._id}

@@ -12,55 +12,80 @@ export default function CommentInputPresenter({
   loginCheck,
   groupId,
   parentId,
+  keyDownCheck,
+  inputRef,
 }) {
   return (
-    <CmntForm onSubmit={handleSubmit(onSubmit)} groupId={groupId} parentId={parentId}>
+    <CmntForm groupId={groupId} parentId={parentId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
-      <CmntInput
-        type='text'
-        placeholder='답변을 기다립니다.'
-        {...register('comment', { required: true })}
-        onClick={loginCheck}
-        groupId={groupId}
-        id={id}
-      />
-      {id ? (
-        <>
-          <CmntBtn type='button' onClick={handleClickCancel}>
-            취소
-          </CmntBtn>
-          <CmntBtn type='submit'>수정</CmntBtn>
-        </>
-      ) : (
-        <>
-          <CmntBtn type='button' onClick={handleClickCancel}>
-            취소
-          </CmntBtn>
-          <CmntBtn type='submit'>게시</CmntBtn>
-        </>
-      )}
+      <CmntInputDiv groupId={groupId} id={id}>
+        <CmntInput
+          type='submit'
+          placeholder='답변을 기다립니다.'
+          {...register('comment', { required: true })}
+          onClick={loginCheck}
+          onKeyDown={keyDownCheck}
+          groupId={groupId}
+          id={id}
+        />
+        {id ? (
+          <>
+            <CmntBtn type='button' onClick={handleClickCancel}>
+              취소
+            </CmntBtn>
+            <CmntBtn
+              type='submit'
+              onClick={handleSubmit(onSubmit)}
+              groupId={groupId}
+              parentId={parentId}
+            >
+              수정
+            </CmntBtn>
+          </>
+        ) : (
+          <>
+            <CmntBtn type='button' onClick={handleClickCancel}>
+              취소
+            </CmntBtn>
+            <CmntBtn
+              type='submit'
+              onClick={handleSubmit(onSubmit)}
+              groupId={groupId}
+              parentId={parentId}
+            >
+              게시
+            </CmntBtn>
+          </>
+        )}
+      </CmntInputDiv>
     </CmntForm>
   );
 }
 
-const CmntForm = styled.form`
+const CmntForm = styled.div`
   width: auto;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
 `;
 
-const CmntInput = styled.input`
-  width: ${({ groupId, id }) => (!groupId ? '80%' : groupId === id ? '80%' : '78%')};
-  height: 35px;
+const CmntInputDiv = styled.div`
+  width: ${({ groupId, id }) => (!groupId ? '94%' : groupId === id ? '94%' : '90%')};
+  display: flex;
+  align-items: flex-end;
+`;
+
+const CmntInput = styled.textarea`
+  width: ${({ groupId, id }) => (!groupId ? '84%' : groupId === id ? '84%' : '83%')};
+  height: 27px;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.lightGray};
   outline: none;
   resize: none;
   font-size: 13px;
   margin-left: 20px;
+  overflow: hidden;
 `;
 
 const CmntBtn = styled.button`

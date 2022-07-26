@@ -4,6 +4,11 @@ import useDropdown from '../../../../hooks/useDropdown';
 
 export default function CommentItemInner({ cmntData, handleClickShow, groupId, itemText }) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
+
+  const createText = () => ({
+    __html: `${itemText}`,
+  });
+
   return (
     <CommentItemInnerPresenter
       isDropdownVisible={isDropdownVisible}
@@ -14,6 +19,7 @@ export default function CommentItemInner({ cmntData, handleClickShow, groupId, i
       handleClickShow={handleClickShow}
       groupId={groupId}
       itemText={itemText}
+      createText={createText}
     />
   );
 }

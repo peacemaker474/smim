@@ -1,26 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  DropdownBox,
-  DropdownContainer,
-  DropdownItemBtn,
+  DropdownLists,
+  DropdownWrraper,
+  DropdownList,
+  DropdownLink,
 } from '../../../../styles/common/dropdown';
 
-export default function PostDropdownPresenter({ forwardRef, handlePostEdit, handlePostDel }) {
+export default function PostDropdownPresenter({ forwardRef, handlePostDel, postId }) {
   return (
-    <PostDropdownContainer ref={forwardRef}>
-      <PostDropdownBox>
-        <PostDropdownBtn onClick={handlePostEdit}>수정</PostDropdownBtn>
-        <PostDropdownBtn onClick={handlePostDel}>삭제</PostDropdownBtn>
-      </PostDropdownBox>
-    </PostDropdownContainer>
+    <PostDropdownWrraper ref={forwardRef}>
+      <PostDropdownLists>
+        <PostDropdownList>
+          <PostDropdownLink to={`/post/edit/${postId}`}>수정</PostDropdownLink>
+        </PostDropdownList>
+        <PostDropdownList onClick={handlePostDel}>삭제</PostDropdownList>
+      </PostDropdownLists>
+    </PostDropdownWrraper>
   );
 }
 
-const PostDropdownContainer = styled(DropdownContainer)`
+const PostDropdownWrraper = styled(DropdownWrraper)`
   height: auto;
+  width: 64px;
 `;
 
-const PostDropdownBox = styled(DropdownBox)``;
+const PostDropdownLists = styled(DropdownLists)``;
 
-const PostDropdownBtn = styled(DropdownItemBtn)``;
+const PostDropdownList = styled(DropdownList)`
+  line-height: 34px;
+`;
+
+const PostDropdownLink = styled(DropdownLink)``;
