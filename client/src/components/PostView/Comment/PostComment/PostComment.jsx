@@ -74,9 +74,9 @@ function PostComment() {
         cancelFunc={cancelFunc}
         modalText={
           modalState === 'delete'
-            ? '댓글을 삭제하시겠습니까?'
+            ? '댓글을 완전히 삭제하시겠습니까?'
             : modalState === 'pinned'
-            ? '이 댓글을 고정하시겠습니까?이미 고정한 댓글이 있으면 이 댓글로 바뀝니다.'
+            ? '이 댓글을 고정하시겠습니까?\n이미 고정한 댓글이 있으면 이 댓글로 바뀝니다.'
             : '고정 댓글을 해제하시겠습니까? '
         }
         postId={postId}
