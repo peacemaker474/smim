@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 
 const MainPostsContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 317px;
+  height: 363px;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 14px;
 `;
@@ -29,11 +29,11 @@ const MoreBtn = styled.button`
 
 const PostsContent = styled.ul`
   width: 100%;
-  height: 100%;
+  height: 83%;
 `;
 
 const PostsList = styled.li`
-  height: 16.6%;
+  height: 20%;
   width: 100%;
   padding: 10px;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
