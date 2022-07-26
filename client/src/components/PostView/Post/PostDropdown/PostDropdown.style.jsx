@@ -22,10 +22,13 @@ export default function PostDropdownPresenter({ forwardRef, handlePostDel, postI
 
 const PostDropdownWrraper = styled(DropdownWrraper)`
   height: auto;
+  width: 64px;
 `;
 
 const PostDropdownLists = styled(DropdownLists)``;
 
-const PostDropdownList = styled(DropdownList)``;
+const PostDropdownList = styled(DropdownList)`
+  line-height: 34px;
+`;
 
 const PostDropdownLink = styled(DropdownLink)``;

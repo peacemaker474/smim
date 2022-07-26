@@ -7,7 +7,7 @@ export default function PostHeadPresenter({ author, userId, postDate, postViews 
     <PostHeadDiv>
       <PostAuthor>
         <UserImage width={'42px'} height={'42px'} imgUrl={author.imageUrl} />
-        <UserName>{author.userId}</UserName>
+        <UserName>{author.nickname}</UserName>
       </PostAuthor>
       <PostAddOns>
         <AddOnsSpan>{postDate}</AddOnsSpan>
