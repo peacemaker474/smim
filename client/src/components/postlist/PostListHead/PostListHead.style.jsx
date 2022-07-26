@@ -34,7 +34,7 @@ export default function PostListHeadPresenter({
 }
 
 const PostListHeadDiv = styled.div`
-  width: 707px;
+  width: 730px;
   height: 25px;
   display: flex;
   justify-content: space-between;

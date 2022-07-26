@@ -65,7 +65,7 @@ const PostListMain = styled.main`
 const PostListContainer = styled.div`
   margin: 53px auto 0;
   padding: 70px 0;
-  width: 707px;
+  width: 730px;
 `;
 
 const PostListHeading = styled.h2`
@@ -78,6 +78,5 @@ const PostListBody = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px 14px;
-  width: 707px;
   margin-top: 67px;
 `;
