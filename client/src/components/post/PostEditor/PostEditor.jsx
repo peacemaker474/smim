@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import PostEditorPresenter from './PostEditor.style';
 
-function PostEditor({ register, errors, setValue, watch }) {
+function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -17,7 +17,6 @@ function PostEditor({ register, errors, setValue, watch }) {
     }),
     []
   );
-
   const paraData = watch('para');
 
   const formats = [
@@ -46,6 +45,15 @@ function PostEditor({ register, errors, setValue, watch }) {
     setValue('para', editorState);
   };
 
+  const onEditorCheckError = (range) => {
+    console.log(range.index);
+    if (range.index >= 10) {
+      clearErrors('para');
+    } else {
+      setError('para', { required: true });
+    }
+  };
+
   return (
     <PostEditorPresenter
       modules={modules}
@@ -55,6 +63,7 @@ function PostEditor({ register, errors, setValue, watch }) {
       setValue={setValue}
       onEditorStateChange={onEditorStateChange}
       paraData={paraData}
+      onEditorCheckError={onEditorCheckError}
     />
   );
 }
