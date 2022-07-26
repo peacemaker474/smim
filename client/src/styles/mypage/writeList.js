@@ -10,10 +10,6 @@ export const ListsUl = styled.ul`
 `;
 
 export const Listli = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
@@ -25,21 +21,24 @@ export const Title = styled.h2`
   padding: 7px;
   width: 100%;
   height: 30%;
+  font-weight: bold;
 `;
 
 export const ListContent = styled.p`
   width: 100%;
-  height: 60%;
+  height: 53%;
   padding: 7px;
   font-size: 0.7em;
   align-self: flex-start;
 `;
 
 export const Writer = styled.p`
-  font-size: 12px;
+  height: 17%;
+  font-size: 0.6em;
   align-self: flex-end;
-  margin-right: 5px;
+  padding: 5px;
   height: 10%;
+  text-align: end;
 `;
 
 export const NotWriteLists = styled.h2`

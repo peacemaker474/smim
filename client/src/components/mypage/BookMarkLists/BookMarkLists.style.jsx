@@ -28,7 +28,7 @@ function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
                 <Listli key={item.createAt} id={item._id} onClick={onBookMarkMove}>
                   <Title> {item.title} </Title>
                   <ListContent dangerouslySetInnerHTML={{__html: item.content}} />
-                  <Writer> {item.owner} </Writer>
+                  <Writer> {item.owner.nickname} </Writer>
               </Listli>
               )}
             </ListsUl>
