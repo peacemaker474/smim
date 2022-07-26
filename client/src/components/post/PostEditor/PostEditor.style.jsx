@@ -10,6 +10,8 @@ function PostEditorPresenter({
   errors,
   paraData,
   onEditorCheckError,
+  registerRef,
+  inputRef,
 }) {
   return (
     <PostEditorWrap error={errors.para} palette='yellow'>
@@ -21,6 +23,10 @@ function PostEditorPresenter({
         onChange={onEditorStateChange}
         value={paraData}
         onBlur={onEditorCheckError}
+        ref={(e) => {
+          registerRef(e);
+          inputRef.current = e;
+        }}
       />
     </PostEditorWrap>
   );

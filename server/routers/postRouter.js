@@ -26,7 +26,7 @@ postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
 postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
 postRouter.post('/comment', verifyToken, postCommentCreate);
-postRouter.post('/img', postImageUpload.single('img'), () => {
+postRouter.post('/img', postImageUpload.single('img'), (req, res) => {
   console.log('전달받은 파일', req.file);
   console.log('저장된 파일의 이름', req.file.filename);
 

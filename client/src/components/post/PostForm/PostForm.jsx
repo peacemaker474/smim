@@ -25,6 +25,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
   useEffect(() => {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
+      console.log(content);
       setValue('title', title);
       setValue('para', content);
       setValue('age', targetAge);
