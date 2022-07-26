@@ -5,15 +5,17 @@ import PostEditorPresenter from './PostEditor.style';
 function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
   const modules = useMemo(
     () => ({
-      toolbar: [
-        //[{ 'font': [] }],
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-        ['link', 'image'],
-        [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
-        ['clean'],
-      ],
+      toolbar: {
+        container: [
+          //[{ 'font': [] }],
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['link', 'image'],
+          [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
+          ['clean'],
+        ],
+      },
     }),
     []
   );
