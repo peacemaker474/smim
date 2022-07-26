@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PostTagPresenter from './PostTag.style';
 
-function PostTag({ register, setValue, watch, errors }) {
+function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
   const [text, setText] = useState('');
   const tagArray = watch('tagArray');
 
   const preValue = useMemo(() => {
-    console.log('tag 렌더링');
     return tagArray;
   }, [tagArray]);
 
@@ -24,6 +23,7 @@ function PostTag({ register, setValue, watch, errors }) {
       if (!preValue.includes(tagText)) {
         setValue('tagArray', [...preValue, tagText]);
         setText('');
+        clearErrors('tagArray');
       } else {
         setText('');
       }
@@ -38,6 +38,9 @@ function PostTag({ register, setValue, watch, errors }) {
     const newHashTagArray = preValue.filter((el) => el !== tag);
     setValue('tagArray', [...newHashTagArray]);
     setText('');
+    if (watch('tagArray').length === 0) {
+      setError('tagArray', { required: true });
+    }
   };
 
   return (

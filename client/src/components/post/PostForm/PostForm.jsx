@@ -13,17 +13,19 @@ function PostForm({ postData = undefined, pathValue, postId }) {
     setValue,
     watch,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [] } });
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const navigate = useNavigate();
-  console.log(errors);
 
   useEffect(() => {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
+      console.log(content);
       setValue('title', title);
       setValue('para', content);
       setValue('age', targetAge);
@@ -101,6 +103,8 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         errors={errors}
         modalVisible={modalVisible}
         pathValue={pathValue}
+        clearErrors={clearErrors}
+        setError={setError}
       />
     </>
   );

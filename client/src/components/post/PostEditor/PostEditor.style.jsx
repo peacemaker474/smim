@@ -3,7 +3,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 
-function PostEditorPresenter({ modules, formats, onEditorStateChange, errors, paraData }) {
+function PostEditorPresenter({
+  modules,
+  formats,
+  onEditorStateChange,
+  errors,
+  paraData,
+  onEditorCheckError,
+  registerRef,
+  inputRef,
+}) {
   return (
     <PostEditorWrap error={errors.para} palette='yellow'>
       <CustomReactQuill
@@ -13,6 +22,11 @@ function PostEditorPresenter({ modules, formats, onEditorStateChange, errors, pa
         theme='snow'
         onChange={onEditorStateChange}
         value={paraData}
+        onBlur={onEditorCheckError}
+        ref={(e) => {
+          registerRef(e);
+          inputRef.current = e;
+        }}
       />
     </PostEditorWrap>
   );
