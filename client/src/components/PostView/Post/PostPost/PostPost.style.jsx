@@ -52,6 +52,7 @@ const PostBody = styled.div``;
 const PostContent = styled.div`
   width: 794px;
   padding: 48px 0;
+  word-break: break-all;
 `;
 
 const PostPara = styled.div`
