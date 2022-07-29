@@ -7,6 +7,7 @@ import {
   getPostList,
   getPostView,
   getPostSearch,
+  postPostImageUpload,
 } from '../controllers/postController.js';
 import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
 import { getBookmark, getUnbookmark } from '../controllers/bookmarkController.js';
@@ -26,15 +27,7 @@ postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
 postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
 postRouter.post('/comment', verifyToken, postCommentCreate);
-postRouter.post('/img', postImageUpload.single('img'), (req, res) => {
-  console.log('전달받은 파일', req.file);
-  console.log('저장된 파일의 이름', req.file.filename);
-
-  // 파일이 저장된 경로를 클라이언트에게 반환해준다.
-  const IMG_URL = `http://localhost:4000/uploads/${req.file.filename}`;
-  console.log(IMG_URL);
-  res.json({ url: IMG_URL });
-});
+postRouter.post('/img', postImageUpload.single('img'), postPostImageUpload);
 
 postRouter
   .route('/:id')

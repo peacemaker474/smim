@@ -4,7 +4,7 @@ import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icon/icon-del.svg';
 
 function PostTagPresenter({
-  preValue,
+  tagArray,
   handleTagDelete,
   handleKeyUp,
   handleTagWrite,
@@ -15,8 +15,8 @@ function PostTagPresenter({
   return (
     <HashContainer error={errors.tagArray} palette='yellow'>
       <HashWrapBox>
-        {preValue &&
-          preValue.map((el, idx) => (
+        {tagArray &&
+          tagArray.map((el, idx) => (
             <HashItem key={idx + el}>
               <span>{el}</span>
               <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
