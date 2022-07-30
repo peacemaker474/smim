@@ -43,6 +43,7 @@ export default function CommentUploaded() {
     loadedComments &&
     loadedComments
       .filter((el) => String(el[0]._id) !== pinnedId)
+      .filter((el) => el[0].being === true)
       .sort((a, b) => {
         return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
       });

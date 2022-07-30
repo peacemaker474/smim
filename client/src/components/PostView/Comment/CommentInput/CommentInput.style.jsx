@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import UserImage from '../../../common/UserImage/UserImage';
+// import CommentTextArea from '../CommentTextArea/CommentTextArea';
 
 export default function CommentInputPresenter({
   loginState,
@@ -13,12 +14,18 @@ export default function CommentInputPresenter({
   groupId,
   parentId,
   keyDownCheck,
-  inputRef,
 }) {
   return (
     <CmntForm groupId={groupId} parentId={parentId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv groupId={groupId} id={id}>
+        {/* <CommentTextArea
+          register={register}
+          onClick={loginCheck}
+          onKeyDown={keyDownCheck}
+          groupId={groupId}
+          id={id}
+        /> */}
         <CmntInput
           type='submit'
           placeholder='답변을 기다립니다.'

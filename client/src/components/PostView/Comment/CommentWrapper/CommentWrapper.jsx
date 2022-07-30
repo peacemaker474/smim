@@ -11,7 +11,13 @@ export default function CommentWrapper({ cmntData }) {
     ? cmntData && cmntData.find((el) => el.parent_id == null)
     : cmntData;
 
-  const childrenData = Array.isArray(cmntData) ? cmntData && cmntData.slice(1) : [];
+  const delComment = useSelector((state) => state.comment).deletedIdArray.find(
+    (el) => el === parentData._id
+  );
+
+  const childrenData = Array.isArray(cmntData)
+    ? cmntData && cmntData.slice(1).filter((el) => el.being === true)
+    : [];
 
   const uploadingReplies = createdComments.filter((el) => el.group_id === parentData._id);
 
@@ -22,6 +28,7 @@ export default function CommentWrapper({ cmntData }) {
       uploadingReplies={uploadingReplies}
       isTargetVisible={isTargetVisible}
       handleTargetShow={handleTargetShow}
+      delComment={delComment}
     />
   );
 }

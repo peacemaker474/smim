@@ -15,7 +15,7 @@ export default function CommentInput({
   handleTextChange,
   id,
   main,
-  itemText,
+  changedText,
 }) {
   const loginState = useSelector((state) => state.user);
   const { register, handleSubmit, setValue, setFocus, watch } = useForm();
@@ -46,7 +46,7 @@ export default function CommentInput({
   useEffect(() => {
     if (isTargetVisible) {
       setFocus('comment');
-      setValue('comment', itemText);
+      setValue('comment', changedText);
     }
   }, [isTargetVisible, setFocus]);
 
@@ -99,7 +99,7 @@ export default function CommentInput({
     );
 
     if (response.data.success) {
-      handleTextChange(data);
+      handleTextChange(data.replace('<br>', '\n'));
       handleClickCancel(e);
     } else {
       console.log(response.data.success);
