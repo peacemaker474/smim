@@ -8,33 +8,40 @@ export default function CommentWrapperPresenter({
   uploadingReplies,
   isTargetVisible,
   handleTargetShow,
+  delComment,
 }) {
   return (
-    <CommentInner>
-      <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
-      {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
-        <ReplyContainer>
-          <ReplyShowingBtn onClick={handleTargetShow}>
-            ----- 답글 {isTargetVisible ? '닫기' : '보기'}
-          </ReplyShowingBtn>
+    <>
+      {delComment ? null : (
+        <CommentInner>
+          <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
+          {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
+            <ReplyContainer>
+              {childrenData.length === 0 ? null : (
+                <ReplyShowingBtn onClick={handleTargetShow}>
+                  ----- 답글 {isTargetVisible ? '닫기' : '보기'}
+                </ReplyShowingBtn>
+              )}
 
-          {isTargetVisible && (
-            <ReplyListBox>
-              {childrenData.map((el) => (
-                <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-              ))}
-            </ReplyListBox>
+              {isTargetVisible && (
+                <ReplyListBox>
+                  {childrenData.map((el) => (
+                    <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+                  ))}
+                </ReplyListBox>
+              )}
+              <ReplyUploadListBox>
+                {uploadingReplies &&
+                  uploadingReplies.length !== 0 &&
+                  uploadingReplies.map((el) => (
+                    <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+                  ))}
+              </ReplyUploadListBox>
+            </ReplyContainer>
           )}
-          <ReplyUploadListBox>
-            {uploadingReplies &&
-              uploadingReplies.length !== 0 &&
-              uploadingReplies.map((el) => (
-                <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-              ))}
-          </ReplyUploadListBox>
-        </ReplyContainer>
+        </CommentInner>
       )}
-    </CommentInner>
+    </>
   );
 }
 

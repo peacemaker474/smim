@@ -9,8 +9,9 @@ export default function CommentItemPresenter({
   isTargetVisible,
   handleClickCancel,
   handleTextChange,
-  itemText,
+  changedText,
   handleClickShow,
+  deleteState,
 }) {
   return (
     <>
@@ -24,12 +25,12 @@ export default function CommentItemPresenter({
           id={cmntData._id}
           handleTextChange={handleTextChange}
           main={true}
-          itemText={itemText}
+          changedText={changedText}
         />
-      ) : (
+      ) : deleteState ? null : (
         <CommentItemContainer>
           <CommentItemInner
-            itemText={itemText}
+            changedText={changedText}
             handleClickShow={handleClickShow}
             groupId={groupId}
             cmntData={cmntData}
