@@ -10,7 +10,7 @@ import MyPageModal from './MyPageModal';
 
 const NavContainer = styled.nav`
   width: 100vw;
-  height: 10vh;
+  height: 80px;
   position: fixed;
   top: 0%;
   left: 0%;
@@ -20,7 +20,7 @@ const NavContainer = styled.nav`
 `;
 
 const NavWrapper = styled.div`
-  width: 90%;
+  max-width: 1180px;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -29,6 +29,10 @@ const NavWrapper = styled.div`
 `;
 
 const NavLogoBox = styled.div`
+  width: 120px;
+  height: 40px;
+  padding-left: 10px;
+  line-height: 40px;
 `;
 
 const NavMainTitle = styled(Link)`
@@ -45,21 +49,15 @@ const NavLists = styled.ul`
   height: 100%;
   display: grid;
   grid-template-columns: ${({ login }) => login ? "5em 5em 5em 5em 5em 5em;" : "5em 5em 5em 5em 5em 5em;"}
-  grid-gap: 3.5em;
+  grid-gap: 2em;
   align-items: center;
   position: relative;
-  @media screen and (max-width: 1065px) {
-    grid-template-columns: 80px 80px 80px 80px 80px 80px 150px;
-  }
   @media ${({ theme }) => theme.device.ipad} {
     display: none;
   }
 `;
 
 const NavList = styled.li`
-  padding-left: 5px;
-  height: 100%;
-  line-height: 5em;
   &:nth-child(6) {
     cursor: pointer;
     display: flex;
@@ -68,16 +66,18 @@ const NavList = styled.li`
 `;
 
 const GenerationLink = styled(Link)`
-  font-size: 1.1em;
+  font-size: 1em;
   text-decoration: none;
-  color: ${({ theme }) => theme.color.gray};
+  color: ${({ theme, current }) => (current ? `${theme.color.black}` : `${theme.color.gray}`)};
+  transition: all 0.3s ease 0s;
   &:hover {
     font-weight: bold;
+    color: ${({ theme }) => theme.color.black};
   }
   padding-bottom: 5px;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
-    ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
+    ${({ current, theme }) => (current ? `${theme.color.black}` : 'transparent')};
 `;
 
 const LoginLink = styled.span`
@@ -136,8 +136,8 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
             ) : (
               <NavList onClick={onMyPageClick} ref={btnRef}>
                 <UserImage
-                  width={"60%"}
-                  height={"60%"}
+                  width={"50%"}
+                  height={"50%"}
                   imgUrl={imgUrl}
                 />
                 <DownButton />
