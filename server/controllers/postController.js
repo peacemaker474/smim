@@ -233,3 +233,8 @@ export const getMainPageLists = async (req, res) => {
     return res.status(500).json({ success: false, message: '다시 시도해주세요.' });
   }
 };
+
+export const postPostImageUpload = (req, res) => {
+  const IMG_URL = `http://localhost:4000/uploads/posts/${req.file.filename}`;
+  res.json({ url: IMG_URL });
+};
