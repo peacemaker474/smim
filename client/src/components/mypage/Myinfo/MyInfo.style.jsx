@@ -8,10 +8,15 @@ import { UpdateBtn } from '../../../styles/common/buttons';
 import UpdateUserImage from '../UpdateUserImage/UpdateUserImage';
 
 const MyInfoForm = styled.form`
-  width: 65%;
+  width: 70%;
   height: 75%;
   display: flex;
   justify-content: space-around;
+
+  @media screen and (max-width: 1180px) {
+    width: 85%;
+    height: 80%;
+  }
 `;
 
 const UserImageWrapper = styled.div`
@@ -33,11 +38,24 @@ const UserImageWrapper = styled.div`
 const UserImageTitle = React.memo(styled.h2`
   width: 10%;
   font-size: 0.9rem;
+  text-align: end;
+  font-weight: bold;
+
+  @media screen and (max-width: 769px) {
+    width: 0%;
+    opacity: 0;
+  }
 `);
 
 const UserImageText = React.memo(styled.p`
-  width: 65%;
+  width: 75%;
   font-size: 0.8rem;
+  text-align: center;
+
+  @media screen and (max-width: 769px) {
+    width: 85%;
+    font-size: 0.7rem;
+  }
 `);
 
 const UserInfoWrapper = styled.div`

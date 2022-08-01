@@ -26,6 +26,18 @@ const MyPageOverlay = styled.div`
   background-color: white;
   border-radius: 5px;
   box-shadow: rgb(0 0 0 / 50%) 0 6px 23px -6px;
+
+  @media screen and (max-width: 1180px) {
+    width: 80%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 375px) {
+    height: 70%;
+  }
 `;
 
 export default function MyPage() {

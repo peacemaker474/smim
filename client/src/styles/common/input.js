@@ -38,8 +38,16 @@ export const MyInfoInput = styled.input`
   border-radius: 5px;
   padding-left: 15px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 769px) {
+    height: 40%;
+  }
 `;
 
 export const ChangePwInput = styled(MyInfoInput)`
   height: 70%;
+
+  @media screen and (max-width: 769px) {
+    height: 60%;
+  }
 `;

@@ -11,6 +11,11 @@ const PasswordWrapper = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+
+  @media screen and (max-width: 1180px) {
+    width: 85%;
+    height: 80%;
+  }
 `;
 
 const PasswordTitle = React.memo(styled.h2`
