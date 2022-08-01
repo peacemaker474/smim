@@ -8,12 +8,13 @@ export default function PostListHeadPresenter({
   handleSearchPost,
   handleSearchInputs,
   inputRef,
-  selected,
+  searchList,
+  postSelected,
 }) {
   return (
     <PostListHeadDiv>
       <SearchDiv>
-        <SearchSelect value={selected} name='sort' onChange={handleSearchOption}>
+        <SearchSelect value={searchList.option} name='sort' onChange={handleSearchOption}>
           <option value=''>선택</option>
           <option value='title'>제목</option>
           <option value='hashtag'>태그</option>
@@ -25,7 +26,7 @@ export default function PostListHeadPresenter({
         </SearchBox>
       </SearchDiv>
       <SortDiv>
-        <SortSelect name='sort' onChange={handleSortOption}>
+        <SortSelect name='postSort' onChange={handleSortOption} value={postSelected}>
           <option value='newer'>최근 게시물</option>
           <option value='popular'>인기 게시물</option>
           <option value='older'>오래된 게시물</option>
