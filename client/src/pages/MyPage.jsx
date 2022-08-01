@@ -8,9 +8,12 @@ const MyPageSection = styled.section`
   width: 100vw;
   height: 100vh;
   background-color: rgba(127, 127, 127, .09);
+  position: relative;
 `;
 
 const MyPageOverlay = styled.div`
+  max-width: 1060px;
+  max-height: 740px;
   width: 60%;
   height: 75%;
   display: flex;
@@ -18,8 +21,8 @@ const MyPageOverlay = styled.div`
   justify-content: space-around;
   position: absolute;
   top: 17.5%;
-  left: 20%;
-  // transform: translate(-50%, -60%);
+  left: 50%;
+  transform: translateX(-50%);
   background-color: white;
   border-radius: 5px;
   box-shadow: rgb(0 0 0 / 50%) 0 6px 23px -6px;
