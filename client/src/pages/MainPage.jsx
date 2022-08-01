@@ -18,6 +18,12 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+
+  @media screen and (max-width: 1180px) {
+    width: 430px;
+    height: 1400px;
+    padding: 75rem 0;
+  }
 `;
 
 const MainWrapper = styled.div`
@@ -25,6 +31,14 @@ const MainWrapper = styled.div`
   height: 400px;
   display: flex;
   justify-content: space-around;
+
+  @media screen and (max-width: 1180px) {
+    width: 430px;
+    height: 1400px;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 50px;
+  }
 `;
 
 function MainPage() {

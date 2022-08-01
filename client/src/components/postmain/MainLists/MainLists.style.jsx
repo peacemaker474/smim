@@ -7,6 +7,11 @@ const MainPostsContainer = styled.div`
   height: 363px;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 14px;
+
+  @media screen and (max-width: 1180px) {
+    width: 420px;
+    height: 521px;
+  }
 `;
 const PostsTitle = styled.div`
   display: flex;
@@ -46,7 +51,7 @@ const ListHeader = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 0.5em;
+  padding-bottom: 0.8em;
   font-size: 1em;
   font-weight: bold;
 `;
@@ -63,6 +68,9 @@ const ListTitle = styled.h3`
 const ListContent = styled.div`
   display: flex;
   font-size: 0.8em;
+  @media screen and (max-width: 1180px) {
+    padding-top: 0.3em;
+  }
 `;
 
 const PostOwner = styled.p`
