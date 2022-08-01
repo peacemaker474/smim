@@ -4,7 +4,9 @@ import { Tag } from '../../../../styles/common/tag';
 
 export default function PostTagListPresenter({ hashtag }) {
   return (
-    <PostTagBox>{hashtag && hashtag.map((el) => <TagItem key={el._id}>{el}</TagItem>)}</PostTagBox>
+    <PostTagBox>
+      {hashtag && hashtag.map((el, idx) => <TagItem key={idx}>{el}</TagItem>)}
+    </PostTagBox>
   );
 }
 
