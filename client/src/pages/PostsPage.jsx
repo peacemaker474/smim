@@ -1,12 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import PostListItem from '../components/postlist/PostListItem/PostListItem';
-import { getPostListRead } from '../network/post/http';
-import LoadingPage from './LoadingPage';
+import { useLocation } from 'react-router-dom';
 import PostListHead from '../components/postlist/PostListHead/PostListHead';
+import PostListBody from '../components/postlist/PostListBody/PostListBody';
 
 function PostsPage() {
   const { search } = useLocation();
@@ -15,42 +11,16 @@ function PostsPage() {
   const age = useMemo(() => {
     return postAge;
   }, [postAge]);
-
-  const tkn = useSelector((state) => state.authToken).accessToken;
-  const [postArray, setPostArray] = useState();
-
-  const settingData = async ({ queryKey }) => {
-    const [{ age }] = queryKey;
-    try {
-      const response = await getPostListRead(age, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { data, isLoading } = useQuery([('postArray', { age })], settingData);
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  const [postArray, setPostArray] = useState([]);
 
   return (
     <PostListMain>
       <PostListContainer>
         <PostListHeading>{age}대 질문리스트</PostListHeading>
-        <PostListHead setPostArray={setPostArray} age={age} />
-        <PostListBody>
-          {(postArray || data).map((el) => (
-            <PostListItem key={el._id} postData={el} />
-          ))}
-        </PostListBody>
+        <PostListHead setPostArray={setPostArray} postArray={postArray} age={age} />
+        <PostBodyContainer>
+          <PostListBody postArray={postArray} setPostArray={setPostArray} age={age} />
+        </PostBodyContainer>
       </PostListContainer>
     </PostListMain>
   );
@@ -74,9 +44,11 @@ const PostListHeading = styled.h2`
   text-align: center;
 `;
 
-const PostListBody = styled.div`
+const PostBodyContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px 14px;
   margin-top: 67px;
+  position: relative;
+  min-height: 250px;
 `;
