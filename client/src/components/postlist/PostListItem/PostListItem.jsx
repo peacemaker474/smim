@@ -16,8 +16,6 @@ function PostListItem({ postData }) {
   const handleDetailPageMove = () => {
     navigate(`/post/view/${_id}`);
   };
-  console.log(postData);
-  // const text = new TextDecoder('UTF-8').decode(content);
 
   let length = [0, 0];
   for (let i = 0; i < hashtag.length; i++) {

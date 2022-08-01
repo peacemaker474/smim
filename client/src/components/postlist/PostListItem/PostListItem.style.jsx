@@ -84,7 +84,7 @@ const PostText = styled.p`
   line-height: 14px;
   margin-bottom: 14px;
   color: ${({ theme }) => theme.color.black};
-
+  overflow: hidden;
   & > p {
     word-break: break-word;
     display: -webkit-box;
@@ -100,6 +100,7 @@ const PostTagListDiv = styled.div`
 `;
 const PostTagDiv = styled.div`
   display: flex;
+  height: 24px;
 `;
 const TagItem = styled(Tag)`
   background-color: ${({ theme, color }) => theme.tagColor[color]};
