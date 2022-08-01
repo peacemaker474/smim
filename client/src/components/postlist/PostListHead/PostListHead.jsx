@@ -9,15 +9,15 @@ export default function PostListHead({ postArray, setPostArray, age }) {
     inputs: '',
   });
   const inputRef = useRef();
-  const [postSelected, setPostSelected] = useState('newer');
+  const [postOption, setPostOption] = useState('newer');
 
   useEffect(() => {
-    setPostSelected('newer');
+    setPostOption('newer');
   }, [age]);
 
-  const handleSortOption = useCallback(
+  const handlePostOption = useCallback(
     (evt) => {
-      setPostSelected(evt.target.value);
+      setPostOption(evt.target.value);
       const option = evt.target.value;
       if (option === 'newer') {
         const newerArray = postArray.sort((a, b) =>
@@ -36,7 +36,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
         setPostArray([...olderArray]);
       }
     },
-    [postArray, setPostArray, postSelected]
+    [postArray, setPostArray, postOption]
   );
 
   const handleSearchOption = useCallback(
@@ -63,19 +63,19 @@ export default function PostListHead({ postArray, setPostArray, age }) {
           target: age,
         };
         getSearchPost(body).then((res) => {
-          if (postSelected === 'newer') {
+          if (postOption === 'newer') {
             const newerArray = res.data.sort((a, b) =>
               a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0
             );
             setPostArray([...newerArray]);
-          } else if (postSelected === 'popular') {
+          } else if (postOption === 'popular') {
             const popularArray = res.data
               .sort((a, b) => (a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0))
               .sort((a, b) =>
                 a.meta.likes > b.meta.likes ? -1 : a.meta.likes < b.meta.likes ? 1 : 0
               );
             setPostArray([...popularArray]);
-          } else if (postSelected === 'older') {
+          } else if (postOption === 'older') {
             const olderArray = res.data.sort((a, b) =>
               a.createAt > b.createAt ? 1 : a.create > b.create ? 0 : -1
             );
@@ -91,12 +91,12 @@ export default function PostListHead({ postArray, setPostArray, age }) {
   return (
     <PostListHeadPresenter
       handleSearchOption={handleSearchOption}
-      handleSortOption={handleSortOption}
+      handlePostOption={handlePostOption}
       handleSearchPost={handleSearchPost}
       handleSearchInputs={handleSearchInputs}
       inputRef={inputRef}
       searchList={searchList}
-      postSelected={postSelected}
+      postOption={postOption}
     />
   );
 }

@@ -4,12 +4,12 @@ import Search from '../../../asset/icon/icon-search-line.svg';
 
 export default function PostListHeadPresenter({
   handleSearchOption,
-  handleSortOption,
+  handlePostOption,
   handleSearchPost,
   handleSearchInputs,
   inputRef,
   searchList,
-  postSelected,
+  postOption,
 }) {
   return (
     <PostListHeadDiv>
@@ -26,7 +26,7 @@ export default function PostListHeadPresenter({
         </SearchBox>
       </SearchDiv>
       <SortDiv>
-        <SortSelect name='postSort' onChange={handleSortOption} value={postSelected}>
+        <SortSelect name='postSort' onChange={handlePostOption} value={postOption}>
           <option value='newer'>최근 게시물</option>
           <option value='popular'>인기 게시물</option>
           <option value='older'>오래된 게시물</option>
