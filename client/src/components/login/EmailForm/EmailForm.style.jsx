@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import SignupLink from '../SignupLink/SignupLink';
 import LoginId from '../LoginId';
 import LoginPw from '../LoginPw';
-import { LoginBtn } from '../../../styles/common/buttons';
 
 export const FormBox = styled.form`
-  width: 100%;
-  height: 95%;
+  width: 90%;
+  height: 92%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 1.2em;
+  padding-top: 1.2em;
+  margin: 0 auto;
 `;
 
 const FindIdPwd = React.memo(styled.span`
@@ -21,6 +21,19 @@ const FindIdPwd = React.memo(styled.span`
   align-self: flex-end;
   cursor: pointer;
   padding-right: 1.1em;
+`);
+
+const LoginBtn = React.memo(styled.button`
+  width: 95%;
+  height: 10%;
+  background-color: #ffc306;
+  color: #EFFFE9;
+  font-weight: bold;
+  align-self: center;
+  border: none;
+  border-radius: 5px;
+  margin: 15px 0;
+  font-size: 1em;
 `);
 
 

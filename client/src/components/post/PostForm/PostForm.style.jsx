@@ -14,6 +14,7 @@ function PostFormPresenter({
   pathValue,
   clearErrors,
   setError,
+  postData,
 }) {
   return (
     <div id='upload'>
@@ -34,6 +35,7 @@ function PostFormPresenter({
         watch={watch}
         clearErrors={clearErrors}
         setError={setError}
+        postData={postData}
       />
       <PostBottomBtn formState={pathValue} errors={errors} handleSubmit={handleSubmit} />
     </div>

@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PostForm from '../components/post/PostForm/PostForm';
 import { getReadPostDetail } from '../network/post/http';
+import { useQuery } from 'react-query';
+import LoadingPage from './LoadingPage';
 
 function PostUploadPage() {
   const tkn = useSelector((state) => state.authToken).accessToken;
-
   const { pathname } = useLocation();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
-  const [postData, setPostData] = useState();
 
-  const loadPost = useCallback(async () => {
+  const loadPost = async () => {
     try {
       const response = await getReadPostDetail(postId, {
         headers: {
@@ -22,19 +22,17 @@ function PostUploadPage() {
           Authorization: `Bearer ${tkn}`,
         },
       });
-      const data = response.data;
-      console.log(data);
-      setPostData(data);
+      return response.data;
     } catch (error) {
       console.error(error);
     }
-  }, [postId, tkn]);
+  };
 
-  useEffect(() => {
-    if (pathValue === 'edit') {
-      loadPost();
-    }
-  }, [pathValue, loadPost]);
+  const { data: postData, isLoading } = useQuery(['postEdit'], loadPost);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <PostCreateMain>

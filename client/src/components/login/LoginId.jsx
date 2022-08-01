@@ -5,10 +5,9 @@ import { LoginInput, LoginLabel } from '../../styles/login/LoginInput';
 
 const InputWrapper = styled.div`
   width: 95%;
-  height: 30%;
+  height: 33%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
 `;
 
 function LoginId ({ register, errors }) {

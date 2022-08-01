@@ -8,7 +8,7 @@ const MyProfileWrapper = styled.div`
 `;
 
 const MyProfileLists = styled.ul`
-  width: 90%;
+  width: 100%;
   height: 50%;
 `;
 

@@ -8,25 +8,24 @@ function PostEditorPresenter({
   formats,
   onEditorStateChange,
   errors,
-  paraData,
-  onEditorCheckError,
   registerRef,
-  inputRef,
+  quillRef,
+  text,
+  onEditorSetValue,
 }) {
   return (
-    <PostEditorWrap error={errors.para} palette='yellow'>
+    <PostEditorWrap error={errors.para} palette='yellow' onBlur={onEditorSetValue}>
       <CustomReactQuill
         name='editor'
         modules={modules}
         formats={formats}
         theme='snow'
         onChange={onEditorStateChange}
-        value={paraData}
-        onBlur={onEditorCheckError}
         ref={(e) => {
           registerRef(e);
-          inputRef.current = e;
+          quillRef.current = e;
         }}
+        value={text}
       />
     </PostEditorWrap>
   );

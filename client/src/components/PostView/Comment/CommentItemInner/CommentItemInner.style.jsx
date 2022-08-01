@@ -14,8 +14,7 @@ export default function CommentItemInnerPresenter({
   handleDropdownShow,
   cmntData,
   handleClickShow,
-  itemText,
-  createText,
+  changedText,
 }) {
   return (
     <>
@@ -25,7 +24,7 @@ export default function CommentItemInnerPresenter({
           <CommentContentBox>
             <CommentText groupId={groupId} cmntId={cmntData._id}>
               <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
-              <CommentTextPara dangerouslySetInnerHTML={createText()}></CommentTextPara>
+              <CommentTextPara>{changedText}</CommentTextPara>
             </CommentText>
             <CommentItemEtc cmntData={cmntData} groupId={groupId} />
           </CommentContentBox>
@@ -80,7 +79,8 @@ const CommentStrongName = styled.strong`
 `;
 
 const CommentTextPara = styled.p`
-  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-line;
 `;
 
 const PostDropdownBtnDiv = styled.div`

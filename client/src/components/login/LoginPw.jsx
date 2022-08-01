@@ -5,10 +5,9 @@ import { LoginInput, LoginLabel } from '../../styles/login/LoginInput';
 
 const InputWrapper = styled.div`
   width: 95%;
-  height: 30%;
+  height: 33%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
 `;
 
 function LoginPw ({ register, errors, message }) {

@@ -11,7 +11,7 @@ export const LoginLabel = React.memo(styled.label`
 export const LoginInput = styled.input`
   all: unset;
   width: 95%;
-  height: 40%;
+  height: 35%;
   border: 1px solid rgba(12, 12, 12, .4);
   border-radius: 5px;
   padding-left: 10px;

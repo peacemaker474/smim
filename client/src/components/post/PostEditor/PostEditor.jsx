@@ -1,16 +1,18 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module-react';
 import PostEditorPresenter from './PostEditor.style';
 import axios from 'axios';
 
-function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
-  const inputRef = useRef();
-  Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageResize', ImageResize);
 
-  const imageHandler = () => {
-    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
+function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
+  const postText = watch('para');
+  const quillRef = useRef();
+  const [text, setText] = useState('');
+
+  function imageHandler() {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -18,18 +20,20 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
     input.addEventListener('change', async () => {
       const file = input.files[0];
       const formData = new FormData();
-      formData.append('img', file); //
+      formData.append('img', file);
       try {
         const result = await axios.post('http://localhost:4000/post/img', formData);
-        const IMG_URL = result.data.url;
-        const editor = inputRef.current.getEditor(); // 에디터 객체 가져오기
-        const range = editor.getSelection();
-        editor.insertEmbed(range.index, 'image', IMG_URL);
+        const url = result.data.url;
+        const quill = quillRef.current.getEditor();
+        const range = quill.getSelection()?.index;
+        if (typeof range !== 'number') return;
+        quill.setSelection(range, 1);
+        quill.clipboard.dangerouslyPasteHTML(range, `<img src=${url} alt="image" />`);
       } catch (error) {
         console.log(error);
       }
     });
-  };
+  }
 
   const modules = useMemo(
     () => ({
@@ -54,7 +58,6 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
     }),
     []
   );
-  const paraData = watch('para');
 
   const formats = [
     //'font',
@@ -75,21 +78,27 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   ];
 
   useEffect(() => {
-    register('para', { required: true, minLength: 10 });
-  }, [register]);
+    register('para', { required: true, minLength: 10 }, { shouldFocus: false });
+    setText(postText);
+  }, [register, watch, postText]);
 
-  const { ref } = register('para');
-  console.log(inputRef);
+  const { ref } = register('para', { required: true, minLength: 10 }, { shouldFocus: false });
+
   const onEditorStateChange = (editorState) => {
-    setValue('para', editorState);
+    setText(editorState);
   };
 
-  const onEditorCheckError = (range) => {
-    console.log(range.index);
-    if (range.index >= 10) {
-      clearErrors('para');
+  const onEditorSetValue = () => {
+    if (text === '<p><br></p>') {
+      setValue('para', '');
     } else {
-      setError('para', { required: true });
+      setValue('para', text);
+    }
+
+    if (text === '<p><br></p>' || text.length < 10) {
+      setError('para', { required: true, minLength: 10 }, { shouldFocus: false });
+    } else {
+      clearErrors('para');
     }
   };
 
@@ -101,10 +110,10 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
       errors={errors}
       setValue={setValue}
       onEditorStateChange={onEditorStateChange}
-      paraData={paraData}
-      onEditorCheckError={onEditorCheckError}
+      onEditorSetValue={onEditorSetValue}
       registerRef={ref}
-      inputRef={inputRef}
+      quillRef={quillRef}
+      text={text}
     />
   );
 }

@@ -7,7 +7,7 @@ import Modal from '../../../components/common/Modal/Modal';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../network/post/http';
 
-function PostForm({ postData = undefined, pathValue, postId }) {
+function PostForm({ postData, pathValue, postId }) {
   const {
     register,
     setValue,
@@ -16,7 +16,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
     clearErrors,
     setError,
     formState: { errors },
-  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [] } });
+  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
@@ -25,26 +25,28 @@ function PostForm({ postData = undefined, pathValue, postId }) {
   useEffect(() => {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
-      console.log(content);
       setValue('title', title);
       setValue('para', content);
       setValue('age', targetAge);
       setValue('tagArray', hashtag);
+    } else {
+      setValue('title', '');
+      setValue('para', '');
+      setValue('age', '');
+      setValue('tagArray', []);
     }
   }, [postData, setValue]);
 
   const uploadPost = async (tkn) => {
-    const title = watch('title');
-    const content = watch('para');
-    const hashtag = watch('tagArray');
-    const targetAge = String(watch('age'));
+    const { title, para, tagArray, age } = watch();
+
     if (pathValue === 'create') {
       postCreatePost(
         {
           title,
-          content,
-          hashtag,
-          targetAge,
+          content: para,
+          hashtag: tagArray,
+          targetAge: String(age),
         },
         {
           headers: {
@@ -63,9 +65,9 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         postId,
         {
           title,
-          content,
-          hashtag,
-          targetAge,
+          content: para,
+          hashtag: tagArray,
+          targetAge: String(age),
         },
         {
           headers: {
@@ -105,6 +107,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         pathValue={pathValue}
         clearErrors={clearErrors}
         setError={setError}
+        postData={postData}
       />
     </>
   );

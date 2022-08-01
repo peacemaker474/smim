@@ -351,13 +351,11 @@ export const checkCommentCreateAndEdit = async (req, res) => {
 
 export const postImageUpload = multer({
   storage: multer.diskStorage({
-    // 저장할 장소
     destination(req, file, cb) {
-      cb(null, './uploads/');
+      cb(null, 'uploads/posts');
     },
-    // 저장할 이미지의 파일명
     filename(req, file, cb) {
-      const ext = path.extname(file.originalname); // 파일의 확장자
+      const ext = path.extname(file.originalname);
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
