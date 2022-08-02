@@ -8,9 +8,7 @@ import {
   getCommentUnpinned,
   getComment,
 } from '../controllers/commentController.js';
-import { verifyToken } from '../controllers/tokenControllers.js';
-
-// import { existPostCheckAndData } from '../middlewares.js';
+import { verifyToken, verifyRefreshToken } from '../controllers/tokenControllers.js';
 
 export const commentRouter = express.Router();
 
@@ -19,7 +17,7 @@ commentRouter
   .get(getComment)
   .put(verifyToken, putCommentEdit)
   .delete(verifyToken, deleteComment);
-commentRouter.get('/:id/detail', verifyToken, getComment);
+commentRouter.get('/:id/detail', verifyRefreshToken, getComment);
 commentRouter.get('/:id/pinned', verifyToken, getCommentPinned);
 commentRouter.get('/:id/unpinned', verifyToken, getCommentUnpinned);
 commentRouter.get('/:id/like', verifyToken, getCommentLike);

@@ -23,6 +23,7 @@ export default function PostDropdownPresenter({ forwardRef, handlePostDel, postI
 const PostDropdownWrraper = styled(DropdownWrraper)`
   height: auto;
   width: 64px;
+  top: 27px;
 `;
 
 const PostDropdownLists = styled(DropdownLists)``;

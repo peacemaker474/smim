@@ -5,9 +5,10 @@ import { useQuery } from 'react-query';
 import { getCommentListRead } from '../../../../network/comment/http';
 import CommentUploadedPresenter from './CommentUploaded.style';
 import LoadingPage from '../../../../pages/LoadingPage';
+import { getCookie } from '../../../../utils/cookie';
 
 export default function CommentUploaded() {
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const tkn = getCookie();
   const pinnedId = useSelector((state) => state.comment).pinnedId;
   const { id: postid } = useParams();
 

@@ -59,6 +59,12 @@ const PostPara = styled.div`
   font-weight: 500;
   line-height: 23px;
   margin-bottom: 60px;
+  & > p {
+    width: 794px;
+  }
+  & > p > img {
+    max-width: 794px;
+  }
 `;
 
 const PostLikeBox = styled.div`

@@ -1,10 +1,19 @@
 import axios from 'axios';
+import { getCookie } from '../../utils/cookie';
 
 const http = 'http://localhost:4000';
+const tkn = getCookie();
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${tkn}`,
+  },
+};
 
 export const getCommentListRead = (id, header = undefined) => {
   if (header) {
-    return axios.get(`${http}/post/${id}/comment/detail`, header);
+    return axios.get(`${http}/post/${id}/comment/detail`, config);
   } else {
     return axios.get(`${http}/post/${id}/comment`);
   }
