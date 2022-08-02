@@ -7,6 +7,10 @@ export const ListsUl = styled.ul`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 10px;
+
+  @media screen and (max-width: 1180px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 export const Listli = styled.li`

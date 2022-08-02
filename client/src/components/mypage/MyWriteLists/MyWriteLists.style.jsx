@@ -10,6 +10,11 @@ const MyWriteWrapper = styled.div`
   justify-content: ${({ writeList }) => !writeList ? "center" : "space-between"};
   align-items: center;
   position: relative;
+
+  @media screen and (max-width: 1180px) {
+    width: 70%;
+    height: 80%;
+  }
 `;
 
 const MyWritePageNumber = styled.p`
