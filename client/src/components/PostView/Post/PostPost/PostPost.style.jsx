@@ -27,11 +27,10 @@ export default function PostPostPresenter({ postDetail, date, user }) {
   );
 }
 const PostBox = styled.div`
-  width: 794px;
-  margin: 0 auto 32px;
+  margin-bottom: 32px;
 `;
 const PostViewH2 = styled.h1`
-  width: 794px;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
@@ -50,7 +49,7 @@ const PostTitle = styled.h3`
 const PostBody = styled.div``;
 
 const PostContent = styled.div`
-  width: 794px;
+  width: 100%;
   padding: 48px 0;
 `;
 
@@ -60,10 +59,10 @@ const PostPara = styled.div`
   line-height: 23px;
   margin-bottom: 60px;
   & > p {
-    width: 794px;
+    width: 100%;
   }
   & > p > img {
-    max-width: 794px;
+    max-width: 100%;
   }
 `;
 

@@ -73,7 +73,8 @@ const CmntForm = styled.div`
 `;
 
 const CmntInputDiv = styled.div`
-  width: ${({ groupId, id }) => (!groupId ? '94%' : groupId === id ? '94%' : '90%')};
+  width: ${({ groupId, id }) => (!groupId ? '94%' : groupId === id ? '94%' : '96%')};
+  // width: 93%;
   display: flex;
   align-items: flex-end;
 `;

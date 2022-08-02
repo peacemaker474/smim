@@ -34,8 +34,7 @@ export default function PostCommentPresenter({
 }
 
 const CommentSection = styled.div`
-  width: 794px;
-  // height: 59px;
+  width: 100%;
   margin: 20px auto;
 `;
 
@@ -44,14 +43,6 @@ const CommentH2 = styled.h2`
   font-weight: 700;
   line-height: 25px;
   margin-bottom: 28px;
-  // &::after {
-  //   width: 70px;
-  //   height: 2px;
-  //   background: #000000;
-  //   display: block;
-  //   content: '';
-  //   margin-top: 9px;
-  // }
 `;
 
 const CommentContainer = styled.div``;
