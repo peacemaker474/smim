@@ -54,6 +54,16 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
       imageResize: {
         parchment: Quill.import('parchment'),
         modules: ['Resize', 'DisplaySize', 'Toolbar'],
+        image: {
+          attribute: ['width'], // ['width', 'height']
+          limit: {
+            minWidth: 200,
+            maxWidth: 800,
+            minHeight: 200,
+            maxHeight: 800,
+            ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
+          },
+        },
       },
     }),
     []
