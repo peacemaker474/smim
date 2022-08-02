@@ -29,15 +29,20 @@ const MyPageOverlay = styled.div`
 
   @media screen and (max-width: 1180px) {
     width: 80%;
-    height: 100%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 1rem;
     gap: 1.5rem;
   }
 
-  @media screen and (min-width: 375px) {
-    height: 70%;
+  @media screen and (max-width: 769px) {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    top: 5%;
+    padding-top: 2rem;
   }
+
 `;
 
 export default function MyPage() {

@@ -14,7 +14,15 @@ const MyInfoForm = styled.form`
   justify-content: space-around;
 
   @media screen and (max-width: 1180px) {
-    width: 85%;
+    width: 90%;
+    height: 80%;
+  }
+
+  @media screen and (max-width: 769px) {
+    height: 50%;
+  }
+
+  @media screen and (max-height: 796px) {
     height: 80%;
   }
 `;
@@ -54,6 +62,10 @@ const UserImageText = React.memo(styled.p`
 
   @media screen and (max-width: 769px) {
     width: 85%;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
     font-size: 0.7rem;
   }
 `);

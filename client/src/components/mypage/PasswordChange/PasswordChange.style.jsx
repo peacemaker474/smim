@@ -13,7 +13,15 @@ const PasswordWrapper = styled.form`
   gap: 10px;
 
   @media screen and (max-width: 1180px) {
-    width: 85%;
+    width: 90%;
+    height: 80%;
+  }
+
+  @media screen and (max-width: 769px) {
+    height: 50%;
+  }
+
+  @media screen and (max-height: 796px) {
     height: 80%;
   }
 `;
