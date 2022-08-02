@@ -1,26 +1,42 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef } from 'react';
+import CommentTextAreaPresenter from './CommentTextArea.style';
 
-export default function CommentTextArea() {
-  const [value, setValue] = useState('');
+export default function CommentTextArea({
+  handleloginCheck,
+  handleKeyDownCheck,
+  register,
+  setValue,
+  value,
+  groupId,
+  id,
+}) {
   const ref = useRef();
 
-  const onChange = (event) => {
+  const handleCommentChange = (event) => {
     const v = event.target.value;
-    setValue(v);
+    setValue('comment', v);
   };
+
+  const { ref: registerRef } = register('comment');
 
   useEffect(() => {
     // textarea scroll height 설정
-    ref.current.style.height = '0px';
+    register('comment', { required: true });
+    ref.current.style.height = '27px';
     const scrollHeight = ref.current.scrollHeight;
     ref.current.style.height = scrollHeight + 'px';
   }, [value]);
 
-  return <Textarea ref={ref} value={value} onChange={onChange} />;
+  return (
+    <CommentTextAreaPresenter
+      registerRef={registerRef}
+      inputRef={ref}
+      value={value}
+      handleCommentChange={handleCommentChange}
+      handleloginCheck={handleloginCheck}
+      handleKeyDownCheck={handleKeyDownCheck}
+      groupId={groupId}
+      id={id}
+    />
+  );
 }
-
-const Textarea = styled.textarea`
-  min-height: 100px;
-  overflow: hidden;
-`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CommentLikeBtn from '../CommentLikeBtn/CommentLikeBtn';
-import CommentInput from '../CommentInput/CommentInput';
+import CommentForm from '../CommentForm/CommentForm';
 
 export default function CommentItemEtcPresenter({
   createAt,
@@ -21,7 +21,7 @@ export default function CommentItemEtcPresenter({
         <CommentLikeBtn cmntData={cmntData} />
       </CommentEtc>
       {isTargetVisible && (
-        <CommentInput
+        <CommentForm
           groupId={groupId}
           postId={postId}
           parentId={parentId}

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
 import { createComment } from '../../../../redux/slice/commentCreateSlice';
-import CommentInputPresenter from './CommentInput.style';
+import CommentFormPresenter from './CommentForm.style';
 import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
-export default function CommentInput({
+export default function CommentForm({
   postId,
   parentId,
   groupId,
@@ -14,7 +14,6 @@ export default function CommentInput({
   handleClickCancel = undefined,
   handleTextChange,
   id,
-  main,
   changedText,
 }) {
   const loginState = useSelector((state) => state.user);
@@ -22,7 +21,6 @@ export default function CommentInput({
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
   let data = watch('comment');
-  const inputRef = useRef();
 
   if (!handleClickCancel) {
     handleClickCancel = () => setValue('comment', '');
@@ -31,7 +29,6 @@ export default function CommentInput({
   const onSubmit = (data, e) => {
     e.preventDefault();
     const addData = data.comment.replaceAll('\n', '<br>');
-    console.log(addData);
 
     if (tkn) {
       if (id) {
@@ -106,7 +103,7 @@ export default function CommentInput({
     }
   };
 
-  const loginCheck = (e) => {
+  const handleloginCheck = (e) => {
     e.preventDefault();
     if (!tkn) {
       e.target.disabled = true;
@@ -114,7 +111,7 @@ export default function CommentInput({
     }
   };
 
-  const keyDownCheck = (e) => {
+  const handleKeyDownCheck = (e) => {
     if (e.keyCode === 13 && e.shiftKey === true) {
       e.preventDefault();
       setValue('comment', data + '\n');
@@ -125,20 +122,19 @@ export default function CommentInput({
     }
   };
   return (
-    <CommentInputPresenter
+    <CommentFormPresenter
       loginState={loginState}
       handleSubmit={handleSubmit}
-      register={register}
       handleClickCancel={handleClickCancel}
-      id={id}
+      handleloginCheck={handleloginCheck}
+      handleKeyDownCheck={handleKeyDownCheck}
       onSubmit={onSubmit}
-      loginCheck={loginCheck}
-      isLogin={tkn}
+      register={register}
+      setValue={setValue}
+      value={data}
       groupId={groupId}
       parentId={parentId}
-      main={main}
-      keyDownCheck={keyDownCheck}
-      inputRef={inputRef}
+      id={id}
     />
   );
 }

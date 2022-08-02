@@ -1,37 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import UserImage from '../../../common/UserImage/UserImage';
-// import CommentTextArea from '../CommentTextArea/CommentTextArea';
+import CommentTextArea from '../CommentTextArea/CommentTextArea';
 
-export default function CommentInputPresenter({
+export default function CommentFormPresenter({
   loginState,
   handleSubmit,
-  register,
   handleClickCancel,
+  handleloginCheck,
+  handleKeyDownCheck,
   onSubmit,
-  id,
-  loginCheck,
+  register,
+  setValue,
+  value,
   groupId,
   parentId,
-  keyDownCheck,
+  id,
 }) {
   return (
     <CmntForm groupId={groupId} parentId={parentId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv groupId={groupId} id={id}>
-        {/* <CommentTextArea
+        <CommentTextArea
+          handleloginCheck={handleloginCheck}
+          handleKeyDownCheck={handleKeyDownCheck}
           register={register}
-          onClick={loginCheck}
-          onKeyDown={keyDownCheck}
-          groupId={groupId}
-          id={id}
-        /> */}
-        <CmntInput
-          type='submit'
-          placeholder='답변을 기다립니다.'
-          {...register('comment', { required: true })}
-          onClick={loginCheck}
-          onKeyDown={keyDownCheck}
+          setValue={setValue}
+          value={value}
           groupId={groupId}
           id={id}
         />
@@ -81,18 +76,6 @@ const CmntInputDiv = styled.div`
   width: ${({ groupId, id }) => (!groupId ? '94%' : groupId === id ? '94%' : '90%')};
   display: flex;
   align-items: flex-end;
-`;
-
-const CmntInput = styled.textarea`
-  width: ${({ groupId, id }) => (!groupId ? '84%' : groupId === id ? '84%' : '83%')};
-  height: 27px;
-  border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.lightGray};
-  outline: none;
-  resize: none;
-  font-size: 13px;
-  margin-left: 20px;
-  overflow: hidden;
 `;
 
 const CmntBtn = styled.button`

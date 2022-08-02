@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentInput from '../CommentInput/CommentInput';
+import CommentForm from '../CommentForm/CommentForm';
 import CommentItemInner from '../CommentItemInner/CommentItemInner';
 
 export default function CommentItemPresenter({
@@ -16,7 +16,7 @@ export default function CommentItemPresenter({
   return (
     <>
       {isTargetVisible ? (
-        <CommentInput
+        <CommentForm
           postId={cmntData.post_id}
           parentId={cmntData.parent_id}
           groupId={groupId}
@@ -24,7 +24,6 @@ export default function CommentItemPresenter({
           handleClickCancel={handleClickCancel}
           id={cmntData._id}
           handleTextChange={handleTextChange}
-          main={true}
           changedText={changedText}
         />
       ) : deleteState ? null : (
