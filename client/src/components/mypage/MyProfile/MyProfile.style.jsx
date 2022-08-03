@@ -10,6 +10,10 @@ const MyProfileWrapper = styled.div`
     width: 100%;
     height: 10%;
   }
+
+  @media screen and (max-width: 769px) {
+    padding-top: 1.5rem;
+  }
 `;
 
 const MyProfileLists = styled.ul`
@@ -35,6 +39,12 @@ const ProfileList = styled.li`
     padding: 0;
     justify-content: center;
   }
+
+  @media screen and (min-width: 375px) {
+    &:first-child {
+      width: 80%;
+    }
+  }
 `;
 
 const MyProfileLink = styled(Link)`
@@ -48,12 +58,12 @@ const MyProfileLink = styled(Link)`
     font-size: 1em;
   }
 
-  @media screen and (max-width: 860px) {
-    font-size: 0.8em
+  @media screen and (max-width: 760px) {
+    font-size: 1em
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 0.5em;
+    font-size: 0.8em;
   }
 `;
 

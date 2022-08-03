@@ -15,6 +15,15 @@ const MyWriteWrapper = styled.div`
     width: 70%;
     height: 80%;
   }
+
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    height: 50%;
+  }
+
+  @media screen and (max-height: 796px) {
+    height: 80%;
+  }
 `;
 
 const MyWritePageNumber = styled.p`

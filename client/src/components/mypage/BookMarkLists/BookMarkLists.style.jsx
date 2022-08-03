@@ -10,6 +10,20 @@ const BookMarkWrapper = styled.div`
   justify-content: ${({ bookMarkList }) => !bookMarkList ? "center" : "space-between"};
   align-items: center;
   position: relative;
+
+  @media screen and (max-width: 1180px) {
+    width: 70%;
+    height: 80%;
+  }
+
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    height: 50%;
+  }
+
+  @media screen and (max-height: 796px) {
+    height: 80%;
+  }
 `;
 
 const BookMarkPageNumber = styled.p`
