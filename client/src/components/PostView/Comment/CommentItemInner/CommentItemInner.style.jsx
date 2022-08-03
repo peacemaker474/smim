@@ -16,12 +16,13 @@ export default function CommentItemInnerPresenter({
   handleClickShow,
   changedText,
 }) {
+  console.log(groupId === cmntData._id);
   return (
     <>
       <CommentItemInner>
         <UserImage width={'45px'} height={'45px'} imgUrl={cmntData.writer.imageUrl} />
         <CommentItemContent>
-          <CommentContentBox>
+          <CommentContentBox groupId={groupId} cmntId={cmntData._id}>
             <CommentText groupId={groupId} cmntId={cmntData._id}>
               <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
               <CommentTextPara>{changedText}</CommentTextPara>
@@ -63,14 +64,28 @@ const CommentItemContent = styled.div`
   display: flex;
 `;
 
-const CommentContentBox = styled.div``;
+const CommentContentBox = styled.div`
+  @media (max-width: 768px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '238px' : '350px')};
+  }
+  @media (min-width: 768px) and (max-width: 992px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '549px' : '486px')};
+  }
+
+  @media (min-width: 992px) and (max-width: 1200px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '681px' : '617px')};
+  }
+
+  @media (min-width: 1200px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '795px' : '730px')};
+  }
+`;
 
 const CommentText = styled.span`
   display: block;
   margin: 0;
   margin-bottom: 4px;
   line-height: 23px;
-  width: ${({ groupId, cmntId }) => (groupId === cmntId ? '710px' : '645px')};
 `;
 
 const CommentStrongName = styled.strong`
@@ -88,6 +103,7 @@ const PostDropdownBtnDiv = styled.div`
 `;
 
 const CommentDropdownBtn = styled(DropdownBtn)`
+  background: url(${moreIcon});
   ${CommentItemInner}:hover > ${PostDropdownBtnDiv} > & {
     background: url(${moreIcon});
     background-repeat: no-repeat;
@@ -97,5 +113,5 @@ const CommentDropdownBtn = styled(DropdownBtn)`
     background: url(${moreIcon});
     background-repeat: no-repeat;
   }
-  background: none;
+  // background: none;
 `;

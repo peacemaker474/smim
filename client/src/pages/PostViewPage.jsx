@@ -10,11 +10,6 @@ import { deletePost } from '../network/post/http';
 import { resetComment } from '../redux/slice/commentCreateSlice';
 import { resetPost } from '../redux/slice/postSlice';
 
-const PostViewContainer = styled.div`
-  margin-top: 10vh;
-  padding-top: 70px;
-`;
-
 function PostViewPage() {
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
@@ -59,3 +54,23 @@ function PostViewPage() {
 }
 
 export default PostViewPage;
+
+const PostViewContainer = styled.div`
+  margin: 10vh auto 0;
+  padding-top: 70px;
+  @media (max-width: 612px) {
+    width: 328px;
+  }
+  @media (min-width: 612px) and (max-width: 768px) {
+    width: 506px;
+  }
+  @media (min-width: 768px) and (max-width: 992px) {
+    width: 640px;
+  }
+  @media (min-width: 992px) and (max-width: 1200px) {
+    width: 770px;
+  }
+  @media (min-width: 1200px) {
+    width: 900px;
+  }
+`;
