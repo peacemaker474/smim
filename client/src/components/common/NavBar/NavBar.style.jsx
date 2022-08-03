@@ -16,7 +16,7 @@ const NavContainer = styled.nav`
   left: 0%;
   background-color: white;
   box-shadow: rgb(0 0 0 / 50%) 0 -3px 16px 1px;
-  z-index: 2;
+  z-index: 999;
 `;
 
 const NavWrapper = styled.div`
@@ -157,7 +157,7 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
         </NavWrapper>
       </NavContainer>
       {loginToggled && <LoginSection />}
-      {menuToggled && <MobileNavBar />}
+      {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
     </>
   );
 }

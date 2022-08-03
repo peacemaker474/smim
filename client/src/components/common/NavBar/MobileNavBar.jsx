@@ -1,22 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { menuToggle } from '../../../redux/slice/toggleSlice';
-import { getUserLogOut } from '../../../redux/services/UserService';
+import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 
 const MobileNavBox = styled.section`
   width: 45vw;
   height: 100vh;
   position: fixed;
-  top: 10%;
+  top: 6%;
   right: 0;
+  z-index: 999;
   background-color: white;
   display: none;
   @media ${({ theme }) => theme.device.ipad} {
-    display: flex;
-    justify-content: flex-end;
+    display: block;
     box-shadow: rgb(0 0 0 / 50%) -16px 0px 16px -16px;
+  }
+
+  @media screen and (max-height: 796px) {
+    top: 10%;
   }
 `;
 
@@ -106,57 +109,52 @@ const MobileSignUp = styled(Link)`
   }
 `;
 
-function MobileNavBar () {
-  const loginState = useSelector((state) => state.user);
+function MobileNavBar ({ onLogoutClick }) {
+  const { authenticated } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    dispatch(menuToggle());
+    dispatch(loginToggle());
+  };
+
   const handleMenuClick = () => {
     dispatch(menuToggle());
   }
-
-  const handleLogoutClick = () => {
-    dispatch(getUserLogOut());
-    dispatch(menuToggle());
-    navigate('/');
-  };
 
   return (
     <MobileNavBox>
       <MobileLists>
         <MobileList>
-          {!loginState.isLogin ? (
+          {!authenticated ? (
             <MobileSignBox>
-              <MobileSignIn onClick={handleMenuClick}> 로그인 하기 </MobileSignIn>
+              <MobileSignIn onClick={handleLoginClick}> 로그인 하기 </MobileSignIn>
               <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
-              <MobileSignUp to='/signup'> 회원가입 </MobileSignUp>
+              <MobileSignUp to='/signup' onClick={handleMenuClick}> 회원가입 </MobileSignUp>
             </MobileSignBox>
           ) : (
-            <MobileLink to='/my'> 마이페이지 </MobileLink>
+            <MobileLink to='/my' onClick={handleMenuClick}> 마이페이지 </MobileLink>
           )}
         </MobileList>
         <MobileList>
-          <MobileLink to='/post/view/generation10'> 10대에게 </MobileLink>
+          <MobileLink to='generation?age=10' onClick={handleMenuClick}> 10대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='/post/view/generation20'> 20대에게 </MobileLink>
+          <MobileLink to='generation?age=20' onClick={handleMenuClick}> 20대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='/post/view/generation30'> 30대에게 </MobileLink>
+          <MobileLink to='generation?age=30' onClick={handleMenuClick}> 30대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='/post/view/generation40'> 40대에게 </MobileLink>
+          <MobileLink to='generation?age=40' onClick={handleMenuClick}> 40대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='/post/view/generation50'> 50대에게 </MobileLink>
+          <MobileLink to='generation?age=50' onClick={handleMenuClick}> 50대에게 </MobileLink>
         </MobileList>
-        <MobileList>
-          <MobileLink to='/post/view/generation60'> 60대에게 </MobileLink>
-        </MobileList>
-        {loginState.isLogin && (
+        {authenticated && (
           <MobileList>
-            <MobileLink to='/' onClick={handleLogoutClick}>
-              {' '}
-              로그아웃{' '}
+            <MobileLink to='/' onClick={onLogoutClick}>
+              로그아웃
             </MobileLink>
           </MobileList>
         )}

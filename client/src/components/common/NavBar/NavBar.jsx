@@ -32,8 +32,10 @@ function NavBar() {
     dispatch(getUserLogOut());
     dispatch(DELETE_TOKEN());
     handleDropdownShow();
+    if (menuToggled) dispatch(menuToggle());
     navigate('/');
-  }, [dispatch, navigate]);
+
+  }, [dispatch, navigate, menuToggled, handleDropdownShow]);
 
   const handleToggleClick = useCallback(() => {
     dispatch(menuToggle());
