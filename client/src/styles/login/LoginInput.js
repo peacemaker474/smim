@@ -6,6 +6,10 @@ export const LoginLabel = React.memo(styled.label`
   font-weight: bold;
   margin-bottom: 10px;
   display: block;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.8em;
+  }
 `);
 
 export const LoginInput = styled.input`
@@ -16,4 +20,8 @@ export const LoginInput = styled.input`
   border-radius: 5px;
   padding-left: 10px;
   font-size: 0.9em;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.7em;
+  }
 `;

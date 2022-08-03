@@ -21,6 +21,10 @@ const FindIdPwd = React.memo(styled.span`
   align-self: flex-end;
   cursor: pointer;
   padding-right: 1.1em;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.5em;
+  }
 `);
 
 const LoginBtn = React.memo(styled.button`
@@ -34,6 +38,11 @@ const LoginBtn = React.memo(styled.button`
   border-radius: 5px;
   margin: 15px 0;
   font-size: 1em;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 0.8em;
+  }
 `);
 
 
