@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { ColorBtn } from '../../../styles/common/buttons';
 
 const BtnBox = styled.div`
-  width: 40%;
+  width: 100%;
   height: 10%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const SignupBtn = styled(ColorBtn)`
@@ -15,8 +15,12 @@ const SignupBtn = styled(ColorBtn)`
   width: 80px;
   height: 70%;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 0.9rem;
   font-weight: bold;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const CancelBtn = styled(ColorBtn)`
@@ -26,6 +30,11 @@ const CancelBtn = styled(ColorBtn)`
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
+  margin-right: 20px;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.8rem;
+  }
 `;
 
 function SignupBtnsStyle ({ onSignupSubmit }) {
