@@ -41,5 +41,17 @@ const PostEditorWrap = styled.div`
 `;
 const CustomReactQuill = styled(ReactQuill)`
   border: none;
-  height: 90%;
+
+  @media screen and (max-width: 550px) {
+    height: 78%;
+  }
+  @media (min-width: 550px) and (max-width: 992px) {
+    height: 84%;
+  }
+  @media (min-width: 992px) and (max-width: 1200px) {
+    height: 90%;
+  }
+  @media (min-width: 1200px) {
+    height: 90%;
+  }
 `;

@@ -8,7 +8,8 @@ function PostTitlePresenter({ register, errors }) {
         placeholder='제목'
         palette='yellow'
         error={errors.title}
-        {...register('title', { required: 'This is required' })}
+        maxLength='25'
+        {...register('title', { required: 'This is required', maxLength: 25 })}
       />
     </TitleWrap>
   );
@@ -22,12 +23,14 @@ const TitleWrap = styled.div`
 `;
 
 const TitleInput = styled.input`
-  width: 500px;
   height: 40px;
   border: 2px solid
     ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
   border-radius: 3px;
-  @media screen and (max-width: 550px) {
-    width: 400px;
+  @media screen and (max-width: 612px) {
+    width: 100%;
+  }
+  @media (min-width: 612px) {
+    width: 413px;
   }
 `;
