@@ -37,18 +37,12 @@ const BtnWrap = styled.div`
   margin-top: 30px;
   display: flex;
   justify-content: flex-end;
-  @media screen and (max-width: 550px) {
-    width: 450px;
-  }
 `;
 
 const BtnDiv = styled.div`
   width: 183px;
   display: flex;
   justify-content: space-between;
-  @media screen and (max-width: 550px) {
-    width: 180px;
-  }
 `;
 
 const PostColorBtn = styled(ColorBtn)`

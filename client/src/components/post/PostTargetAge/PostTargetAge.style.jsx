@@ -35,6 +35,9 @@ const TargetAgeSelect = styled.select`
     ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
   border-radius: 3px;
   @media screen and (max-width: 550px) {
-    width: 400px;
+    width: 100%;
+    & > option {
+      width: 100%;
+    }
   }
 `;
