@@ -22,6 +22,10 @@ const MyInfoForm = styled.form`
     height: 50%;
   }
 
+  @media screen and (max-width: 380px) {
+    width: 100%;
+  }
+
   @media screen and (max-height: 796px) {
     height: 80%;
   }
