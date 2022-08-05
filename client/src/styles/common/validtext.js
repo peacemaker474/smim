@@ -8,6 +8,10 @@ export const ValidCheck = React.memo(styled.span`
   font-size: 11px;
   color: red;
   margin-top: 10px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.6rem;
+  }
 `);
 
 export const LoginValid = styled(ValidCheck)`

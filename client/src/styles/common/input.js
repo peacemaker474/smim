@@ -8,6 +8,15 @@ export const SignupInput = styled.input`
   padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
+
+  @media screen and (max-width: 769px) {
+    height: 45%;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.7rem;
+  }
 `;
 
 export const BirthYear = styled.input`
@@ -18,16 +27,37 @@ export const BirthYear = styled.input`
   padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
+
+  @media screen and (max-width: 769px) {
+    height: 90%;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.7rem;
+    padding-left: 5px;
+  }
 `;
 
 export const BirthMonth = styled.select`
   all: unset;
   width: 30%;
   height: 100%;
+  line-height: 10px;
   border: 2px solid ${({theme}) => theme.color.yellow};
   padding: 12px 0 0 10px;
   box-sizing: border-box;
   border-radius: 5px;
+
+  @media screen and (max-width: 769px) {
+    height: 90%;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.7rem;
+    padding-left: 5px;
+  }
 `;
 
 export const MyInfoInput = styled.input`
