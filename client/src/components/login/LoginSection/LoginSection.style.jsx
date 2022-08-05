@@ -30,6 +30,11 @@ const LoginWrapper = styled.section`
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 5px;
+
+  @media screen and (max-width: 400px) {
+    width: 16rem;
+    height: 17rem;
+  }
 `;
 
 

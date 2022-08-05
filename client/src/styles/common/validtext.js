@@ -15,6 +15,10 @@ export const LoginValid = styled(ValidCheck)`
   align-self: flex-end;
   margin: 0;
   padding: 0.9em 0.5em 0 0;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.45em;
+  }
 `;
 
 export const MyPageValid = styled(ValidCheck)`
