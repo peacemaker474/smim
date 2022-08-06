@@ -19,16 +19,18 @@ function PostListItem({ postData }) {
 
   let length = [0, 0];
   for (let i = 0; i < hashtag.length; i++) {
+    console.log(hashtag[i].length);
     length[0] += hashtag[i].length;
     length[1] += 1;
     if (length > 10) {
+      console.log(length);
       break;
     } else if (hashtag.length === 0) {
       break;
     }
   }
 
-  const hashtagEdition = hashtag.slice(0, length[1] - 1);
+  const hashtagEdition = hashtag.slice(0, length[1]);
 
   const date = new Date(updateAt);
 
