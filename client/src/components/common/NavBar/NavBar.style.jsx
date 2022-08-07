@@ -21,6 +21,7 @@ const NavContainer = styled.nav`
 
 const NavWrapper = styled.div`
   max-width: 1180px;
+  width: 95%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -31,8 +32,6 @@ const NavWrapper = styled.div`
 const NavLogoBox = styled.div`
   width: 120px;
   height: 40px;
-  padding-left: 10px;
-  line-height: 40px;
 `;
 
 const NavMainTitle = styled(Link)`
@@ -40,7 +39,8 @@ const NavMainTitle = styled(Link)`
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
   cursor: pointer;
-  @media screen and (max-width: 320px) {
+  line-height: 40px;
+  @media ${({ theme }) => theme.device.ipad} {
     font-size: 20px;
   }
 `;
