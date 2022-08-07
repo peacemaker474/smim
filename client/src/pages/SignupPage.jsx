@@ -5,16 +5,16 @@ import SignupForm from "../components/signup/SignupForm/SignupForm";
 const SignupContainer = styled.section`
   max-width: 890px;
   max-height: 1000px;
-  width: 50vw;
-  height: 95vh;
+  width: 45vw;
+  height: 100vh;
   margin: 0 auto;
-  padding-top: 5vw;
+  padding-top: 7vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 1180px) {
+  @media ${({ theme }) => theme.device.webMiddle} {
     width: 70vw;
     padding-top: 10vw;
   }

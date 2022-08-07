@@ -9,7 +9,7 @@ import SignupBtns from '../SignupButton/SignupBtns';
 
 const SignupFormBox = styled.form`
   width: 60%;
-  height: 85%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
