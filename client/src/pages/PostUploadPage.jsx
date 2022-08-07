@@ -14,8 +14,12 @@ function PostUploadPage() {
 
   const loadPost = async () => {
     try {
-      const response = await getReadPostDetail(postId);
-      return response.data;
+      if (postId) {
+        const response = await getReadPostDetail(postId);
+        return response.data;
+      } else {
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
