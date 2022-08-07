@@ -19,7 +19,10 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
   const handleKeyUp = (e) => {
     if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
       const tagText = text.split(',')[0];
-      if (!tagArray.includes(tagText)) {
+      console.log(tagText.length);
+      if (tagText.length === 0) {
+        setText('');
+      } else if (!tagArray.includes(tagText)) {
         setValue('tagArray', [...tagArray, tagText]);
         setText('');
         clearErrors('tagArray');
