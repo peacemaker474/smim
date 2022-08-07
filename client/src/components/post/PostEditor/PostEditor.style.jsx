@@ -38,6 +38,9 @@ const PostEditorWrap = styled.div`
   height: 580px;
   border: 2px solid
     ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
+  @media screen and (max-width: 550px) {
+    height: 602px;
+  }
 `;
 const CustomReactQuill = styled(ReactQuill)`
   border: none;
@@ -48,7 +51,7 @@ const CustomReactQuill = styled(ReactQuill)`
   @media (min-width: 550px) and (max-width: 992px) {
     height: 89%;
   }
-  @media (min-width: 992px) and (min-width: 1200px) {
+  @media (min-width: 992px) {
     height: 93%;
   }
 `;
