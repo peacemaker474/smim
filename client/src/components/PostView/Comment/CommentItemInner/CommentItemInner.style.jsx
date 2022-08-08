@@ -26,7 +26,11 @@ export default function CommentItemInnerPresenter({
               <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
               <CommentTextPara>{changedText}</CommentTextPara>
             </CommentText>
-            <CommentItemEtc cmntData={cmntData} groupId={groupId} />
+            <CommentItemEtc
+              cmntData={cmntData}
+              groupId={groupId}
+              writer={cmntData.writer.nickname}
+            />
           </CommentContentBox>
         </CommentItemContent>
         <PostDropdownBtnDiv
@@ -65,13 +69,13 @@ const CommentItemContent = styled.div`
 
 const CommentContentBox = styled.div`
   @media (max-width: 612px) {
-    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '238px' : '173px')};
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '239px' : '174px')};
   }
   @media (min-width: 612px) and (max-width: 768px) {
     width: ${({ groupId, cmntId }) => (groupId === cmntId ? '420px' : '354px')};
   }
   @media (min-width: 768px) and (max-width: 992px) {
-    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '549px' : '486px')};
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '551px' : '486px')};
   }
 
   @media (min-width: 992px) and (max-width: 1200px) {
@@ -79,7 +83,7 @@ const CommentContentBox = styled.div`
   }
 
   @media (min-width: 1200px) {
-    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '795px' : '730px')};
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '811px' : '746px')};
   }
 `;
 

@@ -12,6 +12,7 @@ export default function CommentItemEtcPresenter({
   handleClickCancel,
   cmntData,
   isTargetVisible,
+  writer,
 }) {
   return (
     <CommentEtcContainer>
@@ -25,6 +26,7 @@ export default function CommentItemEtcPresenter({
           groupId={groupId}
           postId={postId}
           parentId={parentId}
+          writer={writer}
           handleClickCancel={handleClickCancel}
           isTargetVisible={isTargetVisible}
         />
@@ -43,10 +45,18 @@ const CommentEtc = styled.div`
 const CommentDate = styled.span`
   margin-right: 5px;
   font-size: 14px;
+  @media (max-width: 612px) {
+    font-size: 13px;
+    margin-right: 0;
+  }
 `;
 
 const CommentReBtn = styled.button`
   margin-right: 5px;
   font-size: 14px;
   font-weight: 600;
+  @media (max-width: 612px) {
+    font-size: 13px;
+    margin-right: 0;
+  }
 `;

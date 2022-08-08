@@ -16,13 +16,13 @@ export default function CommentFormPresenter({
   groupId,
   parentId,
   id,
+  writer,
+  state,
 }) {
-  console.log(groupId === id);
-  console.log(groupId === parentId);
   return (
-    <CmntForm groupId={groupId} parentId={parentId}>
+    <CmntForm groupId={groupId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
-      <CmntInputDiv groupId={groupId} parentId={parentId} id={id}>
+      <CmntInputDiv state={state}>
         <CommentTextArea
           handleloginCheck={handleloginCheck}
           handleKeyDownCheck={handleKeyDownCheck}
@@ -32,9 +32,10 @@ export default function CommentFormPresenter({
           groupId={groupId}
           parentId={parentId}
           id={id}
+          writer={writer}
         />
         {id ? (
-          <CmntBtnBox groupId={groupId} parentId={parentId} id={id}>
+          <CmntBtnBox state={state}>
             <CmntBtn type='button' onClick={handleClickCancel}>
               취소
             </CmntBtn>
@@ -48,7 +49,7 @@ export default function CommentFormPresenter({
             </CmntBtn>
           </CmntBtnBox>
         ) : (
-          <CmntBtnBox groupId={groupId} parentId={parentId} id={id}>
+          <CmntBtnBox state={state}>
             <CmntBtn type='button' onClick={handleClickCancel}>
               취소
             </CmntBtn>
@@ -76,27 +77,111 @@ const CmntForm = styled.div`
 `;
 
 const CmntInputDiv = styled.div`
-  width: ${({ groupId, parentId, id }) =>
-    !groupId ? '94%' : id && groupId === id ? '94%' : id && groupId === id ? '94%' : '96%'};
+  @media (max-width: 612px) {
+    width: ${({ state }) =>
+      state === 'main'
+        ? '283px'
+        : state === 'main Edit'
+        ? '283px'
+        : state === 'main Reply'
+        ? '193px'
+        : state === 'main Reply Edit'
+        ? '218px'
+        : state === 'Reply Reply'
+        ? '128px'
+        : '218px'};
+    display: ${({ state }) =>
+      state === 'main'
+        ? 'flex'
+        : state === 'main Edit'
+        ? 'flex'
+        : state === 'main Reply'
+        ? 'block'
+        : state === 'main Reply Edit'
+        ? 'block'
+        : state === 'Reply Reply'
+        ? 'block'
+        : 'block'};
+  }
+
+  @media (min-width: 612px) and (max-width: 768px) {
+    width: ${({ state }) =>
+      state === 'main'
+        ? '460px'
+        : state === 'main Edit'
+        ? '460px'
+        : state === 'main Reply'
+        ? '374px'
+        : state === 'main Reply Edit'
+        ? '396px'
+        : state === 'Reply Reply'
+        ? '308px'
+        : '396px'};
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    width: ${({ state }) =>
+      state === 'main'
+        ? '595px'
+        : state === 'main Edit'
+        ? '595px'
+        : state === 'main Reply'
+        ? '506px'
+        : state === 'main Reply Edit'
+        ? '530px'
+        : state === 'Reply Reply'
+        ? '441px'
+        : '530px'};
+  }
+
+  @media (min-width: 992px) and (max-width: 1200px) {
+    width: ${({ state }) =>
+      state === 'main'
+        ? '725px'
+        : state === 'main Edit'
+        ? '725px'
+        : state === 'main Reply'
+        ? '636px'
+        : state === 'main Reply Edit'
+        ? '660px'
+        : state === 'Reply Reply'
+        ? '572px'
+        : '660px'};
+  }
+
+  @media (min-width: 1200px) {
+    width: ${({ state }) =>
+      state === 'main'
+        ? '855px'
+        : state === 'main Edit'
+        ? '855px'
+        : state === 'main Reply'
+        ? '766px'
+        : state === 'main Reply Edit'
+        ? '790px'
+        : state === 'Reply Reply'
+        ? '701px'
+        : '790px'};
+  }
   display: flex;
   align-items: flex-end;
-  @media (max-width: 612px) {
-    display: ${({ groupId, id }) =>
-      !groupId ? 'flex' : id && groupId === id ? 'flex' : id && groupId === id ? 'flex' : 'block'};
-  }
 `;
 
 const CmntBtnBox = styled.div`
   display: flex;
   @media (max-width: 612px) {
-    margin: ${({ groupId, parentId, id }) =>
-      !groupId
-        ? '0'
-        : id && groupId === id
-        ? '0'
-        : id && groupId === id
-        ? '3px 0 0 125px'
-        : '3px 0 0 102px'};
+    margin: ${({ state }) =>
+      state === 'main'
+        ? '0px'
+        : state === 'main Edit'
+        ? '0px'
+        : state === 'main Reply'
+        ? '5px 0 0 103px'
+        : state === 'main Reply Edit'
+        ? '5px 0 0 127px'
+        : state === 'Reply Reply'
+        ? '5px 0 0 37px'
+        : '5px 0 0 127px'};
   }
 `;
 
