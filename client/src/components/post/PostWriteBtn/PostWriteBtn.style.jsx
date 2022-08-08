@@ -22,6 +22,10 @@ const BtnDiv = styled.div`
   cursor: pointer;
   background: #fff;
   z-index: 2;
+
+  @media ${({ theme }) => theme.device.ipad} {
+    display: none;
+  }
 `;
 
 const ImgDiv = styled.div`
