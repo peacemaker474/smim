@@ -31,7 +31,7 @@ export default function CommentTextAreaPresenter({
 
 const Textarea = styled.textarea`
   @media (max-width: 612px) {
-    width: ${({ groupId, id }) => (!groupId ? '64%' : groupId === id ? '79%' : '29%')};
+    width: ${({ groupId, id }) => (!groupId ? '64%' : groupId === id ? '79%' : '78%')};
   }
 
   @media (min-width: 612px) and (max-width: 768px) {
