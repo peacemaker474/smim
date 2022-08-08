@@ -42,7 +42,7 @@ export default function CommentTextArea({
     ref.current.style.height = '27px';
     const scrollHeight = ref.current.scrollHeight;
     ref.current.style.height = scrollHeight + 'px';
-  }, [value]);
+  }, [value, register]);
 
   return (
     <CommentTextAreaPresenter

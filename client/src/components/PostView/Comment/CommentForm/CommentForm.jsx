@@ -61,7 +61,7 @@ export default function CommentForm({
       setFocus('comment');
       setValue('comment', changedText);
     }
-  }, [isTargetVisible, setFocus]);
+  }, [isTargetVisible, setFocus, changedText, setValue]);
 
   const handleCommentCreate = async (e, data) => {
     const response = await postCommentCreate(
