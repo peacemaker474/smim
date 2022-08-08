@@ -39,7 +39,7 @@ function PostTagPresenter({
 export default PostTagPresenter;
 
 const HashContainer = styled.div`
-  height: 40px;
+  height: auto;
   margin-top: 30px;
   padding: 5px;
   color: rgb(52, 58, 64);
@@ -52,7 +52,6 @@ const HashContainer = styled.div`
     ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
   @media screen and (max-width: 1200px) {
     display: block;
-    height: auto;
   }
 `;
 

@@ -43,6 +43,10 @@ const ModalBox = styled.div`
   left: 50%;
   z-index: 2;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 612px) {
+    font-size: 13px;
+    width: 310px;
+  }
 `;
 const ModalText = styled.h2`
   margin: 0 auto;
@@ -65,5 +69,10 @@ const Btn = styled(ColorBtn)`
   &:hover {
     background: ${({ theme }) => theme.color.yellow};
     color: #fff;
+  }
+  @media screen and (max-width: 612px) {
+    font-size: 13px;
+    width: 3rem;
+    height: 1.7rem;
   }
 `;

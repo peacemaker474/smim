@@ -14,8 +14,12 @@ function PostUploadPage() {
 
   const loadPost = async () => {
     try {
-      const response = await getReadPostDetail(postId);
-      return response.data;
+      if (postId) {
+        const response = await getReadPostDetail(postId);
+        return response.data;
+      } else {
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
@@ -39,17 +43,16 @@ function PostUploadPage() {
 
 export default PostUploadPage;
 
-const PostCreateMain = styled.main`
-  margin-top: 10vh;
-`;
+const PostCreateMain = styled.main``;
 
 const PostCreateContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 53px auto 0;
+  margin: 100px auto 0;
   padding: 70px 0;
   @media screen and (max-width: 550px) {
     width: 333px;
+    padding: 50px 0;
   }
   @media (min-width: 550px) and (max-width: 612px) {
     width: 500px;
