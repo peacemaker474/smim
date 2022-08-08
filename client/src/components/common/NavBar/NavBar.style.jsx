@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Toggle from './Toggle';
 import MobileNavBar from './MobileNavBar';
-import LoginSection from '../../login/LoginSection/LoginSection';
 import UserImage from '../UserImage/UserImage';
 import DownArrow from '../../../asset/icon/icon-down.svg';
 import MyPageModal from './MyPageModal';
@@ -21,6 +20,7 @@ const NavContainer = styled.nav`
 
 const NavWrapper = styled.div`
   max-width: 1180px;
+  width: 95%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -31,8 +31,6 @@ const NavWrapper = styled.div`
 const NavLogoBox = styled.div`
   width: 120px;
   height: 40px;
-  padding-left: 10px;
-  line-height: 40px;
 `;
 
 const NavMainTitle = styled(Link)`
@@ -40,7 +38,8 @@ const NavMainTitle = styled(Link)`
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
   cursor: pointer;
-  @media screen and (max-width: 320px) {
+  line-height: 40px;
+  @media ${({ theme }) => theme.device.ipad} {
     font-size: 20px;
   }
 `;
@@ -156,7 +155,6 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
           />
         </NavWrapper>
       </NavContainer>
-      {loginToggled && <LoginSection />}
       {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
     </>
   );

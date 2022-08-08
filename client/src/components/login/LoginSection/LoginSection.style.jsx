@@ -9,16 +9,13 @@ const LoginContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 1000;
+  background-color: rgba(12, 12, 12, 0.2);
 `;
 
 const LoginOverlay = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(12, 12, 12, 0.2);
-  position: absolute;
-  top: 0;
-  left: 0;
 `;
 
 const LoginWrapper = styled.section`
@@ -31,9 +28,9 @@ const LoginWrapper = styled.section`
   background-color: white;
   border-radius: 5px;
 
-  @media screen and (max-width: 400px) {
-    width: 16rem;
-    height: 17rem;
+  @media ${({ theme }) => theme.device.mobile } {
+    width: 16.5rem;
+    height: 19rem;
   }
 `;
 

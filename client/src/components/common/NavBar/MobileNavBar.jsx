@@ -34,20 +34,24 @@ const MobileList = styled.li`
   width: 80%;
   height: 100%;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
+  padding: 20px 20px 0 0;
+  line-height: 60px;
+
+  &:first-child {
+    line-height: 15px;
+  }
 `;
 
 const MobileLink = styled(Link)`
-  font-size: 26px;
+  font-size: 1.2rem;
   text-decoration: none;
   color: ${({ theme }) => theme.color.gray};
   cursor: pointer;
   @media ${({ theme }) => theme.device.iphoneSE} {
-    font-size: 18px;
+    font-size: 1.1rem;
   }
   @media ${({ theme }) => theme.device.fold} {
-    font-size: 17px;
+    font-size: 1rem;
   }
 `;
 
@@ -62,50 +66,37 @@ const MobileSignBox = styled.div`
 `;
 
 const MobileSignIn = styled.h2`
-  font-size: 18px;
+  font-size: 1.1rem;
   margin: 10px 0;
   cursor: pointer;
   @media ${({ theme }) => theme.device.iphoneSE} {
-    font-size: 15px;
+    font-size: 0.9rem;
     margin: 5px 0;
   }
   @media ${({ theme }) => theme.device.fold} {
-    font-size: 14px;
-    margin: 5px 0;
+    font-size: 0.8rem;
   }
 `;
 
-const MobileSignUpTitle = styled.span`
-  font-size: 13px;
+const MobileSignUpTitle = styled.p`
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.color.gray};
   font-weight: 500;
+  margin-bottom: 5px;
 
   @media ${({ theme }) => theme.device.iphoneSE} {
     display: block;
-    font-size: 11px;
-    margin-bottom: 5px;
-  }
-  @media ${({ theme }) => theme.device.fold} {
-    font-size: 10px;
-    display: block;
-    margin-bottom: 5px;
+    font-size: 0.5rem;
   }
 `;
 
 const MobileSignUp = styled(Link)`
   color: ${({ theme }) => theme.color.black};
   font-weight: bold;
-  font-size: 15px;
-  padding-left: 5px;
+  font-size: 0.9rem;
 
   @media ${({ theme }) => theme.device.iphoneSE} {
-    font-size: 13px;
-    padding-left: 0;
-  }
-
-  @media ${({ theme }) => theme.device.fold} {
-    font-size: 12px;
-    padding-left: 0;
+    font-size: 0.7rem;
   }
 `;
 
