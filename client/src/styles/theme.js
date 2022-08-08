@@ -30,6 +30,7 @@ export const theme = {
     webMiddle: `screen and (max-width: 1180px)`,
     ipad: `screen and (max-width: 769px)`,
     mobileMiddle: `screen and (max-width: 500px)`,
+    mobile: `screen and (max-width: 400px)`,
     iphoneSE: `screen and (max-width: 320px)`,
     fold: `screen and (max-width: 280px)`,
   },

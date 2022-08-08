@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
@@ -9,13 +9,7 @@ import NavBarStyle from './NavBar.style';
 import useDropdown from '../../../hooks/useDropdown';
 
 function NavBar() {
-  const { menuToggled, loginToggled} = useSelector(
-    state => ({
-      menuToggled: state.toggle.menuToggled,
-      loginToggled: state.toggle.loginToggled,
-    }),
-    shallowEqual
-  );
+  const { menuToggled } = useSelector((state) => state.toggle);
   const { authenticated } = useSelector((state) => state.authToken);
   const { imgUrl } = useSelector((state) => state.user);
   const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ] = useDropdown();
@@ -48,7 +42,6 @@ function NavBar() {
   return (
     <NavBarStyle
       menuToggled={menuToggled}
-      loginToggled={loginToggled}
       authenticated={authenticated}
       imgUrl={imgUrl}
       isDropdownVisible={isDropdownVisible}
