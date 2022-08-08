@@ -16,7 +16,6 @@ export default function CommentItemInnerPresenter({
   handleClickShow,
   changedText,
 }) {
-  console.log(groupId === cmntData._id);
   return (
     <>
       <CommentItemInner>
@@ -65,8 +64,11 @@ const CommentItemContent = styled.div`
 `;
 
 const CommentContentBox = styled.div`
-  @media (max-width: 768px) {
-    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '238px' : '350px')};
+  @media (max-width: 612px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '238px' : '173px')};
+  }
+  @media (min-width: 612px) and (max-width: 768px) {
+    width: ${({ groupId, cmntId }) => (groupId === cmntId ? '420px' : '354px')};
   }
   @media (min-width: 768px) and (max-width: 992px) {
     width: ${({ groupId, cmntId }) => (groupId === cmntId ? '549px' : '486px')};

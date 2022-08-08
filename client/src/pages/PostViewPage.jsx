@@ -35,28 +35,32 @@ function PostViewPage() {
   };
 
   return (
-    <PostViewContainer>
-      {modalVisible && (
-        <Modal
-          actionfunc={() => {
-            requestDelete(id, tkn);
-            dispatch(modalToggle());
-          }}
-          cancelFunc={() => dispatch(modalToggle())}
-        >
-          게시물을 삭제하시겠습니까?
-        </Modal>
-      )}
-      <PostPost />
-      <PostComment />
-    </PostViewContainer>
+    <PostViewMain>
+      <PostViewContainer>
+        {modalVisible && (
+          <Modal
+            actionfunc={() => {
+              requestDelete(id, tkn);
+              dispatch(modalToggle());
+            }}
+            cancelFunc={() => dispatch(modalToggle())}
+          >
+            게시물을 삭제하시겠습니까?
+          </Modal>
+        )}
+        <PostPost />
+        <PostComment />
+      </PostViewContainer>
+    </PostViewMain>
   );
 }
 
 export default PostViewPage;
 
+const PostViewMain = styled.main``;
+
 const PostViewContainer = styled.div`
-  margin: 10vh auto 0;
+  margin: 100px auto 0;
   padding-top: 70px;
   @media (max-width: 612px) {
     width: 328px;

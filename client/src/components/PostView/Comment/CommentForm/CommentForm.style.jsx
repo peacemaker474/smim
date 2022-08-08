@@ -17,10 +17,12 @@ export default function CommentFormPresenter({
   parentId,
   id,
 }) {
+  console.log(groupId === id);
+  console.log(groupId === parentId);
   return (
     <CmntForm groupId={groupId} parentId={parentId}>
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
-      <CmntInputDiv groupId={groupId} id={id}>
+      <CmntInputDiv groupId={groupId} parentId={parentId} id={id}>
         <CommentTextArea
           handleloginCheck={handleloginCheck}
           handleKeyDownCheck={handleKeyDownCheck}
@@ -28,10 +30,11 @@ export default function CommentFormPresenter({
           setValue={setValue}
           value={value}
           groupId={groupId}
+          parentId={parentId}
           id={id}
         />
         {id ? (
-          <>
+          <CmntBtnBox groupId={groupId} parentId={parentId} id={id}>
             <CmntBtn type='button' onClick={handleClickCancel}>
               취소
             </CmntBtn>
@@ -43,9 +46,9 @@ export default function CommentFormPresenter({
             >
               수정
             </CmntBtn>
-          </>
+          </CmntBtnBox>
         ) : (
-          <>
+          <CmntBtnBox groupId={groupId} parentId={parentId} id={id}>
             <CmntBtn type='button' onClick={handleClickCancel}>
               취소
             </CmntBtn>
@@ -57,7 +60,7 @@ export default function CommentFormPresenter({
             >
               게시
             </CmntBtn>
-          </>
+          </CmntBtnBox>
         )}
       </CmntInputDiv>
     </CmntForm>
@@ -73,10 +76,28 @@ const CmntForm = styled.div`
 `;
 
 const CmntInputDiv = styled.div`
-  width: ${({ groupId, id }) => (!groupId ? '94%' : groupId === id ? '94%' : '96%')};
-  // width: 93%;
+  width: ${({ groupId, parentId, id }) =>
+    !groupId ? '94%' : id && groupId === id ? '94%' : id && groupId === id ? '94%' : '96%'};
   display: flex;
   align-items: flex-end;
+  @media (max-width: 612px) {
+    display: ${({ groupId, id }) =>
+      !groupId ? 'flex' : id && groupId === id ? 'flex' : id && groupId === id ? 'flex' : 'block'};
+  }
+`;
+
+const CmntBtnBox = styled.div`
+  display: flex;
+  @media (max-width: 612px) {
+    margin: ${({ groupId, parentId, id }) =>
+      !groupId
+        ? '0'
+        : id && groupId === id
+        ? '0'
+        : id && groupId === id
+        ? '3px 0 0 125px'
+        : '3px 0 0 102px'};
+  }
 `;
 
 const CmntBtn = styled.button`
