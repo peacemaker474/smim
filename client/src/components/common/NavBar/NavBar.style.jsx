@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Toggle from './Toggle';
 import MobileNavBar from './MobileNavBar';
-import LoginSection from '../../login/LoginSection/LoginSection';
 import UserImage from '../UserImage/UserImage';
 import DownArrow from '../../../asset/icon/icon-down.svg';
 import MyPageModal from './MyPageModal';
@@ -156,7 +155,6 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
           />
         </NavWrapper>
       </NavContainer>
-      {loginToggled && <LoginSection />}
       {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
     </>
   );

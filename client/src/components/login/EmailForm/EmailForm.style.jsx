@@ -6,24 +6,25 @@ import LoginPw from '../LoginPw';
 
 export const FormBox = styled.form`
   width: 90%;
-  height: 92%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
   padding-top: 1.2em;
   margin: 0 auto;
+  gap: 5px;
 `;
 
 const FindIdPwd = React.memo(styled.span`
-  font-size: 0.7em;
+  font-size: 0.7rem;
   font-weight: bold;
   align-self: flex-end;
   cursor: pointer;
-  padding-right: 1.1em;
+  padding-right: 1.3em;
 
-  @media screen and (max-width: 400px) {
-    font-size: 0.5em;
+  @media ${({ theme }) => theme.device.mobile } {
+    font-size: 0.5rem;
   }
 `);
 
@@ -33,15 +34,12 @@ const LoginBtn = React.memo(styled.button`
   background-color: #ffc306;
   color: #EFFFE9;
   font-weight: bold;
-  align-self: center;
-  border: none;
-  border-radius: 5px;
   margin: 15px 0;
-  font-size: 1em;
+  font-size: 1rem;
 
-  @media screen and (max-width: 400px) {
+  @media ${({ theme }) => theme.device.mobile } {
     margin: 10px 0;
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
 `);
 

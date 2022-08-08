@@ -11,6 +11,7 @@ import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
 import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
+import LoginSection from './components/login/LoginSection/LoginSection';
 
 function App() {
   const { authenticated, expireTime } = useSelector(
@@ -20,8 +21,13 @@ function App() {
     }),
     shallowEqual
   );
-
-  const { isLoginCheckToggled } = useSelector((state) => state.toggle);
+  const { isLoginCheckToggled, loginToggled } = useSelector(
+    (state) => ({
+      isLoginCheckToggled: state.toggle.isLoginCheckToggled,
+      loginToggled: state.toggle.loginToggled,
+    }),
+    shallowEqual
+  );
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
@@ -58,6 +64,7 @@ function App() {
         </Modal>
       ) : null}
       <NavBar />
+      {loginToggled && <LoginSection />}
       {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <AppRoute />
       <ReactQueryDevtools initialIsOpen={true} />
