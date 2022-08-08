@@ -8,6 +8,14 @@ import { getMainPostLists } from '../network/main/http';
 const MainBody = styled.main`
   width: 100%;
   padding: 13em 0;
+
+  @media ${({ theme }) => theme.device.webMiddle} {
+    padding: 0;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    padding: 13em 0;
+  }
 `;
 
 const MainContainer = styled.div`
@@ -19,7 +27,12 @@ const MainContainer = styled.div`
   justify-content: center;
   gap: 20px;
 
-  @media screen and (max-width: 1180px) {
+  @media ${({ theme }) => theme.device.webMiddle} {
+    width: 850px;
+    height: 1223px;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
     width: 430px;
     height: 1400px;
     padding: 75rem 0;
@@ -32,7 +45,12 @@ const MainWrapper = styled.div`
   display: flex;
   justify-content: space-around;
 
-  @media screen and (max-width: 1180px) {
+  @media ${({ theme }) => theme.device.webMiddle} {
+    width: 100%;
+    height: 30%;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
     width: 430px;
     height: 1400px;
     flex-direction: column;
