@@ -37,16 +37,22 @@ export default function PostListHeadPresenter({
 }
 
 const PostListHeadDiv = styled.div`
-  width: 730px;
   height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 588px) {
+    display: block;
+    height: auto;
+  }
 `;
 
 const SortDiv = styled.div`
   height: 35px;
   display: flex;
+  @media screen and (max-width: 588px) {
+    justify-content: end;
+  }
 `;
 
 const SortSelect = styled.select`
@@ -56,6 +62,9 @@ const SortSelect = styled.select`
 
 const SearchDiv = styled.div`
   display: flex;
+  @media screen and (max-width: 588px) {
+    margin-bottom: 8px;
+  }
 `;
 
 const SearchBox = styled.form`
@@ -77,6 +86,9 @@ const SearchInput = styled.input`
   width: 217px;
   height: 28px;
   border: none;
+  @media screen and (max-width: 588px) {
+    width: 162px;
+  }
 `;
 
 const SearchBtn = styled.button`
