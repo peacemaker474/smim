@@ -3,18 +3,18 @@ import styled from 'styled-components';
 export const SignupInput = styled.input`
   all: unset;
   width: 100%;
-  height: 55%;
+  height: 50%;
+  font-size: 0.9rem;
   border: 2px solid ${({theme}) => theme.color.yellow};
   padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
 
-  @media screen and (max-width: 769px) {
-    height: 45%;
+  @media ${({ theme }) => theme.device.ipad} {
     font-size: 0.8rem;
   }
 
-  @media screen and (max-width: 500px) {
+  @media ${({ theme }) => theme.device.mobileMiddel} {
     font-size: 0.7rem;
   }
 `;
@@ -28,12 +28,12 @@ export const BirthYear = styled.input`
   box-sizing: border-box;
   border-radius: 5px;
 
-  @media screen and (max-width: 769px) {
+  @media ${({ theme }) => theme.device.ipad} {
     height: 90%;
     font-size: 0.8rem;
   }
 
-  @media screen and (max-width: 500px) {
+  @media ${({ theme }) => theme.device.mobileMiddle} {
     font-size: 0.7rem;
     padding-left: 5px;
   }
@@ -49,12 +49,12 @@ export const BirthMonth = styled.select`
   box-sizing: border-box;
   border-radius: 5px;
 
-  @media screen and (max-width: 769px) {
+  @media ${({ theme }) => theme.device.ipad} {
     height: 90%;
     font-size: 0.8rem;
   }
 
-  @media screen and (max-width: 500px) {
+  @media ${({ theme }) => theme.device.mobileMiddle} {
     font-size: 0.7rem;
     padding-left: 5px;
   }
@@ -69,7 +69,7 @@ export const MyInfoInput = styled.input`
   padding-left: 15px;
   box-sizing: border-box;
 
-  @media screen and (max-width: 769px) {
+  @media ${({ theme }) => theme.device.ipad} {
     height: 40%;
   }
 `;
@@ -77,7 +77,7 @@ export const MyInfoInput = styled.input`
 export const ChangePwInput = styled(MyInfoInput)`
   height: 70%;
 
-  @media screen and (max-width: 769px) {
+  @media ${({ theme }) => theme.device.ipad} {
     height: 60%;
   }
 `;
