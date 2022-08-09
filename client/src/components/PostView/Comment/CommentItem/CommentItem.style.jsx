@@ -44,4 +44,7 @@ export const CommentItemContainer = styled.div`
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 612px) {
+    font-size: 15px;
+  }
 `;

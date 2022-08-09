@@ -8,8 +8,7 @@ export default function CommentTextAreaPresenter({
   handleCommentChange,
   handleloginCheck,
   handleKeyDownCheck,
-  groupId,
-  id,
+  state,
 }) {
   return (
     <Textarea
@@ -23,31 +22,85 @@ export default function CommentTextAreaPresenter({
       onChange={handleCommentChange}
       onClick={handleloginCheck}
       onKeyDown={handleKeyDownCheck}
-      groupId={groupId}
-      id={id}
+      state={state}
     />
   );
 }
 
 const Textarea = styled.textarea`
   @media (max-width: 612px) {
-    width: ${({ groupId, id }) => (!groupId ? '64%' : groupId === id ? '79%' : '78%')};
+    width: ${({ state }) =>
+      state === 'main'
+        ? '173px'
+        : state === 'main Edit'
+        ? '173px'
+        : state === 'main Reply'
+        ? '173px'
+        : state === 'main Reply Edit'
+        ? '198px'
+        : state === 'Reply Reply'
+        ? '108px'
+        : '198px'};
   }
 
   @media (min-width: 612px) and (max-width: 768px) {
-    width: ${({ groupId, id }) => (!groupId ? '79%' : groupId === id ? '79%' : '68%')};
+    width: ${({ state }) =>
+      state === 'main'
+        ? '350px'
+        : state === 'main Edit'
+        ? '350px'
+        : state === 'main Reply'
+        ? '264px'
+        : state === 'main Reply Edit'
+        ? '286px'
+        : state === 'Reply Reply'
+        ? '198px'
+        : '286px'};
   }
 
   @media (min-width: 768px) and (max-width: 992px) {
-    width: ${({ groupId, id }) => (!groupId ? '85%' : groupId === id ? '85%' : '79%')};
+    width: ${({ state }) =>
+      state === 'main'
+        ? '485px'
+        : state === 'main Edit'
+        ? '485px'
+        : state === 'main Reply'
+        ? '396px'
+        : state === 'main Reply Edit'
+        ? '420px'
+        : state === 'Reply Reply'
+        ? '331px'
+        : '420px'};
   }
 
   @media (min-width: 992px) and (max-width: 1200px) {
-    width: ${({ groupId, id }) => (!groupId ? '87%' : groupId === id ? '87%' : '83%')};
+    width: ${({ state }) =>
+      state === 'main'
+        ? '615px'
+        : state === 'main Edit'
+        ? '615px'
+        : state === 'main Reply'
+        ? '526px'
+        : state === 'main Reply Edit'
+        ? '550px'
+        : state === 'Reply Reply'
+        ? '462px'
+        : '550px'};
   }
 
   @media (min-width: 1200px) {
-    width: ${({ groupId, id }) => (!groupId ? '90%' : groupId === id ? '90%' : '85%')};
+    width: ${({ state }) =>
+      state === 'main'
+        ? '745px'
+        : state === 'main Edit'
+        ? '745px'
+        : state === 'main Reply'
+        ? '656px'
+        : state === 'main Reply Edit'
+        ? '680px'
+        : state === 'Reply Reply'
+        ? '591px'
+        : '680px'};
   }
   margin-left: 20px;
   border: none;

@@ -15,12 +15,28 @@ export default function CommentForm({
   handleTextChange,
   id,
   changedText,
+  writer,
 }) {
   const loginState = useSelector((state) => state.user);
   const { register, handleSubmit, setValue, setFocus, watch } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
   let data = watch('comment');
+
+  let STATE = '';
+  if (parentId == null && !id) {
+    STATE = 'main';
+  } else if (parentId == null && id) {
+    STATE = 'main Edit';
+  } else if (parentId === groupId && !id) {
+    STATE = 'main Reply';
+  } else if (parentId === groupId && id) {
+    STATE = 'main Reply Edit';
+  } else if (parentId !== groupId && id) {
+    STATE = 'Reply Reply Edit';
+  } else {
+    STATE = 'Reply Reply';
+  }
 
   if (!handleClickCancel) {
     handleClickCancel = () => setValue('comment', '');
@@ -45,7 +61,7 @@ export default function CommentForm({
       setFocus('comment');
       setValue('comment', changedText);
     }
-  }, [isTargetVisible, setFocus]);
+  }, [isTargetVisible, setFocus, changedText, setValue]);
 
   const handleCommentCreate = async (e, data) => {
     const response = await postCommentCreate(
@@ -135,6 +151,8 @@ export default function CommentForm({
       groupId={groupId}
       parentId={parentId}
       id={id}
+      writer={writer}
+      state={STATE}
     />
   );
 }

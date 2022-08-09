@@ -8,9 +8,26 @@ export default function CommentTextArea({
   setValue,
   value,
   groupId,
+  parentId,
   id,
+  writer,
 }) {
   const ref = useRef();
+
+  let STATE = '';
+  if (parentId == null && !id) {
+    STATE = 'main';
+  } else if (parentId == null && id) {
+    STATE = 'main Edit';
+  } else if (parentId === groupId && !id) {
+    STATE = 'main Reply';
+  } else if (parentId === groupId && id) {
+    STATE = 'main Reply Edit';
+  } else if (parentId !== groupId && id) {
+    STATE = 'Reply Reply Edit';
+  } else {
+    STATE = 'Reply Reply';
+  }
 
   const handleCommentChange = (event) => {
     const v = event.target.value;
@@ -25,7 +42,7 @@ export default function CommentTextArea({
     ref.current.style.height = '27px';
     const scrollHeight = ref.current.scrollHeight;
     ref.current.style.height = scrollHeight + 'px';
-  }, [value]);
+  }, [value, register]);
 
   return (
     <CommentTextAreaPresenter
@@ -35,8 +52,7 @@ export default function CommentTextArea({
       handleCommentChange={handleCommentChange}
       handleloginCheck={handleloginCheck}
       handleKeyDownCheck={handleKeyDownCheck}
-      groupId={groupId}
-      id={id}
+      state={STATE}
     />
   );
 }

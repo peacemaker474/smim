@@ -11,6 +11,7 @@ export default function CommentPinned() {
     shallowEqual
   );
 
+  console.log(pinnedData, pinnedId);
   const { postWriter } = useSelector((state) => state.post);
 
   return (
