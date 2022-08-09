@@ -8,7 +8,7 @@ import PostListBodyPresenter from './PostListBody.style';
 export default function PostListBody({ setPostArray, postArray, age }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
 
-  const settingData = async ({ queryKey }) => {
+  const loadedPostListData = async ({ queryKey }) => {
     const [{ age }] = queryKey;
     try {
       const response = await getPostListRead(age, {
@@ -26,7 +26,7 @@ export default function PostListBody({ setPostArray, postArray, age }) {
     }
   };
 
-  const { data, isLoading } = useQuery([('postArray', { age })], settingData);
+  const { data, isLoading } = useQuery([('postArray', { age })], loadedPostListData);
 
   if (isLoading) {
     return <LoadingPage position='absolute' />;
