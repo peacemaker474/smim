@@ -5,7 +5,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 
 const MobileNavBox = styled.section`
-  width: 45vw;
+  width: 35vw;
   height: 100vh;
   position: fixed;
   top: 6%;
@@ -35,23 +35,21 @@ const MobileList = styled.li`
   height: 100%;
   margin: 0 auto;
   padding: 20px 20px 0 0;
-  line-height: 60px;
-
-  &:first-child {
-    line-height: 15px;
-  }
 `;
 
 const MobileLink = styled(Link)`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: none;
-  color: ${({ theme }) => theme.color.gray};
+  color: ${({ theme }) => theme.color.black};
   cursor: pointer;
+  &:hover {
+    font-weight: bold;
+  }
   @media ${({ theme }) => theme.device.iphoneSE} {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   @media ${({ theme }) => theme.device.fold} {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -116,17 +114,24 @@ function MobileNavBar ({ onLogoutClick }) {
   return (
     <MobileNavBox>
       <MobileLists>
-        <MobileList>
-          {!authenticated ? (
+        {!authenticated ? (
+          <MobileList>
             <MobileSignBox>
               <MobileSignIn onClick={handleLoginClick}> 로그인 하기 </MobileSignIn>
               <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
-              <MobileSignUp to='/signup' onClick={handleMenuClick}> 회원가입 </MobileSignUp>
+              <MobileSignUp to='signup' onClick={handleMenuClick}> 회원가입 </MobileSignUp>
             </MobileSignBox>
-          ) : (
-            <MobileLink to='/my' onClick={handleMenuClick}> 마이페이지 </MobileLink>
-          )}
-        </MobileList>
+          </MobileList>
+        ) : (
+          <>
+            <MobileList>
+              <MobileLink to='post/create' onClick={handleMenuClick}> 새 글 작성 </MobileLink>
+            </MobileList>
+            <MobileList>
+              <MobileLink to='my' onClick={handleMenuClick}> 마이페이지 </MobileLink>
+            </MobileList>
+          </>
+        )}
         <MobileList>
           <MobileLink to='generation?age=10' onClick={handleMenuClick}> 10대에게 </MobileLink>
         </MobileList>

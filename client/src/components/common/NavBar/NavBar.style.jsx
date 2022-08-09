@@ -34,13 +34,17 @@ const NavLogoBox = styled.div`
 `;
 
 const NavMainTitle = styled(Link)`
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
   cursor: pointer;
   line-height: 40px;
   @media ${({ theme }) => theme.device.ipad} {
-    font-size: 20px;
+    font-size: 1.8rem;
+  }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 1.5rem;
   }
 `;
 
