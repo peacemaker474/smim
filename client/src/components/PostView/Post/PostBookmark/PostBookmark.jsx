@@ -25,13 +25,12 @@ export default function PostBookmark({ bookmark }) {
     if (isBookmarkChecked) {
       // 북마크 했을 때
       try {
-        const response = await getUnbookmark(id, {
+        await getUnbookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
-        console.log(response);
         setIsBookmarkChecked(false);
       } catch (error) {
         console.error(error);
@@ -40,13 +39,12 @@ export default function PostBookmark({ bookmark }) {
       // 북마크 하지 않았을 때
 
       try {
-        const response = await getBookmark(id, {
+        await getBookmark(id, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${tkn}`,
           },
         });
-        console.log(response);
         setIsBookmarkChecked(true);
       } catch (error) {
         console.error(error);
