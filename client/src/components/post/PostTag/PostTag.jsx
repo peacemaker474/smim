@@ -17,9 +17,14 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
   };
 
   const handleKeyUp = (e) => {
-    if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
-      const tagText = text.split(',')[0];
-      console.log(tagText.length);
+    const reg = /[^\wㄱ-힣]/g;
+
+    if (reg.exec(e.target.value)) {
+      setText(e.target.value.replace(reg, ''));
+    }
+
+    if (e.keyCode === 188 || e.keyCode === 32 || (e.keyCode === 13 && e.target.value !== '')) {
+      const tagText = e.target.value.replace(reg, '');
       if (tagText.length === 0) {
         setText('');
       } else if (!tagArray.includes(tagText)) {
