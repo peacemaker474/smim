@@ -42,8 +42,10 @@ const MobileLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.color.black};
   cursor: pointer;
+  transition: all 0.3s ease 0s;
   &:hover {
     font-weight: bold;
+    font-size: 1.2rem;
   }
   @media ${({ theme }) => theme.device.iphoneSE} {
     font-size: 1rem;
@@ -77,8 +79,8 @@ const MobileSignIn = styled.h2`
 `;
 
 const MobileSignUpTitle = styled.p`
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.color.gray};
+  font-size: 0.6rem;
+  color: ${({ theme }) => theme.color.black};
   font-weight: 500;
   margin-bottom: 5px;
 

@@ -3,6 +3,14 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  @font-face {
+    font-family: 'MaruBuri-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   body {
     width: 100vw;
     margin: 0;
@@ -15,9 +23,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     /* firefox 에서의 안티엘리어싱 */
     -moz-osx-font-smoothing: grayscale;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    font-family: 'MaruBuri-Regular';
   }
 
   body::-webkit-scrollbar {
@@ -43,10 +49,12 @@ const GlobalStyle = createGlobalStyle`
     border : none;
     cursor : pointer;
     background : none;
+    font-family: 'MaruBuri-Regular';
   }
   
   input,select{
     outline : none;
+    font-family: 'MaruBuri-Regular';
   }
   
   a {

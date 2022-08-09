@@ -29,7 +29,7 @@ const NavWrapper = styled.div`
 `;
 
 const NavLogoBox = styled.div`
-  width: 120px;
+  width: 170px;
   height: 40px;
 `;
 
@@ -139,8 +139,8 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
             ) : (
               <NavList onClick={onMyPageClick} ref={btnRef}>
                 <UserImage
-                  width={"50%"}
-                  height={"50%"}
+                  width={"40px"}
+                  height={"40px"}
                   imgUrl={imgUrl}
                 />
                 <DownButton />

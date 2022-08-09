@@ -65,7 +65,7 @@ const UserImageText = React.memo(styled.p`
   text-align: center;
 
   @media screen and (max-width: 769px) {
-    width: 85%;
+    width: 80%;
     font-size: 0.8rem;
   }
 
@@ -93,8 +93,8 @@ function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfo
             <UserImageTitle> 사진 </UserImageTitle>
             <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
             <UserImage
-              width={"10%"}
-              height={"70%"}
+              width={"40px"}
+              height={"40px"}
               imgUrl={imgUrl}
             />
           </UserImageWrapper>

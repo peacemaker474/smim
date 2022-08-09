@@ -8,7 +8,7 @@ const MyPageModalWrraper = styled.div`
   background-color: white;
   position: absolute;
   top: 90%;
-  left: 86%;
+  left: 82%;
   box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
   border-radius: 5px;
 `;
@@ -32,6 +32,9 @@ const MyPageModalList = styled.li`
 `;
 
 const MyPageLink = styled(Link)`
+  display: block;
+  width: 100%;
+  height: 100%;
 `;
 
 function MyPageModal ({ onMyPageClick, onLogoutClick }) {
