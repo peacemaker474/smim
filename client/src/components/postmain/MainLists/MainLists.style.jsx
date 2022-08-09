@@ -7,9 +7,15 @@ const MainPostsContainer = styled.div`
   height: 363px;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 14px;
+  margin: 0 auto;
 
-  @media screen and (max-width: 1180px) {
-    width: 420px;
+  @media ${({ theme }) => theme.device.webMiddle} {
+    width: 30%;
+    height: 80%;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    width: 90%;
     height: 521px;
   }
 `;
@@ -20,6 +26,14 @@ const PostsTitle = styled.div`
   align-items: center;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
   height: 17%;
+
+  @media ${({ theme }) => theme.device.webMiddle} {
+    font-size: 0.9rem;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    font-size: 1.1rem;
+  }
 `;
 
 const MoreBtn = styled.button`
@@ -38,12 +52,20 @@ const PostsContent = styled.ul`
 `;
 
 const PostsList = styled.li`
-  height: 20%;
   width: 100%;
+  height: 20%;
   padding: 10px;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
   &:last-child {
     border: none;
+  }
+
+  @media ${({ theme }) => theme.device.webMiddle} {
+    padding: 7px;
+  }
+
+  @meida ${({ theme }) => theme.device.ipad} {
+    padding: 10px;
   }
 `;
 
@@ -52,8 +74,18 @@ const ListHeader = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 0.8em;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: bold;
+
+  @media ${({ theme }) => theme.device.webMiddle} {
+    font-size: 0.9rem;
+    padding-bottom: 0.3em;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    font-size: 1rem;
+    padding: 0.3em 0 0.8em 0;
+  }
 `;
 
 const ListisAnswer = styled.p`
@@ -63,13 +95,27 @@ const ListisAnswer = styled.p`
 
 const ListTitle = styled.h3`
   width: 80%;
+
+  @media ${({ theme }) => theme.device.webMiddle} {
+    padding-left: 5px;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    padding-left: 0;
+  }
 `;
 
 const ListContent = styled.div`
   display: flex;
-  font-size: 0.8em;
-  @media screen and (max-width: 1180px) {
+  font-size: 0.8rem;
+  align-items: center;
+  @media ${({ theme }) => theme.device.webMiddle} {
+    font-size: 0.7rem;
     padding-top: 0.3em;
+  }
+  @media ${({ theme }) => theme.device.ipad} {
+    font-size: 0.8rem;
+    padding-top: 0.5em;
   }
 `;
 
