@@ -94,8 +94,6 @@ export default function CommentForm({
       if (parentId) {
         handleClickCancel(e);
       }
-    } else {
-      console.log(response.data.success);
     }
   };
 
@@ -114,8 +112,6 @@ export default function CommentForm({
     if (response.data.success) {
       handleTextChange(data.replace('<br>', '\n'));
       handleClickCancel(e);
-    } else {
-      console.log(response.data.success);
     }
   };
 
