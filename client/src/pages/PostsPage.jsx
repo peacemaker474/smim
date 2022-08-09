@@ -55,16 +55,16 @@ const PostListHeading = styled.h2`
 
 const PostBodyContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 234px 234px 234px;
   gap: 20px 14px;
   margin-top: 67px;
   position: relative;
-  min-height: 250px;
+  height: 250px;
   @media screen and (max-width: 588px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 252px;
     margin-top: 35px;
   }
   @media (min-width: 588px) and (max-width: 850px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 234px 234px;
   }
 `;

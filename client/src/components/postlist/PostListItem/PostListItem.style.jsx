@@ -58,7 +58,7 @@ const PostAnchor = styled.div``;
 
 const PostTitle = styled.h2`
   color: ${({ theme }) => theme.color.black};
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 20px;
   margin-bottom: 10px;
@@ -77,11 +77,10 @@ const PostWriter = styled.span`
 `;
 
 const PostText = styled.p`
-  height: 28px;
-  width: 148px;
-  font-size: 11px;
+  height: 35px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 14px;
+  line-height: 17px;
   margin-bottom: 14px;
   color: ${({ theme }) => theme.color.black};
   overflow: hidden;
@@ -104,6 +103,7 @@ const PostTagDiv = styled.div`
 `;
 const TagItem = styled(Tag)`
   background-color: ${({ theme, color }) => theme.tagColor[color]};
+  font-weight: 600;
   & + span {
     margin-left: 5px;
   }
