@@ -55,8 +55,7 @@ function PostForm({ postData, pathValue, postId }) {
           },
         }
       )
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           navigate('/');
         })
         .catch((err) => console.log(err));
@@ -76,8 +75,7 @@ function PostForm({ postData, pathValue, postId }) {
           },
         }
       )
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           navigate(-1);
         })
         .catch((err) => console.log(err));

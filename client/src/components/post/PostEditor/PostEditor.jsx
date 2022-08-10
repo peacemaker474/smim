@@ -88,11 +88,11 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   ];
 
   useEffect(() => {
-    register('para', { required: true, minLength: 10 }, { shouldFocus: false });
+    register('para', { required: true });
     setText(postText);
   }, [register, watch, postText]);
 
-  const { ref } = register('para', { required: true, minLength: 10 }, { shouldFocus: false });
+  const { ref } = register('para', { required: true });
 
   const onEditorStateChange = (editorState) => {
     setText(editorState);
@@ -101,14 +101,10 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   const onEditorSetValue = () => {
     if (text === '<p><br></p>') {
       setValue('para', '');
-    } else {
-      setValue('para', text);
-    }
-
-    if (text === '<p><br></p>' || text.length < 10) {
-      setError('para', { required: true, minLength: 10 }, { shouldFocus: false });
+      setError('para', { required: true });
     } else {
       clearErrors('para');
+      setValue('para', text);
     }
   };
 

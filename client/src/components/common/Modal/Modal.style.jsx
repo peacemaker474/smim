@@ -6,11 +6,7 @@ function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
   return (
     <ModalContainer>
       <ModalOverlay onClick={handleModalCancle} />
-      <ModalBox
-        onClick={(e) => {
-          console.log(e);
-        }}
-      >
+      <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
           <Btn onClick={handleModalCancle}>취소</Btn>

@@ -24,13 +24,12 @@ function PostViewPage() {
   }, [dispatch]);
 
   const requestDelete = async (id, tkn) => {
-    const response = await deletePost(id, {
+    await deletePost(id, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tkn}`,
       },
     });
-    console.log(response.data);
     navigate(-1);
   };
 

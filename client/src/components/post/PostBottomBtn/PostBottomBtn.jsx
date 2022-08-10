@@ -17,7 +17,6 @@ function PostBottomBtn({ formState, handleSubmit }) {
       handleFormCancle={handleFormCancle}
       handleSubmit={handleSubmit((data, e) => {
         e.preventDefault();
-        console.log(data);
         dispatch(modalToggle());
       })}
     />

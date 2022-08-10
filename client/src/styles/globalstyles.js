@@ -3,7 +3,6 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-
   @font-face {
     font-family: 'MaruBuri-Regular';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
@@ -17,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: #fff;
     cursor: default;
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
     scrollbar-width: none;
     /* font를 부드럽게 전환. 어두운 배경에서는 더 밝게 보이는 옵션 */
     -webkit-font-smoothing: antialiased;
@@ -27,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body::-webkit-scrollbar {
-    display: none; 
+    display: none;
   }
 
   * {
@@ -56,11 +55,19 @@ const GlobalStyle = createGlobalStyle`
     outline : none;
     font-family: 'MaruBuri-Regular';
   }
+
+  input::placeholder {
+    font-family: 'MaruBuri-Regular';
+  }
+  
+  textarea::placeholder {
+   font-family: 'MaruBuri-Regular';
+  }
   
   a {
   color: inherit;
   text-decoration: none;
-}
+  }
 `;
 
 export default GlobalStyle;
