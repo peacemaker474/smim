@@ -26,6 +26,7 @@ const PostsTitle = styled.div`
   align-items: center;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
   height: 17%;
+  font-size: 1rem;
 
   @media ${({ theme }) => theme.device.webMiddle} {
     font-size: 0.9rem;
@@ -56,6 +57,7 @@ const PostsList = styled.li`
   height: 20%;
   padding: 10px;
   border-bottom: 2px solid ${({ theme }) => theme.color.lightGray};
+  cursor: pointer;
   &:last-child {
     border: none;
   }
@@ -74,16 +76,16 @@ const ListHeader = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 0.8em;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
 
   @media ${({ theme }) => theme.device.webMiddle} {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding-bottom: 0.3em;
   }
 
   @media ${({ theme }) => theme.device.ipad} {
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 0.3em 0 0.8em 0;
   }
 `;
@@ -141,20 +143,20 @@ const PostLike = styled.p`
   margin-right: 10px;
 `;
 
-function MainListsStyle({ age, posts }) {
+function MainListsStyle({ age, posts, onPostListsMove, onPostDetailMove }) {
   return (
     <MainPostsContainer>
       <PostsTitle>
-        <h2>{age}대에게 질문하세요</h2>
-        <MoreBtn>더보기</MoreBtn>
+        <h2 id={age}> {age}대에게 질문하세요 </h2>
+        <MoreBtn onClick={onPostListsMove} type="button" >더보기</MoreBtn>
       </PostsTitle>
       <PostsContent>
         {posts &&
           posts.map((post) => (
-            <PostsList key={post._id}>
+            <PostsList key={post._id} onClick={onPostDetailMove} id={post._id}>
               <ListHeader>
                 <ListisAnswer> {!post.meta.answer ? '답변 대기' : '답변 완료'} </ListisAnswer>
-                <ListTitle>{post.title}</ListTitle>
+                <ListTitle>{post.title.length <= 15 ? post.title : `${post.title.substring(0, 15)}...`}</ListTitle>
               </ListHeader>
               <ListContent>
                 <PostOwner>{post.owner.nickname}</PostOwner>

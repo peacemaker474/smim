@@ -34,6 +34,8 @@ export const ListContent = styled.p`
   padding: 7px;
   font-size: 0.7em;
   align-self: flex-start;
+  line-height: 15px;
+  word-spacing: 1px;
 `;
 
 export const Writer = styled.p`

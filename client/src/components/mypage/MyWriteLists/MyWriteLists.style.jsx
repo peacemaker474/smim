@@ -40,7 +40,7 @@ function MyWriteListsStyle ({ writeList, onMoveDetail }) {
           <ListsUl>
             {writeList.map(item => 
               <Listli key={item.createAt} id={item._id} onClick={onMoveDetail} >
-                <Title> {item.title} </Title>
+                <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
                 <ListContent dangerouslySetInnerHTML={{ __html: item.content}} />
             </Listli>
             )}
