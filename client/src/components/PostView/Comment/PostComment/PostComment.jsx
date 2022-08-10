@@ -22,37 +22,34 @@ function PostComment() {
   const { id: postId } = useParams();
 
   const handleCommentDelete = async () => {
-    const response = await deleteComment(commentId, {
+    await deleteComment(commentId, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tkn}`,
       },
     });
-    console.log(response.data);
     dispatch(deleteCommentId(commentId));
     dispatch(commentModalToggle());
   };
 
   const hadnelCommentPinned = async () => {
-    const response = await getCommentPinned(commentId, {
+    await getCommentPinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tkn}`,
       },
     });
-    console.log(response.data);
     dispatch(getPinnedCommentData({ pinnedId: commentId, tknAnother }));
     dispatch(commentModalToggle());
   };
 
   const handleCommentUnpinned = async () => {
-    const response = await getCommentUnpinned(commentId, {
+    await getCommentUnpinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${tkn}`,
       },
     });
-    console.log(response.data);
     dispatch(unpinnedCommentId());
     dispatch(commentModalToggle());
   };

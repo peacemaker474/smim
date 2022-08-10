@@ -10,7 +10,6 @@ export default function CommentTextArea({
   groupId,
   parentId,
   id,
-  writer,
 }) {
   const ref = useRef();
 
