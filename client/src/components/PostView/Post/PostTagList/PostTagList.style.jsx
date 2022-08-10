@@ -16,6 +16,6 @@ const PostTagBox = styled.div`
 
 const TagItem = styled(Tag)`
   & + span {
-    margin-left: 5px;
+    margin-left: 10px;
   }
 `;
