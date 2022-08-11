@@ -125,6 +125,21 @@ export const userImgUpload = multer({
   }),
 });
 
+// Commment Middleware
+
+export const checkCommentUndefined = async (req, res, next) => {
+  const { id: commentId } = req.params; // comment id
+
+  if (!commentId) {
+    return res.status(400).send({
+      success: false,
+      message: 'comment Id가 undefined입니다.',
+    });
+  }
+
+  next();
+};
+
 export const checkCommentLike = async (req, res) => {
   const {
     user: { _id },

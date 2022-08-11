@@ -28,12 +28,16 @@ export const verifyToken = async (req, res, next) => {
     if (!decoded) {
       return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
     }
-    const userData = await User.findById({ _id: decoded.user_id });
+    const userData = await User.findOne({ _id: decoded.user_id, being: true });
+    if (!userData) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
     req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
     next();
   });
-
-  // return res.status(500).json({ result: '유효하지 않은 토큰입니다.' });
 }; // jwt token decoding
 
 export const verifyRefreshToken = (req, res, next) => {
@@ -48,8 +52,13 @@ export const verifyRefreshToken = (req, res, next) => {
     if (!decoded)
       return res.status(403).json({ success: false, message: '유효하지 않은 토큰입니다. ' });
 
-    console.log('decoded', decoded);
-    const userData = await User.findById({ _id: decoded.user_id });
+    const userData = await User.findOne({ _id: decoded.user_id, being: true });
+    if (!userData) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 탈퇴한 사용자입니다.',
+      });
+    }
     req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
     next();
   });
@@ -68,7 +77,6 @@ export const verifyAccessToken = (req, res, next) => {
       return res
         .status(401)
         .json({ success: false, message: '토큰이 만료되었거나 유효하지 않은 토큰입니다.' });
-    console.log(decoded);
     next();
   });
 };
