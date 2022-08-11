@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import UserImage from '../../common/UserImage/UserImage';
 
 const UpdateImageModalWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -21,8 +21,8 @@ const UpdateImageModalOverlay = styled.div`
 `;
 
 const ImageModalContainer = styled.section`
-  width: 25%;
-  height: 60%;
+  width: 40%;
+  height: 70%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -33,12 +33,23 @@ const ImageModalContainer = styled.section`
   align-items: center;
   justify-content: space-evenly;
   background-color: white;
+
+  @media ${({ theme }) => theme.device.ipad} {
+    width: 50%;
+    height: 50%;
+    justify-content: space-around;
+  }
 `;
 
 const ImageIntroduceBox = styled.div`
   width: 90%;
   height: 25%;
   border-bottom: 1px solid rgba(128, 128, 128, .4);
+
+  @media ${({ theme }) => theme.device.ipad} {
+    width: 90%;
+    height: 27%;
+  }
 `;
 
 const ImageCancelButton = styled.button`
@@ -48,24 +59,45 @@ const ImageCancelButton = styled.button`
   align-self: flex-start;
   margin-left: 1.2em;
   cursor: pointer;
+
+  @media ${({ theme }) => theme.device.ipad} {
+    width: 7%;
+    height: 5%;
+    margin-left: 0.9em;
+    font-size: 0.8rem;
+  }
 `;
 
 const ImageTilte = styled.h2`
-  font-size: 1.2em;
+  font-size: 1.2rem;
   padding-bottom: 1.2em;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 1rem;
+  }
 `;
 
 const ImageText = styled.p`
-  font-size: 0.9em;
+  font-size: 0.8rem;
   line-height: 1.4em;
   word-break: keep-all;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 0.7rem;
+  }
 `;
 
 const InputFileWrapper = styled.div`
-  width: 80%;
-  font-size: 20px;
+  width: 90%;
+  font-size: 1rem;
   display: flex;
-  gap: 10px;
+  justify-content: space-evenly;
+  gap: 5px;
+  font-weight: bold;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 0.8rem;
+  }
 `;
 
 const ImageUpdateLabel = styled.label`
@@ -102,7 +134,7 @@ function UpdateUserImageStyle ({ encodeImg, imgUrl, onFileUpload, onFileRemove, 
         <UserImage
           encodeImg={encodeImg}
           imgUrl={imgUrl}
-          width={"60%"}
+          width={"50%"}
           height={"40%"}
         />
         <InputFileWrapper>

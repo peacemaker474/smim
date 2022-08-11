@@ -6,7 +6,7 @@ export const ValidCheck = React.memo(styled.span`
   font-weight: bold;
   align-self: flex-end;
   color: red;
-  margin-top: 7px;
+  margin-top: 10px;
 
   @media ${({ theme }) => theme.device.mobileMiddle} {
     font-size: 0.6rem;
