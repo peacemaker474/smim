@@ -46,22 +46,26 @@ export default function PostListItemPresenter({
 }
 
 const PostItem = styled(Link)`
+  position: relative;
+  height: 255px;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 20px;
   padding: 31px 21px;
-  position: relative;
   cursor: pointer;
-  height: 250px;
 `;
 
 const PostAnchor = styled.div``;
 
 const PostTitle = styled.h2`
+  height: 21px;
+  margin-bottom: 10px;
+  overflow: hidden;
   color: ${({ theme }) => theme.color.black};
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const PostWriterDiv = styled.div`
