@@ -9,9 +9,22 @@ export const postCommentCreate = async (req, res) => {
     user: { _id },
   } = req.body;
 
+  if (!postId) {
+    return res.status(400).send({
+      success: false,
+      message: 'postId가 undefined입니다.',
+    });
+  }
+
   try {
-    const userExist = await User.exists({ _id: _id });
     const postExist = await Post.exists({ _id: postId, being: true });
+
+    if (!postExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
 
     if (parentId != null) {
       if (parentId === undefined) {
@@ -31,26 +44,7 @@ export const postCommentCreate = async (req, res) => {
       }
     }
 
-    if (!postExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
-
-    if (!postId) {
-      return res.status(400).send({
-        success: false,
-        message: 'postId가 undefined입니다.',
-      });
-    } else if (!content) {
+    if (!content) {
       return res.status(400).send({
         success: false,
         message: 'content가 undefined입니다.',
@@ -102,6 +96,13 @@ export const getCommentList = async (req, res) => {
     userData.userId = userId;
   }
 
+  if (!postId) {
+    return res.status(400).send({
+      success: false,
+      message: 'postId가 undefined입니다.',
+    });
+  }
+
   try {
     const postExist = await Post.exists({ _id: postId, being: true });
 
@@ -112,73 +113,66 @@ export const getCommentList = async (req, res) => {
       });
     }
 
-    if (!postId) {
-      return res.status(400).send({
-        success: false,
-        message: 'postId가 undefined입니다.',
-      });
-    } else {
-      const commentList = await Comment.find({
-        post_id: postId,
-        parent_id: null,
-      });
+    const commentList = await Comment.find({
+      post_id: postId,
+      parent_id: null,
+    });
 
-      const DATA = [];
+    const DATA = [];
 
-      async function repeat(comment, check) {
-        if (comment.length === 0) {
-          return;
-        }
-        const commentDataList = await Promise.all(
-          comment.map(async (el) => {
-            const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
-            const writer = await User.findOne({ _id: el.writer });
-
-            if (userData._id) {
-              return {
-                ...el._doc,
-                children,
-                writer: {
-                  userId: writer.userId,
-                  _id: writer._id,
-                  nickname: writer.nickname,
-                  imageUrl: writer.imageUrl,
-                },
-                like: el._doc.like_users.includes(userData._id),
-              };
-            } else {
-              return {
-                ...el._doc,
-                children,
-                writer: {
-                  userId: writer.userId,
-                  _id: writer._id,
-                  nickname: writer.nickname,
-                  imageUrl: writer.imageUrl,
-                },
-              };
-            }
-          })
-        );
-
-        for (let i = 0; i < commentDataList.length; i++) {
-          if (commentDataList[i].parent_id == null) {
-            check = i;
-            DATA[check] = [];
-          }
-          DATA[check].push(commentDataList[i]);
-          await repeat(commentDataList[i].children, check);
-        }
+    async function repeat(comment, check) {
+      if (comment.length === 0) {
+        return;
       }
+      const commentDataList = await Promise.all(
+        comment.map(async (el) => {
+          const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+          const writer = await User.findOne({ _id: el.writer });
 
-      await repeat(commentList, 0);
-      // console.log(DATA);
+          if (userData._id) {
+            return {
+              ...el._doc,
+              children,
+              writer: {
+                userId: writer.userId,
+                _id: writer._id,
+                nickname: writer.nickname,
+                imageUrl: writer.imageUrl,
+              },
+              like: el._doc.like_users.includes(userData._id),
+            };
+          } else {
+            return {
+              ...el._doc,
+              children,
+              writer: {
+                userId: writer.userId,
+                _id: writer._id,
+                nickname: writer.nickname,
+                imageUrl: writer.imageUrl,
+              },
+            };
+          }
+        })
+      );
 
-      return res.status(200).send({
-        success: true,
-        data: DATA,
-      });
+      for (let i = 0; i < commentDataList.length; i++) {
+        if (commentDataList[i].parent_id == null) {
+          check = i;
+          DATA[check] = [];
+        }
+        DATA[check].push(commentDataList[i]);
+        await repeat(commentDataList[i].children, check);
+      }
     }
+
+    await repeat(commentList, 0);
+    // console.log(DATA);
+
+    return res.status(200).send({
+      success: true,
+      data: DATA,
+    });
   } catch (error) {
     return res.status(500).send({
       success: false,
@@ -196,14 +190,6 @@ export const getCommentPinned = async (req, res) => {
   } = req.body;
 
   try {
-    if (!commentId) {
-      return res.status(400).send({
-        success: false,
-        message: 'commentId가 undefined입니다.',
-      });
-    }
-
-    const userExist = await User.exists({ _id: _id });
     const comment = await Comment.findOne({
       state: true,
       _id: commentId,
@@ -223,13 +209,6 @@ export const getCommentPinned = async (req, res) => {
       return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
       });
     }
 
@@ -266,7 +245,6 @@ export const getCommentUnpinned = async (req, res) => {
       });
     }
 
-    const userExist = await User.exists({ _id: _id });
     const comment = await Comment.findOne({
       state: true,
       _id: commentId,
@@ -289,12 +267,6 @@ export const getCommentUnpinned = async (req, res) => {
       });
     }
 
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
     post.meta.pinnedCmnt = null;
     post.meta.answer = false;
     await post.save();
@@ -318,10 +290,11 @@ export const getCommentLike = async (req, res) => {
     user: { _id },
   } = req.body;
   const { id: commentId } = req.params;
+
   try {
     const comment = await Comment.findById(commentId);
 
-    if (!commentId) {
+    if (!comment) {
       return res.status(400).send({
         success: false,
         message: '존재하지 않는 댓글입니다.',
@@ -361,6 +334,7 @@ export const getCommentUnlike = async (req, res) => {
     user: { _id },
   } = req.body;
   const { id: commentId } = req.params;
+
   try {
     const comment = await Comment.findById(commentId);
 
@@ -417,25 +391,8 @@ export const getComment = async (req, res) => {
     userData.userId = userId;
   }
 
-  if (!commentId) {
-    return res.status(400).send({
-      success: false,
-      message: 'comment Id가 undefined입니다.',
-    });
-  }
-
   try {
     const comment = await Comment.findOne({ _id: commentId, being: true });
-
-    if (userData._id) {
-      const user = await User.findOne({ _id: userData._id, being: true });
-      if (!user) {
-        return res.status(400).send({
-          success: false,
-          message: '존재하지 않거나 탈퇴한 사용자입니다.',
-        });
-      }
-    }
 
     if (!comment) {
       return res.status(400).send({
