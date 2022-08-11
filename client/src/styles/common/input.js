@@ -35,7 +35,7 @@ export const BirthYear = styled.input`
 
   @media ${({ theme }) => theme.device.mobileMiddle} {
     font-size: 0.7rem;
-    padding-left: 5px;
+    padding-left: 10px;
   }
 `;
 
@@ -43,7 +43,7 @@ export const BirthMonth = styled.select`
   all: unset;
   width: 30%;
   height: 100%;
-  line-height: 10px;
+  line-height: 1em;
   border: 2px solid ${({theme}) => theme.color.yellow};
   padding: 12px 0 0 10px;
   box-sizing: border-box;
@@ -56,7 +56,7 @@ export const BirthMonth = styled.select`
 
   @media ${({ theme }) => theme.device.mobileMiddle} {
     font-size: 0.7rem;
-    padding-left: 5px;
+    padding-left: 10px;
   }
 `;
 

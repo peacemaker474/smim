@@ -51,8 +51,9 @@ const NavMainTitle = styled(Link)`
 const NavLists = styled.ul`
   height: 100%;
   display: grid;
-  grid-template-columns: ${({ login }) => login ? "5em 5em 5em 5em 5em 5em;" : "5em 5em 5em 5em 5em 5em;"}
-  grid-gap: 2em;
+  grid-template-columns: repeat(6, 5em);
+  grid-gap: 1.5em;
+  justify-content: center;
   align-items: center;
   position: relative;
   @media ${({ theme }) => theme.device.ipad} {
@@ -69,22 +70,22 @@ const NavList = styled.li`
 `;
 
 const GenerationLink = styled(Link)`
-  font-size: 1em;
+  font-size: 1rem;
   text-decoration: none;
   color: ${({ theme, current }) => (current ? `${theme.color.black}` : `${theme.color.gray}`)};
   transition: all 0.3s ease 0s;
   &:hover {
     font-weight: bold;
     color: ${({ theme }) => theme.color.black};
+    font-size: 1.1rem;
   }
-  padding-bottom: 5px;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
     ${({ current, theme }) => (current ? `${theme.color.black}` : 'transparent')};
 `;
 
 const LoginLink = styled.span`
-  font-size: 18px;
+  font-size: 1.1rem;
   color: ${({ theme }) => theme.color.black};
   font-weight: bold;
   cursor: pointer;

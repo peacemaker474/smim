@@ -10,6 +10,7 @@ export const setRefreshToken = (name, value) => {
   return cookies.set(name, value, {
     sameSite: 'strict',
     path: "/",
+    secure: true,
     expires: new Date(expireDate),
   })
 }
