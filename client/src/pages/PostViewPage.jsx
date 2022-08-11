@@ -48,7 +48,7 @@ function PostViewPage() {
           </Modal>
         )}
         <PostPost />
-        <PostComment />
+        {tkn ? <PostComment /> : null}
       </PostViewContainer>
     </PostViewMain>
   );
@@ -61,6 +61,7 @@ const PostViewMain = styled.main``;
 const PostViewContainer = styled.div`
   margin: 100px auto 0;
   padding-top: 70px;
+  padding-bottom: 50px;
   @media (max-width: 612px) {
     width: 328px;
   }

@@ -1,6 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
+import { useSelector } from 'react-redux';
 import CommentItemEtcPresenter from './CommentItemEtc.style';
 import useVisible from '../../../../hooks/useVisible';
 import { elapsedText } from '../../../../utils/elapsedText';
@@ -8,7 +7,6 @@ import { elapsedText } from '../../../../utils/elapsedText';
 export default function CommentItemEtc({ cmntData, groupId, writer }) {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const [isTargetVisible, handleTargetShow] = useVisible(false);
-  const dispatch = useDispatch();
 
   const handleClickCancel = (e) => {
     e.target.value = '';
@@ -23,8 +21,6 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
       handleClickShow={() => {
         if (tkn) {
           handleTargetShow(true);
-        } else {
-          dispatch(isLoginCheckToggle());
         }
       }}
       createAt={createAt}

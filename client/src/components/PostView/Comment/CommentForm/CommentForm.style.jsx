@@ -7,7 +7,6 @@ export default function CommentFormPresenter({
   loginState,
   handleSubmit,
   handleClickCancel,
-  handleloginCheck,
   handleKeyDownCheck,
   onSubmit,
   register,
@@ -24,7 +23,6 @@ export default function CommentFormPresenter({
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={state}>
         <CommentTextArea
-          handleloginCheck={handleloginCheck}
           handleKeyDownCheck={handleKeyDownCheck}
           register={register}
           setValue={setValue}

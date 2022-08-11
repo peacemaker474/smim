@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import CommentTextAreaPresenter from './CommentTextArea.style';
 
 export default function CommentTextArea({
-  handleloginCheck,
   handleKeyDownCheck,
   register,
   setValue,
@@ -49,7 +48,6 @@ export default function CommentTextArea({
       inputRef={ref}
       value={value}
       handleCommentChange={handleCommentChange}
-      handleloginCheck={handleloginCheck}
       handleKeyDownCheck={handleKeyDownCheck}
       state={STATE}
     />

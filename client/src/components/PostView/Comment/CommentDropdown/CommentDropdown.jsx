@@ -5,12 +5,11 @@ import {
   getPinnedCommentId,
   getUnpinnedCommentId,
 } from '../../../../redux/slice/commentSlice';
-import { commentModalToggle, isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
+import { commentModalToggle } from '../../../../redux/slice/toggleSlice';
 import CommentDropdownPresenter from './CommentDropdown.style';
 
 function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   const dispatch = useDispatch();
-  const tkn = useSelector((state) => state.authToken).accessToken;
 
   const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
 
@@ -36,11 +35,7 @@ function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
     dispatch(commentModalToggle());
   };
 
-  const handleCommentDeclaration = () => {
-    if (!tkn) {
-      dispatch(isLoginCheckToggle());
-    }
-  };
+  const handleCommentDeclaration = () => {};
 
   return (
     <CommentDropdownPresenter

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
 import { createComment } from '../../../../redux/slice/commentCreateSlice';
 import CommentFormPresenter from './CommentForm.style';
-import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
 export default function CommentForm({
   postId,
@@ -115,14 +114,6 @@ export default function CommentForm({
     }
   };
 
-  const handleloginCheck = (e) => {
-    e.preventDefault();
-    if (!tkn) {
-      e.target.disabled = true;
-      dispatch(isLoginCheckToggle());
-    }
-  };
-
   const handleKeyDownCheck = (e) => {
     if (e.keyCode === 13 && e.shiftKey === true) {
       e.preventDefault();
@@ -138,7 +129,6 @@ export default function CommentForm({
       loginState={loginState}
       handleSubmit={handleSubmit}
       handleClickCancel={handleClickCancel}
-      handleloginCheck={handleloginCheck}
       handleKeyDownCheck={handleKeyDownCheck}
       onSubmit={onSubmit}
       register={register}
