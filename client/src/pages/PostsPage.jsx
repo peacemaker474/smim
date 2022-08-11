@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import PostListHead from '../components/postlist/PostListHead/PostListHead';
 import PostListBody from '../components/postlist/PostListBody/PostListBody';
+import NotFound from './NotFound';
 
 function PostsPage() {
   const { search } = useLocation();
@@ -13,17 +14,27 @@ function PostsPage() {
   }, [postAge]);
   const [postArray, setPostArray] = useState([]);
 
-  return (
-    <PostListMain>
-      <PostListContainer>
-        <PostListHeading>{age}대 질문리스트</PostListHeading>
-        <PostListHead setPostArray={setPostArray} postArray={postArray} age={age} />
-        <PostBodyContainer>
-          <PostListBody postArray={postArray} setPostArray={setPostArray} age={age} />
-        </PostBodyContainer>
-      </PostListContainer>
-    </PostListMain>
-  );
+  if (
+    postAge === '10' ||
+    postAge === '20' ||
+    postAge === '30' ||
+    postAge === '40' ||
+    postAge === '50'
+  ) {
+    return (
+      <PostListMain>
+        <PostListContainer>
+          <PostListHeading>{age}대 질문리스트</PostListHeading>
+          <PostListHead setPostArray={setPostArray} postArray={postArray} age={age} />
+          <PostBodyContainer>
+            <PostListBody postArray={postArray} setPostArray={setPostArray} age={age} />
+          </PostBodyContainer>
+        </PostListContainer>
+      </PostListMain>
+    );
+  } else {
+    return <NotFound />;
+  }
 }
 
 export default PostsPage;

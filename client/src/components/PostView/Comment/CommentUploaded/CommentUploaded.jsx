@@ -28,7 +28,7 @@ export default function CommentUploaded() {
       }
       return response.data.data;
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
     }
   };
 
