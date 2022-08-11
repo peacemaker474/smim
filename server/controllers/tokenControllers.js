@@ -66,6 +66,7 @@ export const verifyRefreshToken = (req, res, next) => {
 
 export const verifyAccessToken = (req, res, next) => {
   const { accessToken } = req.body;
+
   if (!accessToken)
     return res
       .status(401)
@@ -82,7 +83,7 @@ export const verifyAccessToken = (req, res, next) => {
 
 export const reissueAccessToken = (req, res) => {
   const { refreshToken } = req.body;
-
+  
   jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
     if (err) console.log(err);
     if (!decoded)

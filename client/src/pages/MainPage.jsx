@@ -65,9 +65,6 @@ function MainPage() {
   const { isLoading, data, isFetching } = useQuery(
     ['mainLists'],
     getMainPostLists,
-    {
-      staleTime: 60 * 1000,
-    }
   );
 
   if (isLoading || isFetching) {

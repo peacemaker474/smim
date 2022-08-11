@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 mongoose.connect(`${process.env.MONGODB}`);
-
 const db = mongoose.connection;
 
 const handleOpen = () => console.log('✅ Connected to DB');
