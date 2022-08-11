@@ -1,17 +1,20 @@
 import React from 'react';
+import CommentItemInnerPresenter from './CommentItemInner.style';
 import useDropdown from '../../../../hooks/useDropdown';
-import CommentDropdownBtnPresenter from './CommentDropdownBtn.style';
 
-export default function CommentDropdownBtn({ cmntData, handleClickShow }) {
+export default function CommentItemInner({ cmntData, handleClickShow, groupId, changedText }) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow] = useDropdown();
+
   return (
-    <CommentDropdownBtnPresenter
+    <CommentItemInnerPresenter
       isDropdownVisible={isDropdownVisible}
       dropdownRef={dropdownRef}
       btnRef={btnRef}
       handleDropdownShow={handleDropdownShow}
       cmntData={cmntData}
       handleClickShow={handleClickShow}
+      groupId={groupId}
+      changedText={changedText}
     />
   );
 }

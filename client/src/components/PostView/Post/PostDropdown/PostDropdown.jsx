@@ -1,28 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PostDropdownPresenter from './PostDropdown.style';
 import { useDispatch } from 'react-redux';
 import { modalToggle } from '../../../../redux/slice/toggleSlice';
 
-function Dropdown({ postId }, ref) {
-  let navigate = useNavigate();
+function Dropdown(props, ref) {
   const dispatch = useDispatch();
-
-  const handlePostEdit = (e) => {
-    e.preventDefault();
-    navigate(`/post/edit/${postId}`);
-  };
+  const { id: postId } = useParams();
   const handlePostDel = async (e) => {
     e.preventDefault();
     dispatch(modalToggle());
   };
-  return (
-    <PostDropdownPresenter
-      handlePostEdit={handlePostEdit}
-      handlePostDel={handlePostDel}
-      forwardRef={ref}
-    />
-  );
+  return <PostDropdownPresenter handlePostDel={handlePostDel} forwardRef={ref} postId={postId} />;
 }
 
 export const PostDropdown = React.forwardRef(Dropdown);

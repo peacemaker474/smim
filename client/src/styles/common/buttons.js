@@ -30,18 +30,6 @@ export const ColorBtn = styled.button`
   }
 `;
 
-export const LoginBtn = React.memo(styled(ColorBtn)`
-  width: 95%;
-  height: 10%;
-  background-color: #FFC306;
-  font-weight: bold;
-  align-self: center;
-  border: none;
-  border-radius: 5px;
-  margin: 15px 0;
-  font-size: 1em;
-`);
-
 export const UpdateBtn = React.memo(styled(ColorBtn)`
   width: 100px;
   height: 50px;
@@ -58,10 +46,11 @@ export const ChangePwBtn = styled(ColorBtn)`
   height: 50px;
   background-color: orange;
   font-size: 18px;
+  border-radius: 5px;
   &:hover {
     font-weight: bold;
   }
-`; 
+`;
 
 export const CancelBtn = styled(ColorBtn)`
   width: 70%;
@@ -69,6 +58,7 @@ export const CancelBtn = styled(ColorBtn)`
   background-color: white;
   font-size: 18px;
   color: black;
+  border-radius: 5px;
   &:hover {
     font-weight: bold;
   }

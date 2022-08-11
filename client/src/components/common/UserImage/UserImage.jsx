@@ -6,7 +6,13 @@ const MyImg = styled.img`
   height: ${({ height }) => height};
   border-radius: 100%;
   object-fit: contain;
+  background-color: white;
   border: 1px solid rgba(7, 7, 7, .6); // 추후에 지울것
+
+  @media ${({ theme }) => theme.device.ipad} {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 function UserImage ({width, height, encodeImg, imgUrl}) {
@@ -23,4 +29,4 @@ function UserImage ({width, height, encodeImg, imgUrl}) {
   );
 }
 
-export default UserImage;
+export default React.memo(UserImage);

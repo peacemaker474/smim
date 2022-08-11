@@ -8,10 +8,27 @@ import { UpdateBtn } from '../../../styles/common/buttons';
 import UpdateUserImage from '../UpdateUserImage/UpdateUserImage';
 
 const MyInfoForm = styled.form`
-  width: 80%;
-  height: 90%;
+  width: 70%;
+  height: 75%;
   display: flex;
   justify-content: space-around;
+
+  @media screen and (max-width: 1180px) {
+    width: 90%;
+    height: 80%;
+  }
+
+  @media screen and (max-width: 769px) {
+    height: 50%;
+  }
+
+  @media screen and (max-width: 380px) {
+    width: 100%;
+  }
+
+  @media screen and (max-height: 796px) {
+    height: 80%;
+  }
 `;
 
 const UserImageWrapper = styled.div`
@@ -27,17 +44,35 @@ const UserImageWrapper = styled.div`
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, .5);
   border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
-const UserImageTitle = styled.h2`
-  width: 20%;
+const UserImageTitle = React.memo(styled.h2`
+  width: 10%;
   font-size: 0.9rem;
-`;
+  text-align: end;
+  font-weight: bold;
 
-const UserImageText = styled.p`
-  width: 60%;
-  font-size: 1rem;
-`;
+  @media screen and (max-width: 769px) {
+    width: 0%;
+    opacity: 0;
+  }
+`);
+
+const UserImageText = React.memo(styled.p`
+  width: 75%;
+  font-size: 0.8rem;
+  text-align: center;
+
+  @media screen and (max-width: 769px) {
+    width: 80%;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.7rem;
+  }
+`);
 
 const UserInfoWrapper = styled.div`
   width: 80%;
@@ -46,7 +81,7 @@ const UserInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 `;
 
 function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfoUpdate, onImageModalOpen}) {
@@ -58,8 +93,8 @@ function MyInfoStyle ({ register, imgUrl, imageToggled, errors, onSubmit, onInfo
             <UserImageTitle> 사진 </UserImageTitle>
             <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
             <UserImage
-              width={"10%"}
-              height={"90%"}
+              width={"40px"}
+              height={"40px"}
               imgUrl={imgUrl}
             />
           </UserImageWrapper>

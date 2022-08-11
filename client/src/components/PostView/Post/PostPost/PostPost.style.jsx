@@ -2,26 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import PostLike from '../PostLike/PostLike';
 import PostBookmark from '../PostBookmark/PostBookmark';
-import { Tag } from '../../../../styles/common/tag';
 import PostHead from '../PostHead/PostHead';
+import PostTagList from '../PostTagList/PostTagList';
 
-export default function PostPostPresenter({ postDetail, postId, date, user }) {
+export default function PostPostPresenter({ postDetail, date, user }) {
   return (
     <PostBox>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
       <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead author={postDetail.owner} date={date} postId={postId} />
+      <PostHead postDetail={postDetail} date={date} />
       <PostBody>
         <PostContent>
           <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
         </PostContent>
-        <PostTagBox>
-          {(postDetail.hashtag || []).map((el, idx) => (
-            <TagItem color='yellow' key={idx}>
-              {el}
-            </TagItem>
-          ))}
-        </PostTagBox>
+        <PostTagList hashtag={postDetail.hashtag} />
         <PostLikeBox>
           <PostLike quantity={postDetail.meta.likes} like={postDetail.like} />
           {postDetail.owner.userId !== user.id ? (
@@ -33,11 +27,10 @@ export default function PostPostPresenter({ postDetail, postId, date, user }) {
   );
 }
 const PostBox = styled.div`
-  width: 794px;
-  margin: 0 auto 32px;
+  margin-bottom: 32px;
 `;
 const PostViewH2 = styled.h1`
-  width: 794px;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
@@ -56,7 +49,7 @@ const PostTitle = styled.h3`
 const PostBody = styled.div``;
 
 const PostContent = styled.div`
-  width: 794px;
+  width: 100%;
   padding: 48px 0;
 `;
 
@@ -65,16 +58,11 @@ const PostPara = styled.div`
   font-weight: 500;
   line-height: 23px;
   margin-bottom: 60px;
-`;
-
-const PostTagBox = styled.div`
-  display: flex;
-`;
-
-const TagItem = styled(Tag)`
-  background-color: ${({ theme, color }) => theme.tagColor[color]};
-  & + span {
-    margin-left: 5px;
+  & > p {
+    width: 100%;
+  }
+  & > p > img {
+    max-width: 100%;
   }
 `;
 
@@ -83,32 +71,3 @@ const PostLikeBox = styled.div`
   justify-content: center;
   margin: 40px 0;
 `;
-
-// const PostLikeSpan = styled.span`
-//   display: flex;
-//   margin-right: 12px;
-//   cursor: pointer;
-//   &::before {
-//     content: '';
-//     width: 20px;
-//     height: 20px;
-//     display: block;
-//     background: url(${heartFill});
-//     background-repeat: no-repeat;
-//     background-position: center;
-//     background-size: contain;
-//   }
-// `;
-
-// const PostBookmarkSpan = styled.span`
-//   margin-right: 12px;
-//   &::before {
-//     content: '';
-//     width: 20px;
-//     height: 20px;
-//     display: block;
-//     background-repeat: no-repeat;
-//     background-position: center;
-//     background-size: contain;
-//   }
-// `;

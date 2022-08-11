@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ToggleBtn = styled.div`
-  width: 45px;
+  width: 40px;
   height: 45px;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

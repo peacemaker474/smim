@@ -2,10 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const LoginLabel = React.memo(styled.label`
-  font-size: 1em;
+  font-size: 0.9rem;
   font-weight: bold;
   margin-bottom: 10px;
-  display: block;
+
+  @media ${({ theme }) => theme.device.mobile } {
+    font-size: 0.8rem;
+  }
 `);
 
 export const LoginInput = styled.input`
@@ -15,5 +18,9 @@ export const LoginInput = styled.input`
   border: 1px solid rgba(12, 12, 12, .4);
   border-radius: 5px;
   padding-left: 10px;
-  font-size: 0.9em;
+  font-size: 0.8rem;
+
+  @media ${({ theme }) => theme.device.mobile } {
+    font-size: 0.7rem;
+  }
 `;

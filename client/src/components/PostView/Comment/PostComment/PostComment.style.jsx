@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentInput from '../CommentInput/CommentInput';
+import CommentForm from '../CommentForm/CommentForm';
 import Modal from '../../../common/Modal/Modal';
 import CommentCreated from '../CommentCreated/CommentCreated';
 import CommentPinned from '../CommentPinned/CommentPinned';
@@ -22,7 +22,7 @@ export default function PostCommentPresenter({
       )}
       <CommentSection>
         <CommentH2>답변하기</CommentH2>
-        <CommentInput postId={postId} parentId={null} />
+        <CommentForm postId={postId} parentId={null} />
         <CommentContainer>
           <CommentPinned />
           <CommentCreated />
@@ -34,8 +34,7 @@ export default function PostCommentPresenter({
 }
 
 const CommentSection = styled.div`
-  width: 794px;
-  // height: 59px;
+  width: 100%;
   margin: 20px auto;
 `;
 
@@ -44,14 +43,6 @@ const CommentH2 = styled.h2`
   font-weight: 700;
   line-height: 25px;
   margin-bottom: 28px;
-  // &::after {
-  //   width: 70px;
-  //   height: 2px;
-  //   background: #000000;
-  //   display: block;
-  //   content: '';
-  //   margin-top: 9px;
-  // }
 `;
 
 const CommentContainer = styled.div``;

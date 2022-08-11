@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentInput from '../CommentInput/CommentInput';
 import CommentLikeBtn from '../CommentLikeBtn/CommentLikeBtn';
+import CommentForm from '../CommentForm/CommentForm';
 
 export default function CommentItemEtcPresenter({
   createAt,
@@ -9,9 +9,10 @@ export default function CommentItemEtcPresenter({
   groupId,
   postId,
   parentId,
-  isTargetVisible,
   handleClickCancel,
   cmntData,
+  isTargetVisible,
+  writer,
 }) {
   return (
     <CommentEtcContainer>
@@ -21,12 +22,13 @@ export default function CommentItemEtcPresenter({
         <CommentLikeBtn cmntData={cmntData} />
       </CommentEtc>
       {isTargetVisible && (
-        <CommentInput
+        <CommentForm
           groupId={groupId}
           postId={postId}
           parentId={parentId}
-          isTargetVisible={isTargetVisible}
+          writer={writer}
           handleClickCancel={handleClickCancel}
+          isTargetVisible={isTargetVisible}
         />
       )}
     </CommentEtcContainer>
@@ -41,12 +43,20 @@ const CommentEtc = styled.div`
 `;
 
 const CommentDate = styled.span`
-  margin-right: 12px;
+  margin-right: 5px;
   font-size: 14px;
+  @media (max-width: 612px) {
+    font-size: 13px;
+    margin-right: 0;
+  }
 `;
 
 const CommentReBtn = styled.button`
-  margin-right: 12px;
+  margin-right: 5px;
   font-size: 14px;
   font-weight: 600;
+  @media (max-width: 612px) {
+    font-size: 13px;
+    margin-right: 0;
+  }
 `;

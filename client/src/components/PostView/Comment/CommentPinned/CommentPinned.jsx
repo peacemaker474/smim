@@ -11,5 +11,13 @@ export default function CommentPinned() {
     shallowEqual
   );
 
-  return <CommentPinnedPresenter pinnedComment={pinnedData} pinnedId={pinnedId} />;
+  const { postWriter } = useSelector((state) => state.post);
+
+  return (
+    <CommentPinnedPresenter
+      pinnedComment={pinnedData}
+      pinnedId={pinnedId}
+      postWriter={postWriter}
+    />
+  );
 }

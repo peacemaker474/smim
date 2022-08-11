@@ -218,9 +218,18 @@ export const getMainPageLists = async (req, res) => {
       40: [],
       50: [],
     };
-    const posts = await Post.find();
-    posts.forEach((el) => {
-      if (postLists[el.targetAge].length < 5 && el.meta.pinnedCmnt === false) {
+    const posts = await Post.find().sort({ createAt: -1 });
+    const newPosts = await Promise.all(
+      posts.map(async (el) => {
+        const user = await User.findById(String(el.owner));
+        return {
+          ...el._doc,
+          owner: { nickname: user.nickname },
+        };
+      })
+    );
+    newPosts.forEach((el) => {
+      if (postLists[el.targetAge].length < 5 && !el.meta.answer) {
         postLists[el.targetAge].push(el);
       } else if (postLists[el.targetAge].length < 5) {
         postLists[el.targetAge].push(el);
@@ -231,4 +240,9 @@ export const getMainPageLists = async (req, res) => {
     console.log(err);
     return res.status(500).json({ success: false, message: '다시 시도해주세요.' });
   }
+};
+
+export const postPostImageUpload = (req, res) => {
+  const IMG_URL = `http://localhost:4000/uploads/posts/${req.file.filename}`;
+  res.json({ url: IMG_URL });
 };

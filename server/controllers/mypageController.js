@@ -37,7 +37,11 @@ export const getFavoriteLists = async (req, res) => {
     const favoriteLists = await Promise.all(
       bookmarks.map(async (list) => {
         const post = await Post.findById(list);
-        return post;
+        const user = await User.findById(String(post.owner));
+        return {
+          ...post._doc,
+          owner: { nickname: user.nickname }
+        };
       })
     );
     

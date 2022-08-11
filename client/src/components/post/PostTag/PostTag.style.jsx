@@ -4,7 +4,7 @@ import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icon/icon-del.svg';
 
 function PostTagPresenter({
-  preValue,
+  tagArray,
   handleTagDelete,
   handleKeyUp,
   handleTagWrite,
@@ -15,8 +15,8 @@ function PostTagPresenter({
   return (
     <HashContainer error={errors.tagArray} palette='yellow'>
       <HashWrapBox>
-        {preValue &&
-          preValue.map((el, idx) => (
+        {tagArray &&
+          tagArray.map((el, idx) => (
             <HashItem key={idx + el}>
               <span>{el}</span>
               <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
@@ -30,6 +30,7 @@ function PostTagPresenter({
         onChange={handleTagWrite}
         onBlur={handleInputReset}
         value={text}
+        maxLength='10'
       />
     </HashContainer>
   );
@@ -38,8 +39,9 @@ function PostTagPresenter({
 export default PostTagPresenter;
 
 const HashContainer = styled.div`
-  height: 40px;
+  height: auto;
   margin-top: 30px;
+  padding: 5px;
   color: rgb(52, 58, 64);
   font-size: 1.125rem;
   display: flex;
@@ -47,40 +49,41 @@ const HashContainer = styled.div`
   letter-spacing: -0.6px;
   color: #444241;
   border: 2px solid
-    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
-  padding: 2px 2px 2px 2px;
-`;
-
-const HashItem = styled.div`
-  margin-top: 1px;
-  width: auto;
-  height: 30px;
-  background: ${theme.color['yellow']};
-  border-radius: 56px;
-  padding: 5px;
-  color: ${theme.color['navy']};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 15px;
-  margin-right: 5px;
-  cursor: pointer;
+    ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
+  @media screen and (max-width: 1200px) {
+    display: block;
+  }
 `;
 
 const HashWrapBox = styled.div`
-  height: 30px;
   display: flex;
   flex-wrap: wrap;
 `;
 
+const HashItem = styled.div`
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  background: ${theme.color['yellow']};
+  color: ${theme.color['navy']};
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+`;
+
 const HashInput = styled.input`
-  display: inline-flex;
+  display: block;
   outline: none;
   cursor: text;
-  line-height: 2rem;
-  min-width: 20rem;
+  margin: 5px;
   border: none;
+  min-width: 300px;
+  width: 90%;
 `;
 
 const HashDelBtn = styled.button`

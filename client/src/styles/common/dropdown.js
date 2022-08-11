@@ -1,12 +1,27 @@
 import styled from 'styled-components';
-import moreIcon from '../../asset/icon/icon-more.svg';
+import { Link } from 'react-router-dom';
+import moreIcon from '../../asset/icon/icon-more-vertical.svg';
 
-export const DropdownBtn = styled.span`
+export const DropdownBtn = styled.div`
   width: ${({ width }) => width || '24px'};
   height: ${({ height }) => height || '24px'};
-  background: url(${moreIcon});
-  position: relative;
-  cursor: pointer;
+  background: url(${({ iconUrl }) => iconUrl || moreIcon});
+  background-repeat: no-repeat;
+  background-size: ${({ size }) => size || 'contain'};
+`;
+
+export const DropdownWrraper = styled.div`
+  width: ${({ width }) => width || '72px'};
+  height: ${({ height }) => height || 'auto'};
+  background: #ffffff;
+  box-shadow: 0 9px 25px rgb(0 0 0 / 15%);
+  position: absolute;
+  top: ${({ top }) => top || '34px'};
+  left: ${({ left }) => left || '50%'};
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 9px;
+  overflow: hidden;
   &::after {
     content: '';
     display: block;
@@ -14,37 +29,21 @@ export const DropdownBtn = styled.span`
   }
 `;
 
-export const DropdownContainer = styled.div`
-  width: ${({ width }) => width || '72px'};
-  height: ${({ height }) => height || 'auto'};
-  background: #ffffff;
-  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
-  position: absolute;
-  top: ${({ top }) => top || '31px'};
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  border-radius: 10px;
-`;
-
-export const DropdownBox = styled.div`
-  padding: 5px;
-  & button + button {
-    margin-top: 8px;
-  }
-`;
-
-export const DropdownItemBtn = styled.button`
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
+export const DropdownLists = styled.ul`
   width: 100%;
-  border: 1px solid #ffffff;
+  height: 100%;
+  font-size: ${({ fontSize }) => fontSize || '13px'};
+`;
+
+export const DropdownList = styled.li`
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  line-height: ${({ lineHeight }) => lineHeight || '40px'};
+  cursor: pointer;
   &:hover {
-    border: 1px solid #000000;
-    color: #000000;
+    background-color: rgba(127, 127, 127, 0.1);
   }
 `;
+
+export const DropdownLink = styled(Link)``;

@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import CommentItemEtc from '../CommentItemEtc/CommentItemEtc';
-import CommentInput from '../CommentInput/CommentInput';
-import CommentDropdownBtn from '../CommentDropdownBtn/CommentDropdownBtn';
-import UserImage from '../../../common/UserImage/UserImage';
+import CommentForm from '../CommentForm/CommentForm';
+import CommentItemInner from '../CommentItemInner/CommentItemInner';
 
 export default function CommentItemPresenter({
   cmntData,
@@ -11,14 +9,14 @@ export default function CommentItemPresenter({
   isTargetVisible,
   handleClickCancel,
   handleTextChange,
-  itemText,
-  deleteState,
+  changedText,
   handleClickShow,
+  deleteState,
 }) {
   return (
     <>
       {isTargetVisible ? (
-        <CommentInput
+        <CommentForm
           postId={cmntData.post_id}
           parentId={cmntData.parent_id}
           groupId={groupId}
@@ -26,53 +24,27 @@ export default function CommentItemPresenter({
           handleClickCancel={handleClickCancel}
           id={cmntData._id}
           handleTextChange={handleTextChange}
+          changedText={changedText}
         />
-      ) : (
-        <CommentItemInner>
-          <UserImage width={'38px'} height={'38px'} imgUrl={cmntData.writer.imageUrl} />
-          <CommentItemContent>
-            {deleteState || !cmntData.being ? (
-              <CommentText>
-                <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
-                {'삭제된 댓글입니다.'}
-              </CommentText>
-            ) : (
-              <>
-                <CommentText>
-                  <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
-                  {itemText}
-                </CommentText>
-                <CommentItemEtc cmntData={cmntData} groupId={groupId} />
-              </>
-            )}
-          </CommentItemContent>
-          {deleteState || !cmntData.being ? null : (
-            <CommentDropdownBtn cmntData={cmntData} handleClickShow={handleClickShow} />
-          )}
-        </CommentItemInner>
+      ) : deleteState ? null : (
+        <CommentItemContainer>
+          <CommentItemInner
+            changedText={changedText}
+            handleClickShow={handleClickShow}
+            groupId={groupId}
+            cmntData={cmntData}
+          />
+        </CommentItemContainer>
       )}
     </>
   );
 }
 
-const CommentItemInner = styled.div`
+export const CommentItemContainer = styled.div`
   margin-bottom: 15px;
   display: flex;
-  position: relative;
-  //   margin-left: ${(props) => (props.extend === 'reply' ? '49px' : '0')};
-`;
-
-const CommentItemContent = styled.div`
-  width: 709px;
-`;
-
-const CommentText = styled.span`
-  display: block;
-  margin: 0;
-  margin-bottom: 12px;
-  line-height: 23px;
-`;
-
-const CommentStrongName = styled.strong`
-  font-weight: 600;
+  justify-content: space-between;
+  @media (max-width: 612px) {
+    font-size: 15px;
+  }
 `;

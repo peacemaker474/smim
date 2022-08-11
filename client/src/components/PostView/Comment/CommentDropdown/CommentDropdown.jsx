@@ -39,8 +39,6 @@ function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   const handleCommentDeclaration = () => {
     if (!tkn) {
       dispatch(isLoginCheckToggle());
-    } else {
-      console.log('declaration');
     }
   };
 

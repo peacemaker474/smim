@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import PostTagPresenter from './PostTag.style';
 
-function PostTag({ register, setValue, watch, errors }) {
+function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
   const [text, setText] = useState('');
   const tagArray = watch('tagArray');
-
-  const preValue = useMemo(() => {
-    console.log('tag 렌더링');
-    return tagArray;
-  }, [tagArray]);
 
   useEffect(() => {
     register('tagArray', { required: true });
@@ -16,14 +11,26 @@ function PostTag({ register, setValue, watch, errors }) {
 
   const handleInputReset = () => {
     setText('');
+    if (watch('tagArray').length === 0) {
+      setError('tagArray', { required: true });
+    }
   };
 
   const handleKeyUp = (e) => {
-    if (e.keyCode === 188 || (e.keyCode === 13 && e.target.value !== '')) {
-      const tagText = text.split(',')[0];
-      if (!preValue.includes(tagText)) {
-        setValue('tagArray', [...preValue, tagText]);
+    const reg = /[^\wㄱ-힣]/g;
+
+    if (reg.exec(e.target.value)) {
+      setText(e.target.value.replace(reg, ''));
+    }
+
+    if (e.keyCode === 188 || e.keyCode === 32 || (e.keyCode === 13 && e.target.value !== '')) {
+      const tagText = e.target.value.replace(reg, '');
+      if (tagText.length === 0) {
         setText('');
+      } else if (!tagArray.includes(tagText)) {
+        setValue('tagArray', [...tagArray, tagText]);
+        setText('');
+        clearErrors('tagArray');
       } else {
         setText('');
       }
@@ -35,14 +42,17 @@ function PostTag({ register, setValue, watch, errors }) {
   };
 
   const handleTagDelete = (tag) => {
-    const newHashTagArray = preValue.filter((el) => el !== tag);
+    const newHashTagArray = tagArray.filter((el) => el !== tag);
     setValue('tagArray', [...newHashTagArray]);
     setText('');
+    if (watch('tagArray').length === 0) {
+      setError('tagArray', { required: true });
+    }
   };
 
   return (
     <PostTagPresenter
-      preValue={preValue}
+      tagArray={tagArray}
       handleTagDelete={handleTagDelete}
       handleKeyUp={handleKeyUp}
       handleTagWrite={handleTagWrite}

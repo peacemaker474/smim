@@ -52,20 +52,10 @@ const commentSlice = createSlice({
         };
       },
     },
-
-    pinnedCommentId: {
-      reducer(state, action) {
-        state.pinnedId = action.payload.commentId;
-      },
-      prepare(commentId) {
-        return {
-          payload: {
-            commentId,
-          },
-        };
-      },
+    pinnedInitCommentId(state) {
+      state.pinnedId = undefined;
+      state.pinnedData = undefined;
     },
-
     getUnpinnedCommentId: {
       reducer(state, action) {
         state.commentId = action.payload.commentId;
@@ -100,6 +90,7 @@ export const {
   getDeleteCommentId,
   deleteCommentId,
   getPinnedCommentId,
+  pinnedInitCommentId,
   getUnpinnedCommentId,
   unpinnedCommentId,
 } = commentSlice.actions;

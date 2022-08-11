@@ -1,71 +1,83 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import PostForm from '../components/post/PostForm/PostForm';
 import { getReadPostDetail } from '../network/post/http';
+import { useQuery } from 'react-query';
+import LoadingPage from './LoadingPage';
 
 function PostUploadPage() {
-  const tkn = useSelector((state) => state.authToken).accessToken;
-
   const { pathname } = useLocation();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
-  const [postData, setPostData] = useState();
 
-  const loadPost = useCallback(async () => {
+  const loadPost = async () => {
     try {
-      const response = await getReadPostDetail(postId, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
-        },
-      });
-      const data = response.data;
-      console.log(data);
-      setPostData(data);
+      if (postId) {
+        const response = await getReadPostDetail(postId);
+        return response.data;
+      } else {
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
-  }, [postId, tkn]);
+  };
 
-  useEffect(() => {
-    if (pathValue === 'edit') {
-      loadPost();
-    }
-  }, [pathValue, loadPost]);
+  const { data: postData, isLoading } = useQuery(['postEdit'], loadPost);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
-    <>
+    <PostCreateMain>
       <PostCreateContainer>
         <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <PostForm postData={postData} pathValue={pathValue} postId={postId} />
       </PostCreateContainer>
-    </>
+    </PostCreateMain>
   );
 }
 
 export default PostUploadPage;
 
+const PostCreateMain = styled.main``;
+
 const PostCreateContainer = styled.div`
-  width: 1200px;
-  height: 80vh;
-  margin-top: 15vh;
-  margin-left: 30px;
   display: flex;
   flex-direction: column;
+  margin: 100px auto 0;
+  padding: 70px 0;
+  @media screen and (max-width: 550px) {
+    width: 333px;
+    padding: 50px 0;
+  }
+  @media (min-width: 550px) and (max-width: 612px) {
+    width: 500px;
+  }
+  @media (min-width: 612px) and (max-width: 768px) {
+    width: 500px;
+  }
+  @media (min-width: 768px) and (max-width: 992px) {
+    width: 500px;
+  }
+  @media (min-width: 992px) and (max-width: 1200px) {
+    width: 697px;
+  }
+  @media (min-width: 1200px) {
+    width: 865px;
+  }
 `;
 
 const PostHeader = styled.h2`
   position: relative;
-  width: fit-content;
-  font-size: 35px;
-  border-bottom: 2px solid
-    ${({ palette, theme }) => (palette ? theme.color[palette] : theme.color['black'])};
-  @media screen and (max-width: 550px) {
+  font-size: 30px;
+  width: 100%;
+  margin: 0 auto 10px;
+  @media screen and (max-width: 612px) {
     font-size: 25px;
-    width: 100px;
-    left: 150px;
+    text-align: center;
   }
 `;

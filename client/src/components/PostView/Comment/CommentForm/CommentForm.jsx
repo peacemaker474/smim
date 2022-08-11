@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { postCommentCreate, putCommentEdit } from '../../../../network/comment/http';
 import { createComment } from '../../../../redux/slice/commentCreateSlice';
-import CommentInputPresenter from './CommentInput.style';
+import CommentFormPresenter from './CommentForm.style';
 import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
-export default function CommentInput({
+export default function CommentForm({
   postId,
   parentId,
   groupId,
@@ -14,11 +14,29 @@ export default function CommentInput({
   handleClickCancel = undefined,
   handleTextChange,
   id,
+  changedText,
+  writer,
 }) {
   const loginState = useSelector((state) => state.user);
-  const { register, handleSubmit, setValue, setFocus } = useForm();
+  const { register, handleSubmit, setValue, setFocus, watch } = useForm();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
+  let data = watch('comment');
+
+  let STATE = '';
+  if (parentId == null && !id) {
+    STATE = 'main';
+  } else if (parentId == null && id) {
+    STATE = 'main Edit';
+  } else if (parentId === groupId && !id) {
+    STATE = 'main Reply';
+  } else if (parentId === groupId && id) {
+    STATE = 'main Reply Edit';
+  } else if (parentId !== groupId && id) {
+    STATE = 'Reply Reply Edit';
+  } else {
+    STATE = 'Reply Reply';
+  }
 
   if (!handleClickCancel) {
     handleClickCancel = () => setValue('comment', '');
@@ -26,11 +44,13 @@ export default function CommentInput({
 
   const onSubmit = (data, e) => {
     e.preventDefault();
+    const addData = data.comment.replaceAll('\n', '<br>');
+
     if (tkn) {
       if (id) {
-        handleCommentEdit(e, data);
+        handleCommentEdit(e, addData);
       } else {
-        handleCommentCreate(data);
+        handleCommentCreate(e, addData);
       }
       setValue('comment', '');
     }
@@ -39,12 +59,13 @@ export default function CommentInput({
   useEffect(() => {
     if (isTargetVisible) {
       setFocus('comment');
+      setValue('comment', changedText);
     }
-  }, [isTargetVisible, setFocus]);
+  }, [isTargetVisible, setFocus, changedText, setValue]);
 
-  const handleCommentCreate = async (data) => {
+  const handleCommentCreate = async (e, data) => {
     const response = await postCommentCreate(
-      { post_id: postId, content: data.comment, parent_id: parentId },
+      { post_id: postId, content: data, parent_id: parentId },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -67,21 +88,19 @@ export default function CommentInput({
           parentId,
           groupId,
           postId,
-          data.comment
+          data
         )
       );
       if (parentId) {
-        handleClickCancel();
+        handleClickCancel(e);
       }
-    } else {
-      console.log(response.data.success);
     }
   };
 
   const handleCommentEdit = async (e, data) => {
     const response = await putCommentEdit(
       id,
-      { post_id: postId, content: data.comment },
+      { post_id: postId, content: data },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -91,33 +110,45 @@ export default function CommentInput({
     );
 
     if (response.data.success) {
-      console.log(response.data.success);
-      handleTextChange(data.comment);
+      handleTextChange(data.replace('<br>', '\n'));
       handleClickCancel(e);
-    } else {
-      console.log(response.data.success);
     }
   };
 
-  const loginCheck = (e) => {
+  const handleloginCheck = (e) => {
     e.preventDefault();
-    // e.target.disabled = false;
     if (!tkn) {
       e.target.disabled = true;
       dispatch(isLoginCheckToggle());
     }
   };
 
+  const handleKeyDownCheck = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === true) {
+      e.preventDefault();
+      setValue('comment', data + '\n');
+    }
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      handleSubmit(onSubmit(watch(), e));
+    }
+  };
   return (
-    <CommentInputPresenter
+    <CommentFormPresenter
       loginState={loginState}
       handleSubmit={handleSubmit}
-      register={register}
       handleClickCancel={handleClickCancel}
-      id={id}
+      handleloginCheck={handleloginCheck}
+      handleKeyDownCheck={handleKeyDownCheck}
       onSubmit={onSubmit}
-      loginCheck={loginCheck}
-      isLogin={tkn}
+      register={register}
+      setValue={setValue}
+      value={data}
+      groupId={groupId}
+      parentId={parentId}
+      id={id}
+      writer={writer}
+      state={STATE}
     />
   );
 }

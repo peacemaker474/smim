@@ -7,19 +7,20 @@ import Modal from '../../../components/common/Modal/Modal';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../network/post/http';
 
-function PostForm({ postData = undefined, pathValue, postId }) {
+function PostForm({ postData, pathValue, postId }) {
   const {
     register,
     setValue,
     watch,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors },
-  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [] } });
+  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
   const dispatch = useDispatch();
   const tkn = useSelector((state) => state.authToken).accessToken;
   const navigate = useNavigate();
-  console.log(errors);
 
   useEffect(() => {
     if (postData) {
@@ -28,21 +29,24 @@ function PostForm({ postData = undefined, pathValue, postId }) {
       setValue('para', content);
       setValue('age', targetAge);
       setValue('tagArray', hashtag);
+    } else {
+      setValue('title', '');
+      setValue('para', '');
+      setValue('age', '');
+      setValue('tagArray', []);
     }
   }, [postData, setValue]);
 
   const uploadPost = async (tkn) => {
-    const title = watch('title');
-    const content = watch('para');
-    const hashtag = watch('tagArray');
-    const targetAge = String(watch('age'));
+    const { title, para, tagArray, age } = watch();
+
     if (pathValue === 'create') {
       postCreatePost(
         {
           title,
-          content,
-          hashtag,
-          targetAge,
+          content: para,
+          hashtag: tagArray,
+          targetAge: String(age),
         },
         {
           headers: {
@@ -51,8 +55,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
           },
         }
       )
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           navigate('/');
         })
         .catch((err) => console.log(err));
@@ -61,9 +64,9 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         postId,
         {
           title,
-          content,
-          hashtag,
-          targetAge,
+          content: para,
+          hashtag: tagArray,
+          targetAge: String(age),
         },
         {
           headers: {
@@ -72,8 +75,7 @@ function PostForm({ postData = undefined, pathValue, postId }) {
           },
         }
       )
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           navigate(-1);
         })
         .catch((err) => console.log(err));
@@ -101,6 +103,9 @@ function PostForm({ postData = undefined, pathValue, postId }) {
         errors={errors}
         modalVisible={modalVisible}
         pathValue={pathValue}
+        clearErrors={clearErrors}
+        setError={setError}
+        postData={postData}
       />
     </>
   );

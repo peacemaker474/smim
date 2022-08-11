@@ -3,23 +3,24 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Toggle from './Toggle';
 import MobileNavBar from './MobileNavBar';
-import LoginSection from '../../login/LoginSection/LoginSection';
 import UserImage from '../UserImage/UserImage';
 import DownArrow from '../../../asset/icon/icon-down.svg';
+import MyPageModal from './MyPageModal';
 
 const NavContainer = styled.nav`
   width: 100vw;
-  height: 10vh;
+  height: 80px;
   position: fixed;
   top: 0%;
   left: 0%;
   background-color: white;
   box-shadow: rgb(0 0 0 / 50%) 0 -3px 16px 1px;
-  z-index: 2;
+  z-index: 999;
 `;
 
 const NavWrapper = styled.div`
-  width: 90%;
+  max-width: 1180px;
+  width: 95%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -28,15 +29,22 @@ const NavWrapper = styled.div`
 `;
 
 const NavLogoBox = styled.div`
+  width: 170px;
+  height: 40px;
 `;
 
 const NavMainTitle = styled(Link)`
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   color: ${({ theme }) => theme.color.yellow};
   text-decoration: none;
   cursor: pointer;
-  @media screen and (max-width: 320px) {
-    font-size: 20px;
+  line-height: 40px;
+  @media ${({ theme }) => theme.device.ipad} {
+    font-size: 1.8rem;
+  }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 1.5rem;
   }
 `;
 
@@ -44,20 +52,15 @@ const NavLists = styled.ul`
   height: 100%;
   display: grid;
   grid-template-columns: ${({ login }) => login ? "5em 5em 5em 5em 5em 5em;" : "5em 5em 5em 5em 5em 5em;"}
-  grid-gap: 3.5em;
+  grid-gap: 2em;
   align-items: center;
   position: relative;
-  @media screen and (max-width: 1065px) {
-    grid-template-columns: 80px 80px 80px 80px 80px 80px 150px;
-  }
   @media ${({ theme }) => theme.device.ipad} {
     display: none;
   }
 `;
 
 const NavList = styled.li`
-  padding-left: 5px;
-
   &:nth-child(6) {
     cursor: pointer;
     display: flex;
@@ -66,51 +69,24 @@ const NavList = styled.li`
 `;
 
 const GenerationLink = styled(Link)`
-  font-size: 1.1em;
+  font-size: 1em;
   text-decoration: none;
-  color: ${({ theme }) => theme.color.gray};
+  color: ${({ theme, current }) => (current ? `${theme.color.black}` : `${theme.color.gray}`)};
+  transition: all 0.3s ease 0s;
   &:hover {
     font-weight: bold;
+    color: ${({ theme }) => theme.color.black};
   }
   padding-bottom: 5px;
   font-weight: ${({ current }) => (current ? `bold` : `none`)};
   border-bottom: 2px solid
-    ${({ current, theme }) => (current ? `${theme.color.lightGray}` : 'transparent')};
+    ${({ current, theme }) => (current ? `${theme.color.black}` : 'transparent')};
 `;
 
 const LoginLink = styled.span`
   font-size: 18px;
   color: ${({ theme }) => theme.color.black};
   font-weight: bold;
-  cursor: pointer;
-`;
-
-const MyPageModalWrraper = styled.div`
-  width: 100px;
-  height: 70px;
-  background-color: white;
-  position: absolute;
-  top: 90%;
-  left: 86%;
-  box-shadow: 0 5px 25px rgb(0 0 0 / 15%);
-`;
-
-const MyPageModalLists = styled.ul`
-  width: 100%;
-  height: 100%;
-`;
-
-const MyPageModalList = styled.li`
-  padding: 0.6em 0;
-  text-align: center;
-  font-size: 0.9em;
-  font-weight: bold;
-`;
-
-const MyPageLink = styled(Link)`
-`;
-
-const LogOutButton = styled.p`
   cursor: pointer;
 `;
 
@@ -122,7 +98,7 @@ const DownButton = styled.div`
   background-size: cover;
 `;
 
-function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
+function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, btnRef, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
   return (
     <>
       <NavContainer>
@@ -161,27 +137,21 @@ function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgU
                 <LoginLink onClick={onLoginClick}> 로그인 </LoginLink>
               </NavList>
             ) : (
-              <NavList onClick={onMyPageClick}>
+              <NavList onClick={onMyPageClick} ref={btnRef}>
                 <UserImage
-                  width={"60%"}
-                  height={"60%"}
+                  width={"40px"}
+                  height={"40px"}
                   imgUrl={imgUrl}
                 />
                 <DownButton />
+                {isDropdownVisible && 
+                  <MyPageModal
+                  ref={dropdownRef}
+                  onMyPageClick={onMyPageClick}
+                  onLogoutClick={onLogoutClick}
+                />}
               </NavList>
             )}
-            {myPageToggled && 
-              <MyPageModalWrraper>
-                <MyPageModalLists>
-                  <MyPageModalList>
-                    <MyPageLink to="/my" onClick={onMyPageClick}> 마이페이지 </MyPageLink>
-                  </MyPageModalList>
-                  <MyPageModalList>
-                    <LogOutButton onClick={onLogoutClick}> 로그아웃 </LogOutButton>
-                  </MyPageModalList>
-                </MyPageModalLists>
-              </MyPageModalWrraper>
-            }
           </NavLists>
           <Toggle
             menuToggled={menuToggled}
@@ -189,8 +159,7 @@ function NavBarStyle ({ menuToggled, myPageToggled, pathname, loginToggled, imgU
           />
         </NavWrapper>
       </NavContainer>
-      {loginToggled && <LoginSection />}
-      {menuToggled && <MobileNavBar />}
+      {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
     </>
   );
 }

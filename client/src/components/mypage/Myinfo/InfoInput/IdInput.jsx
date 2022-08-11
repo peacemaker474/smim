@@ -2,7 +2,7 @@ import React from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { getCheckMyId } from '../../../../network/mypage/http';
 import { MyInfoInput } from '../../../../styles/common/input';
-import { ValidCheck } from '../../../../styles/common/validtext';
+import { MyPageValid } from '../../../../styles/common/validtext';
 import { InfoLabel, InfoBox } from '../../../../styles/mypage/myinfo';
 
 function IdInput ({ register, errors }) {
@@ -34,7 +34,7 @@ function IdInput ({ register, errors }) {
         <ErrorMessage
           name="id"
           errors={errors}
-          render={({ message }) => <ValidCheck> {message} </ValidCheck>}
+          render={({ message }) => <MyPageValid> {message} </MyPageValid>}
         />
       }
     </InfoBox>

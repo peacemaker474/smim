@@ -8,37 +8,58 @@ export default function CommentWrapperPresenter({
   uploadingReplies,
   isTargetVisible,
   handleTargetShow,
+  delComment,
 }) {
   return (
-    <CommentInner>
-      <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
-      {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
-        <ReplyContainer>
-          <ReplyShowingBtn onClick={handleTargetShow}>
-            답글 {isTargetVisible ? '닫기' : '보기'}
-          </ReplyShowingBtn>
-          {isTargetVisible &&
-            childrenData.map((el) => (
-              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-            ))}
-          {uploadingReplies &&
-            uploadingReplies.length !== 0 &&
-            uploadingReplies.map((el) => (
-              <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
-            ))}
-        </ReplyContainer>
+    <>
+      {delComment ? null : (
+        <CommentInner>
+          <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
+          {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
+            <ReplyContainer>
+              {childrenData.length === 0 ? null : (
+                <ReplyShowingBtn onClick={handleTargetShow}>
+                  ----- 답글 {isTargetVisible ? '닫기' : '보기'}
+                </ReplyShowingBtn>
+              )}
+
+              {isTargetVisible && (
+                <ReplyListBox>
+                  {childrenData.map((el) => (
+                    <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+                  ))}
+                </ReplyListBox>
+              )}
+              <ReplyUploadListBox>
+                {uploadingReplies &&
+                  uploadingReplies.length !== 0 &&
+                  uploadingReplies.map((el) => (
+                    <CommentItem key={el._id} cmntData={el} groupId={parentData._id} />
+                  ))}
+              </ReplyUploadListBox>
+            </ReplyContainer>
+          )}
+        </CommentInner>
       )}
-    </CommentInner>
+    </>
   );
 }
 
 const CommentInner = styled.div``;
 
 const ReplyContainer = styled.div`
-  margin-left: 50px;
-  margin-bottom: 38px;
+  margin-left: 65px;
+  margin-bottom: 20px;
+`;
+
+const ReplyListBox = styled.div`
+  margin-top: 15px;
+`;
+
+const ReplyUploadListBox = styled.div`
+  margin-top: 15px;
 `;
 
 const ReplyShowingBtn = styled.button`
-  margin-left: 49px;
+  margin-left: 10px;
 `;

@@ -6,10 +6,10 @@ import CommentItemPresenter from './CommentItem.style';
 function CommentItem({ cmntData, groupId }) {
   const [itemText, setItemText] = useState(cmntData.text);
   const [isTargetVisible, handleClickShow] = useVisible(false); // comment input visible for Edit
-  const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(
     (el) => el === cmntData._id
   );
+  const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
 
   const handleClickCancel = (e) => {
     e.target.value = '';
@@ -20,6 +20,8 @@ function CommentItem({ cmntData, groupId }) {
     setItemText(text);
   };
 
+  let changedText = itemText.replaceAll('<br>', '\n');
+
   return (
     <CommentItemPresenter
       cmntData={cmntData}
@@ -28,11 +30,11 @@ function CommentItem({ cmntData, groupId }) {
       handleClickShow={handleClickShow}
       handleClickCancel={handleClickCancel}
       handleTextChange={handleTextChange}
-      itemText={itemText}
+      changedText={changedText}
       commentModalVisible={commentModalVisible}
       deleteState={Boolean(delComment)}
     />
   );
 }
 
-export default React.memo(CommentItem);
+export default CommentItem;

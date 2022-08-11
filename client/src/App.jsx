@@ -11,24 +11,30 @@ import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
 import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
+import LoginSection from './components/login/LoginSection/LoginSection';
 
 function App() {
   const { authenticated, expireTime } = useSelector(
-    state => ({
+    (state) => ({
       authenticated: state.authToken.authenticated,
       expireTime: state.authToken.expireTime,
     }),
     shallowEqual
   );
-  
-  const { isLoginCheckToggled } = useSelector((state) => state.toggle);
+  const { isLoginCheckToggled, loginToggled } = useSelector(
+    (state) => ({
+      isLoginCheckToggled: state.toggle.isLoginCheckToggled,
+      loginToggled: state.toggle.loginToggled,
+    }),
+    shallowEqual
+  );
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
 
   useEffect(() => {
     if (authenticated && expireTime - new Date().getTime() < 3000) {
-      if (window.confirm("로그인 만료되셨습니다. 연장하시겠습니까?")) {
+      if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
         let data = {
           refreshToken: getCookie(),
         };
@@ -54,10 +60,11 @@ function App() {
           }}
           cancelFunc={() => dispatch(isLoginCheckToggle())}
         >
-          {'로그인이 필요한 기능입니다.로그인하시겠습니까?'}
+          {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}
         </Modal>
       ) : null}
       <NavBar />
+      {loginToggled && <LoginSection />}
       {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <AppRoute />
       <ReactQueryDevtools initialIsOpen={true} />

@@ -3,17 +3,29 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 
-function PostEditorPresenter({ modules, formats, onEditorStateChange, errors, paraData }) {
+function PostEditorPresenter({
+  modules,
+  formats,
+  onEditorStateChange,
+  errors,
+  registerRef,
+  quillRef,
+  text,
+  onEditorSetValue,
+}) {
   return (
-    <PostEditorWrap error={errors.para} palette='yellow'>
-      <ReactQuill
+    <PostEditorWrap error={errors.para} palette='yellow' onBlur={onEditorSetValue}>
+      <CustomReactQuill
         name='editor'
-        style={{ height: '85%', marginBottom: '6%' }}
         modules={modules}
         formats={formats}
         theme='snow'
         onChange={onEditorStateChange}
-        value={paraData}
+        ref={(e) => {
+          registerRef(e);
+          quillRef.current = e;
+        }}
+        value={text}
       />
     </PostEditorWrap>
   );
@@ -23,7 +35,23 @@ export default PostEditorPresenter;
 
 const PostEditorWrap = styled.div`
   margin-top: 30px;
-  height: 400px;
+  height: 580px;
   border: 2px solid
-    ${({ palette, theme, error }) => (error ? theme.color['red'] : theme.color[palette])};
+    ${({ palette, theme, error }) => (error ? theme.color['lightGray'] : theme.color[palette])};
+  @media screen and (max-width: 550px) {
+    height: 602px;
+  }
+`;
+const CustomReactQuill = styled(ReactQuill)`
+  border: none;
+
+  @media screen and (max-width: 550px) {
+    height: 85%;
+  }
+  @media (min-width: 550px) and (max-width: 992px) {
+    height: 89%;
+  }
+  @media (min-width: 992px) {
+    height: 93%;
+  }
 `;

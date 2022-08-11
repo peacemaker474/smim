@@ -3,18 +3,25 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const SignBox = styled.div`
-  padding-top: 5px;
 `;
 
 const SignText = styled.span`
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: ${({theme}) => theme.color.gray};
+
+  @media ${({ theme }) => theme.device.mobile } {
+    font-size: 0.7rem;
+  }
 `;
 
 const SignLink = styled(Link)`
-  font-size: 0.9em;
+  font-size: 0.9rem;
   color: ${({theme}) => theme.color.black};
   font-weight: bold;
+
+  @media ${({ theme }) => theme.device.mobile } {
+    font-size: 0.8rem;
+  }
 `;
 
 function SignupLinkStyle ({ onLoginClose }) {

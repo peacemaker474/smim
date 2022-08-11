@@ -26,6 +26,5 @@ function useDropdown() {
   }, [isDropdownVisible]);
 
   return [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow];
-
 }
 export default useDropdown;

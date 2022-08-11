@@ -8,7 +8,6 @@ const InputWrapper = styled.div`
   height: 30%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
 `;
 
 function LoginId ({ register, errors }) {
