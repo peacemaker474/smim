@@ -10,7 +10,7 @@ import { pinnedInitCommentId } from '../../../../redux/slice/commentSlice';
 import { getPostData } from '../../../../redux/slice/postSlice';
 import { getCookie } from '../../../../utils/cookie';
 
-function PostPost() {
+function PostPost({ setPostViewState }) {
   const tkn = getCookie();
   const user = useSelector((state) => state.user);
   const { id: postId } = useParams();
@@ -43,8 +43,8 @@ function PostPost() {
 
       return post;
     } catch (error) {
-      console.error(error);
-      return error;
+      setPostViewState(true);
+      return error.response.status;
     }
   };
 

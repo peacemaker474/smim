@@ -21,7 +21,7 @@ export default ModalPresenter;
 const ModalContainer = styled.div``;
 
 const ModalOverlay = styled.div`
-  z-index: 2;
+  z-index: 1004;
   background: rgba(0, 0, 0, 0.2);
   width: 100%;
   height: 100%;
@@ -37,7 +37,7 @@ const ModalBox = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 2;
+  z-index: 1006;
   transform: translate(-50%, -50%);
   @media screen and (max-width: 612px) {
     width: 314px;

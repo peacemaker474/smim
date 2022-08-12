@@ -134,14 +134,22 @@ export const getPostList = async (req, res) => {
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
+  const {
+    user: { _id, nickname, userId },
+  } = req.body;
 
   try {
     await Post.findByIdAndUpdate(id, { being: false });
+    const user = await User.findById(_id);
+    user.posts = user.posts.filter((el) => el !== id);
+    await user.save();
+
     return res.status(200).send({
       success: true,
       message: '게시글 삭제가 완료되었습니다.',
     });
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.status(500).send({
       success: false,
       message: '내부 서버 오류입니다.',
@@ -210,7 +218,7 @@ export const getMainPageLists = async (req, res) => {
       40: [],
       50: [],
     };
-    const posts = await Post.find().sort({ createAt: -1 });
+    const posts = await Post.find({ being: true }).sort({ createAt: -1 });
     const newPosts = await Promise.all(
       posts.map(async (el) => {
         const user = await User.findById(String(el.owner));

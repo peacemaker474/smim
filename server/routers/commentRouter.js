@@ -9,17 +9,56 @@ import {
   getComment,
 } from '../controllers/commentController.js';
 import { verifyToken, verifyRefreshToken } from '../controllers/tokenControllers.js';
-import { checkCommentUndefined } from '../middlewares.js';
+import {
+  checkCommentUndefined,
+  checkBodyContentUndefined,
+  checkBodyPostUndefined,
+  checkBodyPostExist,
+  checkParamCommentExistAndData,
+  checkCommentPinned,
+} from '../middlewares.js';
 
 export const commentRouter = express.Router();
 
 commentRouter
   .route('/:id')
-  .get(getComment)
-  .put(verifyToken, checkCommentUndefined, putCommentEdit)
-  .delete(verifyToken, checkCommentUndefined, deleteComment);
+  .get(checkParamCommentExistAndData, getComment)
+  .put(
+    verifyToken,
+    checkCommentUndefined,
+    checkBodyPostUndefined,
+    checkBodyContentUndefined,
+    checkBodyPostExist,
+    checkParamCommentExistAndData,
+    putCommentEdit
+  )
+  .delete(verifyToken, checkCommentUndefined, checkParamCommentExistAndData, deleteComment);
 commentRouter.get('/:id/detail', verifyRefreshToken, checkCommentUndefined, getComment);
-commentRouter.get('/:id/pinned', verifyToken, checkCommentUndefined, getCommentPinned);
-commentRouter.get('/:id/unpinned', verifyToken, checkCommentUndefined, getCommentUnpinned);
-commentRouter.get('/:id/like', verifyToken, checkCommentUndefined, getCommentLike);
-commentRouter.get('/:id/unlike', verifyToken, checkCommentUndefined, getCommentUnlike);
+commentRouter.get(
+  '/:id/pinned',
+  verifyToken,
+  checkCommentUndefined,
+  checkCommentPinned,
+  getCommentPinned
+);
+commentRouter.get(
+  '/:id/unpinned',
+  verifyToken,
+  checkCommentUndefined,
+  checkCommentPinned,
+  getCommentUnpinned
+);
+commentRouter.get(
+  '/:id/like',
+  verifyToken,
+  checkCommentUndefined,
+  checkParamCommentExistAndData,
+  getCommentLike
+);
+commentRouter.get(
+  '/:id/unlike',
+  verifyToken,
+  checkCommentUndefined,
+  checkParamCommentExistAndData,
+  getCommentUnlike
+);
