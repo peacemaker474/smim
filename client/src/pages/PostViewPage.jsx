@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PostPost from '../components/postview/Post/PostPost/PostPost';
@@ -9,6 +9,7 @@ import { modalToggle } from '../redux/slice/toggleSlice';
 import { deletePost } from '../network/post/http';
 import { resetComment } from '../redux/slice/commentCreateSlice';
 import { resetPost } from '../redux/slice/postSlice';
+import NotFound from '../pages/NotFound';
 
 function PostViewPage() {
   const modalVisible = useSelector((state) => state.toggle).modalToggled;
@@ -16,12 +17,18 @@ function PostViewPage() {
   const tkn = useSelector((state) => state.authToken).accessToken;
   const { id } = useParams();
   const navigate = useNavigate();
+  const regExp = /[0-9a-f]{24}/g;
+  const [postViewState, setPostViewState] = useState(false);
 
   useEffect(() => {
     dispatch(resetComment());
     dispatch(resetPost());
     // persist config 관련해서 refactoring 예정
   }, [dispatch]);
+
+  if (!(id.length === 24 && regExp.test(id)) || postViewState) {
+    return <NotFound />;
+  }
 
   const requestDelete = async (id, tkn) => {
     await deletePost(id, {
@@ -47,7 +54,7 @@ function PostViewPage() {
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
-        <PostPost />
+        <PostPost setPostViewState={setPostViewState} />
         <PostComment />
       </PostViewContainer>
     </PostViewMain>
