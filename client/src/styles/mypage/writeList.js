@@ -4,12 +4,19 @@ export const ListsUl = styled.ul`
   width: 95%;
   height: 90%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 185px);
+  grid-template-rows: repeat(3, 140px);
   gap: 10px;
 
-  @media screen and (max-width: 1180px) {
-    grid-template-columns: 1fr 1fr;
+  @media ${({ theme }) => theme.device.webMiddle} {
+    grid-template-columns: repeat(2, 250px);
+    grid-template-rows: repeat(3, 133px);
+    justify-content: space-evenly;
+  }
+
+  @media ${({ theme }) => theme.device.ipad} {
+    grid-template-columns: repeat(2, 225px);
+    grid-template-rows: repeate(4, 135px);
   }
 `;
 
