@@ -1,6 +1,9 @@
 import multer from 'multer';
 import path from 'path';
 import Post from './models/Post.js';
+import Comment from './models/Comment.js';
+
+// Post Middleware
 
 // 요청한 User가 작성한 게시글인지를 체크하는 미들웨어
 export const existPostAndOwnerCheck = async (req, res, next) => {
@@ -110,10 +113,27 @@ export const fieldCheck = async (req, res, next) => {
   }
 };
 
+// Image Middleware
+
 export const userImgUpload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
       cb(null, 'uploads/users/');
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+    limits: {
+      fileSize: 5 * 1024 * 1024,
+    },
+  }),
+});
+
+export const postImageUpload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, 'uploads/posts');
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
@@ -133,96 +153,65 @@ export const checkCommentUndefined = async (req, res, next) => {
   if (!commentId) {
     return res.status(400).send({
       success: false,
-      message: 'comment Id가 undefined입니다.',
+      message: 'commentId가 undefined입니다.',
     });
   }
 
   next();
 };
 
-export const checkCommentLike = async (req, res) => {
-  const {
-    user: { _id },
-  } = req.body;
-  const { id: commentId } = req.params;
+export const checkBodyPostUndefined = async (req, res, next) => {
+  const { post_id: postId } = req.body;
 
-  if (!commentId) {
+  if (!postId) {
     return res.status(400).send({
       success: false,
-      message: 'commentId가 undefined입니다.',
+      message: 'postId가 undefined입니다.',
     });
   }
 
-  try {
-    const userExist = await User.exists({ _id: _id });
-
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
-    const comment = await Comment.findById(commentId);
-
-    if (!commentId) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않는 댓글입니다.',
-      });
-    }
-
-    req.comment = comment;
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
-    });
-  }
+  next();
 };
 
-export const checkCommentPinned = async (req, res) => {
-  const { id: commentId } = req.params;
+export const checkParamPostUndefined = async (req, res, next) => {
+  const { id: postId } = req.params;
 
-  const {
-    user: { _id },
-  } = req.body;
-
-  if (!commentId) {
+  if (!postId) {
     return res.status(400).send({
       success: false,
-      message: 'commentId가 undefined입니다.',
+      message: 'postId가 undefined입니다.',
     });
   }
 
-  try {
-    const userExist = await User.exists({ _id: _id });
+  next();
+};
 
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
+export const checkBodyContentUndefined = async (req, res, next) => {
+  const { content } = req.body;
 
-    const comment = await Comment.findOne({
-      state: true,
-      _id: commentId,
-      parent_id: null,
+  if (!content) {
+    return res.status(400).send({
+      success: false,
+      message: 'content가 undefined입니다.',
     });
+  }
 
-    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
+  next();
+};
 
-    if (!post) {
+export const checkBodyPostExist = async (req, res, next) => {
+  const { post_id: postId } = req.body;
+
+  try {
+    const postExist = await Post.exists({ _id: postId, being: true });
+
+    if (!postExist) {
       return res.status(400).send({
         success: false,
         message: '존재하지 않거나 삭제된 게시물입니다.',
       });
     }
 
-    req.post = post;
-    req.comment = comment;
     next();
   } catch (error) {
     console.log(error);
@@ -232,38 +221,11 @@ export const checkCommentPinned = async (req, res) => {
     });
   }
 };
-
-export const checkParentIdComment = async (req, res) => {
-  const { parent_id: parentId } = req.body;
-
-  if (parentId != null) {
-    // parentId가 null이 아닌데 undefined인 경우
-    if (parentId === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'parentId가 undefined입니다.',
-      });
-    }
-  }
-  next();
-};
-
-export const existUserAndPost = async (req, res) => {
-  const { post_id: postId } = req.body;
-  const {
-    user: { _id },
-  } = req.body;
+export const checkParamPostExist = async (req, res, next) => {
+  const { id: postId } = req.params;
 
   try {
-    const userExist = await User.exists({ _id: _id });
     const postExist = await Post.exists({ _id: postId, being: true });
-
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
 
     if (!postExist) {
       return res.status(400).send({
@@ -282,33 +244,20 @@ export const existUserAndPost = async (req, res) => {
   }
 };
 
-export const checkCommentValue = async (req, res) => {
+export const checkParamCommentExistAndData = async (req, res, next) => {
   const { id: commentId } = req.params;
-  const { post_id: postId, content: content } = req.body;
 
   try {
-    const commentData = await Comment.exists({ _id: commentId, being: true });
+    const comment = await Comment.findOne({ _id: commentId, being: true });
 
-    if (!commentData) {
+    if (!comment) {
       return res.status(400).send({
         success: false,
         message: '존재하지 않는 댓글입니다.',
       });
     }
 
-    if (!postId) {
-      return res.status(400).send({
-        success: false,
-        message: 'postId가 undefined입니다.',
-      });
-    }
-    if (!content) {
-      return res.status(400).send({
-        success: false,
-        message: 'content가 undefined입니다.',
-      });
-    }
-
+    req.comment = comment;
     next();
   } catch (error) {
     console.log(error);
@@ -319,42 +268,37 @@ export const checkCommentValue = async (req, res) => {
   }
 };
 
-export const checkCommentCreateAndEdit = async (req, res) => {
-  const { post_id: postId, content, parent_id: parentId } = req.body;
+export const checkCommentPinned = async (req, res, next) => {
+  const { id: commentId } = req.params;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
-    if (parentId != null) {
-      // parentId가 null이 아닌데 undefined인 경우
-      if (parentId === undefined) {
-        return res.status(400).send({
-          success: false,
-          message: 'parentId가 undefined입니다.',
-        });
-      }
-    }
+    const comment = await Comment.findOne({
+      being: true,
+      _id: commentId,
+      parent_id: null,
+    });
 
-    const commentExist = await Comment.exists({ _id: parentId, being: true });
+    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
 
-    if (!commentExist) {
+    if (!comment) {
       return res.status(400).send({
         success: false,
-        message: '존재하지 않는 댓글입니다.',
+        message: '고정할 수 없는 댓글입니다.',
       });
     }
 
-    if (!postId) {
+    if (!post) {
       return res.status(400).send({
         success: false,
-        message: 'postId가 undefined입니다.',
+        message: '존재하지 않거나 삭제된 게시물입니다.',
       });
-    } else if (!content) {
-      return res.status(400).send({
-        success: false,
-        message: 'content가 undefined입니다.',
-      });
-    } else {
-      next();
     }
+    req.post = post;
+
+    next();
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -363,18 +307,3 @@ export const checkCommentCreateAndEdit = async (req, res) => {
     });
   }
 };
-
-export const postImageUpload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, 'uploads/posts');
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
-    limits: {
-      fileSize: 5 * 1024 * 1024,
-    },
-  }),
-});

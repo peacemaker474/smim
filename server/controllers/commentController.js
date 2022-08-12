@@ -1,6 +1,5 @@
 import Comment from '../models/Comment.js';
 import User from '../models/User.js';
-import Post from '../models/Post.js';
 
 // 댓글 생성(Comment Create)
 export const postCommentCreate = async (req, res) => {
@@ -9,23 +8,7 @@ export const postCommentCreate = async (req, res) => {
     user: { _id },
   } = req.body;
 
-  if (!postId) {
-    return res.status(400).send({
-      success: false,
-      message: 'postId가 undefined입니다.',
-    });
-  }
-
   try {
-    const postExist = await Post.exists({ _id: postId, being: true });
-
-    if (!postExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
     if (parentId != null) {
       if (parentId === undefined) {
         return res.status(400).send({
@@ -44,31 +27,24 @@ export const postCommentCreate = async (req, res) => {
       }
     }
 
-    if (!content) {
-      return res.status(400).send({
-        success: false,
-        message: 'content가 undefined입니다.',
-      });
-    } else {
-      const comment = await Comment.create({
-        text: content,
-        writer: _id,
-        post_id: postId,
-        parent_id: parentId,
-      });
+    const comment = await Comment.create({
+      text: content,
+      writer: _id,
+      post_id: postId,
+      parent_id: parentId,
+    });
 
-      if (parentId != null) {
-        const parentComment = await Comment.findOne({ _id: parentId });
-        parentComment.children.push(comment._id);
-        await parentComment.save();
-      }
-
-      return res.status(200).send({
-        success: true,
-        comment_id: comment._id,
-        message: '댓글 작성 성공했습니다.',
-      });
+    if (parentId != null) {
+      const parentComment = await Comment.findOne({ _id: parentId });
+      parentComment.children.push(comment._id);
+      await parentComment.save();
     }
+
+    return res.status(200).send({
+      success: true,
+      comment_id: comment._id,
+      message: '댓글 작성 성공했습니다.',
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -96,23 +72,7 @@ export const getCommentList = async (req, res) => {
     userData.userId = userId;
   }
 
-  if (!postId) {
-    return res.status(400).send({
-      success: false,
-      message: 'postId가 undefined입니다.',
-    });
-  }
-
   try {
-    const postExist = await Post.exists({ _id: postId, being: true });
-
-    if (!postExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
     const commentList = await Comment.find({
       post_id: postId,
       parent_id: null,
@@ -167,7 +127,6 @@ export const getCommentList = async (req, res) => {
     }
 
     await repeat(commentList, 0);
-    // console.log(DATA);
 
     return res.status(200).send({
       success: true,
@@ -181,200 +140,9 @@ export const getCommentList = async (req, res) => {
   }
 };
 
-// 댓글 고정하기
-export const getCommentPinned = async (req, res) => {
-  const { id: commentId } = req.params;
-
-  const {
-    user: { _id },
-  } = req.body;
-
-  try {
-    const comment = await Comment.findOne({
-      state: true,
-      _id: commentId,
-      parent_id: null,
-    });
-
-    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
-
-    if (!comment) {
-      return res.status(400).send({
-        success: false,
-        message: '고정할 수 없는 댓글입니다.',
-      });
-    }
-
-    if (!post) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    post.meta.pinnedCmnt = commentId;
-    post.meta.answer = true;
-    await post.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '댓글 고정을 성공했습니다.',
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-// 댓글 고정 취소하기
-export const getCommentUnpinned = async (req, res) => {
-  const { id: commentId } = req.params;
-
-  const {
-    user: { _id },
-  } = req.body;
-
-  try {
-    if (!commentId) {
-      return res.status(400).send({
-        success: false,
-        message: 'commentId가 undefined입니다.',
-      });
-    }
-
-    const comment = await Comment.findOne({
-      state: true,
-      _id: commentId,
-      parent_id: null,
-    });
-
-    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
-
-    if (!comment) {
-      return res.status(400).send({
-        success: false,
-        message: '고정할 수 없는 댓글입니다.',
-      });
-    }
-
-    if (!post) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    post.meta.pinnedCmnt = null;
-    post.meta.answer = false;
-    await post.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '고정댓글을 해제했습니다.',
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-// 댓글 좋아요
-export const getCommentLike = async (req, res) => {
-  const {
-    user: { _id },
-  } = req.body;
-  const { id: commentId } = req.params;
-
-  try {
-    const comment = await Comment.findById(commentId);
-
-    if (!comment) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않는 댓글입니다.',
-      });
-    }
-
-    if (comment.like_users.includes(_id)) {
-      return res.status(404).send({
-        success: false,
-        message: '이미 좋아요한 댓글입니다.',
-      });
-    }
-
-    comment.like_count += 1;
-    comment.like_users.push(_id);
-    await comment.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '좋아요를 눌렀습니다.',
-      data: {
-        likes: comment.like_count,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
-    });
-  }
-};
-
-// 댓글 좋아요 취소
-export const getCommentUnlike = async (req, res) => {
-  const {
-    user: { _id },
-  } = req.body;
-  const { id: commentId } = req.params;
-
-  try {
-    const comment = await Comment.findById(commentId);
-
-    if (!commentId) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않는 댓글입니다.',
-      });
-    }
-
-    if (!comment.like_users.includes(_id)) {
-      return res.status(404).send({
-        success: false,
-        message: '좋아요를 하지않은 댓글입니다.',
-      });
-    }
-
-    comment.like_count -= 1;
-    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
-    await comment.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '좋아요를 취소하였습니다.',
-      data: {
-        likes: comment.like_count,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
-    });
-  }
-};
-
 // 댓글 가져오기
 export const getComment = async (req, res) => {
-  const { id: commentId } = req.params; // comment id
+  const { comment } = req;
   const userData = {
     _id: undefined,
     nickname: undefined,
@@ -392,15 +160,6 @@ export const getComment = async (req, res) => {
   }
 
   try {
-    const comment = await Comment.findOne({ _id: commentId, being: true });
-
-    if (!comment) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않는 댓글입니다.',
-      });
-    }
-
     const DATA = [];
     const parentWriter = await User.findOne({ _id: comment.writer });
     if (userData._id) {
@@ -478,54 +237,127 @@ export const getComment = async (req, res) => {
   }
 };
 
-// 댓글 수정하기
-export const putCommentEdit = async (req, res) => {
+// 댓글 고정하기
+export const getCommentPinned = async (req, res) => {
   const { id: commentId } = req.params;
-  const { post_id: postId, content: content } = req.body;
+  const { post } = req;
+
+  try {
+    post.meta.pinnedCmnt = commentId;
+    post.meta.answer = true;
+    await post.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '댓글 고정을 성공했습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// 댓글 고정 취소하기
+export const getCommentUnpinned = async (req, res) => {
+  const { post } = req;
+
+  try {
+    post.meta.pinnedCmnt = null;
+    post.meta.answer = false;
+    await post.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '고정댓글을 해제했습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// 댓글 좋아요
+export const getCommentLike = async (req, res) => {
   const {
     user: { _id },
   } = req.body;
-
-  if (!postId) {
-    return res.status(400).send({
-      success: false,
-      message: 'postId가 undefined입니다.',
-    });
-  }
-  if (!content) {
-    return res.status(400).send({
-      success: false,
-      message: 'content가 undefined입니다.',
-    });
-  }
+  const { comment } = req;
 
   try {
-    const userExist = await User.exists({ _id: _id });
-    const postExist = await Post.exists({ _id: postId, being: true });
-
-    const commentData = await Comment.exists({ _id: commentId, being: true });
-
-    if (!commentData) {
-      return res.status(400).send({
+    if (comment.like_users.includes(_id)) {
+      return res.status(404).send({
         success: false,
-        message: '존재하지 않는 댓글입니다.',
+        message: '이미 좋아요한 댓글입니다.',
       });
     }
 
-    if (!postExist) {
-      return res.status(400).send({
+    comment.like_count += 1;
+    comment.like_users.push(_id);
+    await comment.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 눌렀습니다.',
+      data: {
+        likes: comment.like_count,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
+
+// 댓글 좋아요 취소
+export const getCommentUnlike = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.body;
+  const { comment } = req;
+
+  try {
+    if (!comment.like_users.includes(_id)) {
+      return res.status(404).send({
         success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
+        message: '좋아요를 하지않은 댓글입니다.',
       });
     }
 
-    if (!userExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
+    comment.like_count -= 1;
+    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
+    await comment.save();
 
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 취소하였습니다.',
+      data: {
+        likes: comment.like_count,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
+
+// 댓글 수정하기
+export const putCommentEdit = async (req, res) => {
+  const { id: commentId } = req.params;
+  const { content: content } = req.body;
+
+  try {
     await Comment.findByIdAndUpdate(commentId, { text: content });
 
     return res.status(200).send({

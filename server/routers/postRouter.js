@@ -19,6 +19,11 @@ import {
   existPostCheck,
   fieldCheck,
   postImageUpload,
+  checkBodyPostUndefined,
+  checkParamPostUndefined,
+  checkBodyContentUndefined,
+  checkBodyPostExist,
+  checkParamPostExist,
 } from '../middlewares.js';
 
 export const postRouter = express.Router();
@@ -26,7 +31,14 @@ export const postRouter = express.Router();
 postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
 postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
-postRouter.post('/comment', verifyToken, postCommentCreate);
+postRouter.post(
+  '/comment',
+  verifyToken,
+  checkBodyPostUndefined,
+  checkBodyContentUndefined,
+  checkBodyPostExist,
+  postCommentCreate
+);
 postRouter.post('/img', postImageUpload.single('img'), postPostImageUpload);
 
 postRouter
@@ -41,6 +53,11 @@ postRouter.get('/:id/bookmark', verifyToken, existPostCheck, getBookmark);
 postRouter.get('/:id/unbookmark', verifyToken, existPostCheck, getUnbookmark);
 postRouter.get('/:id/like', verifyToken, existPostCheckAndData, getPostLike);
 postRouter.get('/:id/unlike', verifyToken, existPostCheckAndData, getPostUnlike);
-postRouter.get('/:id/comment', getCommentList);
-postRouter.get('/:id/comment/detail', verifyRefreshToken, getCommentList);
-postRouter.get('/:id/detailComment', verifyToken, getCommentList);
+postRouter.get('/:id/comment', checkParamPostUndefined, checkParamPostExist, getCommentList);
+postRouter.get(
+  '/:id/comment/detail',
+  verifyRefreshToken,
+  checkParamPostUndefined,
+  checkParamPostExist,
+  getCommentList
+);
