@@ -13,6 +13,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
 
   useEffect(() => {
     setPostOption('newer');
+    return () => setPostOption('newer');
   }, [age]);
 
   const handlePostOption = useCallback(
