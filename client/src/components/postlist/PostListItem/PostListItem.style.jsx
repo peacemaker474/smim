@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Tag } from '../../../styles/common/tag';
 import UserImage from '../../common/UserImage/UserImage';
 import Heart from '../../../asset/icon/icon-heart-fill.svg';
+import Save from '../../../asset/icon/icon-save-line.svg';
 import Eye from '../../../asset/icon/icon-eye.svg';
 import { Link } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ export default function PostListItemPresenter({
         <EtcDiv>
           <EtcSpan icon={Heart}>{meta.likes}</EtcSpan>
           <EtcSpan icon={Eye}>{meta.views}</EtcSpan>
+          {content === '<p>[이미지]</p>' ? <EtcSpan icon={Save}></EtcSpan> : null}
         </EtcDiv>
         <PostDate>{postDate}</PostDate>
       </PostAnchor>
@@ -88,14 +90,10 @@ const PostText = styled.p`
   margin-bottom: 14px;
   color: ${({ theme }) => theme.color.black};
   overflow: hidden;
-  & > p {
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; // 원하는 라인수
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const PostTagListDiv = styled.div`
