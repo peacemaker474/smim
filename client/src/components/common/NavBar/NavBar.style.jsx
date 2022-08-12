@@ -99,7 +99,7 @@ const DownButton = styled.div`
   background-size: cover;
 `;
 
-function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, btnRef, loginToggled, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
+function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, btnRef, imgUrl, authenticated, onLoginClick, onLogoutClick, onToggleClick, onMyPageClick}) {  
   return (
     <>
       <NavContainer>
@@ -109,27 +109,27 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
           </NavLogoBox>
           <NavLists>
             <NavList>
-              <GenerationLink to='/generation?age=10' current={pathname === '/generation?age=10'}>
+              <GenerationLink to='/generation?age=10' current={pathname === '/generation?age=10' ? 1 : 0}>
                 10대에게
               </GenerationLink>
             </NavList>
             <NavList>
-              <GenerationLink to='/generation?age=20' current={pathname === '/generation?age=20'}>
+              <GenerationLink to='/generation?age=20' current={pathname === '/generation?age=20' ? 1 : 0}>
                 20대에게
               </GenerationLink>
             </NavList>
             <NavList>
-              <GenerationLink to='/generation?age=30' current={pathname === '/generation?age=30'}>
+              <GenerationLink to='/generation?age=30' current={pathname === '/generation?age=30' ? 1 : 0}>
                 30대에게
               </GenerationLink>
             </NavList>
             <NavList>
-              <GenerationLink to='/generation?age=40' current={pathname === '/generation?age=40'}>
+              <GenerationLink to='/generation?age=40' current={pathname === '/generation?age=40' ? 1 : 0}>
                 40대에게
               </GenerationLink>
             </NavList>
             <NavList>
-              <GenerationLink to='/generation?age=50' current={pathname === '/generation?age=50'}>
+              <GenerationLink to='/generation?age=50' current={pathname === '/generation?age=50' ? 1 : 0}>
                 50대에게
               </GenerationLink>
             </NavList>
@@ -159,8 +159,8 @@ function NavBarStyle ({ menuToggled, pathname, isDropdownVisible, dropdownRef, b
             onToggleClick={onToggleClick}
           />
         </NavWrapper>
+        {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
       </NavContainer>
-      {menuToggled && <MobileNavBar onLogoutClick={onLogoutClick}/>}
     </>
   );
 }
