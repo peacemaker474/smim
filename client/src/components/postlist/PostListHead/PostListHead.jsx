@@ -37,7 +37,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
         setPostArray([...olderArray]);
       }
     },
-    [postArray, setPostArray, postOption]
+    [postArray, setPostArray]
   );
 
   const handleSearchOption = useCallback(
@@ -87,7 +87,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
         inputRef.current.value = '';
       }
     },
-    [searchList, age, setPostArray]
+    [searchList, age, setPostArray, postOption]
   );
   return (
     <PostListHeadPresenter
