@@ -33,7 +33,7 @@ commentRouter
     putCommentEdit
   )
   .delete(verifyToken, checkCommentUndefined, checkParamCommentExistAndData, deleteComment);
-commentRouter.get('/:id/detail', verifyRefreshToken, checkCommentUndefined, getComment);
+commentRouter.get('/:id/detail', verifyRefreshToken, checkParamCommentExistAndData, getComment);
 commentRouter.get(
   '/:id/pinned',
   verifyToken,
