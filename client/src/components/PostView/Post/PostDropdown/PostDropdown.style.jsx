@@ -32,4 +32,8 @@ const PostDropdownList = styled(DropdownList)`
   line-height: 34px;
 `;
 
-const PostDropdownLink = styled(DropdownLink)``;
+const PostDropdownLink = styled(DropdownLink)`
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+`;
