@@ -16,7 +16,7 @@ function EmailForm () {
     }
   });
   const { success, message } = useSelector(
-     state => ({
+    state => ({
         success: state.user.success,
         message: state.user.message,
     }),

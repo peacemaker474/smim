@@ -161,4 +161,4 @@ function MobileNavBar ({ onLogoutClick }) {
   );
 }
 
-export default MobileNavBar;
+export default React.memo(MobileNavBar);

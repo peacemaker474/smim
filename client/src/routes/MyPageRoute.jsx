@@ -16,7 +16,7 @@ export default function MyPageRoute() {
       <Route element={<MyPage />}>
         <Route path='/' element={<MyInfo />} />
         <Route path='writeLists' element={<MyWriteLists userId={user.id} />} />
-        <Route path='favoriteLists' element={<BookMarkLists userId={user.id} />} />
+        <Route path='bookMarkLists' element={<BookMarkLists userId={user.id} />} />
         <Route path='changepw' element={<PasswordChange />} />
       </Route>
       <Route path='*' element={<NotFound />} />

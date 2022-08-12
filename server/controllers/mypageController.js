@@ -28,7 +28,7 @@ export const getWriteLists = async (req, res) => {
   }
 };
 
-export const getFavoriteLists = async (req, res) => {
+export const getBookMarkLists = async (req, res) => {
   const { userId } = req.query;
   try {
     const { bookmarks } = await User.findOne({userId});
