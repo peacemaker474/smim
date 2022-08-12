@@ -6,7 +6,6 @@ export default function CommentTextAreaPresenter({
   inputRef,
   value,
   handleCommentChange,
-  handleloginCheck,
   handleKeyDownCheck,
   state,
 }) {
@@ -20,7 +19,6 @@ export default function CommentTextAreaPresenter({
       }}
       value={value}
       onChange={handleCommentChange}
-      onClick={handleloginCheck}
       onKeyDown={handleKeyDownCheck}
       state={state}
     />

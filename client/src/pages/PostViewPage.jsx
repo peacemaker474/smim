@@ -54,8 +54,8 @@ function PostViewPage() {
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
-        <PostPost setPostViewState={setPostViewState} />
-        <PostComment />
+         <PostPost setPostViewState={setPostViewState} />
+        {tkn ? <PostComment /> : null}
       </PostViewContainer>
     </PostViewMain>
   );
@@ -68,6 +68,7 @@ const PostViewMain = styled.main``;
 const PostViewContainer = styled.div`
   margin: 100px auto 0;
   padding-top: 70px;
+  padding-bottom: 50px;
   @media (max-width: 612px) {
     width: 328px;
   }
