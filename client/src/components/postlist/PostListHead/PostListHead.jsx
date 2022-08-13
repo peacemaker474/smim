@@ -13,6 +13,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
 
   useEffect(() => {
     setPostOption('newer');
+    return () => setPostOption('newer');
   }, [age]);
 
   const handlePostOption = useCallback(
@@ -36,7 +37,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
         setPostArray([...olderArray]);
       }
     },
-    [postArray, setPostArray, postOption]
+    [postArray, setPostArray]
   );
 
   const handleSearchOption = useCallback(
@@ -86,7 +87,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
         inputRef.current.value = '';
       }
     },
-    [searchList, age, setPostArray]
+    [searchList, age, setPostArray, postOption]
   );
   return (
     <PostListHeadPresenter

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PostListItemPresenter from './PostListItem.style';
 import getDate from '../../../utils/changedDate';
 import getHashtagList from '../../../utils/limitedHashtag';
+import checkedText from '../../../utils/checkedText';
 
 function PostListItem({ postData }) {
   const {
@@ -16,6 +17,7 @@ function PostListItem({ postData }) {
   } = postData;
 
   const navigate = useNavigate();
+  let paraContent = checkedText(content);
 
   const handleDetailPageMove = () => {
     navigate(`/post/view/${_id}`);
@@ -30,7 +32,7 @@ function PostListItem({ postData }) {
     <PostListItemPresenter
       handleDetailPageMove={handleDetailPageMove}
       hashtag={hashtagEdition}
-      content={content}
+      content={paraContent}
       meta={meta}
       postDate={postDate}
       title={title}
