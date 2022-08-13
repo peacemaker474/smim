@@ -84,18 +84,18 @@ function MyProfileStyle ({ social, pathname }) {
         {!social && 
           <>
             <ProfileList>
-              <MyProfileLink to="/my" current={pathname === '/my'}> 내 정보 수정 </MyProfileLink>
+              <MyProfileLink to="/my" current={pathname === '/my' ? 1 : 0}> 내 정보 수정 </MyProfileLink>
             </ProfileList>
             <ProfileList>
-              <MyProfileLink to="/my/changepw" current={pathname === '/my/changepw'}> 비밀번호 변경 </MyProfileLink>
+              <MyProfileLink to="/my/changepw" current={pathname === '/my/changepw' ? 1 : 0}> 비밀번호 변경 </MyProfileLink>
             </ProfileList>
           </>
         }
         <ProfileList>
-          <MyProfileLink to="/my/writeLists" current={pathname === '/my/writeLists'}> 작성한 글목록 </MyProfileLink>
+          <MyProfileLink to="/my/writeLists" current={pathname === '/my/writeLists' ? 1 : 0}> 작성한 글목록 </MyProfileLink>
         </ProfileList>
         <ProfileList>
-          <MyProfileLink to="/my/bookMarkLists" current={pathname === '/my/favoriteLists'}> 즐겨찾기한 글목록 </MyProfileLink>
+          <MyProfileLink to="/my/bookMarkLists" current={pathname === '/my/favoriteLists' ? 1 : 0}> 즐겨찾기한 글목록 </MyProfileLink>
         </ProfileList>
       </MyProfileLists>
     </MyProfileWrapper>

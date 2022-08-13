@@ -12,7 +12,7 @@ const MyWriteWrapper = styled.div`
   position: relative;
 
   @media screen and (max-width: 1180px) {
-    width: 70%;
+    width: 90%;
     height: 80%;
   }
 

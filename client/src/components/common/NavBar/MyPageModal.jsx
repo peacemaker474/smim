@@ -37,9 +37,9 @@ const MyPageLink = styled(Link)`
   height: 100%;
 `;
 
-function MyPageModal ({ onMyPageClick, onLogoutClick }) {
+const MyPageModal = (({ onMyPageClick, onLogoutClick }, ref) => {
   return (
-    <MyPageModalWrraper>
+    <MyPageModalWrraper ref={ref}>
       <MyPageModalLists>
         <MyPageModalList>
           <MyPageLink to="/my" onClick={onMyPageClick}> 마이페이지 </MyPageLink>
@@ -50,6 +50,7 @@ function MyPageModal ({ onMyPageClick, onLogoutClick }) {
       </MyPageModalLists>
     </MyPageModalWrraper>
   );
-}
+});
 
-export default React.memo(MyPageModal);
+const forwardedRefMyPageModal = React.forwardRef(MyPageModal);
+export default React.memo(forwardedRefMyPageModal);
