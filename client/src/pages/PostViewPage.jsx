@@ -37,7 +37,7 @@ function PostViewPage() {
         Authorization: `Bearer ${tkn}`,
       },
     });
-    navigate(-1);
+    navigate(-2);
   };
 
   return (
@@ -54,7 +54,7 @@ function PostViewPage() {
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
-         <PostPost setPostViewState={setPostViewState} />
+        <PostPost setPostViewState={setPostViewState} />
         {tkn ? <PostComment /> : null}
       </PostViewContainer>
     </PostViewMain>
