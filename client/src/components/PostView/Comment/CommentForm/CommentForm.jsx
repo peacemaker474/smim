@@ -74,7 +74,6 @@ export default function CommentForm({
     );
 
     if (response.data.success) {
-      const date = String(new Date());
       dispatch(
         createComment(
           response.data.comment_id,
@@ -83,7 +82,6 @@ export default function CommentForm({
             nickname: loginState.name,
             imageUrl: loginState.imgUrl,
           },
-          date,
           parentId,
           groupId,
           postId,

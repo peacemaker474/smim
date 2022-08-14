@@ -46,7 +46,7 @@ function PostForm({ postData, pathValue, postId }) {
           title,
           content: para,
           hashtag: tagArray,
-          targetAge: String(age),
+          targetAge: age,
         },
         {
           headers: {
@@ -66,7 +66,7 @@ function PostForm({ postData, pathValue, postId }) {
           title,
           content: para,
           hashtag: tagArray,
-          targetAge: String(age),
+          targetAge: age,
         },
         {
           headers: {

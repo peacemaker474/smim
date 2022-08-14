@@ -15,8 +15,7 @@ function PostBottomBtn({ formState, handleSubmit }) {
     <PostBottomBtnPresenter
       formState={formState}
       handleFormCancle={handleFormCancle}
-      handleSubmit={handleSubmit((data, e) => {
-        e.preventDefault();
+      handleSubmit={handleSubmit((data) => {
         dispatch(modalToggle());
       })}
     />
