@@ -48,9 +48,13 @@ function PostPost({ setPostViewState }) {
     }
   };
 
-  const { data: postDetail, isLoading } = useQuery([('postDetail', { postId })], fetchAPI);
+  const {
+    data: postDetail,
+    isLoading,
+    isFetching,
+  } = useQuery([('postDetail', { postId })], fetchAPI);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingPage />;
   }
 

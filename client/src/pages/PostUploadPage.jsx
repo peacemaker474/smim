@@ -25,9 +25,9 @@ function PostUploadPage() {
     }
   };
 
-  const { data: postData, isLoading } = useQuery(['postEdit'], loadPost);
+  const { data: postData, isLoading, isFetching } = useQuery(['postEdit'], loadPost);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingPage />;
   }
 

@@ -26,9 +26,9 @@ export default function PostListBody({ setPostArray, postArray, age }) {
     }
   };
 
-  const { data, isLoading } = useQuery([('postArray', { age })], loadedPostListData);
+  const { data, isLoading, isFetching } = useQuery([('postArray', { age })], loadedPostListData);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingPage position='absolute' />;
   }
 

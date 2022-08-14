@@ -32,11 +32,12 @@ export default function CommentUploaded() {
     }
   };
 
-  const { data: loadedComments, isLoading } = useQuery(
-    [('commentArray', { postid })],
-    loadComments
-  );
-  if (isLoading) {
+  const {
+    data: loadedComments,
+    isLoading,
+    isFetching,
+  } = useQuery([('commentArray', { postid })], loadComments);
+  if (isLoading || isFetching) {
     return <LoadingPage />;
   }
 
