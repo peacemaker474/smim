@@ -10,8 +10,7 @@ import CommentDropdownPresenter from './CommentDropdown.style';
 
 function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   const dispatch = useDispatch();
-
-  const pinnedCommentId = useSelector((state) => state.comment).pinnedId;
+  const { pinnedId } = useSelector((state) => state.comment);
 
   const handleCommentEdit = (e) => {
     e.preventDefault();
@@ -48,7 +47,7 @@ function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
       writer={writer}
       parentId={parentId}
       commentId={commentId}
-      pinnedId={pinnedCommentId}
+      pinnedId={pinnedId}
     />
   );
 }

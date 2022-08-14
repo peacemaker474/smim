@@ -17,9 +17,9 @@ function PostForm({ postData, pathValue, postId }) {
     setError,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
-  const modalVisible = useSelector((state) => state.toggle).modalToggled;
+  const { modalToggled } = useSelector((state) => state.toggle);
+  const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
-  const tkn = useSelector((state) => state.authToken).accessToken;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function PostForm({ postData, pathValue, postId }) {
     }
   }, [postData, setValue]);
 
-  const uploadPost = async (tkn) => {
+  const uploadPost = async (accessToken) => {
     const { title, para, tagArray, age } = watch();
 
     if (pathValue === 'create') {
@@ -51,7 +51,7 @@ function PostForm({ postData, pathValue, postId }) {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )
@@ -71,7 +71,7 @@ function PostForm({ postData, pathValue, postId }) {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )
@@ -84,10 +84,10 @@ function PostForm({ postData, pathValue, postId }) {
 
   return (
     <>
-      {modalVisible && (
+      {modalToggled && (
         <Modal
           actionfunc={() => {
-            uploadPost(tkn);
+            uploadPost(accessToken);
             dispatch(modalToggle());
           }}
           cancelFunc={() => dispatch(modalToggle())}
@@ -101,7 +101,7 @@ function PostForm({ postData, pathValue, postId }) {
         watch={watch}
         handleSubmit={handleSubmit}
         errors={errors}
-        modalVisible={modalVisible}
+        modalToggled={modalToggled}
         pathValue={pathValue}
         clearErrors={clearErrors}
         setError={setError}

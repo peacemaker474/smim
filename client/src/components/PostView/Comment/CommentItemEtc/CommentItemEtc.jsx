@@ -5,7 +5,7 @@ import useVisible from '../../../../hooks/useVisible';
 import { elapsedText } from '../../../../utils/elapsedText';
 
 export default function CommentItemEtc({ cmntData, groupId, writer }) {
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const { accessToken } = useSelector((state) => state.authToken);
   const [isTargetVisible, handleTargetShow] = useVisible(false);
 
   const handleClickCancel = (e) => {
@@ -19,7 +19,7 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
   return (
     <CommentItemEtcPresenter
       handleClickShow={() => {
-        if (tkn) {
+        if (accessToken) {
           handleTargetShow(true);
         }
       }}

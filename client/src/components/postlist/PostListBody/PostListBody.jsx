@@ -6,7 +6,7 @@ import LoadingPage from '../../../pages/LoadingPage';
 import PostListBodyPresenter from './PostListBody.style';
 
 export default function PostListBody({ setPostArray, postArray, age }) {
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const { accessToken } = useSelector((state) => state.authToken);
 
   const loadedPostListData = async ({ queryKey }) => {
     const [{ age }] = queryKey;
@@ -14,7 +14,7 @@ export default function PostListBody({ setPostArray, postArray, age }) {
       const response = await getPostListRead(age, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       setPostArray(

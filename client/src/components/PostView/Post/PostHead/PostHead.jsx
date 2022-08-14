@@ -6,6 +6,7 @@ import { getPostView } from '../../../../network/post/http';
 export default function PostHead({ postDetail, date }) {
   const { owner: author } = postDetail;
   const [view, setView] = useState(0);
+  const { id: userId } = useSelector((state) => state.user);
 
   const fetchAPI = useCallback(async () => {
     const view = await getPostView(postDetail._id);
@@ -15,9 +16,6 @@ export default function PostHead({ postDetail, date }) {
   useEffect(() => {
     fetchAPI();
   }, [fetchAPI]);
-
-  const loginState = useSelector((state) => state.user);
-  const userId = loginState.id;
 
   const postDate = date.toLocaleDateString();
 

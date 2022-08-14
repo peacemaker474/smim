@@ -7,7 +7,7 @@ import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 
 export default function PostLike({ quantity, like }) {
   const [isLikeChecked, setIsLikeChecked] = useState(like);
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const { accessToken } = useSelector((state) => state.authToken);
   const { id } = useParams();
   const [likeValue, setLikeValue] = useState(quantity);
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function PostLike({ quantity, like }) {
   }, [quantity, like]);
 
   const handleLikeClick = async () => {
-    if (!tkn) {
+    if (!accessToken) {
       dispatch(isLoginCheckToggle());
       return;
     }
@@ -29,7 +29,7 @@ export default function PostLike({ quantity, like }) {
         await getPostUnlike(id, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 
@@ -45,7 +45,7 @@ export default function PostLike({ quantity, like }) {
         await getPostLike(id, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
         setIsLikeChecked(true);

@@ -9,7 +9,7 @@ import { getCookie } from '../../../../utils/cookie';
 
 export default function CommentUploaded() {
   const tkn = getCookie();
-  const pinnedId = useSelector((state) => state.comment).pinnedId;
+  const { pinnedId } = useSelector((state) => state.comment);
   const { id: postid } = useParams();
 
   const loadComments = async ({ queryKey }) => {

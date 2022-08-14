@@ -13,19 +13,19 @@ import { getPinnedCommentData } from '../../../../redux/services/comment';
 import { getCookie } from '../../../../utils/cookie';
 
 function PostComment() {
-  const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
-  const tkn = useSelector((state) => state.authToken).accessToken;
-  const tknAnother = getCookie();
+  const { commentToggled } = useSelector((state) => state.toggle);
+  const { accessToken } = useSelector((state) => state.authToken);
+  const { commentId } = useSelector((state) => state.comment);
+  const { check } = useSelector((state) => state.comment);
+  const tkn = getCookie();
   const dispatch = useDispatch();
-  const commentId = useSelector((state) => state.comment).commentId;
-  const modalState = useSelector((state) => state.comment).check;
   const { id: postId } = useParams();
 
   const handleCommentDelete = async () => {
     await deleteComment(commentId, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     dispatch(deleteCommentId(commentId));
@@ -36,10 +36,10 @@ function PostComment() {
     await getCommentPinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
-    dispatch(getPinnedCommentData({ pinnedId: commentId, tknAnother }));
+    dispatch(getPinnedCommentData({ pinnedId: commentId, tkn }));
     dispatch(commentModalToggle());
   };
 
@@ -47,7 +47,7 @@ function PostComment() {
     await getCommentUnpinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     dispatch(unpinnedCommentId());
@@ -62,18 +62,18 @@ function PostComment() {
     <>
       <PostCommentPresenter
         actionFunc={
-          modalState === 'delete'
+          check === 'delete'
             ? handleCommentDelete
-            : modalState === 'pinned'
+            : check === 'pinned'
             ? hadnelCommentPinned
             : handleCommentUnpinned
         }
-        commentModalVisible={commentModalVisible}
+        commentToggled={commentToggled}
         cancelFunc={cancelFunc}
         modalText={
-          modalState === 'delete'
+          check === 'delete'
             ? '댓글을 완전히 삭제하시겠습니까?'
-            : modalState === 'pinned'
+            : check === 'pinned'
             ? '이 댓글을 고정하시겠습니까?\n이미 고정한 댓글이 있으면\n이 댓글로 바뀝니다.'
             : '고정 댓글을 해제하시겠습니까? '
         }

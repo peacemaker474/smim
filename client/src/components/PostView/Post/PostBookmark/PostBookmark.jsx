@@ -6,18 +6,18 @@ import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import PostBookmarkPresenter from './PostBookmark.style';
 
 export default function PostBookmark({ bookmark }) {
+  const { accessToken } = useSelector((state) => state.authToken);
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(bookmark);
   const location = useLocation();
-  const tkn = useSelector((state) => state.authToken).accessToken;
-  const id = location.pathname.split('view/')[1];
   const dispatch = useDispatch();
+  const id = location.pathname.split('view/')[1];
 
   useEffect(() => {
     setIsBookmarkChecked(bookmark);
   }, [bookmark]);
 
   const handleBookmarkClick = async () => {
-    if (!tkn) {
+    if (!accessToken) {
       dispatch(isLoginCheckToggle());
       return;
     }
@@ -28,7 +28,7 @@ export default function PostBookmark({ bookmark }) {
         await getUnbookmark(id, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
         setIsBookmarkChecked(false);
@@ -42,7 +42,7 @@ export default function PostBookmark({ bookmark }) {
         await getBookmark(id, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
         setIsBookmarkChecked(true);
