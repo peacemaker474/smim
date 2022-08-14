@@ -52,7 +52,7 @@ function App() {
 
   return (
     <>
-      {isLoginCheckToggled ? (
+      {isLoginCheckToggled && (
         <Modal
           actionfunc={() => {
             dispatch(isLoginCheckToggle());
@@ -62,7 +62,7 @@ function App() {
         >
           {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}
         </Modal>
-      ) : null}
+      )}
       <NavBar />
       {loginToggled && <LoginSection />}
       {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}

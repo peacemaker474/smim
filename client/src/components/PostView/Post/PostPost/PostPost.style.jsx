@@ -18,9 +18,7 @@ export default function PostPostPresenter({ postDetail, date, user }) {
         <PostTagList hashtag={postDetail.hashtag} />
         <PostLikeBox>
           <PostLike quantity={postDetail.meta.likes} like={postDetail.like} />
-          {postDetail.owner.userId !== user.id ? (
-            <PostBookmark bookmark={postDetail.bookmark} />
-          ) : null}
+          {postDetail.owner.userId !== user.id && <PostBookmark bookmark={postDetail.bookmark} />}
         </PostLikeBox>
       </PostBody>
     </PostBox>

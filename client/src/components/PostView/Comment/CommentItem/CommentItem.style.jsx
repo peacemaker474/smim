@@ -26,15 +26,17 @@ export default function CommentItemPresenter({
           handleTextChange={handleTextChange}
           changedText={changedText}
         />
-      ) : deleteState ? null : (
-        <CommentItemContainer>
-          <CommentItemInner
-            changedText={changedText}
-            handleClickShow={handleClickShow}
-            groupId={groupId}
-            cmntData={cmntData}
-          />
-        </CommentItemContainer>
+      ) : (
+        deleteState && (
+          <CommentItemContainer>
+            <CommentItemInner
+              changedText={changedText}
+              handleClickShow={handleClickShow}
+              groupId={groupId}
+              cmntData={cmntData}
+            />
+          </CommentItemContainer>
+        )
       )}
     </>
   );

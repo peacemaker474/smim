@@ -23,7 +23,6 @@ function PostViewPage() {
   useEffect(() => {
     dispatch(resetComment());
     dispatch(resetPost());
-    // persist config 관련해서 refactoring 예정
   }, [dispatch]);
 
   if (!(id.length === 24 && regExp.test(id)) || postViewState) {
@@ -55,7 +54,7 @@ function PostViewPage() {
           </Modal>
         )}
         <PostPost setPostViewState={setPostViewState} />
-        {tkn ? <PostComment /> : null}
+        {tkn && <PostComment />}
       </PostViewContainer>
     </PostViewMain>
   );

@@ -39,7 +39,7 @@ export default function PostListItemPresenter({
         <EtcDiv>
           <EtcSpan icon={Heart}>{meta.likes}</EtcSpan>
           <EtcSpan icon={Eye}>{meta.views}</EtcSpan>
-          {content === '<p>[이미지]</p>' ? <EtcSpan icon={Save}></EtcSpan> : null}
+          {content === '<p>[이미지]</p>' && <EtcSpan icon={Save}></EtcSpan>}
         </EtcDiv>
         <PostDate>{postDate}</PostDate>
       </PostAnchor>

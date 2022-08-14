@@ -12,17 +12,16 @@ export default function CommentWrapperPresenter({
 }) {
   return (
     <>
-      {delComment ? null : (
+      {delComment && (
         <CommentInner>
           <CommentItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
           {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
             <ReplyContainer>
-              {childrenData.length === 0 ? null : (
+              {childrenData.length === 0 && (
                 <ReplyShowingBtn onClick={handleTargetShow}>
                   ----- 답글 {isTargetVisible ? '닫기' : '보기'}
                 </ReplyShowingBtn>
               )}
-
               {isTargetVisible && (
                 <ReplyListBox>
                   {childrenData.map((el) => (
