@@ -7,11 +7,11 @@ import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 function CommentLikeBtn({ cmntData }) {
   const [like, setLike] = useState(cmntData.like);
   const [likeCount, setLikeCount] = useState(cmntData.like_count);
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const { accessToken } = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
 
   const handleCommentLike = () => {
-    if (!tkn) {
+    if (!accessToken) {
       dispatch(isLoginCheckToggle());
       return;
     }
@@ -19,7 +19,7 @@ function CommentLikeBtn({ cmntData }) {
       getCommentUnlike(cmntData._id, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -28,7 +28,7 @@ function CommentLikeBtn({ cmntData }) {
       getCommentLike(cmntData._id, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       setLikeCount(likeCount + 1);

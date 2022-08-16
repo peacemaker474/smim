@@ -17,8 +17,8 @@ export default function CommentForm({
   writer,
 }) {
   const loginState = useSelector((state) => state.user);
+  const { accessToken } = useSelector((state) => state.authToken);
   const { register, handleSubmit, setValue, setFocus, watch } = useForm();
-  const tkn = useSelector((state) => state.authToken).accessToken;
   const dispatch = useDispatch();
   let data = watch('comment');
 
@@ -45,7 +45,7 @@ export default function CommentForm({
     e.preventDefault();
     const addData = data.comment.replaceAll('\n', '<br>');
 
-    if (tkn) {
+    if (accessToken) {
       if (id) {
         handleCommentEdit(e, addData);
       } else {
@@ -68,13 +68,12 @@ export default function CommentForm({
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
 
     if (response.data.success) {
-      const date = String(new Date());
       dispatch(
         createComment(
           response.data.comment_id,
@@ -83,7 +82,6 @@ export default function CommentForm({
             nickname: loginState.name,
             imageUrl: loginState.imgUrl,
           },
-          date,
           parentId,
           groupId,
           postId,
@@ -103,7 +101,7 @@ export default function CommentForm({
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tkn}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );

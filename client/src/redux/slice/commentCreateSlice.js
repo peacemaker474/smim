@@ -23,12 +23,12 @@ const commentCreateSlice = createSlice({
           like_count: 0,
         });
       },
-      prepare(_id, writer, createAt, parent_id, group_id, post_id, text) {
+      prepare(_id, writer, parent_id, group_id, post_id, text) {
         return {
           payload: {
             _id,
             writer,
-            createAt,
+            createAt: String(new Date()),
             like_count: 0,
             being: true,
             parent_id,

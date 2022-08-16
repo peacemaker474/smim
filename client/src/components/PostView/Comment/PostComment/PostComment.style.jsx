@@ -7,7 +7,7 @@ import CommentPinned from '../CommentPinned/CommentPinned';
 import CommentUploaded from '../CommentUploaded/CommentUploaded';
 
 export default function PostCommentPresenter({
-  commentModalVisible,
+  commentToggled,
   actionFunc,
   cancelFunc,
   modalText,
@@ -15,7 +15,7 @@ export default function PostCommentPresenter({
 }) {
   return (
     <>
-      {commentModalVisible && (
+      {commentToggled && (
         <Modal actionfunc={actionFunc} cancelFunc={cancelFunc}>
           {modalText}
         </Modal>

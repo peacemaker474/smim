@@ -12,10 +12,10 @@ import { resetPost } from '../redux/slice/postSlice';
 import NotFound from '../pages/NotFound';
 
 function PostViewPage() {
-  const modalVisible = useSelector((state) => state.toggle).modalToggled;
-  const dispatch = useDispatch();
-  const tkn = useSelector((state) => state.authToken).accessToken;
+  const { modalToggled } = useSelector((state) => state.toggle);
+  const { accessToken } = useSelector((state) => state.authToken);
   const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const regExp = /[0-9a-f]{24}/g;
   const [postViewState, setPostViewState] = useState(false);
@@ -23,18 +23,17 @@ function PostViewPage() {
   useEffect(() => {
     dispatch(resetComment());
     dispatch(resetPost());
-    // persist config 관련해서 refactoring 예정
   }, [dispatch]);
 
   if (!(id.length === 24 && regExp.test(id)) || postViewState) {
     return <NotFound />;
   }
 
-  const requestDelete = async (id, tkn) => {
+  const requestDelete = async (id, accessToken) => {
     await deletePost(id, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${tkn}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     navigate(-2);
@@ -43,10 +42,10 @@ function PostViewPage() {
   return (
     <PostViewMain>
       <PostViewContainer>
-        {modalVisible && (
+        {modalToggled && (
           <Modal
             actionfunc={() => {
-              requestDelete(id, tkn);
+              requestDelete(id, accessToken);
               dispatch(modalToggle());
             }}
             cancelFunc={() => dispatch(modalToggle())}
@@ -55,7 +54,7 @@ function PostViewPage() {
           </Modal>
         )}
         <PostPost setPostViewState={setPostViewState} />
-        {tkn ? <PostComment /> : null}
+        {accessToken && <PostComment />}
       </PostViewContainer>
     </PostViewMain>
   );

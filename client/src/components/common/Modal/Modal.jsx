@@ -11,7 +11,7 @@ function Modal({ children, actionfunc, cancelFunc }) {
     actionfunc();
   };
   return (
-    <ModalPresenter handleModalCancle={handleModalCancle} handleModalConfirm={handleModalConfirm}>
+    <ModalPresenter onModalCancle={handleModalCancle} onModalConfirm={handleModalConfirm}>
       {children}
     </ModalPresenter>
   );

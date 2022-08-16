@@ -9,14 +9,14 @@ import PasswordChange from '../components/mypage/PasswordChange/PasswordChange';
 import NotFound from '../pages/NotFound';
 
 export default function MyPageRoute() {
-  const user = useSelector((state) => state.user);
+  const { id: userId } = useSelector((state) => state.user);
 
   return (
     <Routes>
       <Route element={<MyPage />}>
         <Route path='/' element={<MyInfo />} />
-        <Route path='writeLists' element={<MyWriteLists userId={user.id} />} />
-        <Route path='bookMarkLists' element={<BookMarkLists userId={user.id} />} />
+        <Route path='writeLists' element={<MyWriteLists userId={userId} />} />
+        <Route path='bookMarkLists' element={<BookMarkLists userId={userId} />} />
         <Route path='changepw' element={<PasswordChange />} />
       </Route>
       <Route path='*' element={<NotFound />} />

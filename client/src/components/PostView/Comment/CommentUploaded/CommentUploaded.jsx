@@ -9,7 +9,7 @@ import { getCookie } from '../../../../utils/cookie';
 
 export default function CommentUploaded() {
   const tkn = getCookie();
-  const pinnedId = useSelector((state) => state.comment).pinnedId;
+  const { pinnedId } = useSelector((state) => state.comment);
   const { id: postid } = useParams();
 
   const loadComments = async ({ queryKey }) => {
@@ -32,11 +32,12 @@ export default function CommentUploaded() {
     }
   };
 
-  const { data: loadedComments, isLoading } = useQuery(
-    [('commentArray', { postid })],
-    loadComments
-  );
-  if (isLoading) {
+  const {
+    data: loadedComments,
+    isLoading,
+    isFetching,
+  } = useQuery([('commentArray', { postid })], loadComments);
+  if (isLoading || isFetching) {
     return <LoadingPage />;
   }
 

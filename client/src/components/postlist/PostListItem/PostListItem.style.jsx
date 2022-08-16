@@ -8,7 +8,7 @@ import Eye from '../../../asset/icon/icon-eye.svg';
 import { Link } from 'react-router-dom';
 
 export default function PostListItemPresenter({
-  handleDetailPageMove,
+  onDetailPageMove,
   hashtag,
   content,
   meta,
@@ -20,13 +20,13 @@ export default function PostListItemPresenter({
 }) {
   return (
     <PostItem to={`/post/view/${id}`}>
-      <PostAnchor onClick={handleDetailPageMove}>
+      <PostAnchor onClick={onDetailPageMove}>
         <PostTitle>{title}</PostTitle>
         <PostWriterDiv>
           <UserImage width='23px' height='23px' imgUrl={imgUrl} />
           <PostWriter>{writer}</PostWriter>
         </PostWriterDiv>
-        <PostText dangerouslySetInnerHTML={{ __html: content }} />
+        <PostText dangerouslySetInnerHTML={{ __html: content.value }} />
         <PostTagListDiv>
           <PostTagDiv>
             {(hashtag || []).map((el, idx) => (
@@ -39,7 +39,7 @@ export default function PostListItemPresenter({
         <EtcDiv>
           <EtcSpan icon={Heart}>{meta.likes}</EtcSpan>
           <EtcSpan icon={Eye}>{meta.views}</EtcSpan>
-          {content === '<p>[이미지]</p>' ? <EtcSpan icon={Save}></EtcSpan> : null}
+          {content.check && <EtcSpan icon={Save}></EtcSpan>}
         </EtcDiv>
         <PostDate>{postDate}</PostDate>
       </PostAnchor>

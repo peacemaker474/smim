@@ -6,12 +6,12 @@ import pinIcon from '../../../../asset/icon/icon-pin.svg';
 export default function CommentPinnedPresenter({ pinnedComment, pinnedId, postWriter }) {
   return (
     <>
-      {pinnedId ? (
+      {pinnedId && (
         <CommentPinnedDiv>
           <CommentPinnedSpan>{postWriter}이 고정함</CommentPinnedSpan>
           <CommentWrapper cmntData={pinnedComment} />
         </CommentPinnedDiv>
-      ) : null}
+      )}
     </>
   );
 }

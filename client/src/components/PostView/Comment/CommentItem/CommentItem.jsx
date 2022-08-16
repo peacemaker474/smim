@@ -9,7 +9,6 @@ function CommentItem({ cmntData, groupId }) {
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(
     (el) => el === cmntData._id
   );
-  const commentModalVisible = useSelector((state) => state.toggle).commentToggled;
 
   const handleClickCancel = (e) => {
     e.target.value = '';
@@ -31,7 +30,6 @@ function CommentItem({ cmntData, groupId }) {
       handleClickCancel={handleClickCancel}
       handleTextChange={handleTextChange}
       changedText={changedText}
-      commentModalVisible={commentModalVisible}
       deleteState={Boolean(delComment)}
     />
   );

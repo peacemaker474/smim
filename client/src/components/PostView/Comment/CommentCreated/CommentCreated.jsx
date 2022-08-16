@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import CommentCreatedPresenter from './CommentCreated.style';
 
 export default function CommentCreated() {
-  const pinnedId = useSelector((state) => state.comment).pinnedId;
+  const { pinnedId } = useSelector((state) => state.comment);
   const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
   const uploadingComments = createdComments
