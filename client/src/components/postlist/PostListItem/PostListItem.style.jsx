@@ -8,7 +8,7 @@ import Eye from '../../../asset/icon/icon-eye.svg';
 import { Link } from 'react-router-dom';
 
 export default function PostListItemPresenter({
-  handleDetailPageMove,
+  onDetailPageMove,
   hashtag,
   content,
   meta,
@@ -20,7 +20,7 @@ export default function PostListItemPresenter({
 }) {
   return (
     <PostItem to={`/post/view/${id}`}>
-      <PostAnchor onClick={handleDetailPageMove}>
+      <PostAnchor onClick={onDetailPageMove}>
         <PostTitle>{title}</PostTitle>
         <PostWriterDiv>
           <UserImage width='23px' height='23px' imgUrl={imgUrl} />

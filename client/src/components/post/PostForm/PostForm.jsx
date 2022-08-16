@@ -99,7 +99,7 @@ function PostForm({ postData, pathValue, postId }) {
         register={register}
         setValue={setValue}
         watch={watch}
-        handleSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         errors={errors}
         modalToggled={modalToggled}
         pathValue={pathValue}

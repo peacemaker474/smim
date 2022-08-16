@@ -4,20 +4,23 @@ import { useDispatch } from 'react-redux';
 import PostBottomBtnPresenter from './PostBottomBtn.style';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 
-function PostBottomBtn({ formState, handleSubmit }) {
+function PostBottomBtn({ formState, onSubmit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleFormCancle = () => {
     navigate(-1);
   };
 
+  const handleSubmit = onSubmit(() => {
+    dispatch(modalToggle());
+  });
+
   return (
     <PostBottomBtnPresenter
       formState={formState}
-      handleFormCancle={handleFormCancle}
-      handleSubmit={handleSubmit((data) => {
-        dispatch(modalToggle());
-      })}
+      onFormCancle={handleFormCancle}
+      onSubmit={handleSubmit}
     />
   );
 }

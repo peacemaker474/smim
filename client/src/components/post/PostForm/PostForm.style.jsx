@@ -7,7 +7,7 @@ import PostBottomBtn from '../../../components/post/PostBottomBtn/PostBottomBtn'
 
 function PostFormPresenter({
   register,
-  handleSubmit,
+  onSubmit,
   errors,
   setValue,
   watch,
@@ -37,7 +37,7 @@ function PostFormPresenter({
         setError={setError}
         postData={postData}
       />
-      <PostBottomBtn formState={pathValue} errors={errors} handleSubmit={handleSubmit} />
+      <PostBottomBtn formState={pathValue} errors={errors} onSubmit={onSubmit} />
     </div>
   );
 }

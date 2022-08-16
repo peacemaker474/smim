@@ -30,7 +30,7 @@ function PostListItem({ postData }) {
 
   return (
     <PostListItemPresenter
-      handleDetailPageMove={handleDetailPageMove}
+      onDetailPageMove={handleDetailPageMove}
       hashtag={hashtagEdition}
       content={paraContent}
       meta={meta}

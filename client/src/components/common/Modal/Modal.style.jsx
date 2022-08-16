@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColorBtn } from '../../../styles/common/buttons';
 
-function ModalPresenter({ children, handleModalCancle, handleModalConfirm }) {
+function ModalPresenter({ children, onModalCancle, onModalConfirm }) {
   return (
     <ModalContainer>
-      <ModalOverlay onClick={handleModalCancle} />
+      <ModalOverlay onClick={onModalCancle} />
       <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
-          <Btn onClick={handleModalCancle}>취소</Btn>
-          <Btn onClick={handleModalConfirm}>확인</Btn>
+          <Btn onClick={onModalCancle}>취소</Btn>
+          <Btn onClick={onModalConfirm}>확인</Btn>
         </BtnBox>
       </ModalBox>
     </ModalContainer>
