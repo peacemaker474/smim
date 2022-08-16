@@ -5,7 +5,7 @@ import { ChangePwInput } from '../../../styles/common/input';
 import { MyPageValid } from '../../../styles/common/validtext';
 
 const PasswordWrapper = styled.form`
-  width: 65%;
+  width: 70%;
   height: 80%;
   display: flex;
   flex-direction: column;

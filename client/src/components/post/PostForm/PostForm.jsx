@@ -39,7 +39,7 @@ function PostForm({ postData, pathValue, postId }) {
 
   const uploadPost = async (tkn) => {
     const { title, para, tagArray, age } = watch();
-
+    
     if (pathValue === 'create') {
       postCreatePost(
         {

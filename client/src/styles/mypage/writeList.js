@@ -43,6 +43,11 @@ export const ListContent = styled.p`
   align-self: flex-start;
   line-height: 15px;
   word-spacing: 1px;
+
+  p {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const Writer = styled.p`
@@ -50,7 +55,6 @@ export const Writer = styled.p`
   font-size: 0.6em;
   align-self: flex-end;
   padding: 5px;
-  height: 10%;
   text-align: end;
 `;
 
