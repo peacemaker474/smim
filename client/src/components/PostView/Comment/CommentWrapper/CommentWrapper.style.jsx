@@ -7,7 +7,7 @@ export default function CommentWrapperPresenter({
   childrenData,
   uploadingReplies,
   isTargetVisible,
-  handleTargetShow,
+  onTargetShow,
   delComment,
 }) {
   return (
@@ -18,7 +18,7 @@ export default function CommentWrapperPresenter({
           {(childrenData.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
             <ReplyContainer>
               {childrenData.length === 0 ? null : (
-                <ReplyShowingBtn onClick={handleTargetShow}>
+                <ReplyShowingBtn onClick={onTargetShow}>
                   ----- 답글 {isTargetVisible ? '닫기' : '보기'}
                 </ReplyShowingBtn>
               )}

@@ -27,7 +27,7 @@ export default function CommentWrapper({ cmntData }) {
       childrenData={childrenData}
       uploadingReplies={uploadingReplies}
       isTargetVisible={isTargetVisible}
-      handleTargetShow={handleTargetShow}
+      onTargetShow={handleTargetShow}
       delComment={delComment}
     />
   );

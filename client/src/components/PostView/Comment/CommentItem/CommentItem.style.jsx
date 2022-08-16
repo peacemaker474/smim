@@ -7,10 +7,10 @@ export default function CommentItemPresenter({
   cmntData,
   groupId,
   isTargetVisible,
-  handleClickCancel,
-  handleTextChange,
+  onFormInputCancel,
+  onTextChange,
+  onClickShow,
   changedText,
-  handleClickShow,
   deleteState,
 }) {
   return (
@@ -21,16 +21,16 @@ export default function CommentItemPresenter({
           parentId={cmntData.parent_id}
           groupId={groupId}
           isTargetVisible={isTargetVisible}
-          handleClickCancel={handleClickCancel}
+          onFormInputCancel={onFormInputCancel}
           id={cmntData._id}
-          handleTextChange={handleTextChange}
+          onTextChange={onTextChange}
           changedText={changedText}
         />
       ) : deleteState ? null : (
         <CommentItemContainer>
           <CommentItemInner
             changedText={changedText}
-            handleClickShow={handleClickShow}
+            onClickShow={onClickShow}
             groupId={groupId}
             cmntData={cmntData}
           />

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import heartFill from '../../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../../asset/icon/icon-heart-line.svg';
 
-export default function PostLikePresenter({ handleLikeClick, isLikeChecked, likeValue }) {
+export default function PostLikePresenter({ onLikeClick, isLikeChecked, likeValue }) {
   return (
-    <PostLikeSpan onClick={handleLikeClick} likechecked={isLikeChecked}>
+    <PostLikeSpan onClick={onLikeClick} likechecked={isLikeChecked}>
       {likeValue}
     </PostLikeSpan>
   );

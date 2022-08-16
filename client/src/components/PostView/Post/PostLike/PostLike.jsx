@@ -58,7 +58,7 @@ export default function PostLike({ quantity, like }) {
 
   return (
     <PostLikePresenter
-      handleLikeClick={handleLikeClick}
+      onLikeClick={handleLikeClick}
       isLikeChecked={isLikeChecked}
       likeValue={likeValue}
     />

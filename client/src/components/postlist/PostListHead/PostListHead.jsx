@@ -91,10 +91,10 @@ export default function PostListHead({ postArray, setPostArray, age }) {
   );
   return (
     <PostListHeadPresenter
-      handleSearchOption={handleSearchOption}
-      handlePostOption={handlePostOption}
-      handleSearchPost={handleSearchPost}
-      handleSearchInputs={handleSearchInputs}
+      onSearchOption={handleSearchOption}
+      onPostOption={handlePostOption}
+      onSearchPost={handleSearchPost}
+      onSearchInputs={handleSearchInputs}
       inputRef={inputRef}
       searchList={searchList}
       postOption={postOption}

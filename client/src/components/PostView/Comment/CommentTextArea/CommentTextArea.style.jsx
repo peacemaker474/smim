@@ -5,8 +5,8 @@ export default function CommentTextAreaPresenter({
   registerRef,
   inputRef,
   value,
-  handleCommentChange,
-  handleKeyDownCheck,
+  onCommentChange,
+  onKeyDownCheck,
   state,
 }) {
   return (
@@ -18,8 +18,8 @@ export default function CommentTextAreaPresenter({
         inputRef.current = e;
       }}
       value={value}
-      onChange={handleCommentChange}
-      onKeyDown={handleKeyDownCheck}
+      onChange={onCommentChange}
+      onKeyDown={onKeyDownCheck}
       state={state}
     />
   );

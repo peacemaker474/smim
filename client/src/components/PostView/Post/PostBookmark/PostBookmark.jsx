@@ -54,7 +54,7 @@ export default function PostBookmark({ bookmark }) {
 
   return (
     <PostBookmarkPresenter
-      handleBookmarkClick={handleBookmarkClick}
+      onBookmarkClick={handleBookmarkClick}
       isBookmarkChecked={isBookmarkChecked}
     />
   );

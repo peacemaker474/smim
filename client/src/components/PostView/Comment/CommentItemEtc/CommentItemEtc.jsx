@@ -8,9 +8,15 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
   const { accessToken } = useSelector((state) => state.authToken);
   const [isTargetVisible, handleTargetShow] = useVisible(false);
 
-  const handleClickCancel = (e) => {
+  const handleFormInputCancel = (e) => {
     e.target.value = '';
     handleTargetShow(false);
+  };
+
+  const handleReplyClickShow = () => {
+    if (accessToken) {
+      handleTargetShow(true);
+    }
   };
 
   const create = new Date(cmntData.createAt);
@@ -18,11 +24,6 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
 
   return (
     <CommentItemEtcPresenter
-      handleClickShow={() => {
-        if (accessToken) {
-          handleTargetShow(true);
-        }
-      }}
       createAt={createAt}
       groupId={groupId}
       postId={cmntData.post_id}
@@ -30,7 +31,8 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
       id={cmntData._id}
       cmntData={cmntData}
       isTargetVisible={isTargetVisible}
-      handleClickCancel={handleClickCancel}
+      onReplyClickShow={handleReplyClickShow}
+      onFormInputCancel={handleFormInputCancel}
       writer={writer}
     />
   );

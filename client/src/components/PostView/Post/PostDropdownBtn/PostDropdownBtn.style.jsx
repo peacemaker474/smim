@@ -8,10 +8,10 @@ export default function PostDropdownBtnPresenter({
   isDropdownVisible,
   dropdownRef,
   btnRef,
-  handleDropdownShow,
+  onDropdownShow,
 }) {
   return (
-    <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
+    <PostDropdownBtnDiv ref={btnRef} onClick={onDropdownShow}>
       <PostDropdownBtn></PostDropdownBtn>
       {isDropdownVisible && <PostDropdown ref={dropdownRef} />}
     </PostDropdownBtnDiv>

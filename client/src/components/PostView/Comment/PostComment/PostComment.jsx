@@ -49,7 +49,7 @@ function PostComment() {
     dispatch(commentModalToggle());
   };
 
-  const hadnelCommentPinned = async () => {
+  const handleCommentPinned = async () => {
     await getCommentPinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function PostComment() {
           check === 'delete'
             ? handleCommentDelete
             : check === 'pinned'
-            ? hadnelCommentPinned
+            ? handleCommentPinned
             : handleCommentUnpinned
         }
         commentToggled={commentToggled}

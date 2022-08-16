@@ -5,20 +5,20 @@ import CommentForm from '../CommentForm/CommentForm';
 
 export default function CommentItemEtcPresenter({
   createAt,
-  handleClickShow,
   groupId,
   postId,
   parentId,
-  handleClickCancel,
   cmntData,
   isTargetVisible,
+  onFormInputCancel,
+  onReplyClickShow,
   writer,
 }) {
   return (
     <CommentEtcContainer>
       <CommentEtc>
         <CommentDate>{createAt}</CommentDate>
-        <CommentReBtn onClick={handleClickShow}>답글 달기</CommentReBtn>
+        <CommentReBtn onClick={onReplyClickShow}>답글 달기</CommentReBtn>
         <CommentLikeBtn cmntData={cmntData} />
       </CommentEtc>
       {isTargetVisible && (
@@ -27,7 +27,7 @@ export default function CommentItemEtcPresenter({
           postId={postId}
           parentId={parentId}
           writer={writer}
-          handleClickCancel={handleClickCancel}
+          onFormInputCancel={onFormInputCancel}
           isTargetVisible={isTargetVisible}
         />
       )}

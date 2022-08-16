@@ -10,7 +10,7 @@ function CommentItem({ cmntData, groupId }) {
     (el) => el === cmntData._id
   );
 
-  const handleClickCancel = (e) => {
+  const handleFormInputCancel = (e) => {
     e.target.value = '';
     handleClickShow(false);
   };
@@ -26,9 +26,9 @@ function CommentItem({ cmntData, groupId }) {
       cmntData={cmntData}
       groupId={groupId}
       isTargetVisible={isTargetVisible}
-      handleClickShow={handleClickShow}
-      handleClickCancel={handleClickCancel}
-      handleTextChange={handleTextChange}
+      onClickShow={handleClickShow}
+      onFormInputCancel={handleFormInputCancel}
+      onTextChange={handleTextChange}
       changedText={changedText}
       deleteState={Boolean(delComment)}
     />
