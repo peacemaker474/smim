@@ -1,26 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { getCookie } from './utils/cookie';
-import { postCreateAccessToken } from './network/main/http';
-import { DELETE_TOKEN, SET_TOKEN } from './redux/auth';
-import { getUserLogOut } from './redux/services/UserService';
 import { isLoginCheckToggle, loginToggle } from './redux/slice/toggleSlice';
 import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
 import NavBar from './components/common/NavBar/NavBar';
 import AppRoute from './routes/AppRoute';
 import Modal from './components/common/Modal/Modal';
 import LoginSection from './components/login/LoginSection/LoginSection';
+import Auth from './components/common/Auth/Auth';
 
 function App() {
-  const { authenticated, expireTime } = useSelector(
-    (state) => ({
-      authenticated: state.authToken.authenticated,
-      expireTime: state.authToken.expireTime,
-    }),
-    shallowEqual
-  );
+  const { authenticated } = useSelector((state) => state.authToken);
   const { isLoginCheckToggled, loginToggled } = useSelector(
     (state) => ({
       isLoginCheckToggled: state.toggle.isLoginCheckToggled,
@@ -31,24 +22,6 @@ function App() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
-
-  useEffect(() => {
-    if (authenticated && expireTime - new Date().getTime() < 3000) {
-      if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
-        let data = {
-          refreshToken: getCookie(),
-        };
-        postCreateAccessToken(data).then((res) => {
-          if (res.data.success) {
-            dispatch(SET_TOKEN(res.data.accessToken));
-          }
-        });
-      } else {
-        dispatch(DELETE_TOKEN());
-        dispatch(getUserLogOut());
-      }
-    }
-  }, [authenticated, dispatch, expireTime, pathname]);
 
   return (
     <>
@@ -64,6 +37,7 @@ function App() {
         </Modal>
       )}
       <NavBar />
+      <Auth />
       {loginToggled && <LoginSection />}
       {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <AppRoute />

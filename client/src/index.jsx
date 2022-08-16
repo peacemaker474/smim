@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
@@ -31,8 +31,8 @@ ReactDOM.render(
           </BrowserRouter>
         </QueryClientProvider>
       </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 
