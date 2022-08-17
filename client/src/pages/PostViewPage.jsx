@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PostPost from '../components/postview/Post/PostPost/PostPost';
-import PostComment from '../components/postview/Comment/PostComment/PostComment';
+import PostViewContent from '../components/postview/PostViewContent';
 import styled from 'styled-components';
 import Modal from '../components/common/Modal/Modal';
 import { modalToggle } from '../redux/slice/toggleSlice';
@@ -53,8 +52,7 @@ function PostViewPage() {
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
-        <PostPost setPostViewState={setPostViewState} />
-        {accessToken && <PostComment />}
+        <PostViewContent setPostViewState={setPostViewState} />
       </PostViewContainer>
     </PostViewMain>
   );
