@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import PostFormPresenter from './PostForm.style';
 import Modal from '../../../components/common/Modal/Modal';
-import { modalToggle } from '../../../redux/slice/toggleSlice';
+import { modalToggle, postUploadToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../network/post/http';
 
 function PostForm({ postData, pathValue, postId }) {
@@ -17,7 +17,7 @@ function PostForm({ postData, pathValue, postId }) {
     setError,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
-  const { modalToggled } = useSelector((state) => state.toggle);
+  const { postUploadToggled, modalToggled } = useSelector((state) => state.toggle);
   const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function PostForm({ postData, pathValue, postId }) {
 
   const uploadPost = async (accessToken) => {
     const { title, para, tagArray, age } = watch();
-    
+
     if (pathValue === 'create') {
       postCreatePost(
         {
@@ -84,15 +84,26 @@ function PostForm({ postData, pathValue, postId }) {
 
   return (
     <>
-      {modalToggled && (
+      {postUploadToggled && (
         <Modal
           actionfunc={() => {
             uploadPost(accessToken);
+            dispatch(postUploadToggle());
+          }}
+          cancelFunc={() => dispatch(postUploadToggle())}
+        >
+          {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
+        </Modal>
+      )}
+      {modalToggled && (
+        <Modal
+          actionfunc={() => {
             dispatch(modalToggle());
+            navigate(-1);
           }}
           cancelFunc={() => dispatch(modalToggle())}
         >
-          {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
+          {'게시물을 취소하시겠습니까? \n 작성한 내용은 저장되지 않습니다.'}
         </Modal>
       )}
       <PostFormPresenter
