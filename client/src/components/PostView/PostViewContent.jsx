@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,14 +10,13 @@ import { getPostData } from '../../redux/slice/postSlice';
 import { getCookie } from '../../utils/cookie';
 import { getReadPostDetail } from '../../network/post/http';
 import LoadingPage from '../../pages/LoadingPage';
+import NotFoundPage from '../../pages/NotFound';
 
-function PostViewContent({ setPostViewState }) {
+function PostViewContent() {
   const tkn = getCookie();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { id: postId } = useParams();
-
-  console.log('rendering');
 
   const fetchAPI = async ({ queryKey }) => {
     const [{ postId }] = queryKey;
@@ -46,14 +45,9 @@ function PostViewContent({ setPostViewState }) {
 
       return post;
     } catch (error) {
-      setPostViewState(true);
       return error.response.status;
     }
   };
-
-  useEffect(() => {
-    return () => setPostViewState(false);
-  });
 
   const {
     data: postDetail,
@@ -63,6 +57,10 @@ function PostViewContent({ setPostViewState }) {
 
   if (isLoading || isFetching) {
     return <LoadingPage />;
+  }
+
+  if (postDetail === 404) {
+    return <NotFoundPage />;
   }
 
   const date = new Date(postDetail.createAt);
