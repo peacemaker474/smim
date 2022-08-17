@@ -38,17 +38,20 @@ function PostViewPage() {
     navigate(-2);
   };
 
+  const postViewActionFunc = () => {
+    requestDelete(id, accessToken);
+    dispatch(modalToggle());
+  };
+
+  const postViewCancelFunc = () => {
+    dispatch(modalToggle());
+  };
+
   return (
     <PostViewMain>
       <PostViewContainer>
         {modalToggled && (
-          <Modal
-            actionfunc={() => {
-              requestDelete(id, accessToken);
-              dispatch(modalToggle());
-            }}
-            cancelFunc={() => dispatch(modalToggle())}
-          >
+          <Modal actionfunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
             게시물을 삭제하시겠습니까?
           </Modal>
         )}

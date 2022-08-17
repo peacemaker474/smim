@@ -2,21 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function CommentTextAreaPresenter({
-  registerRef,
-  inputRef,
   value,
   onCommentChange,
   onKeyDownCheck,
   state,
+  settingRegisterRef,
 }) {
   return (
     <Textarea
       type='submit'
       placeholder='답변을 기다립니다.'
-      ref={(e) => {
-        registerRef(e);
-        inputRef.current = e;
-      }}
+      ref={settingRegisterRef}
       value={value}
       onChange={onCommentChange}
       onKeyDown={onKeyDownCheck}

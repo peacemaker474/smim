@@ -92,13 +92,13 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
     setText(postText);
   }, [register, watch, postText]);
 
-  const { ref } = register('para', { required: true });
+  const { ref: registerRef } = register('para', { required: true });
 
-  const onEditorStateChange = (editorState) => {
+  const handleEditorStateChange = (editorState) => {
     setText(editorState);
   };
 
-  const onEditorSetValue = () => {
+  const handleEditorSetValue = () => {
     if (text === '<p><br></p>') {
       setValue('para', '');
       setError('para', { required: true });
@@ -108,18 +108,20 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
     }
   };
 
+  const settingRegisterRef = (e) => {
+    registerRef(e);
+    quillRef.current = e;
+  };
+
   return (
     <PostEditorPresenter
       modules={modules}
       formats={formats}
-      register={register}
+      onEditorStateChange={handleEditorStateChange}
+      settingRegisterRef={settingRegisterRef}
       errors={errors}
-      setValue={setValue}
-      onEditorStateChange={onEditorStateChange}
-      onEditorSetValue={onEditorSetValue}
-      registerRef={ref}
-      quillRef={quillRef}
       text={text}
+      onEditorSetValue={handleEditorSetValue}
     />
   );
 }

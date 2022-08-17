@@ -23,16 +23,19 @@ function App() {
   const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
 
+  const actionFunc = () => {
+    dispatch(isLoginCheckToggle());
+    dispatch(loginToggle());
+  };
+
+  const cancelFunc = () => {
+    dispatch(isLoginCheckToggle());
+  };
+
   return (
     <>
       {isLoginCheckToggled && (
-        <Modal
-          actionfunc={() => {
-            dispatch(isLoginCheckToggle());
-            dispatch(loginToggle());
-          }}
-          cancelFunc={() => dispatch(isLoginCheckToggle())}
-        >
+        <Modal actionfunc={actionFunc} cancelFunc={cancelFunc}>
           {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}
         </Modal>
       )}

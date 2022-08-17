@@ -10,7 +10,7 @@ export default function CommentTextArea({
   parentId,
   id,
 }) {
-  const ref = useRef();
+  const inputRef = useRef();
 
   let STATE = '';
   if (parentId === null && !id) {
@@ -37,18 +37,22 @@ export default function CommentTextArea({
   useEffect(() => {
     // textarea scroll height 설정
     register('comment', { required: true });
-    ref.current.style.height = '27px';
-    const scrollHeight = ref.current.scrollHeight;
-    ref.current.style.height = scrollHeight + 'px';
+    inputRef.current.style.height = '27px';
+    const scrollHeight = inputRef.current.scrollHeight;
+    inputRef.current.style.height = scrollHeight + 'px';
   }, [value, register]);
+
+  const settingRegisterRef = (e) => {
+    registerRef(e);
+    inputRef.current = e;
+  };
 
   return (
     <CommentTextAreaPresenter
-      registerRef={registerRef}
-      inputRef={ref}
       value={value}
       onCommentChange={handleCommentChange}
       onKeyDownCheck={onKeyDownCheck}
+      settingRegisterRef={settingRegisterRef}
       state={STATE}
     />
   );
