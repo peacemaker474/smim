@@ -7,7 +7,7 @@ import LoadingPage from '../../../pages/LoadingPage';
 
 function MyWriteLists({ userId }) {
   const fetchAPI = () => {
-    return getMyWriteLists(userId)
+    return getMyWriteLists(userId);
   };
 
   const { isLoading, isFetching, data } = useQuery(
@@ -34,7 +34,7 @@ function MyWriteLists({ userId }) {
 
   return (
     <MyWriteListsStyle 
-      writeList={data?.writeLists}
+      writeList={data}
       onMoveDetail={handleMoveDetail}
     />
   );

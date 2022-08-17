@@ -41,7 +41,7 @@ function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
               {bookMarkList.map(item => 
                 <Listli key={item.createAt} id={item._id} onClick={onBookMarkMove}>
                   <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
-                  <ListContent dangerouslySetInnerHTML={{__html: item.content}} />
+                  <ListContent dangerouslySetInnerHTML={{__html: item.content.value}} />
                   <Writer> {item.owner.nickname} </Writer>
               </Listli>
               )}
