@@ -145,6 +145,7 @@ export const deletePost = async (req, res) => {
 
   try {
     await Post.deleteOne({ _id: id });
+    await Like.deleteOne({ _id: id });
     const user = await User.findById(_id);
     user.posts = user.posts.filter((el) => el !== id);
     await user.save();
