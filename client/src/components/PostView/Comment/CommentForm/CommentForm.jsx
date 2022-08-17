@@ -23,9 +23,9 @@ export default function CommentForm({
   let data = watch('comment');
 
   let STATE = '';
-  if (parentId == null && !id) {
+  if (parentId === null && !id) {
     STATE = 'main';
-  } else if (parentId == null && id) {
+  } else if (parentId === null && id) {
     STATE = 'main Edit';
   } else if (parentId === groupId && !id) {
     STATE = 'main Reply';

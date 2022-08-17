@@ -7,9 +7,8 @@ function PostEditorPresenter({
   modules,
   formats,
   onEditorStateChange,
+  settingRegisterRef,
   errors,
-  registerRef,
-  quillRef,
   text,
   onEditorSetValue,
 }) {
@@ -21,10 +20,7 @@ function PostEditorPresenter({
         formats={formats}
         theme='snow'
         onChange={onEditorStateChange}
-        ref={(e) => {
-          registerRef(e);
-          quillRef.current = e;
-        }}
+        ref={settingRegisterRef}
         value={text}
       />
     </PostEditorWrap>

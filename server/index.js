@@ -3,7 +3,6 @@ import './db.js';
 import './models/Comment.js';
 import './models/Like.js';
 import './models/Post.js';
-import './models/Tag.js';
 import './models/User.js';
 import app from './server.js';
 

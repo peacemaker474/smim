@@ -9,7 +9,7 @@ export const postCommentCreate = async (req, res) => {
   } = req.body;
 
   try {
-    if (parentId != null) {
+    if (parentId !== null) {
       if (parentId === undefined) {
         return res.status(400).send({
           success: false,
@@ -34,7 +34,7 @@ export const postCommentCreate = async (req, res) => {
       parent_id: parentId,
     });
 
-    if (parentId != null) {
+    if (parentId !== null) {
       const parentComment = await Comment.findOne({ _id: parentId });
       parentComment.children.push(comment._id);
       await parentComment.save();
@@ -117,7 +117,7 @@ export const getCommentList = async (req, res) => {
       );
 
       for (let i = 0; i < commentDataList.length; i++) {
-        if (commentDataList[i].parent_id == null) {
+        if (commentDataList[i].parent_id === null) {
           check = i;
           DATA[check] = [];
         }
