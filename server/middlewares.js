@@ -12,7 +12,7 @@ export const existPostAndOwnerCheck = async (req, res, next) => {
     user: { _id },
   } = req.body; // user id
   try {
-    const exist = await Post.exists({ _id: id, owner: _id, being: true });
+    const exist = await Post.exists({ _id: id, owner: _id });
 
     if (!exist) {
       return res.status(400).send({
@@ -33,7 +33,7 @@ export const existPostAndOwnerCheck = async (req, res, next) => {
 export const existPostCheckAndData = async (req, res, next) => {
   const { id: postId } = req.params;
   try {
-    const post = await Post.findOne({ _id: postId, being: true });
+    const post = await Post.findOne({ _id: postId });
 
     if (!post) {
       return res.status(404).send({
@@ -56,7 +56,7 @@ export const existPostCheckAndData = async (req, res, next) => {
 export const existPostCheck = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const exist = await Post.exists({ _id: id, being: true });
+    const exist = await Post.exists({ _id: id });
 
     if (!exist) {
       return res.status(404).send({
@@ -203,7 +203,7 @@ export const checkBodyPostExist = async (req, res, next) => {
   const { post_id: postId } = req.body;
 
   try {
-    const postExist = await Post.exists({ _id: postId, being: true });
+    const postExist = await Post.exists({ _id: postId });
 
     if (!postExist) {
       return res.status(400).send({
@@ -281,7 +281,7 @@ export const checkCommentPinned = async (req, res, next) => {
       parent_id: null,
     });
 
-    const post = await Post.findOne({ _id: comment.post_id, being: true, owner: _id });
+    const post = await Post.findOne({ _id: comment.post_id, owner: _id });
 
     if (!comment) {
       return res.status(400).send({

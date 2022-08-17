@@ -67,7 +67,7 @@ export const getPostDetail = async (req, res) => {
     if (Object.keys(req.body).includes('user')) {
       // 로그인 했을 때
       const {
-        user: { _id, nickname, userId },
+        user: { _id },
       } = req.body;
       const user = await User.findOne({ _id: _id });
       return res.status(200).send({
@@ -111,7 +111,7 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  const postList = await Post.find({ targetAge: age, being: true });
+  const postList = await Post.find({ targetAge: age });
 
   const postDataList = await Promise.all(
     postList.map(async (el) => {
@@ -135,11 +135,11 @@ export const getPostList = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.params; // post id
   const {
-    user: { _id, nickname, userId },
+    user: { _id },
   } = req.body;
 
   try {
-    await Post.findByIdAndUpdate(id, { being: false });
+    await Post.deleteOne({ _id: id });
     const user = await User.findById(_id);
     user.posts = user.posts.filter((el) => el !== id);
     await user.save();
@@ -190,7 +190,7 @@ export const getPostSearch = async (req, res) => {
     });
   }
   try {
-    const postList = await Post.find({ targetAge: age, being: true });
+    const postList = await Post.find({ targetAge: age });
     const postDataList = await Promise.all(
       postList
         .filter((el) => el[tag].includes(keyword))
@@ -218,7 +218,7 @@ export const getMainPageLists = async (req, res) => {
       40: [],
       50: [],
     };
-    const posts = await Post.find({ being: true }).sort({ createAt: -1 });
+    const posts = await Post.find().sort({ createAt: -1 });
     const newPosts = await Promise.all(
       posts.map(async (el) => {
         const user = await User.findById(String(el.owner));
