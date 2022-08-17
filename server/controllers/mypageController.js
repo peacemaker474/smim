@@ -11,7 +11,7 @@ import bcrypt from 'bcrypt';
 export const getWriteLists = async (req, res) => {
   const { userId } = req.query;
   try {
-    const { posts } = await User.findOne({userId});
+    const { posts } = await User.findOne({userId, being: true});
     if (posts.length === 0) return res.status(200).send("작성한 게시글이 없습니다.");
     
     const writeLists = await Promise.all(
@@ -31,10 +31,10 @@ export const getWriteLists = async (req, res) => {
 export const getBookMarkLists = async (req, res) => {
   const { userId } = req.query;
   try {
-    const { bookmarks } = await User.findOne({userId});
+    const { bookmarks } = await User.findOne({userId, being: true});
     if (bookmarks.length === 0) return res.status(200).send("즐겨찾기한 게시글이 없습니다.");
 
-    const favoriteLists = await Promise.all(
+    const bookMarkLists = await Promise.all(
       bookmarks.map(async (list) => {
         const post = await Post.findById(list);
         const user = await User.findById(String(post.owner));
@@ -45,7 +45,7 @@ export const getBookMarkLists = async (req, res) => {
       })
     );
     
-    return res.status(200).json({ success: true, favoriteLists});
+    return res.status(200).json({ success: true, bookMarkLists});
   } catch (err) {
     console.log(err);
     return res.status(500).send("잠시 후에 다시 시도해주세요.");
