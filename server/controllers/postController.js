@@ -64,6 +64,8 @@ export const getPostDetail = async (req, res) => {
     const owner = await User.findById(String(post.owner));
     const like = await Like.findOne({ post_id: postId });
 
+    const age = String(post._doc.targetAge);
+
     if (Object.keys(req.body).includes('user')) {
       // 로그인 했을 때
       const {
@@ -72,6 +74,7 @@ export const getPostDetail = async (req, res) => {
       const user = await User.findOne({ _id: _id });
       return res.status(200).send({
         ...post._doc,
+        targetAge: age,
         bookmark: user.bookmarks.includes(postId),
         like: like.user_array.includes(_id),
         owner: {
@@ -82,9 +85,11 @@ export const getPostDetail = async (req, res) => {
         },
       });
     }
+
     // 로그인 안했을 때
     return res.status(200).send({
       ...post._doc,
+      targetAge: age,
       owner: {
         _id: owner._id,
         userId: owner.userId,
