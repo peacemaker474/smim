@@ -10,7 +10,7 @@ export default function PostDropdownBtn() {
       isDropdownVisible={isDropdownVisible}
       dropdownRef={dropdownRef}
       btnRef={btnRef}
-      handleDropdownShow={handleDropdownShow}
+      onDropdownShow={handleDropdownShow}
     />
   );
 }

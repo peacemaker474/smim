@@ -11,7 +11,7 @@ function Dropdown(props, ref) {
     e.preventDefault();
     dispatch(modalToggle());
   };
-  return <PostDropdownPresenter handlePostDel={handlePostDel} forwardRef={ref} postId={postId} />;
+  return <PostDropdownPresenter onPostDel={handlePostDel} forwardRef={ref} postId={postId} />;
 }
 
 export const PostDropdown = React.forwardRef(Dropdown);

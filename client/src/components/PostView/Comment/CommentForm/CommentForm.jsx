@@ -10,8 +10,8 @@ export default function CommentForm({
   parentId,
   groupId,
   isTargetVisible,
-  handleClickCancel = undefined,
-  handleTextChange,
+  onFormInputCancel = undefined,
+  onTextChange,
   id,
   changedText,
   writer,
@@ -37,11 +37,11 @@ export default function CommentForm({
     STATE = 'Reply Reply';
   }
 
-  if (!handleClickCancel) {
-    handleClickCancel = () => setValue('comment', '');
+  if (!onFormInputCancel) {
+    onFormInputCancel = () => setValue('comment', '');
   }
 
-  const onSubmit = (data, e) => {
+  const handleCommentTextareaSubmit = (data, e) => {
     e.preventDefault();
     const addData = data.comment.replaceAll('\n', '<br>');
 
@@ -89,7 +89,7 @@ export default function CommentForm({
         )
       );
       if (parentId) {
-        handleClickCancel(e);
+        onFormInputCancel(e);
       }
     }
   };
@@ -107,8 +107,8 @@ export default function CommentForm({
     );
 
     if (response.data.success) {
-      handleTextChange(data.replace('<br>', '\n'));
-      handleClickCancel(e);
+      onTextChange(data.replace('<br>', '\n'));
+      onFormInputCancel(e);
     }
   };
 
@@ -119,16 +119,16 @@ export default function CommentForm({
     }
     if (e.keyCode === 13 && e.shiftKey === false) {
       e.preventDefault();
-      handleSubmit(onSubmit(watch(), e));
+      handleSubmit(handleCommentTextareaSubmit(watch(), e));
     }
   };
   return (
     <CommentFormPresenter
       loginState={loginState}
       handleSubmit={handleSubmit}
-      handleClickCancel={handleClickCancel}
-      handleKeyDownCheck={handleKeyDownCheck}
-      onSubmit={onSubmit}
+      onFormInputCancel={onFormInputCancel}
+      onKeyDownCheck={handleKeyDownCheck}
+      onCommentTextareaSubmit={handleCommentTextareaSubmit}
       register={register}
       setValue={setValue}
       value={data}

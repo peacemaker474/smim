@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import heartFill from '../../../../asset/icon/icon-heart-fill.svg';
 import heartLine from '../../../../asset/icon/icon-heart-line.svg';
 
-export default function CommentLikeBtnPresenter({ like, handleCommentLike, likeCount }) {
+export default function CommentLikeBtnPresenter({ like, onCommentLike, likeCount }) {
   return (
-    <CommentLike like={like} onClick={handleCommentLike}>
+    <CommentLike like={like} onClick={onCommentLike}>
       {likeCount}
     </CommentLike>
   );

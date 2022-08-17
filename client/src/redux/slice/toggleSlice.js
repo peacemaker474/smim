@@ -5,6 +5,7 @@ const initialToggleState = {
   loginToggled: false,
   inputToggled: false,
   modalToggled: false,
+  postUploadToggled: false,
   commentToggled: false,
   imageToggled: false,
   isLoginCheckToggled: false,
@@ -29,12 +30,15 @@ const toggleSlice = createSlice({
     isLoginCheckToggle(state) {
       state.isLoginCheckToggled = !state.isLoginCheckToggled;
     },
+    postUploadToggle(state) {
+      state.postUploadToggled = !state.postUploadToggled;
+    },
     commentModalToggle(state) {
       state.commentToggled = !state.commentToggled;
     },
     userImageToggle(state) {
       state.imageToggled = !state.imageToggled;
-    }
+    },
   },
 });
 
@@ -43,6 +47,7 @@ export const {
   menuToggle,
   inputToggle,
   modalToggle,
+  postUploadToggle,
   commentModalToggle,
   userImageToggle,
   isLoginCheckToggle,

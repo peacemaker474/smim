@@ -8,13 +8,13 @@ import {
 import { commentModalToggle } from '../../../../redux/slice/toggleSlice';
 import CommentDropdownPresenter from './CommentDropdown.style';
 
-function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
+function Dropdown({ onClickShow, writer, commentId, parentId }, ref) {
   const dispatch = useDispatch();
   const { pinnedId } = useSelector((state) => state.comment);
 
   const handleCommentEdit = (e) => {
     e.preventDefault();
-    handleClickShow(true);
+    onClickShow(true);
   };
   const handleCommentDel = (e) => {
     e.preventDefault();
@@ -39,11 +39,11 @@ function Dropdown({ handleClickShow, writer, commentId, parentId }, ref) {
   return (
     <CommentDropdownPresenter
       forwardRef={ref}
-      handleCommentEdit={handleCommentEdit}
-      handleCommentDel={handleCommentDel}
-      handleCommentPinned={handleCommentPinned}
-      handleCommentUnpinned={handleCommentUnpinned}
-      handleCommentDeclaration={handleCommentDeclaration}
+      onCommentEdit={handleCommentEdit}
+      onCommentDel={handleCommentDel}
+      onCommentPinned={handleCommentPinned}
+      onCommentUnpinned={handleCommentUnpinned}
+      onCommentDeclaration={handleCommentDeclaration}
       writer={writer}
       parentId={parentId}
       commentId={commentId}

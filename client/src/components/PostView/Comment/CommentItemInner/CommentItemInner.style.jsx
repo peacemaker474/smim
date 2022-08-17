@@ -11,9 +11,9 @@ export default function CommentItemInnerPresenter({
   isDropdownVisible,
   dropdownRef,
   btnRef,
-  handleDropdownShow,
+  onDropdownBtnClick,
   cmntData,
-  handleClickShow,
+  onClickShow,
   changedText,
 }) {
   return (
@@ -33,19 +33,13 @@ export default function CommentItemInnerPresenter({
             />
           </CommentContentBox>
         </CommentItemContent>
-        <PostDropdownBtnDiv
-          ref={btnRef}
-          onClick={(e) => {
-            handleDropdownShow();
-            e.target.focus();
-          }}
-        >
+        <PostDropdownBtnDiv ref={btnRef} onClick={onDropdownBtnClick}>
           <CommentDropdownBtn />
           {isDropdownVisible && (
             <CommentDropdown
               ref={dropdownRef}
               writer={cmntData.writer.nickname}
-              handleClickShow={handleClickShow}
+              onClickShow={onClickShow}
               commentId={cmntData._id}
               parentId={cmntData.parent_id}
               isDropdownVisible={isDropdownVisible}

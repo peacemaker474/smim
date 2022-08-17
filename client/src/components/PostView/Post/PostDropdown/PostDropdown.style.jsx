@@ -7,14 +7,14 @@ import {
   DropdownLink,
 } from '../../../../styles/common/dropdown';
 
-export default function PostDropdownPresenter({ forwardRef, handlePostDel, postId }) {
+export default function PostDropdownPresenter({ forwardRef, onPostDel, postId }) {
   return (
     <PostDropdownWrraper ref={forwardRef}>
       <PostDropdownLists>
         <PostDropdownList>
           <PostDropdownLink to={`/post/edit/${postId}`}>수정</PostDropdownLink>
         </PostDropdownList>
-        <PostDropdownList onClick={handlePostDel}>삭제</PostDropdownList>
+        <PostDropdownList onClick={onPostDel}>삭제</PostDropdownList>
       </PostDropdownLists>
     </PostDropdownWrraper>
   );

@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import MainAdd from '../../../asset/icon/icon-mail-add-fill.png';
 
-function PostWriteBtnPresenter({ handleBtnClick }) {
+function PostWriteBtnPresenter({ onBtnClick }) {
   return (
-    <BtnDiv onClick={handleBtnClick}>
+    <BtnDiv onClick={onBtnClick}>
       <ImgDiv></ImgDiv>
     </BtnDiv>
   );

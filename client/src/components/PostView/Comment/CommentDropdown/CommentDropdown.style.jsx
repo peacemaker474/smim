@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 
 export default function CommentDropdownPresenter({
   forwardRef,
-  handleCommentEdit,
-  handleCommentDel,
-  handleCommentPinned,
-  handleCommentUnpinned,
-  handleCommentDeclaration,
+  onCommentEdit,
+  onCommentDel,
+  onCommentPinned,
+  onCommentUnpinned,
+  onCommentDeclaration,
   writer,
   parentId,
   commentId,
@@ -22,17 +22,17 @@ export default function CommentDropdownPresenter({
     <CommentDropdownWrraper ref={forwardRef}>
       <CommentDropdownLists>
         {name === postWriter && !parentId && commentId === pinnedId ? (
-          <CommentDropdownList onClick={handleCommentUnpinned}>고정해제</CommentDropdownList>
+          <CommentDropdownList onClick={onCommentUnpinned}>고정해제</CommentDropdownList>
         ) : name === postWriter && !parentId ? (
-          <CommentDropdownList onClick={handleCommentPinned}>고정</CommentDropdownList>
+          <CommentDropdownList onClick={onCommentPinned}>고정</CommentDropdownList>
         ) : null}
         {name === writer ? (
           <>
-            <CommentDropdownList onClick={handleCommentEdit}>수정</CommentDropdownList>
-            <CommentDropdownList onClick={handleCommentDel}>삭제</CommentDropdownList>
+            <CommentDropdownList onClick={onCommentEdit}>수정</CommentDropdownList>
+            <CommentDropdownList onClick={onCommentDel}>삭제</CommentDropdownList>
           </>
         ) : (
-          <CommentDropdownList onClick={handleCommentDeclaration}>신고</CommentDropdownList>
+          <CommentDropdownList onClick={onCommentDeclaration}>신고</CommentDropdownList>
         )}
       </CommentDropdownLists>
     </CommentDropdownWrraper>

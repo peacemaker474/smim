@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PostCommentPresenter from './PostComment.style';
 import {
@@ -15,13 +15,29 @@ import { getCookie } from '../../../../utils/cookie';
 function PostComment() {
   const { commentToggled } = useSelector((state) => state.toggle);
   const { accessToken } = useSelector((state) => state.authToken);
-  const { commentId } = useSelector((state) => state.comment);
-  const { check } = useSelector((state) => state.comment);
+
+  const { commentId, check, pinnedId } = useSelector(
+    (state) => ({
+      commentId: state.comment.commentId,
+      pinnedId: state.comment.pinnedId,
+      check: state.comment.check,
+    }),
+    shallowEqual
+  );
   const tkn = getCookie();
   const dispatch = useDispatch();
   const { id: postId } = useParams();
 
   const handleCommentDelete = async () => {
+    if (commentId === pinnedId) {
+      await getCommentUnpinned(commentId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      dispatch(unpinnedCommentId());
+    }
     await deleteComment(commentId, {
       headers: {
         'Content-Type': 'application/json',
@@ -29,10 +45,11 @@ function PostComment() {
       },
     });
     dispatch(deleteCommentId(commentId));
+
     dispatch(commentModalToggle());
   };
 
-  const hadnelCommentPinned = async () => {
+  const handleCommentPinned = async () => {
     await getCommentPinned(commentId, {
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +82,7 @@ function PostComment() {
           check === 'delete'
             ? handleCommentDelete
             : check === 'pinned'
-            ? hadnelCommentPinned
+            ? handleCommentPinned
             : handleCommentUnpinned
         }
         commentToggled={commentToggled}

@@ -5,10 +5,10 @@ import DelBtn from '../../../asset/icon/icon-del.svg';
 
 function PostTagPresenter({
   tagArray,
-  handleTagDelete,
-  handleKeyUp,
-  handleTagWrite,
-  handleInputReset,
+  onTagDelete,
+  onKeyUp,
+  onTagWrite,
+  onInputReset,
   text,
   errors,
 }) {
@@ -19,16 +19,16 @@ function PostTagPresenter({
           tagArray.map((el, idx) => (
             <HashItem key={idx + el}>
               <span>{el}</span>
-              <HashDelBtn type='button' onClick={() => handleTagDelete(el)}></HashDelBtn>
+              <HashDelBtn type='button' onClick={() => onTagDelete(el)}></HashDelBtn>
             </HashItem>
           ))}
       </HashWrapBox>
       <HashInput
         type='text'
         placeholder='해시태그를 입력해주시고 콤마로 구분해주세요'
-        onKeyUp={handleKeyUp}
-        onChange={handleTagWrite}
-        onBlur={handleInputReset}
+        onKeyUp={onKeyUp}
+        onChange={onTagWrite}
+        onBlur={onInputReset}
         value={text}
         maxLength='10'
       />

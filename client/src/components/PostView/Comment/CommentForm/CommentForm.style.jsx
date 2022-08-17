@@ -6,9 +6,9 @@ import CommentTextArea from '../CommentTextArea/CommentTextArea';
 export default function CommentFormPresenter({
   loginState,
   handleSubmit,
-  handleClickCancel,
-  handleKeyDownCheck,
-  onSubmit,
+  onFormInputCancel,
+  onKeyDownCheck,
+  onCommentTextareaSubmit,
   register,
   setValue,
   value,
@@ -23,7 +23,7 @@ export default function CommentFormPresenter({
       <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={state}>
         <CommentTextArea
-          handleKeyDownCheck={handleKeyDownCheck}
+          onKeyDownCheck={onKeyDownCheck}
           register={register}
           setValue={setValue}
           value={value}
@@ -34,12 +34,12 @@ export default function CommentFormPresenter({
         />
         {id ? (
           <CmntBtnBox state={state}>
-            <CmntBtn type='button' onClick={handleClickCancel}>
+            <CmntBtn type='button' onClick={onFormInputCancel}>
               취소
             </CmntBtn>
             <CmntBtn
               type='submit'
-              onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit(onCommentTextareaSubmit)}
               groupId={groupId}
               parentId={parentId}
             >
@@ -48,12 +48,12 @@ export default function CommentFormPresenter({
           </CmntBtnBox>
         ) : (
           <CmntBtnBox state={state}>
-            <CmntBtn type='button' onClick={handleClickCancel}>
+            <CmntBtn type='button' onClick={onFormInputCancel}>
               취소
             </CmntBtn>
             <CmntBtn
               type='submit'
-              onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit(onCommentTextareaSubmit)}
               groupId={groupId}
               parentId={parentId}
             >

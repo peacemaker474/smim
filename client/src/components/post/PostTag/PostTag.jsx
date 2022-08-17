@@ -53,10 +53,10 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
   return (
     <PostTagPresenter
       tagArray={tagArray}
-      handleTagDelete={handleTagDelete}
-      handleKeyUp={handleKeyUp}
-      handleTagWrite={handleTagWrite}
-      handleInputReset={handleInputReset}
+      onTagDelete={handleTagDelete}
+      onKeyUp={handleKeyUp}
+      onTagWrite={handleTagWrite}
+      onInputReset={handleInputReset}
       text={text}
       errors={errors}
     />

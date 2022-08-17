@@ -14,8 +14,7 @@ function PostTargetAgePresenter({ register, errors }) {
         <option value='20'>20대에게</option>
         <option value='30'>30대에게</option>
         <option value='40'>40대에게</option>
-        <option value='50'>50대에게</option>
-        <option value='60'>60대 이상에게</option>
+        <option value='50'>50대이상에게</option>
       </TargetAgeSelect>
     </TargetWrap>
   );

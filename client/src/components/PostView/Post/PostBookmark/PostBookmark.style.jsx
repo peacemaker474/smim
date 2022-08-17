@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import bookmarkFill from '../../../../asset/icon/icon-bookmark-fill.svg';
 import bookmarkLine from '../../../../asset/icon/icon-bookmark-line.svg';
 
-export default function PostBookmarkPresenter({ isBookmarkChecked, handleBookmarkClick }) {
-  return <BookmarkSpan onClick={handleBookmarkClick} bookmarkChecked={isBookmarkChecked} />;
+export default function PostBookmarkPresenter({ isBookmarkChecked, onBookmarkClick }) {
+  return <BookmarkSpan onClick={onBookmarkClick} bookmarkChecked={isBookmarkChecked} />;
 }
 
 const BookmarkSpan = styled.span`
