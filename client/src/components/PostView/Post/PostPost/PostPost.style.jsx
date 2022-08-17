@@ -58,6 +58,7 @@ const PostPara = styled.div`
   margin-bottom: 60px;
   & > p {
     width: 100%;
+    word-break: break-word;
   }
   & > p > img {
     max-width: 100%;
