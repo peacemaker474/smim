@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
-  targetAge: { type: String, required: true },
+  targetAge: { type: Number, required: true },
   hashtag: [{ type: String, required: true }],
   meta: {
     views: { type: Number, default: 0, required: true },
@@ -14,7 +14,6 @@ const postSchema = new mongoose.Schema({
   },
   createAt: { type: Date, required: true, default: Date.now },
   updateAt: { type: Date, default: Date.now, required: true },
-  being: { type: Boolean, default: true }, // 게시글의 삭제 유무
   owner: { type: String, required: true },
 });
 

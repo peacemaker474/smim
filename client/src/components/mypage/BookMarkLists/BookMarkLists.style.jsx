@@ -32,9 +32,9 @@ const BookMarkPageNumber = styled.p`
 
 function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
   return (
-    <BookMarkWrapper bookMarkList={bookMarkList}>
+    <BookMarkWrapper bookMarkList={typeof(bookMarkList) === 'string' ? 0 : 1}>
       {
-        !bookMarkList ?
+        typeof(bookMarkList) === 'string' ?
           <NotWriteLists> 즐겨찾기한 게시글이 없습니다. </NotWriteLists> :
           <>
             <ListsUl>

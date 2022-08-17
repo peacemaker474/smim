@@ -32,9 +32,9 @@ const MyWritePageNumber = styled.p`
 
 function MyWriteListsStyle ({ writeList, onMoveDetail }) {
   return (
-    <MyWriteWrapper writeList={writeList}>
+    <MyWriteWrapper writeList={typeof(writeList) === 'string' ? 0 : 1}>
       {
-        !writeList ?
+        typeof(writeList) === 'string' ?
         <NotWriteLists> 작성한 게시글이 없습니다. </NotWriteLists> :
         <>
           <ListsUl>
