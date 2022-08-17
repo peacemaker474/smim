@@ -82,27 +82,33 @@ function PostForm({ postData, pathValue, postId }) {
     }
   };
 
+  const uploadActionFunc = () => {
+    uploadPost(accessToken);
+    dispatch(postUploadToggle());
+  };
+
+  const uploadCancleFunc = () => {
+    dispatch(postUploadToggle());
+  };
+
+  const postActionFunc = () => {
+    dispatch(modalToggle());
+    navigate(-1);
+  };
+
+  const postCancelFunc = () => {
+    dispatch(modalToggle());
+  };
+
   return (
     <>
       {postUploadToggled && (
-        <Modal
-          actionfunc={() => {
-            uploadPost(accessToken);
-            dispatch(postUploadToggle());
-          }}
-          cancelFunc={() => dispatch(postUploadToggle())}
-        >
+        <Modal actionfunc={uploadActionFunc} cancelFunc={uploadCancleFunc}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}
       {modalToggled && (
-        <Modal
-          actionfunc={() => {
-            dispatch(modalToggle());
-            navigate(-1);
-          }}
-          cancelFunc={() => dispatch(modalToggle())}
-        >
+        <Modal actionfunc={postActionFunc} cancelFunc={postCancelFunc}>
           {'게시물을 취소하시겠습니까? \n 작성한 내용은 저장되지 않습니다.'}
         </Modal>
       )}

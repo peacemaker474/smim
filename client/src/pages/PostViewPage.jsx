@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PostViewContent from '../components/postview/PostViewContent';
@@ -17,14 +17,14 @@ function PostViewPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const regExp = /[0-9a-f]{24}/g;
-  const [postViewState, setPostViewState] = useState(false);
+  // const [postViewState, setPostViewState] = useState(false);
 
   useEffect(() => {
     dispatch(resetComment());
     dispatch(resetPost());
   }, [dispatch]);
 
-  if (!(id.length === 24 && regExp.test(id)) || postViewState) {
+  if (!(id.length === 24 && regExp.test(id))) {
     return <NotFound />;
   }
 
@@ -38,21 +38,24 @@ function PostViewPage() {
     navigate(-2);
   };
 
+  const postViewActionFunc = () => {
+    requestDelete(id, accessToken);
+    dispatch(modalToggle());
+  };
+
+  const postViewCancelFunc = () => {
+    dispatch(modalToggle());
+  };
+
   return (
     <PostViewMain>
       <PostViewContainer>
         {modalToggled && (
-          <Modal
-            actionfunc={() => {
-              requestDelete(id, accessToken);
-              dispatch(modalToggle());
-            }}
-            cancelFunc={() => dispatch(modalToggle())}
-          >
+          <Modal actionfunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
-        <PostViewContent setPostViewState={setPostViewState} />
+        <PostViewContent />
       </PostViewContainer>
     </PostViewMain>
   );

@@ -8,7 +8,7 @@ export default function CommentWrapper({ cmntData }) {
   const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
   const parentData = Array.isArray(cmntData)
-    ? cmntData && cmntData.find((el) => el.parent_id == null)
+    ? cmntData && cmntData.find((el) => el.parent_id === null)
     : cmntData;
 
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(

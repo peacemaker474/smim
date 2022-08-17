@@ -7,7 +7,7 @@ export default function CommentCreated() {
   const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
   const uploadingComments = createdComments
-    .filter((el) => el.parent_id == null)
+    .filter((el) => el.parent_id === null)
     .filter((el) => String(el._id) !== pinnedId)
     .sort((a, b) => {
       return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
