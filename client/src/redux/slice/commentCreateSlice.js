@@ -18,7 +18,6 @@ const commentCreateSlice = createSlice({
           group_id: action.payload.group_id,
           post_id: action.payload.post_id,
           text: action.payload.text,
-          being: action.payload.being,
           like: false,
           like_count: 0,
         });
@@ -30,7 +29,6 @@ const commentCreateSlice = createSlice({
             writer,
             createAt: String(new Date()),
             like_count: 0,
-            being: true,
             parent_id,
             group_id,
             post_id,
