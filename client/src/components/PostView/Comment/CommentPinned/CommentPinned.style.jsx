@@ -8,7 +8,9 @@ export default function CommentPinnedPresenter({ pinnedComment, pinnedId, postWr
     <>
       {pinnedId && (
         <CommentPinnedDiv>
-          <CommentPinnedSpan>{postWriter}이 고정함</CommentPinnedSpan>
+          <CommentPinnedSpan>
+            <CommentPinnedId>{postWriter}</CommentPinnedId>님이 고정함
+          </CommentPinnedSpan>
           <CommentWrapper cmntData={pinnedComment} />
         </CommentPinnedDiv>
       )}
@@ -34,4 +36,8 @@ const CommentPinnedSpan = styled.div`
     margin-right: 10px;
   }
   margin-bottom: 12px;
+`;
+
+const CommentPinnedId = styled.strong`
+  font-weight: 600;
 `;
