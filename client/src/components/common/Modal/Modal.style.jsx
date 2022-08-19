@@ -9,8 +9,12 @@ function ModalPresenter({ children, onModalCancle, onModalConfirm }) {
       <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
-          <Btn onClick={onModalConfirm}>확인</Btn>
-          <Btn onClick={onModalCancle}>취소</Btn>
+          <Btn type='button' onClick={onModalConfirm}>
+            확인
+          </Btn>
+          <Btn type='button' onClick={onModalCancle}>
+            취소
+          </Btn>
         </BtnBox>
       </ModalBox>
     </ModalContainer>

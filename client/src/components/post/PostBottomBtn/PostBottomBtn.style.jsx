@@ -2,25 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColorBtn, BorderBtn } from '../../../styles/common/buttons';
 
-function PostBottomBtnPresenter({ formState, onFormCancle, onSubmit }) {
+function PostBottomBtnPresenter({ formState, onFormCancle }) {
   return (
     <BtnWrap>
       <BtnDiv>
         {formState === 'create' ? (
           <>
-            <PostBorderBtn palette='yellow' onClick={onFormCancle}>
+            <PostBorderBtn palette='yellow' type='button' onClick={onFormCancle}>
               작성 취소
             </PostBorderBtn>
-            <PostColorBtn type='button' form='upload' palette='yellow' onClick={onSubmit}>
+            <PostColorBtn type='submit' form='upload' palette='yellow'>
               게시물 등록
             </PostColorBtn>
           </>
         ) : (
           <>
-            <PostBorderBtn onClick={onFormCancle} palette='yellow'>
+            <PostBorderBtn type='button' onClick={onFormCancle} palette='yellow'>
               수정 취소
             </PostBorderBtn>
-            <PostColorBtn type='button' palette='yellow' onClick={onSubmit}>
+            <PostColorBtn type='submit' palette='yellow'>
               재등록
             </PostColorBtn>
           </>
