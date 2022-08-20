@@ -1,10 +1,10 @@
 import React from 'react';
 import SignupBtnsStyle from './SignupBtns.style';
 
-function SignupBtns ({ onSignupSubmit }) {
+function SignupBtns ({ onCancelClick }) {
   return (
     <SignupBtnsStyle 
-      onSignupSubmit={onSignupSubmit}
+      onCancelClick={onCancelClick}
     />
   );
 }

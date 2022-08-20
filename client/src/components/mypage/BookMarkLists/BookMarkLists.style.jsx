@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ListsUl, Listli, Title, ListContent, Writer, NotWriteLists } from '../../../styles/mypage/writeList';
+import { ListsUl, Listli, Title, ListContent, Writer, NotWriteLists, IsImage } from '../../../styles/mypage/writeList';
 
 const BookMarkWrapper = styled.div`
   width: 70%;
@@ -30,19 +30,30 @@ const BookMarkPageNumber = styled.p`
   font-size: 20px;
 `;
 
+const FooterBox = styled.div`
+  width: 100%;
+  height: 17%;
+  display: flex;
+  justify-content: ${({ current }) => current ? "space-between" : "flex-end"};
+  align-items: center;
+`;
+
 function BookMarkListsStyle ({ bookMarkList, onBookMarkMove}) {
   return (
     <BookMarkWrapper bookMarkList={typeof(bookMarkList) === 'string' ? 0 : 1}>
       {
         typeof(bookMarkList) === 'string' ?
-          <NotWriteLists> 즐겨찾기한 게시글이 없습니다. </NotWriteLists> :
+          <NotWriteLists> {bookMarkList} </NotWriteLists> :
           <>
             <ListsUl>
               {bookMarkList.map(item => 
                 <Listli key={item.createAt} id={item._id} onClick={onBookMarkMove}>
                   <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
                   <ListContent dangerouslySetInnerHTML={{__html: item.content.value}} />
-                  <Writer> {item.owner.nickname} </Writer>
+                  <FooterBox current={item.content.check}>
+                    {item.content.check && <IsImage> 💾 </IsImage>}
+                    <Writer> {item.owner.nickname} </Writer>
+                  </FooterBox>
               </Listli>
               )}
             </ListsUl>

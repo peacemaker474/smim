@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session';
 
 import userSlice from './slice/userSlice';
 import toggleSlice from './slice/toggleSlice';
@@ -11,13 +11,13 @@ import commentSlice from './slice/commentSlice';
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: storageSession,
   blacklist: ['user', 'toggle', 'comment', 'commentCreate'],
 };
 
 const userPersistConfig = {
   key: 'user',
-  storage,
+  storage: storageSession,
   whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social'],
 };
 

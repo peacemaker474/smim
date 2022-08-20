@@ -225,6 +225,7 @@ export const getMainPageLists = async (req, res) => {
       50: [],
     };
     const posts = await Post.find().sort({ createAt: -1 });
+    
     const newPosts = await Promise.all(
       posts.map(async (el) => {
         const user = await User.findById(String(el.owner));

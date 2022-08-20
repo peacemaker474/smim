@@ -14,8 +14,8 @@ export const SignupInput = styled.input`
     font-size: 0.8rem;
   }
 
-  @media ${({ theme }) => theme.device.mobileMiddel} {
-    font-size: 0.7rem;
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 0.8rem;
   }
 `;
 

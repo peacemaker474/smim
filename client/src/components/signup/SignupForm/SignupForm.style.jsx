@@ -16,7 +16,7 @@ const SignupFormBox = styled.form`
   align-items: center;
 `;
 
-function SignupFormStyle ({register, errors, getValues, onSubmit, valid, setValid, onSignupSubmit}) {
+function SignupFormStyle ({register, errors, getValues, onSubmit, valid, setValid, onSignupSubmit, onCancelClick}) {
   return (
     <SignupFormBox method='POST' onSubmit={onSubmit(onSignupSubmit)}>
       <SignupId
@@ -49,7 +49,9 @@ function SignupFormStyle ({register, errors, getValues, onSubmit, valid, setVali
         valid={valid}
         setValid={setValid}
       />
-      <SignupBtns />
+      <SignupBtns
+        onCancelClick={onCancelClick}
+      />
     </SignupFormBox>
   )
 }

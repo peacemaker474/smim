@@ -38,6 +38,10 @@ function SignupForm() {
     });
   }, [navigate]);
 
+  const handleCancelClick = () => {
+    navigate('/');
+  };
+
   return (
     <SignupFormStyle
       register={register}
@@ -47,6 +51,7 @@ function SignupForm() {
       valid={valid}
       setValid={setValid}
       onSignupSubmit={handleSignupSubmit}
+      onCancelClick={handleCancelClick}
     />
   );
 }
