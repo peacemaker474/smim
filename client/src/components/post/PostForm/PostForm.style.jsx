@@ -15,9 +15,10 @@ function PostFormPresenter({
   clearErrors,
   setError,
   postData,
+  openPostFormModal,
 }) {
   return (
-    <div id='upload'>
+    <form id='upload' method='POST' onSubmit={onSubmit(openPostFormModal)}>
       <PostTitle register={register} errors={errors} />
       <PostTargetAge register={register} errors={errors} />
       <PostTag
@@ -37,8 +38,8 @@ function PostFormPresenter({
         setError={setError}
         postData={postData}
       />
-      <PostBottomBtn formState={pathValue} errors={errors} onSubmit={onSubmit} />
-    </div>
+      <PostBottomBtn formState={pathValue} errors={errors} />
+    </form>
   );
 }
 export default PostFormPresenter;

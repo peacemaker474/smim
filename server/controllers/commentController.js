@@ -17,7 +17,7 @@ export const postCommentCreate = async (req, res) => {
         });
       }
 
-      const commentExist = await Comment.exists({ _id: parentId, being: true });
+      const commentExist = await Comment.exists({ _id: parentId });
 
       if (!commentExist) {
         return res.status(400).send({
@@ -378,7 +378,7 @@ export const deleteComment = async (req, res) => {
   const { id: commentId } = req.params; // comment id
 
   try {
-    await Comment.findByIdAndUpdate(commentId, { being: false });
+    await Comment.deleteOne({ _id: commentId });
     return res.status(200).send({
       success: true,
       message: '댓글 삭제가 완료되었습니다.',

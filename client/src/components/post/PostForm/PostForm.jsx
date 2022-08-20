@@ -100,6 +100,10 @@ function PostForm({ postData, pathValue, postId }) {
     dispatch(modalToggle());
   };
 
+  const openPostFormModal = () => {
+    dispatch(postUploadToggle());
+  };
+
   return (
     <>
       {postUploadToggled && (
@@ -123,6 +127,7 @@ function PostForm({ postData, pathValue, postId }) {
         clearErrors={clearErrors}
         setError={setError}
         postData={postData}
+        openPostFormModal={openPostFormModal}
       />
     </>
   );

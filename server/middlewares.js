@@ -225,7 +225,7 @@ export const checkParamPostExist = async (req, res, next) => {
   const { id: postId } = req.params;
 
   try {
-    const postExist = await Post.exists({ _id: postId, being: true });
+    const postExist = await Post.exists({ _id: postId });
 
     if (!postExist) {
       return res.status(400).send({
@@ -248,7 +248,7 @@ export const checkParamCommentExistAndData = async (req, res, next) => {
   const { id: commentId } = req.params;
 
   try {
-    const comment = await Comment.findOne({ _id: commentId, being: true });
+    const comment = await Comment.findOne({ _id: commentId });
 
     if (!comment) {
       return res.status(400).send({
@@ -276,7 +276,6 @@ export const checkCommentPinned = async (req, res, next) => {
 
   try {
     const comment = await Comment.findOne({
-      being: true,
       _id: commentId,
       parent_id: null,
     });
