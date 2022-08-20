@@ -95,7 +95,7 @@ function MyProfileStyle ({ social, pathname }) {
           <MyProfileLink to="/my/writeLists" current={pathname === '/my/writeLists' ? 1 : 0}> 작성한 글목록 </MyProfileLink>
         </ProfileList>
         <ProfileList>
-          <MyProfileLink to="/my/bookMarkLists" current={pathname === '/my/favoriteLists' ? 1 : 0}> 즐겨찾기한 글목록 </MyProfileLink>
+          <MyProfileLink to="/my/bookMarkLists" current={pathname === '/my/bookMarkLists' ? 1 : 0}> 즐겨찾기한 글목록 </MyProfileLink>
         </ProfileList>
       </MyProfileLists>
     </MyProfileWrapper>

@@ -31,32 +31,32 @@ export const Title = styled.h2`
   font-size: 0.9em;
   padding: 7px;
   width: 100%;
-  height: 30%;
+  height: 25%;
   font-weight: bold;
 `;
 
 export const ListContent = styled.p`
   width: 100%;
-  height: 53%;
+  height: 50%;
   padding: 7px;
   font-size: 0.7em;
   align-self: flex-start;
   line-height: 15px;
   word-spacing: 1px;
-
-  p {
-    width: 100%;
-    height: 100%;
-    word-break: break-all;
-  }
+  word-break: break-all;
+  overflow-y: hidden;
+  margin-bottom: 10px;
 `;
 
 export const Writer = styled.p`
-  height: 17%;
-  font-size: 0.6em;
-  align-self: flex-end;
+  height: 100%;
+  font-size: 0.6rem;
   padding: 5px;
   text-align: end;
+`;
+
+export const IsImage = styled.span`
+  padding-left: 7px;
 `;
 
 export const NotWriteLists = styled.h2`

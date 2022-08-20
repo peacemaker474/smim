@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ListsUl, Listli, Title, ListContent, NotWriteLists } from '../../../styles/mypage/writeList';
+import { ListsUl, Listli, Title, ListContent, NotWriteLists, IsImage } from '../../../styles/mypage/writeList';
 
 const MyWriteWrapper = styled.div`
   width: 70%;
@@ -35,13 +35,14 @@ function MyWriteListsStyle ({ writeList, onMoveDetail }) {
     <MyWriteWrapper writeList={typeof(writeList) === 'string' ? 0 : 1}>
       {
         typeof(writeList) === 'string' ?
-        <NotWriteLists> 작성한 게시글이 없습니다. </NotWriteLists> :
+        <NotWriteLists> {writeList} </NotWriteLists> :
         <>
           <ListsUl>
             {writeList.map(item => 
               <Listli key={item.createAt} id={item._id} onClick={onMoveDetail} >
                 <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
                 <ListContent dangerouslySetInnerHTML={{ __html: item.content.value}} />
+                {item.content.check && <IsImage> 💾  </IsImage>}
             </Listli>
             )}
           </ListsUl>
