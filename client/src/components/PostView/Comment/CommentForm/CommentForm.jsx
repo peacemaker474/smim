@@ -125,7 +125,7 @@ export default function CommentForm({
   return (
     <CommentFormPresenter
       loginState={loginState}
-      handleSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       onFormInputCancel={onFormInputCancel}
       onKeyDownCheck={handleKeyDownCheck}
       onCommentTextareaSubmit={handleCommentTextareaSubmit}

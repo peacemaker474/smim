@@ -50,10 +50,14 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
     }
   };
 
+  const handleDeleteBtnClick = (el) => {
+    handleTagDelete(el);
+  };
+
   return (
     <PostTagPresenter
       tagArray={tagArray}
-      onTagDelete={handleTagDelete}
+      onDeleteBtnClick={handleDeleteBtnClick}
       onKeyUp={handleKeyUp}
       onTagWrite={handleTagWrite}
       onInputReset={handleInputReset}

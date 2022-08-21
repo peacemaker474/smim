@@ -5,7 +5,7 @@ import CommentTextArea from '../CommentTextArea/CommentTextArea';
 
 export default function CommentFormPresenter({
   loginState,
-  handleSubmit,
+  onSubmit,
   onFormInputCancel,
   onKeyDownCheck,
   onCommentTextareaSubmit,
@@ -39,7 +39,7 @@ export default function CommentFormPresenter({
             </CmntBtn>
             <CmntBtn
               type='submit'
-              onClick={handleSubmit(onCommentTextareaSubmit)}
+              onSubmit={onSubmit(onCommentTextareaSubmit)}
               groupId={groupId}
               parentId={parentId}
             >
@@ -53,7 +53,7 @@ export default function CommentFormPresenter({
             </CmntBtn>
             <CmntBtn
               type='submit'
-              onClick={handleSubmit(onCommentTextareaSubmit)}
+              onSubmit={onSubmit(onCommentTextareaSubmit)}
               groupId={groupId}
               parentId={parentId}
             >

@@ -16,7 +16,7 @@ export default function PostCommentPresenter({
   return (
     <>
       {commentToggled && (
-        <Modal actionfunc={actionFunc} cancelFunc={cancelFunc}>
+        <Modal actionFunc={actionFunc} cancelFunc={cancelFunc}>
           {modalText}
         </Modal>
       )}

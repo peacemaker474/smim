@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -23,19 +23,19 @@ function App() {
   const dispatch = useDispatch();
   const pathCheck = pathname.split('/')[2];
 
-  const actionFunc = () => {
+  const actionFunc = useCallback(() => {
     dispatch(isLoginCheckToggle());
     dispatch(loginToggle());
-  };
+  }, [dispatch]);
 
-  const cancelFunc = () => {
+  const cancelFunc = useCallback(() => {
     dispatch(isLoginCheckToggle());
-  };
+  }, [dispatch]);
 
   return (
     <>
       {isLoginCheckToggled && (
-        <Modal actionfunc={actionFunc} cancelFunc={cancelFunc}>
+        <Modal actionFunc={actionFunc} cancelFunc={cancelFunc}>
           {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}
         </Modal>
       )}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -17,7 +17,10 @@ function PostForm({ postData, pathValue, postId }) {
     setError,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
-  const { postUploadToggled, modalToggled } = useSelector((state) => state.toggle);
+  const { postUploadToggled, modalToggled } = useSelector((state) => ({
+    postUploadToggle: state.toggle.postUploadToggle,
+    modalToggled: state.toggle.modalToggled,
+  }));
   const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -87,32 +90,32 @@ function PostForm({ postData, pathValue, postId }) {
     dispatch(postUploadToggle());
   };
 
-  const uploadCancleFunc = () => {
+  const uploadCancleFunc = useCallback(() => {
     dispatch(postUploadToggle());
-  };
+  }, [dispatch]);
 
-  const postActionFunc = () => {
+  const postActionFunc = useCallback(() => {
     dispatch(modalToggle());
     navigate(-1);
-  };
+  }, [dispatch, navigate]);
 
-  const postCancelFunc = () => {
+  const postCancelFunc = useCallback(() => {
     dispatch(modalToggle());
-  };
+  }, [dispatch]);
 
-  const openPostFormModal = () => {
+  const openPostFormModal = useCallback(() => {
     dispatch(postUploadToggle());
-  };
+  }, [dispatch]);
 
   return (
     <>
       {postUploadToggled && (
-        <Modal actionfunc={uploadActionFunc} cancelFunc={uploadCancleFunc}>
+        <Modal actionFunc={uploadActionFunc} cancelFunc={uploadCancleFunc}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>
       )}
       {modalToggled && (
-        <Modal actionfunc={postActionFunc} cancelFunc={postCancelFunc}>
+        <Modal actionFunc={postActionFunc} cancelFunc={postCancelFunc}>
           {'게시물을 취소하시겠습니까? \n 작성한 내용은 저장되지 않습니다.'}
         </Modal>
       )}
