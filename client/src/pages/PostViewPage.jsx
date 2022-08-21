@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PostViewContent from '../components/postview/PostViewContent';
@@ -17,15 +17,10 @@ function PostViewPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const regExp = /[0-9a-f]{24}/g;
-  // const [postViewState, setPostViewState] = useState(false);
 
   useEffect(() => {
     dispatch(resetComment());
     dispatch(resetPost());
-  }, [dispatch]);
-
-  const postViewCancelFunc = useCallback(() => {
-    dispatch(modalToggle());
   }, [dispatch]);
 
   if (!(id.length === 24 && regExp.test(id))) {
@@ -47,11 +42,15 @@ function PostViewPage() {
     dispatch(modalToggle());
   };
 
+  const postViewCancelFunc = () => {
+    dispatch(modalToggle());
+  };
+
   return (
     <PostViewMain>
       <PostViewContainer>
         {modalToggled && (
-          <Modal actionFunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
+          <Modal actionfunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
             게시물을 삭제하시겠습니까?
           </Modal>
         )}
