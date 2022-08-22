@@ -16,7 +16,15 @@ function PostForm({ postData, pathValue, postId }) {
     clearErrors,
     setError,
     formState: { errors },
-  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
+  } = useForm({
+    mode: 'onBlur', 
+    defaultValues: { 
+      tagArray: [], 
+      title: '', 
+      para: '', 
+      age: '' 
+    }
+  });
   const { postUploadToggled, modalToggled } = useSelector((state) => state.toggle);
   const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();

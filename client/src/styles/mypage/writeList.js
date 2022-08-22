@@ -4,7 +4,7 @@ export const ListsUl = styled.ul`
   width: 95%;
   height: 90%;
   display: grid;
-  grid-template-columns: repeat(3, 185px);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 140px);
   gap: 10px;
 
