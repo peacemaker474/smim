@@ -17,7 +17,6 @@ function PostViewPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const regExp = /[0-9a-f]{24}/g;
-  // const [postViewState, setPostViewState] = useState(false);
 
   useEffect(() => {
     dispatch(resetComment());

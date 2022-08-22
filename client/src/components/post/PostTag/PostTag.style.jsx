@@ -5,7 +5,7 @@ import DelBtn from '../../../asset/icon/icon-del.svg';
 
 function PostTagPresenter({
   tagArray,
-  onTagDelete,
+  onDeleteBtnClick,
   onKeyUp,
   onTagWrite,
   onInputReset,
@@ -19,7 +19,7 @@ function PostTagPresenter({
           tagArray.map((el, idx) => (
             <HashItem key={idx + el}>
               <span>{el}</span>
-              <HashDelBtn type='button' onClick={() => onTagDelete(el)}></HashDelBtn>
+              <HashDelBtn type='button' onClick={onDeleteBtnClick}></HashDelBtn>
             </HashItem>
           ))}
       </HashWrapBox>
