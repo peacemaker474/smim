@@ -235,13 +235,18 @@ export const getMainPageLists = async (req, res) => {
         };
       })
     );
-    newPosts.forEach((el) => {
-      if (postLists[el.targetAge].length < 5 && !el.meta.answer) {
-        postLists[el.targetAge].push(el);
-      } else if (postLists[el.targetAge].length < 5) {
-        postLists[el.targetAge].push(el);
-      }
+    
+    const answerNotPosts = newPosts.filter((item) => item.meta.answer === false);
+    const answerPosts = newPosts.filter((item) => item.meta.answer === true); 
+
+    answerNotPosts.forEach((el) => {
+      if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
     });
+
+    answerPosts.forEach((el) => {
+      if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
+    })
+
     return res.status(200).send({ success: true, lists: postLists });
   } catch (err) {
     console.log(err);
