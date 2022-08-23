@@ -10,6 +10,7 @@ const MyWriteWrapper = styled.div`
   justify-content: ${({ writeList }) => !writeList ? "center" : "space-between"};
   align-items: center;
   position: relative;
+  overflow-y: scroll;
 
   @media screen and (max-width: 1180px) {
     width: 90%;
@@ -26,28 +27,21 @@ const MyWriteWrapper = styled.div`
   }
 `;
 
-const MyWritePageNumber = styled.p`
-  font-size: 20px;
-`;
-
 function MyWriteListsStyle ({ writeList, onMoveDetail }) {
   return (
     <MyWriteWrapper writeList={typeof(writeList) === 'string' ? 0 : 1}>
       {
         typeof(writeList) === 'string' ?
         <NotWriteLists> {writeList} </NotWriteLists> :
-        <>
-          <ListsUl>
-            {writeList.map(item => 
-              <Listli key={item.createAt} id={item._id} onClick={onMoveDetail} >
-                <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
-                <ListContent dangerouslySetInnerHTML={{ __html: item.content.value}} />
-                {item.content.check && <IsImage> 💾  </IsImage>}
+        <ListsUl list={writeList.length}>
+          {writeList.map(item => 
+            <Listli key={item.createAt} id={item._id} onClick={onMoveDetail} >
+              <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
+              <ListContent dangerouslySetInnerHTML={{ __html: item.content.value}} />
+              {item.content.check && <IsImage> 💾  </IsImage>}
             </Listli>
-            )}
-          </ListsUl>
-          <MyWritePageNumber> 1 </MyWritePageNumber>
-        </>
+          )}
+        </ListsUl>
       }
     </MyWriteWrapper>
   );

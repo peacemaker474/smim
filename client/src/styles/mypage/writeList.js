@@ -4,19 +4,17 @@ export const ListsUl = styled.ul`
   width: 95%;
   height: 90%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 140px);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: ${({ list }) => `repeat(${list}, 133px);`}
   gap: 10px;
 
   @media ${({ theme }) => theme.device.webMiddle} {
     grid-template-columns: repeat(2, 250px);
-    grid-template-rows: repeat(3, 133px);
     justify-content: space-evenly;
   }
 
   @media ${({ theme }) => theme.device.ipad} {
     grid-template-columns: repeat(2, 225px);
-    grid-template-rows: repeate(4, 135px);
   }
 `;
 

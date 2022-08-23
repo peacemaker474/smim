@@ -22,7 +22,7 @@ export const SignupInput = styled.input`
 export const BirthYear = styled.input`
   all: unset;
   width: 30%;
-  height: 100%;
+  height: 45px;
   border: 2px solid ${({theme}) => theme.color.yellow};
   padding-left: 10px;
   box-sizing: border-box;
@@ -42,7 +42,7 @@ export const BirthYear = styled.input`
 export const BirthMonth = styled.select`
   all: unset;
   width: 30%;
-  height: 100%;
+  height: 45px;
   line-height: 1em;
   border: 2px solid ${({theme}) => theme.color.yellow};
   padding: 12px 0 0 10px;
