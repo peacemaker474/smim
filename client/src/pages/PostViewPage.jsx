@@ -50,7 +50,7 @@ function PostViewPage() {
     <PostViewMain>
       <PostViewContainer>
         {modalToggled && (
-          <Modal actionfunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
+          <Modal actionFunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
             게시물을 삭제하시겠습니까?
           </Modal>
         )}

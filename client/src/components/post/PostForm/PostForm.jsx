@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import PostFormPresenter from './PostForm.style';
 import Modal from '../../../components/common/Modal/Modal';
@@ -17,10 +17,13 @@ function PostForm({ postData, pathValue, postId }) {
     setError,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
-  const { postUploadToggled, modalToggled } = useSelector((state) => ({
-    postUploadToggle: state.toggle.postUploadToggle,
-    modalToggled: state.toggle.modalToggled,
-  }));
+  const { postUploadToggled, modalToggled } = useSelector(
+    (state) => ({
+      postUploadToggled: state.toggle.postUploadToggled,
+      modalToggled: state.toggle.modalToggled,
+    }),
+    shallowEqual
+  );
   const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,6 +107,7 @@ function PostForm({ postData, pathValue, postId }) {
   }, [dispatch]);
 
   const openPostFormModal = useCallback(() => {
+    console.log('action');
     dispatch(postUploadToggle());
   }, [dispatch]);
 
