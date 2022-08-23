@@ -40,8 +40,14 @@ export const postPostCreate = async (req, res) => {
 // 게시물 수정(Post Edit)
 export const putPostEdit = async (req, res) => {
   const { id } = req.params;
+  const { content } = req.body;
+  const myRegExp1 = /http:(.*?)(png|jpg|jpeg)/g;
+  console.log(content.match(myRegExp1));
 
   try {
+    const { content: preContent } = await Post.findById(id);
+    console.log(preContent.match(myRegExp1));
+
     await Post.findByIdAndUpdate(id, { ...req.body });
     return res.status(201).send({
       success: true,
@@ -225,7 +231,7 @@ export const getMainPageLists = async (req, res) => {
       50: [],
     };
     const posts = await Post.find().sort({ createAt: -1 });
-    
+
     const newPosts = await Promise.all(
       posts.map(async (el) => {
         const user = await User.findById(String(el.owner));
@@ -235,9 +241,9 @@ export const getMainPageLists = async (req, res) => {
         };
       })
     );
-    
+
     const answerNotPosts = newPosts.filter((item) => item.meta.answer === false);
-    const answerPosts = newPosts.filter((item) => item.meta.answer === true); 
+    const answerPosts = newPosts.filter((item) => item.meta.answer === true);
 
     answerNotPosts.forEach((el) => {
       if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
@@ -245,7 +251,7 @@ export const getMainPageLists = async (req, res) => {
 
     answerPosts.forEach((el) => {
       if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
-    })
+    });
 
     return res.status(200).send({ success: true, lists: postLists });
   } catch (err) {
