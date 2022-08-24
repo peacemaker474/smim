@@ -63,6 +63,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
           setPostArray(res.data);
         });
         setSearchList({ option: '', inputs: '' });
+        setPostOption('newer');
         inputRef.current.value = '';
       }
     },
