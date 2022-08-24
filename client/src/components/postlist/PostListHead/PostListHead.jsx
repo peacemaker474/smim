@@ -21,19 +21,15 @@ export default function PostListHead({ postArray, setPostArray, age }) {
       setPostOption(evt.target.value);
       const option = evt.target.value;
       if (option === 'newer') {
-        const newerArray = postArray.sort((a, b) =>
-          a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0
-        );
+        const newerArray = postArray.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
         setPostArray([...newerArray]);
       } else if (option === 'popular') {
         const popularArray = postArray
-          .sort((a, b) => (a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0))
-          .sort((a, b) => (a.meta.likes > b.meta.likes ? -1 : a.meta.likes < b.meta.likes ? 1 : 0));
+          .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
+          .sort((a, b) => (a.meta.likes = b.meta.likes));
         setPostArray([...popularArray]);
       } else if (option === 'older') {
-        const olderArray = postArray.sort((a, b) =>
-          a.createAt > b.createAt ? 1 : a.create > b.create ? 0 : -1
-        );
+        const olderArray = postArray.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
         setPostArray([...olderArray]);
       }
     },
@@ -64,30 +60,13 @@ export default function PostListHead({ postArray, setPostArray, age }) {
           target: age,
         };
         getSearchPost(body).then((res) => {
-          if (postOption === 'newer') {
-            const newerArray = res.data.sort((a, b) =>
-              a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0
-            );
-            setPostArray([...newerArray]);
-          } else if (postOption === 'popular') {
-            const popularArray = res.data
-              .sort((a, b) => (a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0))
-              .sort((a, b) =>
-                a.meta.likes > b.meta.likes ? -1 : a.meta.likes < b.meta.likes ? 1 : 0
-              );
-            setPostArray([...popularArray]);
-          } else if (postOption === 'older') {
-            const olderArray = res.data.sort((a, b) =>
-              a.createAt > b.createAt ? 1 : a.create > b.create ? 0 : -1
-            );
-            setPostArray([...olderArray]);
-          }
+          setPostArray(res.data);
         });
         setSearchList({ option: '', inputs: '' });
         inputRef.current.value = '';
       }
     },
-    [searchList, age, setPostArray, postOption]
+    [searchList, age, setPostArray]
   );
   return (
     <PostListHeadPresenter

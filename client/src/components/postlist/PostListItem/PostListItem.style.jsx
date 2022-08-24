@@ -29,7 +29,7 @@ export default function PostListItemPresenter({
         <PostText dangerouslySetInnerHTML={{ __html: content.value }} />
         <PostTagListDiv>
           <PostTagDiv>
-            {(hashtag || []).map((el, idx) => (
+            {hashtag.map((el, idx) => (
               <TagItem color='yellow' key={idx}>
                 {el}
               </TagItem>

@@ -4,10 +4,10 @@ export const elapsedText = (date) => {
   const hour = minute * 60;
   const day = hour * 24;
 
-  var today = new Date();
-  var elapsedTime = Math.trunc((today.getTime() - date.getTime()) / 1000);
+  const today = new Date();
+  const elapsedTime = Math.trunc((today.getTime() - date.getTime()) / 1000);
 
-  var elapsedText = '';
+  let elapsedText = '';
   if (elapsedTime < seconds) {
     elapsedText = '방금 전';
   } else if (elapsedTime < minute) {
