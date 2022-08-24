@@ -17,20 +17,17 @@ export default function PostListBody({ setPostArray, postArray, age }) {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setPostArray(
-        response.data.sort((a, b) => (a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0))
-      );
-      return response.data;
+      setPostArray(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { data, isLoading, isFetching } = useQuery([('postArray', { age })], loadedPostListData);
+  const { isLoading, isFetching } = useQuery([('postArray', { age })], loadedPostListData);
 
   if (isLoading || isFetching) {
     return <LoadingPage position='absolute' />;
   }
 
-  return <PostListBodyPresenter postData={postArray || data} data={data} />;
+  return <PostListBodyPresenter postData={postArray} />;
 }

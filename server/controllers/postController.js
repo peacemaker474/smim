@@ -122,7 +122,7 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  const postList = await Post.find({ targetAge: age });
+  const postList = await Post.find({ targetAge: age }).sort({ createAt: -1 });
 
   const postDataList = await Promise.all(
     postList.map(async (el) => {
