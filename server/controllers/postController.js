@@ -202,7 +202,7 @@ export const getPostSearch = async (req, res) => {
     });
   }
   try {
-    const postList = await Post.find({ targetAge: age });
+    const postList = await Post.find({ targetAge: age }).sort({ createAt: -1 });
     const postDataList = await Promise.all(
       postList
         .filter((el) => el[tag].includes(keyword))
