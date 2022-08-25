@@ -18,13 +18,13 @@ import {
   existPostCheckAndData,
   existPostCheck,
   fieldCheck,
-  postImageUpload,
   checkBodyPostUndefined,
   checkParamPostUndefined,
   checkBodyContentUndefined,
   checkBodyPostExist,
   checkParamPostExist,
 } from '../middlewares.js';
+import { postImageUpload } from '../multer.js';
 
 export const postRouter = express.Router();
 

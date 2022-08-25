@@ -261,6 +261,5 @@ export const getMainPageLists = async (req, res) => {
 };
 
 export const postPostImageUpload = (req, res) => {
-  const IMG_URL = `http://localhost:4000/uploads/posts/${req.file.filename}`;
-  res.json({ url: IMG_URL });
+  res.json({ url: `${req.file.location}` });
 };
