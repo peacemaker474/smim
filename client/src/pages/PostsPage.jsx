@@ -1,18 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PostListHead from '../components/postlist/PostListHead/PostListHead';
 import PostListBody from '../components/postlist/PostListBody/PostListBody';
 import NotFound from './NotFound';
 
 function PostsPage() {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
-  const postAge = query.get('age');
-  const age = useMemo(() => {
-    return postAge;
-  }, [postAge]);
   const [postArray, setPostArray] = useState([]);
+  const { age: postAge } = useParams();
 
   if (
     postAge === '10' ||
@@ -24,10 +19,10 @@ function PostsPage() {
     return (
       <PostListMain>
         <PostListContainer>
-          <PostListHeading>{age}대 질문리스트</PostListHeading>
-          <PostListHead setPostArray={setPostArray} postArray={postArray} age={age} />
+          <PostListHeading>{postAge}대 질문리스트</PostListHeading>
+          <PostListHead setPostArray={setPostArray} postArray={postArray} age={postAge} />
           <PostBodyContainer>
-            <PostListBody postArray={postArray} setPostArray={setPostArray} age={age} />
+            <PostListBody postArray={postArray} setPostArray={setPostArray} age={postAge} />
           </PostBodyContainer>
         </PostListContainer>
       </PostListMain>
