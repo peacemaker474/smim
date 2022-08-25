@@ -16,6 +16,7 @@ function PostViewContent() {
   const tkn = getCookie();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const { accessToken } = useSelector((state) => state.authToken);
   const { id: postId } = useParams();
 
   const fetchAPI = async ({ queryKey }) => {
@@ -68,7 +69,7 @@ function PostViewContent() {
   return (
     <>
       <PostPost postDetail={postDetail} postId={postId} date={date} user={user} />
-      <PostComment />
+      {accessToken && <PostComment />}
     </>
   );
 }

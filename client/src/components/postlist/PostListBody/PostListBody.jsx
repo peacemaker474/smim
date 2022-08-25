@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
+import { useLocation } from 'react-router-dom';
 import { getPostListRead } from '../../../network/post/http';
 import LoadingPage from '../../../pages/LoadingPage';
 import PostListBodyPresenter from './PostListBody.style';
 
 export default function PostListBody({ setPostArray, postArray, age }) {
   const { accessToken } = useSelector((state) => state.authToken);
+  const { key } = useLocation();
 
   const loadedPostListData = async ({ queryKey }) => {
     const [{ age }] = queryKey;
@@ -23,7 +25,11 @@ export default function PostListBody({ setPostArray, postArray, age }) {
     }
   };
 
-  const { isLoading, isFetching } = useQuery([('postArray', { age })], loadedPostListData);
+  const { isLoading, isFetching, refetch } = useQuery([('postArray', { age })], loadedPostListData);
+
+  useEffect(() => {
+    refetch();
+  }, [key, refetch]);
 
   if (isLoading || isFetching) {
     return <LoadingPage position='absolute' />;

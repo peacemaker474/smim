@@ -8,6 +8,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
     option: '',
     inputs: '',
   });
+
   const inputRef = useRef();
   const [postOption, setPostOption] = useState('newer');
 
@@ -69,6 +70,7 @@ export default function PostListHead({ postArray, setPostArray, age }) {
     },
     [searchList, age, setPostArray]
   );
+
   return (
     <PostListHeadPresenter
       onSearchOption={handleSearchOption}

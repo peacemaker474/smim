@@ -22,7 +22,7 @@ function AppRoute() {
       <Route path='/' element={<MainPage />} />
       <Route path='/intro' element={<Intro />} />
       <Route path='/signup' element={<SignupPage />} />
-      <Route path='/generation' element={<PostsPage />} />
+      <Route path='/generation/:age' element={<PostsPage />} />
       <Route path='/post/view/:id' element={<PostViewPage />} />
       <Route path='/post/*' element={<NotFound />} />
       <Route path='/loading' element={<LoadingPage />} />

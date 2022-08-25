@@ -5,7 +5,7 @@ import { DELETE_TOKEN, SET_TOKEN } from '../../../redux/auth';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { getCookie } from '../../../utils/cookie';
 
-function Auth () {
+function Auth() {
   const { authenticated, expireTime } = useSelector(
     (state) => ({
       authenticated: state.authToken.authenticated,
@@ -32,9 +32,7 @@ function Auth () {
     }
   }
 
-  return (
-    <div />
-  )
+  return <></>;
 }
 
 export default Auth;
