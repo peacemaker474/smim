@@ -12,6 +12,20 @@ const MyWriteWrapper = styled.div`
   position: relative;
   overflow-y: scroll;
 
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 17%;
+    background-color: rgba(127, 127, 127, .5);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0);
+  }
+
   @media screen and (max-width: 1180px) {
     width: 90%;
     height: 80%;

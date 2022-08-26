@@ -15,7 +15,7 @@ function NavBar() {
   const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ] = useDropdown();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { pathname, search } = useLocation(null);
+  const { pathname } = useLocation(null);
 
   const handleLoginClick = useCallback(() => {
     dispatch(loginToggle());
@@ -47,7 +47,7 @@ function NavBar() {
       isDropdownVisible={isDropdownVisible}
       dropdownRef={dropdownRef}
       btnRef={btnRef}
-      pathname={search ? `${pathname}${search}` : `${pathname}`}
+      pathname={pathname}
       onLoginClick={handleLoginClick}
       onLogoutClick={handleLogoutClick}
       onToggleClick={handleToggleClick}

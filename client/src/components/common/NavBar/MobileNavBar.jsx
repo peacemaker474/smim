@@ -135,19 +135,19 @@ function MobileNavBar ({ onLogoutClick }) {
           </>
         )}
         <MobileList>
-          <MobileLink to='generation?age=10' onClick={handleMenuClick}> 10대에게 </MobileLink>
+          <MobileLink to='generation/10' onClick={handleMenuClick}> 10대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation?age=20' onClick={handleMenuClick}> 20대에게 </MobileLink>
+          <MobileLink to='generation/20' onClick={handleMenuClick}> 20대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation?age=30' onClick={handleMenuClick}> 30대에게 </MobileLink>
+          <MobileLink to='generation/30' onClick={handleMenuClick}> 30대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation?age=40' onClick={handleMenuClick}> 40대에게 </MobileLink>
+          <MobileLink to='generation/40' onClick={handleMenuClick}> 40대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation?age=50' onClick={handleMenuClick}> 50대에게 </MobileLink>
+          <MobileLink to='generation/50' onClick={handleMenuClick}> 50대에게 </MobileLink>
         </MobileList>
         {authenticated && (
           <MobileList>

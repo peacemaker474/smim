@@ -63,7 +63,7 @@ export const putChangeUserImage = async (req, res) => {
   const updateImage = await User.findByIdAndUpdate(
     user._id,
     {
-      imageUrl: file ? file.path : user.imageUrl,
+      imageUrl: file ? file.location : user.imageUrl,
     },
     { new: true }
   );
