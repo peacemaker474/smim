@@ -32,12 +32,12 @@ function PostForm({ postData, pathValue, postId }) {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
       setValue('title', title);
-      setValue('para', content);
+      setValue('para', { para: content, img: [] });
       setValue('age', targetAge);
       setValue('tagArray', hashtag);
     } else {
       setValue('title', '');
-      setValue('para', '');
+      setValue('para', { para: '', img: [] });
       setValue('age', '');
       setValue('tagArray', []);
     }

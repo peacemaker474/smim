@@ -4,7 +4,12 @@ import Like from '../models/Like.js';
 
 // 게시물 생성(Post Create)
 export const postPostCreate = async (req, res) => {
-  const { title, content, hashtag, targetAge } = req.body;
+  const {
+    title,
+    content: { para },
+    hashtag,
+    targetAge,
+  } = req.body;
   const {
     user: { _id },
   } = req.body;
@@ -14,7 +19,7 @@ export const postPostCreate = async (req, res) => {
     const post = await Post.create({
       title,
       hashtag,
-      content,
+      content: para,
       targetAge,
       owner: _id,
     });
@@ -261,5 +266,5 @@ export const getMainPageLists = async (req, res) => {
 };
 
 export const postPostImageUpload = (req, res) => {
-  res.json({ url: `${req.file.location}` });
+  res.json({ url: `${req.file.location}`, key: req.file.key });
 };
