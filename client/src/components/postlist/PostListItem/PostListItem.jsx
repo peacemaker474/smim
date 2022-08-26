@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import PostListItemPresenter from './PostListItem.style';
 import getDate from '../../../utils/changedDate';
 import getHashtagList from '../../../utils/limitedHashtag';
@@ -16,12 +15,7 @@ function PostListItem({ postData }) {
     owner: { nickname, imageUrl },
   } = postData;
 
-  const navigate = useNavigate();
   let paraContent = checkedText(content);
-
-  const handleDetailPageMove = () => {
-    navigate(`/post/view/${_id}`);
-  };
 
   const hashtagEdition = getHashtagList(hashtag);
 
@@ -30,7 +24,6 @@ function PostListItem({ postData }) {
 
   return (
     <PostListItemPresenter
-      onDetailPageMove={handleDetailPageMove}
       hashtag={hashtagEdition}
       content={paraContent}
       meta={meta}

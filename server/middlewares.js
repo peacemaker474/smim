@@ -77,7 +77,12 @@ export const existPostCheck = async (req, res, next) => {
 
 // 보낸 데이터에서 누락한 field의 유무를 체크하는 미들웨어
 export const fieldCheck = async (req, res, next) => {
-  const { title, content, hashtag, targetAge } = req.body;
+  const {
+    title,
+    content: { para },
+    hashtag,
+    targetAge,
+  } = req.body;
 
   if (!title) {
     return res.status(400).send({
@@ -89,10 +94,10 @@ export const fieldCheck = async (req, res, next) => {
       success: false,
       message: 'hashtag가 undefined입니다.',
     });
-  } else if (!content) {
+  } else if (!para) {
     return res.status(400).send({
       success: false,
-      message: 'content가 undefined입니다.',
+      message: 'para가 undefined입니다.',
     });
   } else if (
     !(
