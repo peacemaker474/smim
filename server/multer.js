@@ -1,6 +1,12 @@
-import s3 from './s3.js';
+import AWS from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
 export const postImageUpload = multer({
   storage: multerS3({
@@ -8,9 +14,6 @@ export const postImageUpload = multer({
     bucket: 'smim-image-bucket',
     key: function (req, file, cb) {
       let ext = file.mimetype.split('/')[1];
-      if (!['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-        return cb(new Error('Only images are allowed'));
-      }
       cb(null, `${Date.now()}_${file.originalname}`);
     },
   }),
