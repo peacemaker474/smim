@@ -8,7 +8,6 @@ import Eye from '../../../asset/icon/icon-eye.svg';
 import { Link } from 'react-router-dom';
 
 export default function PostListItemPresenter({
-  onDetailPageMove,
   hashtag,
   content,
   meta,
@@ -19,8 +18,8 @@ export default function PostListItemPresenter({
   id,
 }) {
   return (
-    <PostItem to={`/post/view/${id}`}>
-      <PostAnchor onClick={onDetailPageMove}>
+    <PostItem>
+      <PostAnchor to={`/post/view/${id}`}>
         <PostTitle>{title}</PostTitle>
         <PostWriterDiv>
           <UserImage width='23px' height='23px' imgUrl={imgUrl} />
@@ -47,7 +46,7 @@ export default function PostListItemPresenter({
   );
 }
 
-const PostItem = styled(Link)`
+const PostItem = styled.div`
   position: relative;
   height: 255px;
   border: 2px solid ${({ theme }) => theme.color.lightGray};
@@ -56,7 +55,7 @@ const PostItem = styled(Link)`
   cursor: pointer;
 `;
 
-const PostAnchor = styled.div``;
+const PostAnchor = styled(Link)``;
 
 const PostTitle = styled.h2`
   height: 21px;

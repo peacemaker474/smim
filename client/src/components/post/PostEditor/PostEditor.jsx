@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef, useState } from 'react';
+import React, { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { Quill } from 'react-quill';
 import ImageResize from 'quill-image-resize-module-react';
@@ -11,8 +11,11 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   const postText = watch('para');
   const quillRef = useRef();
   const [text, setText] = useState('');
+  const [img, setImg] = useState('');
 
-  function imageHandler() {
+  console.log(postText);
+
+  const imageHandler = useCallback(() => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -24,6 +27,8 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
       try {
         const result = await axios.post('http://localhost:4000/post/img', formData);
         const url = result.data.url;
+        console.log(result.data.key);
+        setImg(result.data.key);
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection()?.index;
         if (typeof range !== 'number') return;
@@ -33,7 +38,7 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
         console.log(error);
       }
     });
-  }
+  }, [setImg]);
 
   const modules = useMemo(
     () => ({
@@ -66,7 +71,7 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
         },
       },
     }),
-    []
+    [imageHandler]
   );
 
   const formats = [
@@ -89,7 +94,7 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
 
   useEffect(() => {
     register('para', { required: true });
-    setText(postText);
+    setText(postText.para);
   }, [register, watch, postText]);
 
   const { ref: registerRef } = register('para', { required: true });
@@ -100,11 +105,15 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
 
   const handleEditorSetValue = () => {
     if (text === '<p><br></p>') {
-      setValue('para', '');
+      setValue('para', { para: '', img: [] });
       setError('para', { required: true });
     } else {
       clearErrors('para');
-      setValue('para', text);
+      if (img !== '') {
+        setValue('para', { para: text, img: [...postText.img, img] });
+      } else {
+        setValue('para', { para: text, img: [...postText.img] });
+      }
     }
   };
 

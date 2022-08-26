@@ -40,9 +40,6 @@ export const postImageUpload = multer({
     bucket: 'smim-image-bucket',
     key: function (req, file, cb) {
       let ext = file.mimetype.split('/')[1];
-      if (!['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-        return cb(new Error('Only images are allowed'));
-      }
       cb(null, `${Date.now()}_${file.originalname}`);
     },
   }),
