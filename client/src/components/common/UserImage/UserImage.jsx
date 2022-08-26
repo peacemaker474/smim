@@ -16,7 +16,7 @@ function UserImage ({width, height, encodeImg, imgUrl}) {
   
   return (
     <MyImg 
-      src={encodeImg ? encodeImg : "http://localhost:4000/" + decoded}
+      src={encodeImg ? encodeImg : decoded}
       alt="user_profileImage"
       width={width}
       height={height}
