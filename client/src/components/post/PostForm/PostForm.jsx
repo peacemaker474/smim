@@ -37,7 +37,7 @@ function PostForm({ postData, pathValue, postId }) {
       setValue('tagArray', hashtag);
     } else {
       setValue('title', '');
-      setValue('para', { para: '', img: [] });
+      setValue('para', { para: null, img: [] });
       setValue('age', '');
       setValue('tagArray', []);
     }
