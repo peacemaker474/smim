@@ -1,19 +1,17 @@
 import React, { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { Quill } from 'react-quill';
-import ImageResize from 'quill-image-resize-module-react';
+// import { Quill } from 'react-quill';
+// import ImageResize from 'quill-image-resize-module-react';
 import PostEditorPresenter from './PostEditor.style';
 import axios from 'axios';
 
-Quill.register('modules/imageResize', ImageResize);
+// Quill.register('modules/imageResize', ImageResize);
 
 function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
   const postText = watch('para');
   const quillRef = useRef();
   const [text, setText] = useState('');
   const [img, setImg] = useState('');
-
-  console.log(postText);
 
   const imageHandler = useCallback(() => {
     const input = document.createElement('input');
@@ -27,7 +25,6 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
       try {
         const result = await axios.post('http://localhost:4000/post/img', formData);
         const url = result.data.url;
-        console.log(result.data.key);
         setImg(result.data.key);
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection()?.index;
@@ -56,20 +53,20 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
           image: imageHandler,
         },
       },
-      imageResize: {
-        parchment: Quill.import('parchment'),
-        modules: ['Resize', 'DisplaySize', 'Toolbar'],
-        image: {
-          attribute: ['width'], // ['width', 'height']
-          limit: {
-            minWidth: 200,
-            maxWidth: 800,
-            minHeight: 200,
-            maxHeight: 800,
-            ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
-          },
-        },
-      },
+      // imageResize: {
+      //   parchment: Quill.import('parchment'),
+      //   modules: ['Resize', 'DisplaySize', 'Toolbar'],
+      //   image: {
+      //     attribute: ['width'], // ['width', 'height']
+      //     limit: {
+      //       minWidth: 200,
+      //       maxWidth: 800,
+      //       minHeight: 200,
+      //       maxHeight: 800,
+      //       ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
+      //     },
+      //   },
+      // },
     }),
     [imageHandler]
   );
@@ -93,11 +90,11 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   ];
 
   useEffect(() => {
-    register('para', { required: true });
+    register('para.para', { required: true });
     setText(postText.para);
   }, [register, watch, postText]);
 
-  const { ref: registerRef } = register('para', { required: true });
+  const { ref: registerRef } = register('para.para', { required: true });
 
   const handleEditorStateChange = (editorState) => {
     setText(editorState);
@@ -105,14 +102,14 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
 
   const handleEditorSetValue = () => {
     if (text === '<p><br></p>') {
+      setError('para.para', { required: true });
       setValue('para', { para: '', img: [] });
-      setError('para', { required: true });
     } else {
       clearErrors('para');
-      if (img !== '') {
-        setValue('para', { para: text, img: [...postText.img, img] });
-      } else {
+      if (img === '' || postText.img.includes(img)) {
         setValue('para', { para: text, img: [...postText.img] });
+      } else {
+        setValue('para', { para: text, img: [...postText.img, img] });
       }
     }
   };

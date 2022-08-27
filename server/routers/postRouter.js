@@ -23,14 +23,15 @@ import {
   checkBodyContentUndefined,
   checkBodyPostExist,
   checkParamPostExist,
+  // postImageUpload,
 } from '../middlewares.js';
-import { postImageUpload } from '../multer.js';
+import { postImageUpload, postImageDelete } from '../multer.js';
 
 export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
 postRouter.get('/search', getPostSearch);
-postRouter.post('/create', verifyToken, fieldCheck, postPostCreate);
+postRouter.post('/create', verifyToken, fieldCheck, postImageDelete, postPostCreate);
 postRouter.post(
   '/comment',
   verifyToken,
