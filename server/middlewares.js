@@ -118,22 +118,6 @@ export const fieldCheck = async (req, res, next) => {
   }
 };
 
-// Image Middleware
-export const postImageUpload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, 'uploads/posts');
-    },
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
-    limits: {
-      fileSize: 5 * 1024 * 1024,
-    },
-  }),
-});
-
 // Commment Middleware
 
 export const checkCommentUndefined = async (req, res, next) => {

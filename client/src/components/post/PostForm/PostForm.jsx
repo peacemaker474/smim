@@ -31,13 +31,17 @@ function PostForm({ postData, pathValue, postId }) {
   useEffect(() => {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
+
+      const myRegExp1 = /https:(.*?)(png|jpg|jpeg)/gi;
+      const imgArray = (content.match(myRegExp1) || []).map((el) => decodeURI(el.split('com/')[1]));
+
       setValue('title', title);
-      setValue('para', { para: content, img: [] });
+      setValue('para', { para: content, img: [...imgArray] });
       setValue('age', targetAge);
       setValue('tagArray', hashtag);
     } else {
       setValue('title', '');
-      setValue('para', { para: null, img: [] });
+      setValue('para', { para: '', img: [] });
       setValue('age', '');
       setValue('tagArray', []);
     }
@@ -62,7 +66,7 @@ function PostForm({ postData, pathValue, postId }) {
         }
       )
         .then(() => {
-          navigate('/');
+          navigate(`/generation/${age}`);
         })
         .catch((err) => console.log(err));
     } else if (pathValue === 'edit') {
@@ -107,7 +111,6 @@ function PostForm({ postData, pathValue, postId }) {
   }, [dispatch]);
 
   const openPostFormModal = useCallback(() => {
-    console.log('action');
     dispatch(postUploadToggle());
   }, [dispatch]);
 
