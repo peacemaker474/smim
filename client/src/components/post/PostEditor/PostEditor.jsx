@@ -101,16 +101,19 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
   };
 
   const handleEditorSetValue = () => {
-    if (text === '<p><br></p>') {
-      setError('para.para', { required: true });
+    if (
+      (postText.para === '' || postText.para === '<p><br></p>') &&
+      (text === '' || text === '<p><br></p>')
+    ) {
       setValue('para', { para: '', img: [] });
+      setError('para.para', { required: true });
     } else {
-      clearErrors('para');
       if (img === '' || postText.img.includes(img)) {
         setValue('para', { para: text, img: [...postText.img] });
       } else {
         setValue('para', { para: text, img: [...postText.img, img] });
       }
+      clearErrors('para');
     }
   };
 
