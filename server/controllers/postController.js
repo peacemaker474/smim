@@ -45,15 +45,12 @@ export const postPostCreate = async (req, res) => {
 // 게시물 수정(Post Edit)
 export const putPostEdit = async (req, res) => {
   const { id } = req.params;
-  const { content } = req.body;
-  const myRegExp1 = /http:(.*?)(png|jpg|jpeg)/g;
-  console.log(content.match(myRegExp1));
+  const {
+    content: { para },
+  } = req.body;
 
   try {
-    const { content: preContent } = await Post.findById(id);
-    console.log(preContent.match(myRegExp1));
-
-    await Post.findByIdAndUpdate(id, { ...req.body });
+    await Post.findByIdAndUpdate(id, { ...req.body, content: para });
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',

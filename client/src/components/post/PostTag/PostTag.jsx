@@ -23,7 +23,7 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
       setText(e.target.value.replace(reg, ''));
     }
 
-    if (e.keyCode === 188 || e.keyCode === 32 || (e.keyCode === 13 && e.target.value !== '')) {
+    if (e.keyCode === 188 || (e.keyCode === 32 && e.target.value !== '')) {
       const tagText = e.target.value.replace(reg, '');
       if (tagText.length === 0) {
         setText('');
@@ -41,7 +41,8 @@ function PostTag({ register, setValue, watch, errors, clearErrors, setError }) {
     setText(e.target.value);
   };
 
-  const handleTagDelete = (tag) => {
+  const handleTagDelete = (e) => {
+    const tag = e.target.previousSibling.innerText;
     const newHashTagArray = tagArray.filter((el) => el !== tag);
     setValue('tagArray', [...newHashTagArray]);
     setText('');

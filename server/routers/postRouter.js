@@ -25,7 +25,7 @@ import {
   checkParamPostExist,
   // postImageUpload,
 } from '../middlewares.js';
-import { postImageUpload, postImageDelete } from '../multer.js';
+import { postImageUpload, postImageDelete, postImageDeleteDelete } from '../multer.js';
 
 export const postRouter = express.Router();
 
@@ -45,8 +45,8 @@ postRouter.post('/img', postImageUpload.single('img'), postPostImageUpload);
 postRouter
   .route('/:id')
   .get(existPostCheckAndData, getPostDetail)
-  .put(verifyToken, fieldCheck, existPostAndOwnerCheck, putPostEdit)
-  .delete(verifyToken, existPostAndOwnerCheck, deletePost);
+  .put(verifyToken, fieldCheck, existPostAndOwnerCheck, postImageDelete, putPostEdit)
+  .delete(verifyToken, existPostCheckAndData, postImageDeleteDelete, deletePost);
 
 postRouter.get('/:id/detail', verifyRefreshToken, existPostCheckAndData, getPostDetail);
 postRouter.get('/:id/view', existPostCheckAndData, getPostView);
