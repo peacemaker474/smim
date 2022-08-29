@@ -23,7 +23,10 @@ export const userUpload = multer({
 export const deleteUserImage = async (key) => {
   const params = {
     Bucket: 'smim-image-bucket',
-    Key: `${key}`,
+    Delete: {
+      Objects: [{ Key: `${key}`}],
+      Quiet: false,
+    },
   };
 
   try {
