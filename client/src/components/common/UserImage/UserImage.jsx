@@ -16,7 +16,7 @@ function UserImage ({width, height, encodeImg, imgUrl}) {
   
   return (
     <MyImg 
-      src={encodeImg ? encodeImg : decoded}
+      src={encodeImg ? encodeImg : "https://smim-image-bucket.s3.ap-northeast-2.amazonaws.com/" + decoded}
       alt="user_profileImage"
       width={width}
       height={height}

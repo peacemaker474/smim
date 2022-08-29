@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import Post from '../models/Post.js';
+import { deleteUserImage } from '../multer.js';
 import bcrypt from 'bcrypt';
 
 /*
@@ -60,13 +61,17 @@ export const putChangeUserImage = async (req, res) => {
     file,
   } = req;
   const user = await User.findOne({ email });
+  const pastUserImage = user.imageUrl;
   const updateImage = await User.findByIdAndUpdate(
     user._id,
     {
-      imageUrl: file ? file.location : user.imageUrl,
+      imageUrl: file ? file.key : user.imageUrl,
     },
     { new: true }
   );
+  
+  if (pastUserImage) deleteUserImage(pastUserImage);
+
   if (file)
     return res.status(201).json({
       success: true,
