@@ -14,6 +14,12 @@ export const postLogin = async (req, res) => {
     const accessToken = createAccessToken(user._id);
     const refreshToekn = createRefreshToken(user._id);
 
+    res.cookie('users', refreshToekn, {
+      httpOnly: true,
+      expires: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+      secure: false,
+    })
+
     return res.status(200).json({
       id: user.userId,
       name: user.nickname,
