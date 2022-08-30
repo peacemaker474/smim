@@ -82,7 +82,7 @@ export const verifyAccessToken = (req, res, next) => {
 };
 
 export const reissueAccessToken = (req, res) => {
-  const { refreshToken } = req.body;
+  const refreshToken = req.cookies['users'];
   
   jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
     if (err) console.log(err);

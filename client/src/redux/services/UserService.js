@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getCookie, setRefreshToken } from "../../utils/cookie";
 
 /* 
   추후에 catch 부분 추가해야 할 부분이 있음.
@@ -8,7 +7,6 @@ import { getCookie, setRefreshToken } from "../../utils/cookie";
 */
 
 const http = "http://localhost:4000";
-const cookieName = "users";
 
 const config = {
   headers: {
@@ -16,18 +14,16 @@ const config = {
   }
 };
 
-const verifyToken = {
-  headers: {
-    Authorization: getCookie(),
-  }
-};
-
 export const postUserLogin = createAsyncThunk(
   "POST_LOGIN",
   async (loginData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(`${http}/login`, loginData, verifyToken);
-      setRefreshToken(cookieName, data.refreshToekn);
+      const { data } = await axios.post(`${http}/login`, loginData, {
+        headers: {
+          "Access-Control-Allow-Origin": true,
+        },
+        withCredentials: true,
+      } );
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);

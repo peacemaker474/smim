@@ -3,10 +3,14 @@ import axios from "axios";
 const http = "http://localhost:4000";
 
 export const getMainPostLists = async () => {
-  const { data } = await axios.get(`${http}`);
+  const { data } = await axios.get(`${http}`, {
+    withCredentials: true
+  });
   return data;
 }
 
 export const postCreateAccessToken = (data) => {
-  return axios.post(`${http}/token`, data);
+  return axios.get(`${http}/token`, {
+    withCredentials: true
+  });
 } 
