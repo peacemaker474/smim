@@ -1,11 +1,11 @@
 import React, { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import 'react-quill/dist/quill.snow.css';
-// import { Quill } from 'react-quill';
-// import ImageResize from 'quill-image-resize-module-react';
+import { Quill } from 'react-quill';
+import ImageResize from 'quill-image-resize-module-react';
 import PostEditorPresenter from './PostEditor.style';
 import axios from 'axios';
 
-// Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageResize', ImageResize);
 
 function PostEditor({ register, errors, setValue, watch, clearErrors, setError }) {
   const postText = watch('para');
@@ -53,20 +53,20 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
           image: imageHandler,
         },
       },
-      // imageResize: {
-      //   parchment: Quill.import('parchment'),
-      //   modules: ['Resize', 'DisplaySize', 'Toolbar'],
-      //   image: {
-      //     attribute: ['width'], // ['width', 'height']
-      //     limit: {
-      //       minWidth: 200,
-      //       maxWidth: 800,
-      //       minHeight: 200,
-      //       maxHeight: 800,
-      //       ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
-      //     },
-      //   },
-      // },
+      imageResize: {
+        parchment: Quill.import('parchment'),
+        modules: ['Resize', 'DisplaySize', 'Toolbar'],
+        image: {
+          attribute: ['width'], // ['width', 'height']
+          limit: {
+            minWidth: 200,
+            maxWidth: 800,
+            minHeight: 200,
+            maxHeight: 800,
+            ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
+          },
+        },
+      },
     }),
     [imageHandler]
   );

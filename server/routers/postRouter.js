@@ -23,9 +23,13 @@ import {
   checkBodyContentUndefined,
   checkBodyPostExist,
   checkParamPostExist,
-  // postImageUpload,
 } from '../middlewares.js';
-import { postImageUpload, postImageDelete, postImageDeleteDelete } from '../multer.js';
+import {
+  postImageUpload,
+  postImageDelete,
+  postImageDeleteDelete,
+  onlyPostImageDelete,
+} from '../multer.js';
 
 export const postRouter = express.Router();
 
@@ -41,6 +45,7 @@ postRouter.post(
   postCommentCreate
 );
 postRouter.post('/img', postImageUpload.single('img'), postPostImageUpload);
+postRouter.delete('/img', onlyPostImageDelete);
 
 postRouter
   .route('/:id')

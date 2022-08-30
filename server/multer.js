@@ -24,7 +24,7 @@ export const deleteUserImage = async (key) => {
   const params = {
     Bucket: 'smim-image-bucket',
     Delete: {
-      Objects: [{ Key: `${key}`}],
+      Objects: [{ Key: `${key}` }],
       Quiet: false,
     },
   };
@@ -36,6 +36,8 @@ export const deleteUserImage = async (key) => {
     console.log(err);
   }
 };
+
+// post upload or edit and image delete
 
 export const postImageDelete = (req, res, next) => {
   const {
@@ -74,6 +76,8 @@ export const postImageDelete = (req, res, next) => {
     });
   }
 };
+
+// post delete and image delete
 
 export const postImageDeleteDelete = (req, res, next) => {
   const {
@@ -115,6 +119,7 @@ export const postImageDeleteDelete = (req, res, next) => {
   }
 };
 
+// only image upload
 export const postImageUpload = multer({
   storage: multerS3({
     s3: s3,
@@ -126,3 +131,51 @@ export const postImageUpload = multer({
   }),
   acl: 'public-read-write',
 });
+
+// only image delete
+export const onlyPostImageDelete = (req, res) => {
+  console.log('hey');
+  console.log(req.body);
+  const {
+    body: {
+      content: { img },
+    },
+  } = req; // post id
+
+  let params = {
+    Bucket: 'smim-image-bucket',
+    Delete: {
+      Objects: [],
+    },
+  };
+
+  if (img.length === 0) {
+    return res.status(200).send({
+      success: true,
+      message: '이미지가 성공적으로 삭제되었습니다.',
+    });
+  }
+
+  img.forEach((el) => {
+    const key = decodeURI(el);
+    params.Delete.Objects.push({ Key: key });
+  });
+
+  try {
+    s3.deleteObjects(params, function (err, data) {
+      if (err) console.log(err);
+      // an error occurred
+      else console.log(data); // successful response
+    });
+    return res.status(200).send({
+      success: true,
+      message: '이미지가 성공적으로 삭제되었습니다.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
