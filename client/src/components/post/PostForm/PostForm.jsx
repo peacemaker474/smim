@@ -1,11 +1,13 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { usePrompt } from '../../../utils/blocker.js';
 import PostFormPresenter from './PostForm.style';
 import Modal from '../../../components/common/Modal/Modal';
 import { modalToggle, postUploadToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../network/post/http';
+import axios from 'axios';
 
 function PostForm({ postData, pathValue, postId }) {
   const {
@@ -15,6 +17,7 @@ function PostForm({ postData, pathValue, postId }) {
     handleSubmit,
     clearErrors,
     setError,
+    getValues,
     formState: { errors },
   } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
   const { postUploadToggled, modalToggled } = useSelector(
@@ -27,6 +30,25 @@ function PostForm({ postData, pathValue, postId }) {
   const { accessToken } = useSelector((state) => state.authToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [view, setView] = useState(true);
+
+  usePrompt('현재 페이지를 벗어나시겠습니까?', view, async () => {
+    const delData = getValues('para');
+    await axios.delete(
+      'http://localhost:4000/post/img',
+      {
+        data: {
+          content: delData,
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  });
 
   useEffect(() => {
     if (postData) {
@@ -93,6 +115,7 @@ function PostForm({ postData, pathValue, postId }) {
   };
 
   const uploadActionFunc = () => {
+    setView(false);
     uploadPost(accessToken);
     dispatch(postUploadToggle());
   };
@@ -101,10 +124,26 @@ function PostForm({ postData, pathValue, postId }) {
     dispatch(postUploadToggle());
   }, [dispatch]);
 
-  const postActionFunc = useCallback(() => {
+  const postActionFunc = useCallback(async () => {
+    setView(false);
+    const delData = getValues('para');
+    await axios.delete(
+      'http://localhost:4000/post/img',
+      {
+        data: {
+          content: delData,
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     dispatch(modalToggle());
     navigate(-1);
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, getValues, accessToken]);
 
   const postCancelFunc = useCallback(() => {
     dispatch(modalToggle());
