@@ -36,7 +36,7 @@ const PostListMain = styled.main``;
 
 const PostListContainer = styled.div`
   margin: 100px auto 0;
-  padding: 70px 0;
+  padding: 70px 0 200px;
   width: 730px;
   @media screen and (max-width: 588px) {
     width: 252px;
