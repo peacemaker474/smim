@@ -5,19 +5,13 @@ const http = 'http://localhost:4000';
 
 export const getPinnedCommentData = createAsyncThunk(
   'PIN_COMMENT',
-  async ({ pinnedId, tkn }, { rejectWithValue }) => {
+  async ({ pinnedId }, { rejectWithValue }) => {
     let commentData;
     try {
-      if (tkn) {
-        const { data } = await axios.get(`${http}/comment/${pinnedId}/detail`, {
-          withCredentials: true,
-        });
-        commentData = data.data;
-      } else {
-        const { data } = await axios.get(`${http}/comment/${pinnedId}`);
-        commentData = data.data;
-      }
-
+      const { data } = await axios.get(`${http}/comment/${pinnedId}`, {
+        withCredentials: true,
+      });
+      commentData = data.data;
       return commentData;
     } catch (err) {
       return rejectWithValue(err.response.data);

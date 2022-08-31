@@ -42,22 +42,29 @@ export const verifyToken = async (req, res, next) => {
 
 export const verifyRefreshToken = (req, res, next) => {
   const refreshToken = req.cookies['users'];
+  // console.log(refreshToken);
 
-  jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
-    if (err) console.log(err);
-    if (!decoded)
-      return res.status(403).json({ success: false, message: '유효하지 않은 토큰입니다. ' });
+  if (refreshToken) {
+    jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!decoded) {
+        return res.status(403).json({ success: false, message: '유효하지 않은 토큰입니다. ' });
+      }
 
-    const userData = await User.findOne({ _id: decoded.user_id, being: true });
-    if (!userData) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
-    req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
-    next();
-  });
+      const userData = await User.findOne({ _id: decoded.user_id, being: true });
+      if (!userData) {
+        return res.status(400).send({
+          success: false,
+          message: '존재하지 않거나 탈퇴한 사용자입니다.',
+        });
+      }
+      req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
+    });
+  }
+
+  next();
 };
 
 export const verifyAccessToken = (req, res, next) => {

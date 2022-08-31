@@ -7,13 +7,11 @@ import PostComment from './Comment/PostComment/PostComment';
 import { getPinnedCommentData } from '../../redux/services/comment';
 import { pinnedInitCommentId } from '../../redux/slice/commentSlice';
 import { getPostData } from '../../redux/slice/postSlice';
-import { getCookie } from '../../utils/cookie';
 import { getReadPostDetail } from '../../network/post/http';
 import LoadingPage from '../../pages/LoadingPage';
 import NotFoundPage from '../../pages/NotFound';
 
 function PostViewContent() {
-  const tkn = getCookie();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { accessToken } = useSelector((state) => state.authToken);
@@ -27,7 +25,7 @@ function PostViewContent() {
       post = response.data;
 
       if (post.meta.pinnedCmnt) {
-        dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt, tkn }));
+        dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt }));
       } else {
         dispatch(pinnedInitCommentId());
       }

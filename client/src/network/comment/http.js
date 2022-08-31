@@ -1,17 +1,11 @@
 import axios from 'axios';
-import { getCookie } from '../../utils/cookie';
 
 const http = 'http://localhost:4000';
-const tkn = getCookie();
 
 export const getCommentListRead = (id) => {
-  if (tkn) {
-    return axios.get(`${http}/post/${id}/comment/detail`, {
-      withCredentials: true,
-    });
-  } else {
-    return axios.get(`${http}/post/${id}/comment`);
-  }
+  return axios.get(`${http}/post/${id}/comment`, {
+    withCredentials: true,
+  });
 };
 
 export const postCommentCreate = (data, header) => {

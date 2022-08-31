@@ -22,7 +22,7 @@ export const commentRouter = express.Router();
 
 commentRouter
   .route('/:id')
-  .get(checkParamCommentExistAndData, getComment)
+  .get(verifyRefreshToken, checkParamCommentExistAndData, getComment)
   .put(
     verifyToken,
     checkCommentUndefined,
@@ -33,7 +33,6 @@ commentRouter
     putCommentEdit
   )
   .delete(verifyToken, checkCommentUndefined, checkParamCommentExistAndData, deleteComment);
-commentRouter.get('/:id/detail', verifyRefreshToken, checkParamCommentExistAndData, getComment);
 commentRouter.get(
   '/:id/pinned',
   verifyToken,

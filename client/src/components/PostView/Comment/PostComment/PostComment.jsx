@@ -10,7 +10,6 @@ import {
 import { commentModalToggle } from '../../../../redux/slice/toggleSlice';
 import { deleteCommentId, unpinnedCommentId } from '../../../../redux/slice/commentSlice';
 import { getPinnedCommentData } from '../../../../redux/services/comment';
-import { getCookie } from '../../../../utils/cookie';
 
 function PostComment() {
   const { commentToggled } = useSelector((state) => state.toggle);
@@ -24,7 +23,6 @@ function PostComment() {
     }),
     shallowEqual
   );
-  const tkn = getCookie();
   const dispatch = useDispatch();
   const { id: postId } = useParams();
 
@@ -56,7 +54,7 @@ function PostComment() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    dispatch(getPinnedCommentData({ pinnedId: commentId, tkn }));
+    dispatch(getPinnedCommentData({ pinnedId: commentId }));
     dispatch(commentModalToggle());
   };
 

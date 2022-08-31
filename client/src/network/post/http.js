@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { getCookie } from '../../utils/cookie';
 
 const http = 'http://localhost:4000';
-const tkn = getCookie();
 
 export const postCreatePost = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);
@@ -16,18 +14,14 @@ export const putPostEdit = (id, data, header) => {
   return axios.put(`${http}/post/${id}`, data, header);
 };
 
-export const getPostListRead = (targetAge, header) => {
-  return axios.get(`${http}/post/target?age=${targetAge}`, header);
+export const getPostListRead = (targetAge, page = 1, header) => {
+  return axios.get(`${http}/post/target?age=${targetAge}&page=${page}`, header);
 };
 
 export const getReadPostDetail = (id) => {
-  if (tkn) {
-    return axios.get(`${http}/post/${id}/detail`, {
-      withCredentials: true,
-    });
-  } else {
-    return axios.get(`${http}/post/${id}`);
-  }
+  return axios.get(`${http}/post/${id}`, {
+    withCredentials: true,
+  });
 };
 
 export const getPostLike = (id, header) => {
