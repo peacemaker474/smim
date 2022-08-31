@@ -41,11 +41,7 @@ export const verifyToken = async (req, res, next) => {
 }; // jwt token decoding
 
 export const verifyRefreshToken = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.json({ result: 'access token이 없습니다.' });
-  }
-
-  const refreshToken = req.headers.authorization.split('Bearer ')[1];
+  const refreshToken = req.cookies['users'];
 
   jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
     if (err) console.log(err);
@@ -83,7 +79,7 @@ export const verifyAccessToken = (req, res, next) => {
 
 export const reissueAccessToken = (req, res) => {
   const refreshToken = req.cookies['users'];
-  
+
   jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
     if (err) console.log(err);
     if (!decoded)

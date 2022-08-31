@@ -10,10 +10,7 @@ export const getPinnedCommentData = createAsyncThunk(
     try {
       if (tkn) {
         const { data } = await axios.get(`${http}/comment/${pinnedId}/detail`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
-          },
+          withCredentials: true,
         });
         commentData = data.data;
       } else {

@@ -23,18 +23,8 @@ function PostViewContent() {
     const [{ postId }] = queryKey;
     let post;
     try {
-      if (tkn) {
-        const response = await getReadPostDetail(postId, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
-          },
-        });
-        post = response.data;
-      } else {
-        const response = await getReadPostDetail(postId);
-        post = response.data;
-      }
+      const response = await getReadPostDetail(postId);
+      post = response.data;
 
       if (post.meta.pinnedCmnt) {
         dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt, tkn }));
