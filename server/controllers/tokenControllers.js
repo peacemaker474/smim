@@ -41,27 +41,30 @@ export const verifyToken = async (req, res, next) => {
 }; // jwt token decoding
 
 export const verifyRefreshToken = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.json({ result: 'access token이 없습니다.' });
+  const refreshToken = req.cookies['users'];
+  // console.log(refreshToken);
+
+  if (refreshToken) {
+    jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!decoded) {
+        return res.status(403).json({ success: false, message: '유효하지 않은 토큰입니다. ' });
+      }
+
+      const userData = await User.findOne({ _id: decoded.user_id, being: true });
+      if (!userData) {
+        return res.status(400).send({
+          success: false,
+          message: '존재하지 않거나 탈퇴한 사용자입니다.',
+        });
+      }
+      req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
+    });
   }
 
-  const refreshToken = req.headers.authorization.split('Bearer ')[1];
-
-  jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
-    if (err) console.log(err);
-    if (!decoded)
-      return res.status(403).json({ success: false, message: '유효하지 않은 토큰입니다. ' });
-
-    const userData = await User.findOne({ _id: decoded.user_id, being: true });
-    if (!userData) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 탈퇴한 사용자입니다.',
-      });
-    }
-    req.body.user = { nickname: userData.nickname, _id: userData._id, userId: userData.userId };
-    next();
-  });
+  next();
 };
 
 export const verifyAccessToken = (req, res, next) => {
@@ -83,7 +86,7 @@ export const verifyAccessToken = (req, res, next) => {
 
 export const reissueAccessToken = (req, res) => {
   const refreshToken = req.cookies['users'];
-  
+
   jwt.verify(refreshToken, REFRESH_KEY, async (err, decoded) => {
     if (err) console.log(err);
     if (!decoded)

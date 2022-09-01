@@ -14,16 +14,14 @@ export const putPostEdit = (id, data, header) => {
   return axios.put(`${http}/post/${id}`, data, header);
 };
 
-export const getPostListRead = (targetAge, header) => {
-  return axios.get(`${http}/post/target?age=${targetAge}`, header);
+export const getPostListRead = (targetAge, page = 1, header) => {
+  return axios.get(`${http}/post/target?age=${targetAge}&page=${page}`, header);
 };
 
-export const getReadPostDetail = (id, header = undefined) => {
-  if (header) {
-    return axios.get(`${http}/post/${id}/detail`, header);
-  } else {
-    return axios.get(`${http}/post/${id}`);
-  }
+export const getReadPostDetail = (id) => {
+  return axios.get(`${http}/post/${id}`, {
+    withCredentials: true,
+  });
 };
 
 export const getPostLike = (id, header) => {

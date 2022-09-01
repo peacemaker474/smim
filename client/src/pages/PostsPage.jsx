@@ -21,9 +21,7 @@ function PostsPage() {
         <PostListContainer>
           <PostListHeading>{postAge}대 질문리스트</PostListHeading>
           <PostListHead setPostArray={setPostArray} postArray={postArray} age={postAge} />
-          <PostBodyContainer>
-            <PostListBody postArray={postArray} setPostArray={setPostArray} age={postAge} />
-          </PostBodyContainer>
+          <PostListBody postArray={postArray} setPostArray={setPostArray} age={postAge} />
         </PostListContainer>
       </PostListMain>
     );
@@ -38,7 +36,7 @@ const PostListMain = styled.main``;
 
 const PostListContainer = styled.div`
   margin: 100px auto 0;
-  padding: 70px 0;
+  padding: 70px 0 200px;
   width: 730px;
   @media screen and (max-width: 588px) {
     width: 252px;
@@ -56,21 +54,5 @@ const PostListHeading = styled.h2`
   @media screen and (max-width: 588px) {
     font-size: 27px;
     margin-bottom: 54px;
-  }
-`;
-
-const PostBodyContainer = styled.div`
-  display: grid;
-  grid-template-columns: 234px 234px 234px;
-  gap: 20px 14px;
-  margin-top: 67px;
-  position: relative;
-  height: 250px;
-  @media screen and (max-width: 588px) {
-    grid-template-columns: 252px;
-    margin-top: 35px;
-  }
-  @media (min-width: 588px) and (max-width: 850px) {
-    grid-template-columns: 234px 234px;
   }
 `;

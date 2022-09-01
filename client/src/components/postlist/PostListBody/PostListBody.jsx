@@ -1,39 +1,64 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom';
+import { useInfiniteQuery } from 'react-query';
 import { getPostListRead } from '../../../network/post/http';
 import LoadingPage from '../../../pages/LoadingPage';
 import PostListBodyPresenter from './PostListBody.style';
 
-export default function PostListBody({ setPostArray, postArray, age }) {
+export default function PostListBody({ age }) {
   const { accessToken } = useSelector((state) => state.authToken);
-  const { key } = useLocation();
+  const obsRef = useRef(null);
 
-  const loadedPostListData = async ({ queryKey }) => {
+  const loadedPostListData = async ({ queryKey, pageParam = 1 }) => {
     const [{ age }] = queryKey;
     try {
-      const response = await getPostListRead(age, {
+      const response = await getPostListRead(age, pageParam, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      setPostArray(response.data);
+      return response.data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { isLoading, isFetching, refetch } = useQuery([('postArray', { age })], loadedPostListData);
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    [('postArray', { age })],
+    loadedPostListData,
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return currentPage.lastPage ? null : nextPage;
+      },
+    }
+  );
 
   useEffect(() => {
-    refetch();
-  }, [key, refetch]);
+    if (!hasNextPage) {
+      return;
+    }
+    const observer = new IntersectionObserver((entries) =>
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          fetchNextPage();
+        }
+      })
+    );
+    const el = obsRef && obsRef.current;
+    if (!el) {
+      return;
+    }
+    observer.observe(el);
+    return () => {
+      observer.unobserve(el);
+    };
+  }, [hasNextPage, fetchNextPage]);
 
-  if (isLoading || isFetching) {
-    return <LoadingPage position='absolute' />;
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
-  return <PostListBodyPresenter postData={postArray} />;
+  return <PostListBodyPresenter postData={data} obsRef={obsRef} />;
 }

@@ -5,10 +5,8 @@ import { useQuery } from 'react-query';
 import { getCommentListRead } from '../../../../network/comment/http';
 import CommentUploadedPresenter from './CommentUploaded.style';
 import LoadingPage from '../../../../pages/LoadingPage';
-import { getCookie } from '../../../../utils/cookie';
 
 export default function CommentUploaded() {
-  const tkn = getCookie();
   const { pinnedId } = useSelector((state) => state.comment);
   const { id: postid } = useParams();
 
@@ -16,16 +14,7 @@ export default function CommentUploaded() {
     const [{ postid }] = queryKey;
     try {
       let response;
-      if (tkn) {
-        response = await getCommentListRead(postid, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${tkn}`,
-          },
-        });
-      } else {
-        response = await getCommentListRead(postid);
-      }
+      response = await getCommentListRead(postid);
       return response.data.data;
     } catch (error) {
       console.log(error.message);

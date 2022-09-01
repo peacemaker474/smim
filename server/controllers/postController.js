@@ -116,7 +116,7 @@ export const getPostDetail = async (req, res) => {
 
 // 나이별 게시물 보기(Post List Read)
 export const getPostList = async (req, res) => {
-  const { age } = req.query;
+  const { age, page } = req.query;
 
   if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
     return res.status(404).send({
@@ -124,7 +124,20 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  const postList = await Post.find({ targetAge: age }).sort({ createAt: -1 });
+  let pageNum = parseInt(page);
+
+  let skipNum = pageNum === 1 ? 0 : (pageNum - 1) * 10;
+  let nextNum = pageNum * 10;
+
+  const postList = await Post.find({ targetAge: age })
+    .sort({ createAt: -1 })
+    .skip(skipNum)
+    .limit(10);
+
+  const nextPostList = await Post.find({ targetAge: age })
+    .sort({ createAt: -1 })
+    .skip(nextNum)
+    .limit(10);
 
   const postDataList = await Promise.all(
     postList.map(async (el) => {
@@ -141,7 +154,11 @@ export const getPostList = async (req, res) => {
     })
   );
 
-  return res.status(200).send(postDataList);
+  return res.status(200).send({
+    data: postDataList,
+    page: pageNum,
+    lastPage: !Boolean(nextPostList.length),
+  });
 };
 
 // 게시물 삭제(Post List Delete)

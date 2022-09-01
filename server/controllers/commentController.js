@@ -90,6 +90,7 @@ export const getCommentList = async (req, res) => {
           const writer = await User.findOne({ _id: el.writer });
 
           if (userData._id) {
+            // 로그인 했을 때
             return {
               ...el._doc,
               children,
@@ -102,6 +103,7 @@ export const getCommentList = async (req, res) => {
               like: el._doc.like_users.includes(userData._id),
             };
           } else {
+            // 로그인 안했을 때
             return {
               ...el._doc,
               children,
@@ -163,6 +165,7 @@ export const getComment = async (req, res) => {
     const DATA = [];
     const parentWriter = await User.findOne({ _id: comment.writer });
     if (userData._id) {
+      // 로그인 했을 때
       DATA.push({
         ...comment._doc,
         writer: {
@@ -174,6 +177,7 @@ export const getComment = async (req, res) => {
         like: comment.like_users.includes(userData._id),
       });
     } else {
+      // 로그인 안했을 때
       DATA.push({
         ...comment._doc,
         writer: {
@@ -196,6 +200,7 @@ export const getComment = async (req, res) => {
 
           const writer = await User.findOne({ _id: child.writer });
           if (userData._id) {
+            // 로그인 했을 때
             DATA.push({
               ...child._doc,
               writer: {
@@ -207,6 +212,7 @@ export const getComment = async (req, res) => {
               like: child.like_users.includes(userData._id),
             });
           } else {
+            // 로그인 안했을 때
             DATA.push({
               ...el._doc,
               writer: {
