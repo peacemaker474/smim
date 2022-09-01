@@ -73,7 +73,7 @@ function MainPage() {
 
   const handlePostListsMove = (evt) => {
     const id = evt.target.previousSibling.id;
-    navigate(`generation?age=${id}`);
+    navigate(`generation/${id}`);
   };
 
   const handlePostDetailMove = (evt) => {

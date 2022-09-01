@@ -59,7 +59,10 @@ export const getUserLogOut = createAsyncThunk(
   "GET_LOGOUT",
   async () => {
     try {
-      const { data } = await axios.get(`${http}/logout`, {crossDomain: true});
+      const { data } = await axios.get(`${http}/logout`, {
+        crossDomain: true,
+        withCredentials: true,
+      });
       return data;
     } catch (err) {
       console.log(err);

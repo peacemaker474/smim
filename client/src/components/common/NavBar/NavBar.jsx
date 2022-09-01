@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN } from '../../../redux/auth';
-import { deleteCookie } from '../../../utils/cookie';
 import NavBarStyle from './NavBar.style';
 import useDropdown from '../../../hooks/useDropdown';
 
@@ -22,7 +21,6 @@ function NavBar() {
   }, [dispatch]);
 
   const handleLogoutClick = useCallback(() => {
-    deleteCookie("users");
     dispatch(getUserLogOut());
     dispatch(DELETE_TOKEN());
     handleDropdownShow();

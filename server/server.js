@@ -17,7 +17,6 @@ let corsOption = {
   credentials: true,
 }
 
-
 app.use(cookieParser());
 app.use(cors(corsOption));
 app.use(express.json());
