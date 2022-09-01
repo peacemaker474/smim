@@ -38,5 +38,6 @@ export const postLogin = async (req, res) => {
 }
 
 export const getLogout = (req, res) => {
+  res.clearCookie('users');
   return res.status(200).json({ success: true });
 }
