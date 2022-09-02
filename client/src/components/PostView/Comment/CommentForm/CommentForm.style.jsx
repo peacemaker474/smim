@@ -19,7 +19,7 @@ export default function CommentFormPresenter({
   state,
 }) {
   return (
-    <CmntForm groupId={groupId}>
+    <CmntForm groupId={groupId} method='POST' onSubmit={onSubmit(onCommentTextareaSubmit)}>
       <UserImage width={'42px'} height={'42px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={state}>
         <CommentTextArea
@@ -37,12 +37,7 @@ export default function CommentFormPresenter({
             <CmntBtn type='button' onClick={onFormInputCancel}>
               취소
             </CmntBtn>
-            <CmntBtn
-              type='submit'
-              onSubmit={onSubmit(onCommentTextareaSubmit)}
-              groupId={groupId}
-              parentId={parentId}
-            >
+            <CmntBtn type='submit' groupId={groupId} parentId={parentId}>
               수정
             </CmntBtn>
           </CmntBtnBox>
@@ -51,12 +46,7 @@ export default function CommentFormPresenter({
             <CmntBtn type='button' onClick={onFormInputCancel}>
               취소
             </CmntBtn>
-            <CmntBtn
-              type='submit'
-              onSubmit={onSubmit(onCommentTextareaSubmit)}
-              groupId={groupId}
-              parentId={parentId}
-            >
+            <CmntBtn type='submit' groupId={groupId} parentId={parentId}>
               게시
             </CmntBtn>
           </CmntBtnBox>
