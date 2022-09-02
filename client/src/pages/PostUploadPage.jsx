@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import PostForm from '../components/post/PostForm/PostForm';
-import { getReadPostDetail } from '../network/post/http';
+import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
+import { getReadPostDetail } from '../network/post/http';
+import { postCreateAccessToken } from '../network/main/http';
+import { getCookie } from '../utils/cookie';
+import { SET_TOKEN } from '../redux/auth';
 import LoadingPage from './LoadingPage';
+import PostForm from '../components/post/PostForm/PostForm';
 
 function PostUploadPage() {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
+
+  useEffect(() => {
+    let data = {
+      refreshToken: getCookie(),
+    };
+    postCreateAccessToken(data).then((res) => {
+      if (res.data.success) {
+        dispatch(SET_TOKEN(res.data.accessToken));
+      }
+    });
+  }, [dispatch]);
 
   const loadPost = async () => {
     try {
