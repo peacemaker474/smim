@@ -3,30 +3,30 @@ import styled from 'styled-components';
 import Search from '../../../asset/icon/icon-search-line.svg';
 
 export default function PostListHeadPresenter({
+  onSearchSubmit,
+  onPostFilter,
   onSearchOption,
-  onPostOption,
-  onSearchPost,
-  onSearchInputs,
+  onSearchText,
   inputRef,
-  searchList,
-  postOption,
+  postFilter,
+  searchOption,
 }) {
   return (
     <PostListHeadDiv>
       <SearchDiv>
-        <SearchSelect value={searchList.option} name='sort' onChange={onSearchOption}>
+        <SearchSelect value={searchOption} name='sort' onChange={onSearchOption}>
           <option value=''>선택</option>
           <option value='title'>제목</option>
           <option value='hashtag'>태그</option>
           <option value='content'>내용</option>
         </SearchSelect>
-        <SearchBox onSubmit={onSearchPost}>
-          <SearchInput onChange={onSearchInputs} ref={inputRef} />
+        <SearchBox onSubmit={onSearchSubmit}>
+          <SearchInput onChange={onSearchText} ref={inputRef} />
           <SearchBtn />
         </SearchBox>
       </SearchDiv>
       <SortDiv>
-        <SortSelect name='postSort' onChange={onPostOption} value={postOption}>
+        <SortSelect name='postSort' onChange={onPostFilter} value={postFilter}>
           <option value='newer'>최근 게시물</option>
           <option value='popular'>인기 게시물</option>
           <option value='older'>오래된 게시물</option>

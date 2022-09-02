@@ -20,7 +20,7 @@ export default function CommentFormPresenter({
 }) {
   return (
     <CmntForm groupId={groupId}>
-      <UserImage width={'45px'} height={'45px'} imgUrl={loginState.imgUrl} />
+      <UserImage width={'42px'} height={'42px'} imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={state}>
         <CommentTextArea
           onKeyDownCheck={onKeyDownCheck}
@@ -66,7 +66,7 @@ export default function CommentFormPresenter({
   );
 }
 
-const CmntForm = styled.div`
+const CmntForm = styled.form`
   width: auto;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};

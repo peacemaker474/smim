@@ -1,23 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from 'react-query';
 import { getPostListRead } from '../../../network/post/http';
-import LoadingPage from '../../../pages/LoadingPage';
 import PostListBodyPresenter from './PostListBody.style';
 
-export default function PostListBody({ age }) {
-  const { accessToken } = useSelector((state) => state.authToken);
+export default function PostListBody({ age, postFilter, searchList }) {
   const obsRef = useRef(null);
 
   const loadedPostListData = async ({ queryKey, pageParam = 1 }) => {
-    const [{ age }] = queryKey;
+    const [{ age, postFilter, searchList }] = queryKey;
+
     try {
-      const response = await getPostListRead(age, pageParam, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await getPostListRead(age, pageParam, postFilter, searchList);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -25,7 +18,7 @@ export default function PostListBody({ age }) {
   };
 
   const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    [('postArray', { age })],
+    [('postArray', { age, postFilter, searchList })],
     loadedPostListData,
     {
       getNextPageParam: (currentPage) => {
@@ -56,9 +49,5 @@ export default function PostListBody({ age }) {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  return <PostListBodyPresenter postData={data} obsRef={obsRef} />;
+  return <PostListBodyPresenter postData={data} obsRef={obsRef} isLoading={isLoading} />;
 }

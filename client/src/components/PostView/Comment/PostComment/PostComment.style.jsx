@@ -12,6 +12,7 @@ export default function PostCommentPresenter({
   cancelFunc,
   modalText,
   postId,
+  accessToken,
 }) {
   return (
     <>
@@ -22,7 +23,7 @@ export default function PostCommentPresenter({
       )}
       <CommentSection>
         <CommentH2>답변하기</CommentH2>
-        <CommentForm postId={postId} parentId={null} />
+        {accessToken && <CommentForm postId={postId} parentId={null} />}
         <CommentContainer>
           <CommentPinned />
           <CommentCreated />

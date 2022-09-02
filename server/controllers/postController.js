@@ -116,7 +116,7 @@ export const getPostDetail = async (req, res) => {
 
 // 나이별 게시물 보기(Post List Read)
 export const getPostList = async (req, res) => {
-  const { age, page } = req.query;
+  const { age, page, filter, tag, keyword } = req.query;
 
   if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
     return res.status(404).send({
@@ -124,41 +124,56 @@ export const getPostList = async (req, res) => {
       message: '해당 연령대는 존재하지 않습니다',
     });
   }
-  let pageNum = parseInt(page);
 
+  let pageNum = parseInt(page);
   let skipNum = pageNum === 1 ? 0 : (pageNum - 1) * 10;
   let nextNum = pageNum * 10;
+  let filterOption = {};
 
-  const postList = await Post.find({ targetAge: age })
-    .sort({ createAt: -1 })
-    .skip(skipNum)
-    .limit(10);
+  if (filter === 'newer') {
+    filterOption = { createAt: -1 };
+  } else if (filter === 'popular') {
+    filterOption = { 'meta.likes': -1, createAt: -1 };
+  } else if (filter === 'older') {
+    filterOption = { createAt: 1 };
+  }
 
-  const nextPostList = await Post.find({ targetAge: age })
-    .sort({ createAt: -1 })
-    .skip(nextNum)
-    .limit(10);
+  try {
+    let postDataList = await Post.find({ targetAge: age, [tag]: new RegExp(keyword) })
+      .sort(filterOption)
+      .skip(skipNum)
+      .limit(10);
+    let nextPostList = await Post.find({ targetAge: age, [tag]: new RegExp(keyword) })
+      .sort(filterOption)
+      .skip(nextNum);
 
-  const postDataList = await Promise.all(
-    postList.map(async (el) => {
-      const user = await User.findById(String(el.owner));
-      return {
-        ...el._doc,
-        owner: {
-          _id: user._id,
-          nickname: user.nickname,
-          userId: user.userId,
-          imageUrl: user.imageUrl,
-        },
-      };
-    })
-  );
+    let postDataUserList = await Promise.all(
+      postDataList.map(async (el) => {
+        const user = await User.findById(String(el.owner));
+        return {
+          ...el._doc,
+          owner: {
+            _id: user._id,
+            nickname: user.nickname,
+            userId: user.userId,
+            imageUrl: user.imageUrl,
+          },
+        };
+      })
+    );
 
-  return res.status(200).send({
-    data: postDataList,
-    page: pageNum,
-    lastPage: !Boolean(nextPostList.length),
-  });
+    return res.status(200).send({
+      data: postDataUserList,
+      page: pageNum,
+      lastPage: !Boolean(nextPostList.length),
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
 };
 
 // 게시물 삭제(Post List Delete)

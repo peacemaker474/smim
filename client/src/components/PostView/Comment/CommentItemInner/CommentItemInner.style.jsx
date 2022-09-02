@@ -19,7 +19,7 @@ export default function CommentItemInnerPresenter({
   return (
     <>
       <CommentItemInner>
-        <UserImage width={'45px'} height={'45px'} imgUrl={cmntData.writer.imageUrl} />
+        <UserImage width={'42px'} height={'42px'} imgUrl={cmntData.writer.imageUrl} />
         <CommentItemContent>
           <CommentContentBox groupId={groupId} cmntId={cmntData._id}>
             <CommentText groupId={groupId} cmntId={cmntData._id}>
