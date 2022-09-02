@@ -93,6 +93,7 @@ function PostComment() {
             : '고정 댓글을 해제하시겠습니까? '
         }
         postId={postId}
+        accessToken={accessToken}
       />
     </>
   );
