@@ -1,85 +1,63 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
-import { getSearchPost } from '../../../network/post/http';
 import PostListHeadPresenter from './PostListHead.style';
 
-export default function PostListHead({ postArray, setPostArray, age }) {
-  const [searchList, setSearchList] = useState({
-    option: '',
-    inputs: '',
-  });
-
+export default function PostListHead({ setSearchList, postFilter, setPostFilter, age }) {
   const inputRef = useRef();
-  const [postOption, setPostOption] = useState('newer');
+  const [searchText, setSearchText] = useState('');
+  const [searchOption, setSearchOption] = useState('');
 
   useEffect(() => {
-    setPostOption('newer');
-    return () => setPostOption('newer');
-  }, [age]);
+    setSearchList({ option: '', inputs: '' });
+    setPostFilter('newer');
+    inputRef.current.value = '';
+    return () => {
+      setSearchList({ option: '', inputs: '' });
+      setPostFilter('newer');
+    };
+  }, [age, setPostFilter, setSearchList]);
 
-  const handlePostOption = useCallback(
+  const handlePostFilter = useCallback(
     (evt) => {
-      setPostOption(evt.target.value);
-      const option = evt.target.value;
-      if (option === 'newer') {
-        const newerArray = postArray.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
-        setPostArray([...newerArray]);
-      } else if (option === 'popular') {
-        const popularArray = postArray
-          .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
-          .sort((a, b) => (a.meta.likes = b.meta.likes));
-        setPostArray([...popularArray]);
-      } else if (option === 'older') {
-        const olderArray = postArray.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
-        setPostArray([...olderArray]);
-      }
+      setPostFilter(evt.target.value);
     },
-    [postArray, setPostArray]
+    [setPostFilter]
   );
 
   const handleSearchOption = useCallback(
     (evt) => {
-      setSearchList({ ...searchList, option: evt.target.value });
+      setSearchOption(evt.target.value);
     },
-    [searchList]
+    [setSearchOption]
   );
 
-  const handleSearchInputs = useCallback(
+  const handleSearchText = useCallback(
     (evt) => {
-      setSearchList({ ...searchList, inputs: evt.target.value });
+      setSearchText(evt.target.value);
     },
-    [searchList]
+    [setSearchText]
   );
 
-  const handleSearchPost = useCallback(
+  const handleSearchSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
-      if (searchList.option !== '' && searchList.inputs !== '') {
-        let body = {
-          option: searchList.option,
-          search: searchList.inputs,
-          target: age,
-        };
-        getSearchPost(body).then((res) => {
-          setPostArray(res.data);
-        });
-        setSearchList({ option: '', inputs: '' });
-        setPostOption('newer');
-        inputRef.current.value = '';
-      }
+      setSearchList({ option: searchOption, inputs: searchText });
+      setPostFilter('newer');
     },
-    [searchList, age, setPostArray]
+    [setSearchList, setPostFilter, searchOption, searchText]
   );
 
   return (
     <PostListHeadPresenter
+      onSearchSubmit={handleSearchSubmit}
+      onPostFilter={handlePostFilter}
       onSearchOption={handleSearchOption}
-      onPostOption={handlePostOption}
-      onSearchPost={handleSearchPost}
-      onSearchInputs={handleSearchInputs}
+      onSearchText={handleSearchText}
       inputRef={inputRef}
-      searchList={searchList}
-      postOption={postOption}
+      postFilter={postFilter}
+      searchText={searchText}
+      searchOption={searchOption}
     />
   );
 }

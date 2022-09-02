@@ -14,8 +14,10 @@ export const putPostEdit = (id, data, header) => {
   return axios.put(`${http}/post/${id}`, data, header);
 };
 
-export const getPostListRead = (targetAge, page = 1, header) => {
-  return axios.get(`${http}/post/target?age=${targetAge}&page=${page}`, header);
+export const getPostListRead = (targetAge, page = 1, filter, data) => {
+  return axios.get(
+    `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.inputs}`
+  );
 };
 
 export const getReadPostDetail = (id) => {
@@ -40,9 +42,9 @@ export const getUnbookmark = (id, header) => {
   return axios.get(`${http}/post/${id}/unbookmark`, header);
 };
 
-export const getSearchPost = (data) => {
+export const getSearchPost = (age, page = 1, data) => {
   return axios.get(
-    `${http}/post/search?age=${data.target}&tag=${data.option}&keyword=${data.search}`
+    `${http}/post/search?age=${age}}&page=${page}&tag=${data.option}&keyword=${data.search}`
   );
 };
 

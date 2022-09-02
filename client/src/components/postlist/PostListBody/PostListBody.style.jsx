@@ -1,27 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import PostListItem from '../PostListItem/PostListItem';
+import LoadingPage from '../../../pages/LoadingPage';
 
-export default function PostListBodyPresenter({ postData, obsRef }) {
+export default function PostListBodyPresenter({ postData, obsRef, isLoading }) {
   return (
-    <PostBodyContainer id='scrollArea'>
-      {postData ? (
-        <>
-          {postData.pages.map((item) => {
-            return item.data.map((v) => <PostListItem key={v.id} postData={v} />);
-          })}
-        </>
-      ) : null}
-      <div ref={obsRef}></div>
-    </PostBodyContainer>
+    <PostListBodyContainer>
+      {isLoading && <LoadingPage position='relative' />}
+      <PostListBodyLayout>
+        {postData ? (
+          <>
+            {postData.pages.map((item) => {
+              return item.data.map((v) => <PostListItem key={v.id} postData={v} />);
+            })}
+          </>
+        ) : null}
+        <div ref={obsRef}></div>
+      </PostListBodyLayout>
+    </PostListBodyContainer>
   );
 }
 
-const PostBodyContainer = styled.div`
+const PostListBodyContainer = styled.div`
+  margin-top: 67px;
+`;
+
+const PostListBodyLayout = styled.div`
   display: grid;
   grid-template-columns: 234px 234px 234px;
   gap: 20px 14px;
-  margin-top: 67px;
+
   position: relative;
   // height: 250px;
   @media screen and (max-width: 588px) {

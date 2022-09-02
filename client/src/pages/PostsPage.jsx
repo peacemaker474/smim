@@ -6,7 +6,11 @@ import PostListBody from '../components/postlist/PostListBody/PostListBody';
 import NotFound from './NotFound';
 
 function PostsPage() {
-  const [postArray, setPostArray] = useState([]);
+  const [searchList, setSearchList] = useState({
+    option: '',
+    inputs: '',
+  });
+  const [postFilter, setPostFilter] = useState('newer');
   const { age: postAge } = useParams();
 
   if (
@@ -20,8 +24,13 @@ function PostsPage() {
       <PostListMain>
         <PostListContainer>
           <PostListHeading>{postAge}대 질문리스트</PostListHeading>
-          <PostListHead setPostArray={setPostArray} postArray={postArray} age={postAge} />
-          <PostListBody postArray={postArray} setPostArray={setPostArray} age={postAge} />
+          <PostListHead
+            setSearchList={setSearchList}
+            postFilter={postFilter}
+            setPostFilter={setPostFilter}
+            age={postAge}
+          />
+          <PostListBody age={postAge} postFilter={postFilter} searchList={searchList} />
         </PostListContainer>
       </PostListMain>
     );
