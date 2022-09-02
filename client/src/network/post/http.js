@@ -42,12 +42,6 @@ export const getUnbookmark = (id, header) => {
   return axios.get(`${http}/post/${id}/unbookmark`, header);
 };
 
-export const getSearchPost = (age, page = 1, data) => {
-  return axios.get(
-    `${http}/post/search?age=${age}}&page=${page}&tag=${data.option}&keyword=${data.search}`
-  );
-};
-
 export const getPostView = (id) => {
   return axios.get(`${http}/post/${id}/view`);
 };

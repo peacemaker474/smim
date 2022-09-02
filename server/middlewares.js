@@ -1,5 +1,3 @@
-import multer from 'multer';
-import path from 'path';
 import Post from './models/Post.js';
 import Comment from './models/Comment.js';
 
