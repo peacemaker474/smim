@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { getPostListRead } from '../../../network/post/http';
 import PostListBodyPresenter from './PostListBody.style';
+import LoadingPage from '../../../pages/LoadingPage';
 
 export default function PostListBody({ age, postFilter, searchList }) {
   const obsRef = useRef(null);
@@ -49,5 +50,9 @@ export default function PostListBody({ age, postFilter, searchList }) {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  return <PostListBodyPresenter postData={data} obsRef={obsRef} isLoading={isLoading} />;
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  return <PostListBodyPresenter postData={data} obsRef={obsRef} />;
 }
