@@ -126,8 +126,8 @@ export const getPostList = async (req, res) => {
   }
 
   let pageNum = parseInt(page);
-  let skipNum = pageNum === 1 ? 0 : (pageNum - 1) * 10;
-  let nextNum = pageNum * 10;
+  let skipNum = pageNum === 1 ? 0 : (pageNum - 1) * 6;
+  let nextNum = pageNum * 6;
   let filterOption = {};
 
   if (filter === 'newer') {
