@@ -1,48 +1,17 @@
-import React, { useCallback } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { isLoginCheckToggle, loginToggle } from './redux/slice/toggleSlice';
-import PostWriteBtn from './components/post/PostWriteBtn/PostWriteBtn';
-import NavBar from './components/common/NavBar/NavBar';
 import AppRoute from './routes/AppRoute';
-import Modal from './components/common/Modal/Modal';
 import LoginSection from './components/login/LoginSection/LoginSection';
 import Auth from './components/common/Auth/Auth';
 
 function App() {
-  const { authenticated } = useSelector((state) => state.authToken);
-  const { isLoginCheckToggled, loginToggled } = useSelector(
-    (state) => ({
-      isLoginCheckToggled: state.toggle.isLoginCheckToggled,
-      loginToggled: state.toggle.loginToggled,
-    }),
-    shallowEqual
-  );
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const pathCheck = pathname.split('/')[2];
-
-  const actionFunc = useCallback(() => {
-    dispatch(isLoginCheckToggle());
-    dispatch(loginToggle());
-  }, [dispatch]);
-
-  const cancelFunc = useCallback(() => {
-    dispatch(isLoginCheckToggle());
-  }, [dispatch]);
+  const { loginToggled } = useSelector((state) => state.toggle);
 
   return (
     <>
-      {isLoginCheckToggled && (
-        <Modal actionFunc={actionFunc} cancelFunc={cancelFunc}>
-          {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}
-        </Modal>
-      )}
-      <NavBar />
       <Auth />
       {loginToggled && <LoginSection />}
-      {authenticated && pathCheck !== 'create' && pathCheck !== 'edit' && <PostWriteBtn />}
       <AppRoute />
       <ReactQueryDevtools initialIsOpen={true} />
     </>

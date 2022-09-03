@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import { getCommentUnlike, getCommentLike } from '../../../../network/comment/http';
 import CommentLikeBtnPresenter from './CommentLikeBtn.style';
 
@@ -7,8 +8,14 @@ function CommentLikeBtn({ cmntData }) {
   const [like, setLike] = useState(cmntData.like);
   const [likeCount, setLikeCount] = useState(cmntData.like_count);
   const { accessToken } = useSelector((state) => state.authToken);
+  const dispatch = useDispatch();
 
   const handleCommentLike = () => {
+    if (!accessToken) {
+      dispatch(isLoginCheckToggle());
+      return;
+    }
+
     if (like) {
       getCommentUnlike(cmntData._id, {
         headers: {

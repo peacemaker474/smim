@@ -1,17 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import PostListItem from '../PostListItem/PostListItem';
-import LoadingPage from '../../../pages/LoadingPage';
 
-export default function PostListBodyPresenter({ postData, obsRef, isLoading }) {
+export default function PostListBodyPresenter({ postData, obsRef }) {
   return (
     <PostListBodyContainer>
-      {isLoading && <LoadingPage position='relative' />}
       <PostListBodyLayout>
         {postData ? (
           <>
             {postData.pages.map((item) => {
-              return item.data.map((v) => <PostListItem key={v.id} postData={v} />);
+              return item.data.map((v) => <PostListItem key={v._id} postData={v} />);
             })}
           </>
         ) : null}

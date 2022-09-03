@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
 import CommentItemEtcPresenter from './CommentItemEtc.style';
 import useVisible from '../../../../hooks/useVisible';
 import { elapsedText } from '../../../../utils/elapsedText';
@@ -7,6 +8,7 @@ import { elapsedText } from '../../../../utils/elapsedText';
 export default function CommentItemEtc({ cmntData, groupId, writer }) {
   const { accessToken } = useSelector((state) => state.authToken);
   const [isTargetVisible, handleTargetShow] = useVisible(false);
+  const dispatch = useDispatch();
 
   const handleFormInputCancel = (e) => {
     e.target.value = '';
@@ -16,6 +18,8 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
   const handleReplyClickShow = () => {
     if (accessToken) {
       handleTargetShow(true);
+    } else {
+      dispatch(isLoginCheckToggle());
     }
   };
 

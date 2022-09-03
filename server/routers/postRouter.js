@@ -6,7 +6,6 @@ import {
   getPostDetail,
   getPostList,
   getPostView,
-  getPostSearch,
   postPostImageUpload,
 } from '../controllers/postController.js';
 import { getPostLike, getPostUnlike } from '../controllers/likeController.js';
@@ -25,17 +24,16 @@ import {
   checkParamPostExist,
 } from '../middlewares.js';
 import {
-  postImageUpload,
-  postImageDelete,
-  postImageDeleteDelete,
-  onlyPostImageDelete,
+  postSingleImageUpload,
+  postImageDeleteAndUpload,
+  postImageDeleteAndDelete,
+  PostImageDelete,
 } from '../multer.js';
 
 export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
-postRouter.get('/search', getPostSearch);
-postRouter.post('/create', verifyToken, fieldCheck, postImageDelete, postPostCreate);
+postRouter.post('/create', verifyToken, fieldCheck, postImageDeleteAndUpload, postPostCreate);
 postRouter.post(
   '/comment',
   verifyToken,
@@ -44,14 +42,14 @@ postRouter.post(
   checkBodyPostExist,
   postCommentCreate
 );
-postRouter.post('/img', postImageUpload.single('img'), postPostImageUpload);
-postRouter.delete('/img', onlyPostImageDelete);
+postRouter.post('/img', postSingleImageUpload.single('img'), postPostImageUpload);
+postRouter.delete('/img', PostImageDelete);
 
 postRouter
   .route('/:id')
   .get(verifyRefreshToken, existPostCheckAndData, getPostDetail)
-  .put(verifyToken, fieldCheck, existPostAndOwnerCheck, postImageDelete, putPostEdit)
-  .delete(verifyToken, existPostCheckAndData, postImageDeleteDelete, deletePost);
+  .put(verifyToken, fieldCheck, existPostAndOwnerCheck, postImageDeleteAndUpload, putPostEdit)
+  .delete(verifyToken, existPostCheckAndData, postImageDeleteAndDelete, deletePost);
 
 postRouter.get('/:id/view', existPostCheckAndData, getPostView);
 postRouter.get('/:id/bookmark', verifyToken, existPostCheck, getBookmark);
