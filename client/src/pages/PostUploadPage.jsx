@@ -4,8 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../network/post/http';
-import { postCreateAccessToken } from '../network/main/http';
-import { getCookie } from '../utils/cookie';
+import { getCreateAccessToken } from '../network/main/http';
 import { SET_TOKEN } from '../redux/auth';
 import LoadingPage from './LoadingPage';
 import PostForm from '../components/post/PostForm/PostForm';
@@ -18,10 +17,7 @@ function PostUploadPage() {
   const postId = pathArr[3];
 
   useEffect(() => {
-    let data = {
-      refreshToken: getCookie(),
-    };
-    postCreateAccessToken(data).then((res) => {
+    getCreateAccessToken().then((res) => {
       if (res.data.success) {
         dispatch(SET_TOKEN(res.data.accessToken));
       }
