@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import heartFill from '../../../asset/icon/icon-heart-fill.svg';
 
@@ -37,7 +38,7 @@ const PostsTitle = styled.div`
   }
 `;
 
-const MoreBtn = styled.button`
+const MoreLink = styled(Link)`
   width: 67px;
   height: 31px;
   padding: 0;
@@ -45,6 +46,8 @@ const MoreBtn = styled.button`
   border-radius: 4px;
   font-weight: 700;
   color: #ffffff;
+  line-height: 31px;
+  text-align: center;
 `;
 
 const PostsContent = styled.ul`
@@ -143,17 +146,17 @@ const PostLike = styled.p`
   margin-right: 10px;
 `;
 
-function MainListsStyle({ age, posts, onPostListsMove, onPostDetailMove }) {
+function MainListsStyle({ age, posts, onPostDetailMove }) {
   return (
     <MainPostsContainer>
       <PostsTitle>
         <h2 id={age}> {age}대에게 질문하세요 </h2>
-        <MoreBtn onClick={onPostListsMove} type="button" >더보기</MoreBtn>
+        <MoreLink to={`generation/${age}`}> 더보기 </MoreLink>
       </PostsTitle>
       <PostsContent>
         {posts &&
           posts.map((post) => (
-            <PostsList key={post._id} onClick={onPostDetailMove} id={post._id}>
+            <PostsList id={post._id} onClick={onPostDetailMove} key={post._id}>
               <ListHeader>
                 <ListisAnswer> {!post.meta.answer ? '답변 대기' : '답변 완료'} </ListisAnswer>
                 <ListTitle>{post.title.length <= 15 ? post.title : `${post.title.substring(0, 15)}...`}</ListTitle>

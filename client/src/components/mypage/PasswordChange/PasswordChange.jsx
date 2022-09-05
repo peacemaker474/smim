@@ -19,7 +19,6 @@ function PasswordChange () {
       oldPassword: '',
       newPassword: '',
       newPassword2: '',
-      accessToken,
     }
   })
 
@@ -30,7 +29,7 @@ function PasswordChange () {
 
   const handlePwSubmit = async (body) => {
     try {
-      const { data } = await putChangePassWord(body);
+      const { data } = await putChangePassWord(body, accessToken);
       if (data.success) {
         alert(data.message);
         dispatch(getUserLogOut());

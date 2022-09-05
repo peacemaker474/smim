@@ -71,11 +71,6 @@ function MainPage() {
     return <LoadingPage />
   }
 
-  const handlePostListsMove = (evt) => {
-    const id = evt.target.previousSibling.id;
-    navigate(`generation/${id}`);
-  };
-
   const handlePostDetailMove = (evt) => {
     const postId = evt.currentTarget.id;
     navigate(`post/view/${postId}`);
@@ -88,19 +83,16 @@ function MainPage() {
           <MainLists 
             age='10'
             posts={data?.lists['10']}
-            onPostListsMove={handlePostListsMove}
             onPostDetailMove={handlePostDetailMove}
           />
           <MainLists
             age='20'
             posts={data?.lists['20']}
-            onPostListsMove={handlePostListsMove}
             onPostDetailMove={handlePostDetailMove}
           />
           <MainLists
             age='30'
             posts={data?.lists['30']}
-            onPostListsMove={handlePostListsMove}
             onPostDetailMove={handlePostDetailMove}
           />
         </MainWrapper>
@@ -108,13 +100,11 @@ function MainPage() {
           <MainLists
             age='40'
             posts={data?.lists['40']}
-            onPostListsMove={handlePostListsMove}
             onPostDetailMove={handlePostDetailMove}
           />
           <MainLists
             age='50'
             posts={data?.lists['50']}
-            onPostListsMove={handlePostListsMove}
             onPostDetailMove={handlePostDetailMove}
           />
         </MainWrapper>

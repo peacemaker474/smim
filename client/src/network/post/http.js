@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const http = 'http://localhost:4000';
+const http = process.env.REACT_APP_SERVER_URL;
 
 export const postCreatePost = (data, header) => {
   return axios.post(`${http}/post/create`, data, header);

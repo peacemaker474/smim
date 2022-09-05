@@ -6,7 +6,7 @@ import axios from "axios";
   이미지 업로드 부분과 로그아웃 부분
 */
 
-const http = "http://localhost:4000";
+const http = process.env.REACT_APP_SERVER_URL;
 
 const config = {
   headers: {
