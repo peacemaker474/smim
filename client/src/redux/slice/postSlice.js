@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  postId: undefined,
-  postWriter: undefined,
+  postId: null,
+  postWriter: null,
 };
 
 const postSlice = createSlice({
@@ -24,8 +24,8 @@ const postSlice = createSlice({
       },
     },
     resetPost(state) {
-      state.postId = undefined;
-      state.postWriter = undefined;
+      state.postId = null;
+      state.postWriter = null;
     },
   },
 });
