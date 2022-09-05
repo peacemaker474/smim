@@ -1,16 +1,7 @@
 import axios from 'axios';
 import checkedText from '../../utils/checkedText';
-import { getCookie } from '../../utils/cookie';
 
-const http = "http://localhost:4000";
-const tkn = getCookie("users");
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${tkn}`,
-  },
-};
+const http = process.env.REACT_APP_SERVER_URL;
 
 export const getMyWriteLists = async (userId) => {
   const { data } = await axios.get(`${http}/my/writeLists?userId=${userId}`);
@@ -56,6 +47,10 @@ export const getCheckMyName = (data) => {
   })
 };
 
-export const putChangePassWord = (data) => {
-  return axios.put(`${http}/my/changepw`, data, config);
+export const putChangePassWord = (data, accessToken) => {
+  return axios.put(`${http}/my/changepw`, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+  });
 };

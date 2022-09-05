@@ -68,7 +68,7 @@ export const verifyRefreshToken = (req, res, next) => {
 };
 
 export const verifyAccessToken = (req, res, next) => {
-  const { accessToken } = req.body;
+  const accessToken = req.headers.authorization.split('Bearer ')[1];
 
   if (!accessToken)
     return res

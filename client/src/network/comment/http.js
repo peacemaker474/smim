@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const http = 'http://localhost:4000';
+const http = process.env.REACT_APP_SERVER_URL;
 
 export const getCommentListRead = (id) => {
   return axios.get(`${http}/post/${id}/comment`, {

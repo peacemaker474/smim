@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const http = 'http://localhost:4000';
+const http = process.env.REACT_APP_SERVER_URL;
 
 export const getPinnedCommentData = createAsyncThunk(
   'PIN_COMMENT',
