@@ -15,6 +15,8 @@ function Auth() {
 
   const dispatch = useDispatch();
 
+  console.log(authenticated);
+
   if (authenticated && expireTime - new Date().getTime() < 3000) {
     if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
       getCreateAccessToken().then((res) => {

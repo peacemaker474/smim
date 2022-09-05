@@ -4,7 +4,12 @@ import bookmarkFill from '../../../../asset/icon/icon-bookmark-fill.svg';
 import bookmarkLine from '../../../../asset/icon/icon-bookmark-line.svg';
 
 export default function PostBookmarkPresenter({ isBookmarkChecked, onBookmarkClick }) {
-  return <BookmarkSpan onClick={onBookmarkClick} bookmarkChecked={isBookmarkChecked} />;
+  return (
+    <BookmarkSpan 
+      onClick={onBookmarkClick}
+      bookmarkChecked={isBookmarkChecked} 
+    />
+  );
 }
 
 const BookmarkSpan = styled.span`

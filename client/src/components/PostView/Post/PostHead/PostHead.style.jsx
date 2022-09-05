@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import UserImage from '../../../common/UserImage/UserImage';
 import PostDropdownBtn from '../PostDropdownBtn/PostDropdownBtn';
+
 export default function PostHeadPresenter({ author, userId, postDate, postViews }) {
   return (
     <PostHeadDiv>

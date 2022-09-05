@@ -13,8 +13,7 @@ export default function CommentUploaded() {
   const loadComments = async ({ queryKey }) => {
     const [{ postid }] = queryKey;
     try {
-      let response;
-      response = await getCommentListRead(postid);
+      const response = await getCommentListRead(postid);
       return response.data.data;
     } catch (error) {
       console.log(error.message);
@@ -38,5 +37,9 @@ export default function CommentUploaded() {
         return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
       });
 
-  return <CommentUploadedPresenter sortedLoadedComments={sortedLoadedComments} />;
+  return (
+    <CommentUploadedPresenter 
+      sortedLoadedComments={sortedLoadedComments}
+    />
+  );
 }

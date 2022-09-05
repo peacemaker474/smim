@@ -50,9 +50,12 @@ export default function PostListBody({ age, postFilter, searchList }) {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  if (isLoading) return <LoadingPage />;
 
-  return <PostListBodyPresenter postData={data} obsRef={obsRef} />;
+  return (
+    <PostListBodyPresenter 
+      postData={data}
+      obsRef={obsRef} 
+    />
+  );
 }

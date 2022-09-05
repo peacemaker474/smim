@@ -12,8 +12,7 @@ function CommentLikeBtn({ cmntData }) {
 
   const handleCommentLike = () => {
     if (!accessToken) {
-      dispatch(isLoginCheckToggle());
-      return;
+      return dispatch(isLoginCheckToggle());
     }
 
     if (like) {
@@ -37,7 +36,11 @@ function CommentLikeBtn({ cmntData }) {
     setLike(!like);
   };
   return (
-    <CommentLikeBtnPresenter onCommentLike={handleCommentLike} like={like} likeCount={likeCount} />
+    <CommentLikeBtnPresenter 
+      onCommentLike={handleCommentLike} 
+      like={like}
+      likeCount={likeCount}
+    />
   );
 }
 

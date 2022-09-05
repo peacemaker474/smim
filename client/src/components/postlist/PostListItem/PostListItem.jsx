@@ -16,11 +16,8 @@ function PostListItem({ postData }) {
   } = postData;
 
   let paraContent = checkedText(content);
-
   const hashtagEdition = getHashtagList(hashtag);
-
-  const date = new Date(updateAt);
-  const postDate = getDate(date);
+  const postDate = getDate(updateAt);
 
   return (
     <PostListItemPresenter

@@ -27,9 +27,8 @@ export default function CommentTextArea({
     STATE = 'Reply Reply';
   }
 
-  const handleCommentChange = (event) => {
-    const v = event.target.value;
-    setValue('comment', v);
+  const handleCommentChange = (e) => {
+    setValue('comment', e.target.value);
   };
 
   const { ref: registerRef } = register('comment');

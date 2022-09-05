@@ -19,8 +19,7 @@ export default function PostLike({ quantity, like }) {
 
   const handleLikeClick = async () => {
     if (!accessToken) {
-      dispatch(isLoginCheckToggle());
-      return;
+      return dispatch(isLoginCheckToggle());
     }
 
     if (isLikeChecked) {

@@ -5,7 +5,9 @@ export default function CommentCreatedPresenter({ uploadingComments }) {
   return (
     <>
       {uploadingComments.length !== 0 &&
-        uploadingComments.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
+        uploadingComments.map((el, idx) => (
+          <CommentWrapper key={idx} cmntData={el} />
+        ))}
     </>
   );
 }

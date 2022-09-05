@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import ScrollToTop from './components/common/ScrollToTop/ScrollToTop';
 import GlobalStyle from './styles/globalstyles';
 import reportWebVitals from './reportWebVitals';

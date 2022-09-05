@@ -35,7 +35,11 @@ export const putUpdateUser = createAsyncThunk(
   "PUT_UPDATE/USER",
   async (userData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`${http}/my/update-user`, userData);
+      const { data } = await axios.put(`${http}/my/update-user`, userData, {
+        headers: {
+          Authorization: `Bearer ${userData.accessToken}`,
+        }
+      });
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);

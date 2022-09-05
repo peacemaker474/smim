@@ -7,7 +7,12 @@ function MyProfile () {
   const { social } = useSelector((state) => state.user);
   const { pathname } = useLocation(null);
 
-  return <MyProfileStyle social={social} pathname={pathname}/>;
+  return (
+    <MyProfileStyle 
+      social={social}
+      pathname={pathname}
+    />
+  );
 }
 
 export default MyProfile;

@@ -9,7 +9,7 @@ function PostTitlePresenter({ register, errors }) {
         palette='yellow'
         error={errors.title}
         maxLength='25'
-        {...register('title', { required: 'This is required', maxLength: 25 })}
+        {...register('title', { required: 'This is required'})}
       />
     </TitleWrap>
   );

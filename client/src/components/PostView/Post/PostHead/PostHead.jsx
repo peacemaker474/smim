@@ -19,5 +19,12 @@ export default function PostHead({ postDetail, date }) {
 
   const postDate = date.toLocaleDateString();
 
-  return <PostHeadPresenter author={author} userId={userId} postDate={postDate} postViews={view} />;
+  return (
+    <PostHeadPresenter
+      author={author}
+      userId={userId}
+      postDate={postDate}
+      postViews={view}
+    />
+  );
 }
