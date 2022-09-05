@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PostCommentPresenter from './PostComment.style';
@@ -69,9 +69,9 @@ function PostComment() {
     dispatch(commentModalToggle());
   };
 
-  const cancelFunc = useCallback(() => {
+  const cancelFunc = () => {
     dispatch(commentModalToggle());
-  }, [dispatch]);
+  };
 
   return (
     <>
