@@ -38,6 +38,10 @@ const MainContainer = styled.div`
     height: 1400px;
     padding: 75rem 0;
   }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 90%;
+  }
 `;
 
 const MainWrapper = styled.div`
@@ -57,6 +61,10 @@ const MainWrapper = styled.div`
     flex-direction: column;
     margin: 0 auto;
     gap: 50px;
+  }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 90%;
   }
 `;
 

@@ -19,6 +19,10 @@ const MainPostsContainer = styled.div`
     width: 90%;
     height: 521px;
   }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 100%;
+  }
 `;
 const PostsTitle = styled.div`
   display: flex;
@@ -36,6 +40,10 @@ const PostsTitle = styled.div`
   @media ${({ theme }) => theme.device.ipad} {
     font-size: 1.1rem;
   }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 0.9rem;
+  }
 `;
 
 const MoreLink = styled(Link)`
@@ -48,6 +56,13 @@ const MoreLink = styled(Link)`
   color: #ffffff;
   line-height: 31px;
   text-align: center;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 48px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 0.8rem;
+  }
 `;
 
 const PostsContent = styled.ul`
@@ -72,6 +87,10 @@ const PostsList = styled.li`
   @meida ${({ theme }) => theme.device.ipad} {
     padding: 10px;
   }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    padding: 7px;
+  }
 `;
 
 const ListHeader = styled.div`
@@ -91,11 +110,20 @@ const ListHeader = styled.div`
     font-size: 0.9rem;
     padding: 0.3em 0 0.8em 0;
   }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    font-size: 0.8rem;
+    padding: 0.2em 0.2em 0.9em 0;
+  }
 `;
 
 const ListisAnswer = styled.p`
   width: 25%;
   color: #038cfc;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 30%;
+  }
 `;
 
 const ListTitle = styled.h3`
@@ -107,6 +135,11 @@ const ListTitle = styled.h3`
 
   @media ${({ theme }) => theme.device.ipad} {
     padding-left: 0;
+  }
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    padding-left: 5px;
+    width: 75%;
   }
 `;
 
@@ -122,10 +155,18 @@ const ListContent = styled.div`
     font-size: 0.8rem;
     padding-top: 0.5em;
   }
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    padding-top: 0.8em;
+  }
 `;
 
 const PostOwner = styled.p`
   width: 23%;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    width: 30%;
+    font-size: 0.7rem;
+  }
 `;
 
 const PostLike = styled.p`
