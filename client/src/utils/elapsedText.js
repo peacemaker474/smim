@@ -1,4 +1,5 @@
-export const elapsedText = (date) => {
+export const elapsedText = (createAt) => {
+  const date = new Date(createAt);
   const seconds = 1;
   const minute = seconds * 60;
   const hour = minute * 60;

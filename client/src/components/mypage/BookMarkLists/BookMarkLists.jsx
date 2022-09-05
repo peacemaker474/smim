@@ -32,7 +32,12 @@ function BookMarkLists({ userId }) {
     );
   }
 
-  return <BookMarkListsStyle bookMarkList={data} onBookMarkMove={handleBookMarkMove} />;
+  return (
+    <BookMarkListsStyle 
+      bookMarkList={data}
+      onBookMarkMove={handleBookMarkMove}
+    />
+  );
 }
 
 export default BookMarkLists;

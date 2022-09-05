@@ -19,7 +19,14 @@ function PostForm({ postData, pathValue, postId }) {
     setError,
     getValues,
     formState: { errors },
-  } = useForm({ mode: 'onBlur', defaultValues: { tagArray: [], title: '', para: '', age: '' } });
+  } = useForm({ 
+    mode: 'onBlur', 
+    defaultValues: { 
+      tagArray: [], 
+      title: '', 
+      para: '', 
+      age: '' } 
+    });
   const { postUploadToggled, modalToggled } = useSelector(
     (state) => ({
       postUploadToggled: state.toggle.postUploadToggled,
@@ -35,7 +42,7 @@ function PostForm({ postData, pathValue, postId }) {
   usePrompt('현재 페이지를 벗어나시겠습니까?', view, async () => {
     const delData = getValues('para');
     await axios.delete(
-      'http://localhost:4000/post/img',
+      `${process.env.REACT_APP_SERVER_URL}/post/img`,
       {
         data: {
           content: delData,
@@ -128,7 +135,7 @@ function PostForm({ postData, pathValue, postId }) {
     setView(false);
     const delData = getValues('para');
     await axios.delete(
-      'http://localhost:4000/post/img',
+      `${process.env.REACT_APP_SERVER_URL}/post/img`,
       {
         data: {
           content: delData,

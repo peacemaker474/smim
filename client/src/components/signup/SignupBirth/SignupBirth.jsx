@@ -1,8 +1,6 @@
 import React from 'react';
 import SignupBirthStyle from './SignupBirth.style';
 
-// 오류 메세지 출력하는 과정에서 문제가 있음
-
 function SignupBirth ({register, errors, getValues }) {
 
   const handleBirthYearInput = () => (value) => {

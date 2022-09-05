@@ -22,9 +22,8 @@ export default function CommentItemEtc({ cmntData, groupId, writer }) {
       dispatch(isLoginCheckToggle());
     }
   };
-
-  const create = new Date(cmntData.createAt);
-  const createAt = elapsedText(create);
+  
+  const createAt = elapsedText(cmntData.createAt);
 
   return (
     <CommentItemEtcPresenter

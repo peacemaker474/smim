@@ -10,7 +10,12 @@ function PostBottomBtn({ formState }) {
     dispatch(modalToggle());
   };
 
-  return <PostBottomBtnPresenter formState={formState} onFormCancle={handleFormCancle} />;
+  return (
+    <PostBottomBtnPresenter
+      formState={formState}
+      onFormCancle={handleFormCancle}
+    />
+  );
 }
 
 export default PostBottomBtn;

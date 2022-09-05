@@ -8,7 +8,12 @@ function PostWriteBtn() {
   const handleBtnClick = () => {
     navigate('/post/create');
   };
-  return <PostWriteBtnPresenter onBtnClick={handleBtnClick} />;
+
+  return (
+    <PostWriteBtnPresenter
+      onBtnClick={handleBtnClick}
+    />
+  );
 }
 
 export default PostWriteBtn;
