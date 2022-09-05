@@ -10,7 +10,7 @@ export default function CommentForm({
   parentId,
   groupId,
   isTargetVisible,
-  onFormInputCancel = undefined,
+  onFormInputCancel = null,
   onTextChange,
   id,
   changedText,
