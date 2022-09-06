@@ -19,20 +19,18 @@ function PostViewContent() {
 
   const fetchAPI = async ({ queryKey }) => {
     const [{ postId }] = queryKey;
-    let post;
-    try {
-      const response = await getReadPostDetail(postId);
-      post = response.data;
 
-      if (post.meta.pinnedCmnt) {
-        dispatch(getPinnedCommentData({ pinnedId: post.meta.pinnedCmnt }));
+    try {
+      const { data } = await getReadPostDetail(postId);
+
+      if (data.meta.pinnedCmnt) {
+        dispatch(getPinnedCommentData({ pinnedId: data.meta.pinnedCmnt }));
       } else {
         dispatch(pinnedInitCommentId());
       }
+      dispatch(getPostData(data._id, data.owner.nickname));
 
-      dispatch(getPostData(post._id, post.owner.nickname));
-
-      return post;
+      return data;
     } catch (error) {
       return error.response.status;
     }
@@ -52,7 +50,7 @@ function PostViewContent() {
     return <NotFoundPage />;
   }
 
-  const date = new Date(postDetail.createAt);
+  const date = new Date(postDetail.updateAt);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import useVisible from '../../../../hooks/useVisible';
 import CommentItemPresenter from './CommentItem.style';
@@ -10,10 +10,13 @@ function CommentItem({ cmntData, groupId }) {
     (el) => el === cmntData._id
   );
 
-  const handleFormInputCancel = (e) => {
-    e.target.value = '';
-    handleClickShow(false);
-  };
+  const handleFormInputCancel = useCallback(
+    (e) => {
+      e.target.value = '';
+      handleClickShow(false);
+    },
+    [isTargetVisible]
+  );
 
   const handleTextChange = (text) => {
     setItemText(text);

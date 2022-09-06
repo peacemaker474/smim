@@ -13,9 +13,5 @@ export default function CommentCreated() {
       return a.createAt > b.createAt ? -1 : a.create < b.create ? 1 : 0;
     });
 
-  return (
-    <CommentCreatedPresenter
-      uploadingComments={uploadingComments}
-    />
-  );
+  return <CommentCreatedPresenter uploadingComments={uploadingComments} />;
 }

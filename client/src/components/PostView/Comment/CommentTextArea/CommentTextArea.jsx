@@ -13,9 +13,9 @@ export default function CommentTextArea({
   const inputRef = useRef();
 
   let STATE = '';
-  if (parentId === null && !id) {
+  if (!parentId && !id) {
     STATE = 'main';
-  } else if (parentId === null && id) {
+  } else if (!parentId && id) {
     STATE = 'main Edit';
   } else if (parentId === groupId && !id) {
     STATE = 'main Reply';

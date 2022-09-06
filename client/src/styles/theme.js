@@ -10,20 +10,7 @@ export const theme = {
   },
 
   tagColor: {
-    purple: '#E8DEEE',
     yellow: '#FDECC8',
-    salmon: '#FFE2DD',
-    gray: '#E3E2E0',
-    green: '#DBEDDB',
-    orange: '#FADEC9',
-    pink: '#F5E0E9',
-    blue: '#D3E5EF',
-  },
-
-  size: {
-    navHeight: '7vh',
-    maxWidth: '1080px',
-    mobile: '767px',
   },
 
   device: {

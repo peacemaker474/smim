@@ -13,15 +13,22 @@ export default function CommentUploaded() {
   const loadComments = async ({ queryKey }) => {
     const [{ postid }] = queryKey;
     try {
-      const response = await getCommentListRead(postid);
-      return response.data.data;
+      const {
+        data: { data: loadedComments },
+      } = await getCommentListRead(postid);
+      const sortedLoadedComments = loadedComments
+        .filter((el) => String(el[0]._id) !== pinnedId)
+        .sort((a, b) => {
+          return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
+        });
+      return sortedLoadedComments;
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const {
-    data: loadedComments,
+    data: sortedLoadedComments,
     isLoading,
     isFetching,
   } = useQuery([('commentArray', { postid })], loadComments);
@@ -29,17 +36,5 @@ export default function CommentUploaded() {
     return <LoadingPage />;
   }
 
-  const sortedLoadedComments =
-    loadedComments &&
-    loadedComments
-      .filter((el) => String(el[0]._id) !== pinnedId)
-      .sort((a, b) => {
-        return a[0].createAt > b[0].createAt ? -1 : a[0].create < b[0].create ? 1 : 0;
-      });
-
-  return (
-    <CommentUploadedPresenter 
-      sortedLoadedComments={sortedLoadedComments}
-    />
-  );
+  return <CommentUploadedPresenter sortedLoadedComments={sortedLoadedComments} />;
 }

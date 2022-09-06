@@ -43,7 +43,6 @@ function PostComment() {
       },
     });
     dispatch(deleteCommentId(commentId));
-
     dispatch(commentModalToggle());
   };
 
