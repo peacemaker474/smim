@@ -2,9 +2,31 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true, trim: true },
-  email: { type: String, required: true, unique: true, trim: true, lowercase: true },
-  nickname: { type: String, required: true, unique: true },
+  userId: { 
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    minlength: 4,
+    maxlength: 12,
+    match: /^[a-zA-Z0-9]/
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    match: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
+  },
+  nickname: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 3,
+    maxlength: 8,
+    match: /^[가-힣a-zA-Z0-9]/
+  },
   password: { type: String, required: true },
   imageUrl: String,
   createAt: { type: Date, default: Date.now, required: true },

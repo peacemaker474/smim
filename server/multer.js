@@ -152,7 +152,7 @@ export const PostImageDelete = (req, res) => {
 
   try {
     s3.deleteObjects(params, function (err, data) {
-      if (err) if (err) throw new Error(err);
+      if (err) throw new Error(err);
     });
     return res.status(200).send({
       success: true,
