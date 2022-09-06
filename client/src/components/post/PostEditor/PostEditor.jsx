@@ -23,7 +23,7 @@ function PostEditor({ register, errors, setValue, watch, clearErrors, setError }
       const formData = new FormData();
       formData.append('img', file);
       try {
-        const result = await axios.post('http://localhost:4000/post/img', formData);
+        const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/post/img`, formData);
         const url = result.data.url;
         setImg(result.data.key);
         const quill = quillRef.current.getEditor();

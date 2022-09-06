@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DropdownWrraper, DropdownLists, DropdownList } from '../../../../styles/common/dropdown';
-import { useSelector } from 'react-redux';
 
 export default function CommentDropdownPresenter({
   forwardRef,
@@ -14,10 +13,9 @@ export default function CommentDropdownPresenter({
   parentId,
   commentId,
   pinnedId,
+  name,
+  postWriter,
 }) {
-  const { name } = useSelector((state) => state.user);
-  const { postWriter } = useSelector((state) => state.post);
-
   return (
     <CommentDropdownWrraper ref={forwardRef}>
       <CommentDropdownLists>

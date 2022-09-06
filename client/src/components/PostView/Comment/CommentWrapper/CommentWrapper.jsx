@@ -7,15 +7,13 @@ export default function CommentWrapper({ cmntData }) {
   const [isTargetVisible, handleTargetShow] = useVisible(false);
   const { commentArray: createdComments } = useSelector((state) => state.commentCreate);
 
-  const parentData = Array.isArray(cmntData)
-    ? cmntData && cmntData.find((el) => el.parent_id === null)
-    : cmntData;
+  const parentData = cmntData.find((el) => el.parent_id === null);
 
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(
     (el) => el === parentData._id
   );
 
-  const childrenData = Array.isArray(cmntData) ? cmntData && cmntData.slice(1) : [];
+  const childrenData = cmntData.slice(1);
 
   const uploadingReplies = createdComments.filter((el) => el.group_id === parentData._id);
 

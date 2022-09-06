@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getDeleteCommentId,
@@ -12,34 +12,49 @@ function Dropdown({ onClickShow, writer, commentId, parentId }, ref) {
   const dispatch = useDispatch();
   const { pinnedId } = useSelector((state) => state.comment);
   const { accessToken } = useSelector((state) => state.authToken);
+  const { name } = useSelector((state) => state.user);
+  const { postWriter } = useSelector((state) => state.post);
 
-  const handleCommentEdit = (e) => {
-    e.preventDefault();
-    onClickShow(true);
-  };
-  const handleCommentDel = (e) => {
-    e.preventDefault();
-    dispatch(getDeleteCommentId(commentId));
-    dispatch(commentModalToggle());
-  };
+  const handleCommentEdit = useCallback(
+    (e) => {
+      e.preventDefault();
+      onClickShow(true);
+    },
+    [onClickShow]
+  );
 
-  const handleCommentPinned = (e) => {
-    e.preventDefault();
-    dispatch(getPinnedCommentId(commentId));
-    dispatch(commentModalToggle());
-  };
+  const handleCommentDel = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(getDeleteCommentId(commentId));
+      dispatch(commentModalToggle());
+    },
+    [dispatch, commentId]
+  );
 
-  const handleCommentUnpinned = (e) => {
-    e.preventDefault();
-    dispatch(getUnpinnedCommentId(commentId));
-    dispatch(commentModalToggle());
-  };
+  const handleCommentPinned = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(getPinnedCommentId(commentId));
+      dispatch(commentModalToggle());
+    },
+    [dispatch, commentId]
+  );
 
-  const handleCommentDeclaration = () => {
+  const handleCommentUnpinned = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(getUnpinnedCommentId(commentId));
+      dispatch(commentModalToggle());
+    },
+    [dispatch, commentId]
+  );
+
+  const handleCommentDeclaration = useCallback(() => {
     if (!accessToken) {
       dispatch(isLoginCheckToggle());
     }
-  };
+  }, [accessToken, dispatch]);
 
   return (
     <CommentDropdownPresenter
@@ -53,6 +68,8 @@ function Dropdown({ onClickShow, writer, commentId, parentId }, ref) {
       parentId={parentId}
       commentId={commentId}
       pinnedId={pinnedId}
+      name={name}
+      postWriter={postWriter}
     />
   );
 }

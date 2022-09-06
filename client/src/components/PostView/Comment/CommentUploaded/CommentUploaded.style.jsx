@@ -5,9 +5,7 @@ export default function CommentUploadedPresenter({ sortedLoadedComments }) {
   return (
     <>
       {sortedLoadedComments &&
-        sortedLoadedComments.map((el, idx) => (
-          <CommentWrapper key={idx} cmntData={el} />
-        ))}
+        sortedLoadedComments.map((el, idx) => <CommentWrapper key={idx} cmntData={el} />)}
     </>
   );
 }
