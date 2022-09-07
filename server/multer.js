@@ -92,7 +92,7 @@ export const postImageDeleteAndDelete = (req, res, next) => {
 
   const myRegExp1 = /https:(.*?)(png|jpg|jpeg)/gi;
 
-  if (content.match(myRegExp1).length === 0) {
+  if (!content.match(myRegExp1)) {
     // 이미지 없으면 삭제 안하고 넘어감
     return next();
   }
