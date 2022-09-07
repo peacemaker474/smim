@@ -179,17 +179,20 @@ export const getPostList = async (req, res) => {
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id: postId } = req.params;
-  const {
-    user: { _id },
-  } = req.body;
 
   try {
+    const post = await Post.findById(postId);
+    await Promise.all(
+      post.meta.bookmarks.map(async (el) => {
+        const user = await User.findById(el);
+        const bookmarkPostArr = user.bookmarks.filter((id) => id !== postId);
+        user.bookmarks = bookmarkPostArr;
+        await user.save();
+      })
+    );
+
     await Post.deleteOne({ _id: postId });
     await Like.deleteOne({ _id: postId });
-    const user = await User.findById(_id);
-    user.posts = user.posts.filter((el) => el !== postId);
-    user.bookmarks = user.bookmarks.filter((el) => el !== postId);
-    await user.save();
 
     return res.status(200).send({
       success: true,
