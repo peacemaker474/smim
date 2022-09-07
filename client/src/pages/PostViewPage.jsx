@@ -34,7 +34,7 @@ function PostViewPage() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    navigate(-2);
+    navigate('/');
   };
 
   const postViewActionFunc = () => {
