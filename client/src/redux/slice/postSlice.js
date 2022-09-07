@@ -9,19 +9,9 @@ const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
-    getPostData: {
-      reducer(state, action) {
-        state.postId = action.payload.postId;
-        state.postWriter = action.payload.postWriter;
-      },
-      prepare(postId, postWriter) {
-        return {
-          payload: {
-            postId,
-            postWriter,
-          },
-        };
-      },
+    getPostData(state, action) {
+      state.postId = action.payload.postId;
+      state.postWriter = action.payload.postWriter;
     },
     resetPost(state) {
       state.postId = null;

@@ -15,13 +15,8 @@ import { postCommentCreate, getCommentList } from '../controllers/commentControl
 import {
   existPostAndOwnerCheck,
   existPostCheckAndData,
-  existPostCheck,
   fieldCheck,
-  checkBodyPostUndefined,
-  checkParamPostUndefined,
-  checkBodyContentUndefined,
-  checkBodyPostExist,
-  checkParamPostExist,
+  checkPostExistAndContent,
 } from '../middlewares.js';
 import {
   postSingleImageUpload,
@@ -34,14 +29,7 @@ export const postRouter = express.Router();
 
 postRouter.get('/target', getPostList);
 postRouter.post('/create', verifyToken, fieldCheck, postImageDeleteAndUpload, postPostCreate);
-postRouter.post(
-  '/comment',
-  verifyToken,
-  checkBodyPostUndefined,
-  checkBodyContentUndefined,
-  checkBodyPostExist,
-  postCommentCreate
-);
+postRouter.post('/comment', verifyToken, checkPostExistAndContent, postCommentCreate);
 postRouter.post('/img', postSingleImageUpload.single('img'), postPostImageUpload);
 postRouter.delete('/img', PostImageDelete);
 
@@ -52,14 +40,8 @@ postRouter
   .delete(verifyToken, existPostCheckAndData, postImageDeleteAndDelete, deletePost);
 
 postRouter.get('/:id/view', existPostCheckAndData, getPostView);
-postRouter.get('/:id/bookmark', verifyToken, existPostCheck, getBookmark);
-postRouter.get('/:id/unbookmark', verifyToken, existPostCheck, getUnbookmark);
+postRouter.get('/:id/bookmark', verifyToken, existPostCheckAndData, getBookmark);
+postRouter.get('/:id/unbookmark', verifyToken, existPostCheckAndData, getUnbookmark);
 postRouter.get('/:id/like', verifyToken, existPostCheckAndData, getPostLike);
 postRouter.get('/:id/unlike', verifyToken, existPostCheckAndData, getPostUnlike);
-postRouter.get(
-  '/:id/comment',
-  verifyRefreshToken,
-  checkParamPostUndefined,
-  checkParamPostExist,
-  getCommentList
-);
+postRouter.get('/:id/comment', verifyRefreshToken, getCommentList);

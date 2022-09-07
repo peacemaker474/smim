@@ -14,62 +14,26 @@ const commentSlice = createSlice({
   name: 'comment',
   initialState,
   reducers: {
-    getDeleteCommentId: {
-      reducer(state, action) {
-        state.commentId = action.payload.commentId;
-        state.check = 'delete';
-      },
-      prepare(commentId) {
-        return {
-          payload: {
-            commentId,
-          },
-        };
-      },
+    getDeleteCommentId(state, action) {
+      state.commentId = action.payload;
+      state.check = 'delete';
     },
-    deleteCommentId: {
-      reducer(state, action) {
-        state.deletedIdArray.push(action.payload.commentId);
-      },
-      prepare(commentId) {
-        return {
-          payload: {
-            commentId,
-          },
-        };
-      },
+    deleteCommentId(state, action) {
+      state.deletedIdArray.push(action.payload);
     },
-    getPinnedCommentId: {
-      reducer(state, action) {
-        state.commentId = action.payload.commentId;
-        state.check = 'pinned';
-      },
-      prepare(commentId) {
-        return {
-          payload: {
-            commentId,
-          },
-        };
-      },
+    getPinnedCommentId(state, action) {
+      state.commentId = action.payload;
+      state.check = 'pinned';
     },
     pinnedInitCommentId(state) {
       state.pinnedId = null;
       state.pinnedData = null;
     },
-    getUnpinnedCommentId: {
-      reducer(state, action) {
-        state.commentId = action.payload.commentId;
-        state.check = 'unpinned';
-      },
-      prepare(commentId) {
-        return {
-          payload: {
-            commentId,
-          },
-        };
-      },
+    getUnpinnedCommentId(state, action) {
+      state.commentId = action.payload;
+      state.check = 'unpinned';
     },
-    unpinnedCommentId(state, action) {
+    unpinnedCommentId(state) {
       state.pinnedData = null;
       state.pinnedId = null;
     },

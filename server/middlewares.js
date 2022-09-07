@@ -50,29 +50,6 @@ export const existPostCheckAndData = async (req, res, next) => {
   }
 };
 
-// User와 상관없이 DB에 존재하는 게시글인지 체크하는 미들웨어
-export const existPostCheck = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const exist = await Post.exists({ _id: id });
-
-    if (!exist) {
-      return res.status(404).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
-    });
-  }
-};
-
 // 보낸 데이터에서 누락한 field의 유무를 체크하는 미들웨어
 export const fieldCheck = async (req, res, next) => {
   const {
@@ -131,34 +108,16 @@ export const checkCommentUndefined = async (req, res, next) => {
   next();
 };
 
-export const checkBodyPostUndefined = async (req, res, next) => {
+export const checkPostExistAndContent = async (req, res, next) => {
   const { post_id: postId } = req.body;
-
-  if (!postId) {
-    return res.status(400).send({
-      success: false,
-      message: 'postId가 undefined입니다.',
-    });
-  }
-
-  next();
-};
-
-export const checkParamPostUndefined = async (req, res, next) => {
-  const { id: postId } = req.params;
-
-  if (!postId) {
-    return res.status(400).send({
-      success: false,
-      message: 'postId가 undefined입니다.',
-    });
-  }
-
-  next();
-};
-
-export const checkBodyContentUndefined = async (req, res, next) => {
   const { content } = req.body;
+
+  if (!postId) {
+    return res.status(400).send({
+      success: false,
+      message: 'postId가 undefined입니다.',
+    });
+  }
 
   if (!content) {
     return res.status(400).send({
@@ -167,52 +126,26 @@ export const checkBodyContentUndefined = async (req, res, next) => {
     });
   }
 
+  try {
+    const postExist = await Post.exists({ _id: postId });
+
+    if (!postExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+
   next();
-};
-
-export const checkBodyPostExist = async (req, res, next) => {
-  const { post_id: postId } = req.body;
-
-  try {
-    const postExist = await Post.exists({ _id: postId });
-
-    if (!postExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-export const checkParamPostExist = async (req, res, next) => {
-  const { id: postId } = req.params;
-
-  try {
-    const postExist = await Post.exists({ _id: postId });
-
-    if (!postExist) {
-      return res.status(400).send({
-        success: false,
-        message: '존재하지 않거나 삭제된 게시물입니다.',
-      });
-    }
-
-    next();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: error.message,
-    });
-  }
 };
 
 export const checkParamCommentExistAndData = async (req, res, next) => {

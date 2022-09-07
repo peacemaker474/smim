@@ -2,18 +2,15 @@ import express from 'express';
 import {
   putCommentEdit,
   deleteComment,
-  getCommentLike,
-  getCommentUnlike,
   getCommentPinned,
   getCommentUnpinned,
   getComment,
 } from '../controllers/commentController.js';
+import { getCommentLike, getCommentUnlike } from '../controllers/likeController.js';
 import { verifyToken, verifyRefreshToken } from '../controllers/tokenControllers.js';
 import {
   checkCommentUndefined,
-  checkBodyContentUndefined,
-  checkBodyPostUndefined,
-  checkBodyPostExist,
+  checkPostExistAndContent,
   checkParamCommentExistAndData,
   checkCommentPinned,
 } from '../middlewares.js';
@@ -26,9 +23,7 @@ commentRouter
   .put(
     verifyToken,
     checkCommentUndefined,
-    checkBodyPostUndefined,
-    checkBodyContentUndefined,
-    checkBodyPostExist,
+    checkPostExistAndContent,
     checkParamCommentExistAndData,
     putCommentEdit
   )

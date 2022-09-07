@@ -75,32 +75,65 @@ export const getPostUnlike = async (req, res) => {
   }
 };
 
+// 댓글 좋아요
 export const getCommentLike = async (req, res) => {
   const {
     user: { _id },
   } = req.body;
-  const { id: postId } = req.params;
-  try {
-    const like = await Like.findOne({ post_id: post._id });
+  const { comment } = req;
 
-    if (like.user_array.includes(_id)) {
+  try {
+    if (comment.like_users.includes(_id)) {
       return res.status(404).send({
         success: false,
-        message: '이미 좋아요한 게시물입니다.',
+        message: '이미 좋아요한 댓글입니다.',
       });
     }
 
-    post.meta.likes += 1;
-    await post.save();
-
-    like.user_array.push(_id);
-    await like.save();
+    comment.like_count += 1;
+    comment.like_users.push(_id);
+    await comment.save();
 
     return res.status(200).send({
       success: true,
       message: '좋아요를 눌렀습니다.',
       data: {
-        likes: post.meta.likes,
+        likes: comment.like_count,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: '내부 서버 오류입니다.',
+    });
+  }
+};
+
+// 댓글 좋아요 취소
+export const getCommentUnlike = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.body;
+  const { comment } = req;
+
+  try {
+    if (!comment.like_users.includes(_id)) {
+      return res.status(404).send({
+        success: false,
+        message: '좋아요를 하지않은 댓글입니다.',
+      });
+    }
+
+    comment.like_count -= 1;
+    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
+    await comment.save();
+
+    return res.status(200).send({
+      success: true,
+      message: '좋아요를 취소하였습니다.',
+      data: {
+        likes: comment.like_count,
       },
     });
   } catch (error) {
