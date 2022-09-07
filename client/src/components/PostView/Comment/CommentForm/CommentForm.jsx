@@ -75,18 +75,18 @@ export default function CommentForm({
 
     if (response.data.success) {
       dispatch(
-        createComment(
-          response.data.comment_id,
-          {
+        createComment({
+          _id: response.data.comment_id,
+          writer: {
             userId: loginState.id,
             nickname: loginState.name,
             imageUrl: loginState.imgUrl,
           },
-          parentId,
-          groupId,
-          postId,
-          data
-        )
+          parent_id: parentId,
+          group_id: groupId,
+          post_id: postId,
+          text: data,
+        })
       );
       if (parentId) {
         onFormInputCancel(e);

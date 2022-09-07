@@ -28,7 +28,12 @@ function PostViewContent() {
       } else {
         dispatch(pinnedInitCommentId());
       }
-      dispatch(getPostData(data._id, data.owner.nickname));
+      dispatch(
+        getPostData({
+          postId: data._id,
+          postWriter: data.owner.nickname,
+        })
+      );
 
       return data;
     } catch (error) {

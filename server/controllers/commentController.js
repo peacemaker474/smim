@@ -57,11 +57,20 @@ export const postCommentCreate = async (req, res) => {
 // 댓글 리스트 가져오기
 export const getCommentList = async (req, res) => {
   const { id: postId } = req.params;
+
   const userData = {
     _id: undefined,
     nickname: undefined,
     userId: undefined,
   };
+
+  if (!postId) {
+    return res.status(400).send({
+      success: false,
+      message: 'postId가 undefined입니다.',
+    });
+  }
+
   if (Object.keys(req.body).includes('user')) {
     // 로그인 했을 때
     const {
@@ -73,6 +82,15 @@ export const getCommentList = async (req, res) => {
   }
 
   try {
+    const postExist = await Post.exists({ _id: postId });
+
+    if (!postExist) {
+      return res.status(400).send({
+        success: false,
+        message: '존재하지 않거나 삭제된 게시물입니다.',
+      });
+    }
+
     const commentList = await Comment.find({
       post_id: postId,
       parent_id: null,
@@ -284,76 +302,6 @@ export const getCommentUnpinned = async (req, res) => {
     return res.status(500).send({
       success: false,
       message: error.message,
-    });
-  }
-};
-
-// 댓글 좋아요
-export const getCommentLike = async (req, res) => {
-  const {
-    user: { _id },
-  } = req.body;
-  const { comment } = req;
-
-  try {
-    if (comment.like_users.includes(_id)) {
-      return res.status(404).send({
-        success: false,
-        message: '이미 좋아요한 댓글입니다.',
-      });
-    }
-
-    comment.like_count += 1;
-    comment.like_users.push(_id);
-    await comment.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '좋아요를 눌렀습니다.',
-      data: {
-        likes: comment.like_count,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
-    });
-  }
-};
-
-// 댓글 좋아요 취소
-export const getCommentUnlike = async (req, res) => {
-  const {
-    user: { _id },
-  } = req.body;
-  const { comment } = req;
-
-  try {
-    if (!comment.like_users.includes(_id)) {
-      return res.status(404).send({
-        success: false,
-        message: '좋아요를 하지않은 댓글입니다.',
-      });
-    }
-
-    comment.like_count -= 1;
-    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
-    await comment.save();
-
-    return res.status(200).send({
-      success: true,
-      message: '좋아요를 취소하였습니다.',
-      data: {
-        likes: comment.like_count,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: '내부 서버 오류입니다.',
     });
   }
 };

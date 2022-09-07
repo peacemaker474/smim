@@ -15,7 +15,7 @@ function CommentItem({ cmntData, groupId }) {
       e.target.value = '';
       handleClickShow(false);
     },
-    [isTargetVisible]
+    [handleClickShow]
   );
 
   const handleTextChange = (text) => {

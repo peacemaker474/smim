@@ -44,13 +44,13 @@ export const postPostCreate = async (req, res) => {
 
 // 게시물 수정(Post Edit)
 export const putPostEdit = async (req, res) => {
-  const { id } = req.params;
+  const { id: postId } = req.params;
   const {
     content: { para },
   } = req.body;
 
   try {
-    await Post.findByIdAndUpdate(id, { ...req.body, content: para });
+    await Post.findByIdAndUpdate(postId, { ...req.body, content: para });
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
@@ -178,16 +178,16 @@ export const getPostList = async (req, res) => {
 
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
-  const { id } = req.params; // post id
+  const { id: postId } = req.params;
   const {
     user: { _id },
   } = req.body;
 
   try {
-    await Post.deleteOne({ _id: id });
-    await Like.deleteOne({ _id: id });
+    await Post.deleteOne({ _id: postId });
+    await Like.deleteOne({ _id: postId });
     const user = await User.findById(_id);
-    user.posts = user.posts.filter((el) => el !== id);
+    user.posts = user.posts.filter((el) => el !== postId);
     await user.save();
 
     return res.status(200).send({
