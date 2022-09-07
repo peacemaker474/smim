@@ -1,4 +1,5 @@
 import Comment from '../models/Comment.js';
+import Post from '../models/Post.js';
 import User from '../models/User.js';
 
 // 댓글 생성(Comment Create)
