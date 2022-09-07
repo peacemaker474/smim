@@ -144,8 +144,6 @@ export const checkPostExistAndContent = async (req, res, next) => {
       message: error.message,
     });
   }
-
-  next();
 };
 
 export const checkParamCommentExistAndData = async (req, res, next) => {

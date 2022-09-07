@@ -188,6 +188,7 @@ export const deletePost = async (req, res) => {
     await Like.deleteOne({ _id: postId });
     const user = await User.findById(_id);
     user.posts = user.posts.filter((el) => el !== postId);
+    user.bookmarks = user.bookmarks.filter((el) => el !== postId);
     await user.save();
 
     return res.status(200).send({

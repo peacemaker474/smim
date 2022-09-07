@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { isLoginCheckToggle, loginToggle } from '../redux/slice/toggleSlice';
 import Modal from '../components/common/Modal/Modal';
-import NavBar from '../components/common/NavBar/NavBar';
 import PostWriteBtn from '../components/post/PostWriteBtn/PostWriteBtn';
 
 function PublicRoute() {
@@ -22,7 +21,6 @@ function PublicRoute() {
 
   return (
     <>
-      <NavBar />
       {isLoginCheckToggled && (
         <Modal actionFunc={actionFunc} cancelFunc={cancelFunc}>
           {'로그인이 필요한 기능입니다.\n로그인하시겠습니까?'}

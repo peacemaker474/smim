@@ -52,12 +52,17 @@ export const postImageDeleteAndUpload = (req, res, next) => {
   const myRegExp1 = /https:(.*?)(png|jpg|jpeg)/gi;
   const realImg = (para.match(myRegExp1) || []).map((el) => decodeURI(el.split('com/')[1]));
 
-  try {
-    for (let el of imgArray) {
-      if (!realImg.includes(el)) {
-        params.Delete.Objects.push({ Key: el });
-      }
+  for (let el of imgArray) {
+    if (!realImg.includes(el)) {
+      params.Delete.Objects.push({ Key: el });
     }
+  }
+
+  if (params.Delete.Objects.length === 0) {
+    return next();
+  }
+
+  try {
     s3.deleteObjects(params, function (err, data) {
       if (err) throw new Error(err);
     });
@@ -89,7 +94,7 @@ export const postImageDeleteAndDelete = (req, res, next) => {
 
   if (content.match(myRegExp1).length === 0) {
     // 이미지 없으면 삭제 안하고 넘어감
-    next();
+    return next();
   }
 
   content.match(myRegExp1).forEach((el) => {
