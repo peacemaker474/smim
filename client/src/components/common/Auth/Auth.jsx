@@ -30,7 +30,7 @@ function Auth() {
         dispatch(getUserLogOut());
       }
     }
-  }, [pathname]);
+  }, [pathname, authenticated, dispatch, expireTime]);
 
   return <></>;
 }
