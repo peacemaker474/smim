@@ -13,6 +13,7 @@ import NotFound from '../pages/NotFound';
 function PostViewPage() {
   const { modalToggled } = useSelector((state) => state.toggle);
   const { accessToken } = useSelector((state) => state.authToken);
+  const { postAge } = useSelector((state) => state.post);
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function PostViewPage() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    navigate('/');
+    navigate(`/generation/${postAge}`);
   };
 
   const postViewActionFunc = () => {
