@@ -27,6 +27,7 @@ export default function CommentUploaded() {
     isLoading,
     isFetching,
   } = useQuery([('commentArray', { postid })], loadComments);
+
   if (isLoading || isFetching) {
     return <LoadingPage />;
   }

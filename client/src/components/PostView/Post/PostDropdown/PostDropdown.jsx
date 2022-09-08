@@ -7,6 +7,7 @@ import { modalToggle } from '../../../../redux/slice/toggleSlice';
 function Dropdown(props, ref) {
   const dispatch = useDispatch();
   const { id: postId } = useParams();
+
   const handlePostDel = async (e) => {
     e.preventDefault();
     dispatch(modalToggle());

@@ -20,7 +20,6 @@ function useDropdown() {
     document.addEventListener('mousedown', checkIfClickedOutside);
 
     return () => {
-      // Cleanup the event listener
       document.removeEventListener('mousedown', checkIfClickedOutside);
     };
   }, [isDropdownVisible]);

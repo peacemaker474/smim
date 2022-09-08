@@ -5,9 +5,14 @@ import { putUpdateUser } from '../../../redux/services/UserService';
 import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import MyInfoStyle from './MyInfo.style';
 
-function MyInfo () {
-  const { id, name: nickname, email, imgUrl } = useSelector(
-    state => ({
+function MyInfo() {
+  const {
+    id,
+    name: nickname,
+    email,
+    imgUrl,
+  } = useSelector(
+    (state) => ({
       id: state.user.id,
       name: state.user.name,
       email: state.user.email,
@@ -18,7 +23,11 @@ function MyInfo () {
   const { accessToken } = useSelector((state) => state.authToken);
   const { imageToggled } = useSelector((state) => state.toggle);
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState: {errors} } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
@@ -26,27 +35,28 @@ function MyInfo () {
       nickname,
       email,
       accessToken,
-    }
+    },
   });
-
-  // 이벰트 영역
 
   const handleImageModalOpen = useCallback(() => {
     dispatch(userImageToggle());
   }, [dispatch]);
 
-  const handleInfoUpdate = useCallback((userInfo) => {
-    const lastIdCheck = userInfo.id.indexOf('\b');
-    const lastNameCheck = userInfo.nickname.indexOf('\b');
-    
-    if (
-      !(id === userInfo.id || nickname === userInfo.nickname) &&
-      lastIdCheck !== 0 &&
-      lastNameCheck !== 0
-    ) {
-      dispatch(putUpdateUser(userInfo));
-    }
-  }, [dispatch, id, nickname]);
+  const handleInfoUpdate = useCallback(
+    (userInfo) => {
+      const lastIdCheck = userInfo.id.indexOf('\b');
+      const lastNameCheck = userInfo.nickname.indexOf('\b');
+
+      if (
+        !(id === userInfo.id || nickname === userInfo.nickname) &&
+        lastIdCheck !== 0 &&
+        lastNameCheck !== 0
+      ) {
+        dispatch(putUpdateUser(userInfo));
+      }
+    },
+    [dispatch, id, nickname]
+  );
 
   return (
     <MyInfoStyle
