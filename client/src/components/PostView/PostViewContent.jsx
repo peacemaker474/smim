@@ -32,6 +32,7 @@ function PostViewContent() {
         getPostData({
           postId: data._id,
           postWriter: data.owner.nickname,
+          postAge: data.targetAge,
         })
       );
 
