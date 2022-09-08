@@ -5,7 +5,7 @@ import MainAdd from '../../../asset/icon/icon-mail-add-fill.png';
 function PostWriteBtnPresenter({ onBtnClick }) {
   return (
     <BtnDiv onClick={onBtnClick}>
-      <ImgDiv></ImgDiv>
+      <ImgDiv />
     </BtnDiv>
   );
 }

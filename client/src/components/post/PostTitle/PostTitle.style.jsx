@@ -9,7 +9,7 @@ function PostTitlePresenter({ register, errors }) {
         palette='yellow'
         error={errors.title}
         maxLength='25'
-        {...register('title', { required: 'This is required'})}
+        {...register('title', { required: 'This is required' })}
       />
     </TitleWrap>
   );
@@ -17,7 +17,6 @@ function PostTitlePresenter({ register, errors }) {
 
 export default PostTitlePresenter;
 
-// PostTitle onChange할 때마다 focus를 잃는 현상 때문에 밖에 배치
 const TitleWrap = styled.div`
   margin-top: 30px;
 `;

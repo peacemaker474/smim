@@ -28,7 +28,6 @@ export function usePrompt(message, when = true, action) {
     (tx) => {
       const value = window.confirm(message);
       if (value) {
-        // 뒤로가기
         action();
         tx.retry();
       }

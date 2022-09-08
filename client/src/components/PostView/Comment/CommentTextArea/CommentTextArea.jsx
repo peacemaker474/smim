@@ -34,7 +34,6 @@ export default function CommentTextArea({
   const { ref: registerRef } = register('comment');
 
   useEffect(() => {
-    // textarea scroll height 설정
     register('comment', { required: true });
     inputRef.current.style.height = '27px';
     const scrollHeight = inputRef.current.scrollHeight;

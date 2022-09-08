@@ -5,7 +5,7 @@ import CommentItemPresenter from './CommentItem.style';
 
 function CommentItem({ cmntData, groupId }) {
   const [itemText, setItemText] = useState(cmntData.text);
-  const [isTargetVisible, handleClickShow] = useVisible(false); // comment input visible for Edit
+  const [isTargetVisible, handleClickShow] = useVisible(false);
   const delComment = useSelector((state) => state.comment).deletedIdArray.find(
     (el) => el === cmntData._id
   );

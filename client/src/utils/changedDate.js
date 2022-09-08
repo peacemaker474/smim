@@ -1,9 +1,9 @@
 export default function getDate(updateAt) {
   const data = new Date(updateAt);
 
-  const _year = data.getFullYear();
-  const _month = data.getMonth() + 1;
-  const _day = data.getDate();
-  
-  return `${_year}년 ${_month}월 ${_day}일`;
+  const year = data.getFullYear();
+  const month = data.getMonth() + 1;
+  const day = data.getDate();
+
+  return `${year}년 ${month}월 ${day}일`;
 }
