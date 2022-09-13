@@ -15,7 +15,7 @@ export const postPostCreate = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await User.findById({ _id: _id });
+    const user = await User.findById(_id);
     const post = await Post.create({
       title,
       hashtag,
@@ -179,9 +179,18 @@ export const getPostList = async (req, res) => {
 // 게시물 삭제(Post List Delete)
 export const deletePost = async (req, res) => {
   const { id: postId } = req.params;
+  const {
+    user: { _id },
+  } = req.body;
 
   try {
+    const owner = await User.findById(_id);
     const post = await Post.findById(postId);
+
+    const createdPostArr = owner.posts.filter((id) => id !== postId);
+    owner.posts = createdPostArr;
+    await owner.save();
+
     await Promise.all(
       post.meta.bookmarks.map(async (el) => {
         const user = await User.findById(el);
