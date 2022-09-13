@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ColorBtn } from '../styles/common/buttons';
 
 const IntroCtn = styled.div`
@@ -54,7 +55,7 @@ const IntroDesc = styled.div`
 
 const Title = styled.h1`
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 4rem;
   color: ${({ theme }) => theme.color.navy};
 `;
 
@@ -74,6 +75,8 @@ const StartBtn = styled(ColorBtn)`
   font-weight: 500;
   margin-top: 1rem;
 `;
+
+const StartAnchor = styled(Link)``;
 
 export default function Intro() {
   return (
@@ -114,7 +117,9 @@ export default function Intro() {
           </IntroImg>
           <IntroDesc>
             <Title>세대간 소통창구 스며들다, 바로 시작해보세요!</Title>
-            <StartBtn palette='yellow'>시작하기</StartBtn>
+            <StartBtn palette='yellow'>
+              <StartAnchor to='/'>시작하기</StartAnchor>
+            </StartBtn>
           </IntroDesc>
         </Content2>
       </Section>
