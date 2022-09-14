@@ -1,10 +1,11 @@
-import React from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { Cookies } from 'react-cookie';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import MainLists from '../components/postmain/MainLists/MainLists';
 import LoadingPage from './LoadingPage';
 import { getMainPostLists } from '../network/main/http';
-import { useNavigate } from 'react-router-dom';
 
 const MainBody = styled.main`
   width: 100%;
@@ -21,7 +22,7 @@ const MainBody = styled.main`
 
 const MainContainer = styled.div`
   width: 1143px;
-  height: 818px;  
+  height: 818px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -70,51 +71,37 @@ const MainWrapper = styled.div`
 
 function MainPage() {
   const navigate = useNavigate();
-  const { isLoading, data, isFetching } = useQuery(
-    ['mainLists'],
-    getMainPostLists,
-  );
+  const cookies = new Cookies();
+  const entryCheck = cookies.get('entry');
+
+  useEffect(() => {
+    if (!entryCheck) {
+      navigate('/intro');
+    }
+  }, [entryCheck, navigate]);
+
+  const { isLoading, data, isFetching } = useQuery(['mainLists'], getMainPostLists);
 
   if (isLoading || isFetching) {
-    return <LoadingPage />
+    return <LoadingPage />;
   }
 
   const handlePostDetailMove = (evt) => {
     const postId = evt.currentTarget.id;
     navigate(`post/view/${postId}`);
-  }
+  };
 
   return (
     <MainBody>
       <MainContainer>
         <MainWrapper>
-          <MainLists 
-            age='10'
-            posts={data?.lists['10']}
-            onPostDetailMove={handlePostDetailMove}
-          />
-          <MainLists
-            age='20'
-            posts={data?.lists['20']}
-            onPostDetailMove={handlePostDetailMove}
-          />
-          <MainLists
-            age='30'
-            posts={data?.lists['30']}
-            onPostDetailMove={handlePostDetailMove}
-          />
+          <MainLists age='10' posts={data?.lists['10']} onPostDetailMove={handlePostDetailMove} />
+          <MainLists age='20' posts={data?.lists['20']} onPostDetailMove={handlePostDetailMove} />
+          <MainLists age='30' posts={data?.lists['30']} onPostDetailMove={handlePostDetailMove} />
         </MainWrapper>
         <MainWrapper>
-          <MainLists
-            age='40'
-            posts={data?.lists['40']}
-            onPostDetailMove={handlePostDetailMove}
-          />
-          <MainLists
-            age='50'
-            posts={data?.lists['50']}
-            onPostDetailMove={handlePostDetailMove}
-          />
+          <MainLists age='40' posts={data?.lists['40']} onPostDetailMove={handlePostDetailMove} />
+          <MainLists age='50' posts={data?.lists['50']} onPostDetailMove={handlePostDetailMove} />
         </MainWrapper>
       </MainContainer>
     </MainBody>
