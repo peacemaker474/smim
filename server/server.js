@@ -13,9 +13,9 @@ import { reissueAccessToken } from './controllers/tokenControllers.js';
 const app = express();
 
 let corsOption = {
-  origin: ['http://localhost:3000'],
+  origin: '*',
   credentials: true,
-}
+};
 
 app.use(cookieParser());
 app.use(cors(corsOption));
