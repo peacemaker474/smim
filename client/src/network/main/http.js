@@ -3,9 +3,7 @@ import axios from 'axios';
 const http = process.env.REACT_APP_SERVER_URL;
 
 export const getMainPostLists = async () => {
-  const { data } = await axios.get(`${http}`, {
-    withCredentials: true,
-  });
+  const { data } = await axios.get(`${http}`);
   return data;
 };
 

@@ -3,20 +3,11 @@ import axios from 'axios';
 
 const http = process.env.REACT_APP_SERVER_URL;
 
-const config = {
-  headers: {
-    'content-type': 'multipart/form-data',
-  },
-};
-
 export const postUserLogin = createAsyncThunk(
   'POST_LOGIN',
   async (loginData, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${http}/login`, loginData, {
-        headers: {
-          'Access-Control-Allow-Origin': true,
-        },
         withCredentials: true,
       });
       return data;
@@ -44,9 +35,14 @@ export const putUpdateUser = createAsyncThunk(
 
 export const putUserImage = createAsyncThunk(
   'PUT_UPDATE/IMAGE',
-  async (imageData, { rejectWithValue }) => {
+  async (newData, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`${http}/my/update-image`, imageData, config);
+      const { data } = await axios.put(`${http}/my/update-image`, newData.imageData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+          Authorization: `Bearer ${newData.accessToken}`,
+        }
+      });
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -57,7 +53,6 @@ export const putUserImage = createAsyncThunk(
 export const getUserLogOut = createAsyncThunk('GET_LOGOUT', async () => {
   try {
     const { data } = await axios.get(`${http}/logout`, {
-      crossDomain: true,
       withCredentials: true,
     });
     return data;

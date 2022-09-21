@@ -4,7 +4,7 @@ import { putUserImage } from '../../../redux/services/UserService';
 import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import UpdateUserImageStyle from './UpdateUserImage.style';
 
-function UpdateUserImage ({ imgUrl, onImageModalOpen }) {
+function UpdateUserImage({ imgUrl, onImageModalOpen }) {
   const { email } = useSelector((state) => state.user);
   const { accessToken } = useSelector((state) => state.authToken);
   const [encodeImg, setEncodeImg] = useState("");
@@ -31,10 +31,14 @@ function UpdateUserImage ({ imgUrl, onImageModalOpen }) {
   const handleImageUpdate = () => {
     const formdata = new FormData();
     formdata.append('email', email);
-    formdata.append('accessToken', accessToken);
+
     if (files !== "") {
       formdata.append('file', files[0]);
-      dispatch(putUserImage(formdata));
+      const newData = {
+        imageData: formdata,
+        accessToken,
+      };
+      dispatch(putUserImage(newData));
       dispatch(userImageToggle());
     }
   }
