@@ -31,7 +31,7 @@ function MyInfo() {
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
-      id,
+      userId: id,
       nickname,
       email,
       accessToken,
@@ -44,11 +44,11 @@ function MyInfo() {
 
   const handleInfoUpdate = useCallback(
     (userInfo) => {
-      const lastIdCheck = userInfo.id.indexOf('\b');
+      const lastIdCheck = userInfo.userId.indexOf('\b');
       const lastNameCheck = userInfo.nickname.indexOf('\b');
 
       if (
-        !(id === userInfo.id || nickname === userInfo.nickname) &&
+        !(id === userInfo.userId || nickname === userInfo.nickname) &&
         lastIdCheck !== 0 &&
         lastNameCheck !== 0
       ) {

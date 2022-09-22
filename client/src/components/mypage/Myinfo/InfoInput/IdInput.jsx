@@ -5,20 +5,20 @@ import { MyInfoInput } from '../../../../styles/common/input';
 import { MyPageValid } from '../../../../styles/common/validtext';
 import { InfoLabel, InfoBox } from '../../../../styles/mypage/myinfo';
 
-function IdInput ({ register, errors }) {
+function IdInput({ register, errors }) {
   return (
     <InfoBox>
       <InfoLabel> 아이디 </InfoLabel>
       <MyInfoInput
         type="text"
         placeholder="아이디"
-        {...register("id", {
+        {...register("userId", {
           pattern: {
             value: /^[a-zA-Z0-9]{4,12}$/,
             message: "4~12자리의 영문, 숫자만 가능합니다."
           },
           validate: {
-            checkExistedId : async (value) => {
+            checkExistedId: async (value) => {
               try {
                 const { data } = await getCheckMyId(value);
                 return data.success;
