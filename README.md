@@ -13,11 +13,11 @@
 서로 세대가 다르기에 생각도 다르고, 경험도 다르지만 스며들다를 통해 서로의 생각을 물어보고  
 들어보면서 서로를 이해해보세요.  여러 고민들을 공유하다 보면 어느새 다른 세대를 이해하고 서로가  
 서로의 세대에게 스며들어 어우러지게 될 것 입니다.
-
-[👉Smim 바로가기](https://smim.kro.kr/)
-
-
-
+  
+[👉Smim 바로가기](https://smim.kro.kr/)  
+  
+  
+  
 ## Team
 | Name | Position | Github |
 |---|:---:|---:|
@@ -35,7 +35,7 @@
 <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"><img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"><img src="https://img.shields.io/badge/Amazon PM2-B037A?style=for-the-badge&logo=Amazon PM2&logoColor=white">
 
 ## Architecture diagram
-![](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9fef342-5ad1-4063-8200-29aca9c2deb0/%EC%BA%A1%EC%B2%98.png)
+![](https://user-images.githubusercontent.com/65156388/191732483-41f43b66-50ee-4368-825f-d4de7b5212aa.png)
 
 ## DB schema
 ![](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eea999bf-39a6-4965-a207-2ee5d2e46e9c/%EC%BA%A1%EC%B2%98.png)
