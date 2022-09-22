@@ -17,6 +17,7 @@ export const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  align-items: center;
 `;
 
 export const BirthBox = styled.div`
