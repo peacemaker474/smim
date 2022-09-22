@@ -27,7 +27,6 @@ export const postLogin = async (req, res) => {
       id: user.userId,
       name: user.nickname,
       email: user.email,
-      social: user.socialOnly,
       accessToken,
       refreshToekn,
       success: true,
