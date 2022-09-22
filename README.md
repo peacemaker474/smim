@@ -14,7 +14,7 @@
 들어보면서 서로를 이해해보세요.  여러 고민들을 공유하다 보면 어느새 다른 세대를 이해하고 서로가  
 서로의 세대에게 스며들어 어우러지게 될 것 입니다.
 
-[👉Smim 바로가기](https://smim.kro.kr/)
+[👉 Smim 바로가기](https://smim.kro.kr/)
 
 ## Team
 | Name | Position | Github |
@@ -32,12 +32,14 @@
 ### **Deploy**
 <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white"> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"> <img src="https://img.shields.io/badge/Amazon PM2-B037A?style=for-the-badge&logo=Amazon PM2&logoColor=white">
 
-## Architecture diagram
+## Architecture Diagram
 ![캡처 PNG](https://user-images.githubusercontent.com/65156388/191733556-1ff554cd-a335-4ae9-98e3-92c224405cff.png)
 
+## Prototype & UI Design
 
-## DB schema
+## DB Schema
 ![캡처 PNG (1)](https://user-images.githubusercontent.com/65156388/191733584-e6209cee-103e-4866-b063-436b65e67508.png)
 
 
 ## API Document
+[👉 API 문서](https://charm-saturnalia-79b.notion.site/12-28-REST-API-1ca8895d57e14dfa8a759316079af45c)
