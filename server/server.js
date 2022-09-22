@@ -13,8 +13,10 @@ import { reissueAccessToken } from './controllers/tokenControllers.js';
 const app = express();
 
 let corsOption = {
-  origin: '*',
+  origin: ['https://smim.kro.kr', 'http://localhost:3000'],
   credentials: true,
+  methods: ['GET', 'PUT', 'POST', 'OPTIONS', 'DELETE'],
+  headers: ['Content-Type', 'Authorization'],
 };
 
 app.use(cookieParser());
