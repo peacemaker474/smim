@@ -333,6 +333,19 @@ export const deleteComment = async (req, res) => {
   const { id: commentId } = req.params; // comment id
 
   try {
+    const comment = await Comment.findOne({
+      _id: commentId,
+    });
+
+    if (comment.parent_id !== null) {
+      const parentComment = await Comment.findOne({
+        _id: comment.parent_id,
+      });
+      const childrenCmnts = parentComment.children.filter((el) => el !== commentId);
+      parentComment.children = childrenCmnts;
+      await parentComment.save();
+    }
+
     await Comment.deleteOne({ _id: commentId });
     return res.status(200).send({
       success: true,
