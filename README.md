@@ -36,6 +36,7 @@
 ![캡처 PNG](https://user-images.githubusercontent.com/65156388/191733556-1ff554cd-a335-4ae9-98e3-92c224405cff.png)
 
 ## Prototype & UI Design
+<img width="427" alt="prototpype2" src="https://user-images.githubusercontent.com/65156388/191736291-2fdfc68c-5b65-47cf-871f-d7e1891ea8fb.PNG">  <img width="555" alt="prototype1" src="https://user-images.githubusercontent.com/65156388/191736301-7a3db850-f672-4685-913b-59d59b8043a2.PNG">
 
 ## DB Schema
 ![캡처 PNG (1)](https://user-images.githubusercontent.com/65156388/191733584-e6209cee-103e-4866-b063-436b65e67508.png)
