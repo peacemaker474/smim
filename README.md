@@ -42,4 +42,4 @@
 
 
 ## API Document
-[👉 API 문서](https://charm-saturnalia-79b.notion.site/12-28-REST-API-1ca8895d57e14dfa8a759316079af45c)
+[👉 API 문서](https://github.com/nayeon-hub/smim/wiki/API)
