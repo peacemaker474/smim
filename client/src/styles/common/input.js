@@ -5,7 +5,7 @@ export const SignupInput = styled.input`
   width: 100%;
   height: 50%;
   font-size: 0.9rem;
-  border: 2px solid ${({theme}) => theme.color.yellow};
+  border: 2px solid ${({ theme }) => theme.color.yellow};
   padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -23,7 +23,7 @@ export const BirthYear = styled.input`
   all: unset;
   width: 30%;
   height: 45px;
-  border: 2px solid ${({theme}) => theme.color.yellow};
+  border: 2px solid ${({ theme }) => theme.color.yellow};
   padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -43,9 +43,9 @@ export const BirthMonth = styled.select`
   all: unset;
   width: 30%;
   height: 45px;
-  line-height: 1em;
-  border: 2px solid ${({theme}) => theme.color.yellow};
-  padding: 12px 0 0 10px;
+  line-height: 45px;
+  border: 2px solid ${({ theme }) => theme.color.yellow};
+  padding-left: 10px;
   box-sizing: border-box;
   border-radius: 5px;
 

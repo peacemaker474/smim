@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
-import SignupForm from "../components/signup/SignupForm/SignupForm";
+import SignupForm from '../components/signup/SignupForm/SignupForm';
 
 const SignupContainer = styled.section`
   max-width: 890px;
   max-height: 1000px;
+  min-height: 670px;
   width: 45vw;
   height: 100vh;
   margin: 0 auto;
