@@ -43,9 +43,9 @@ export const BirthMonth = styled.select`
   all: unset;
   width: 30%;
   height: 45px;
-  line-height: 45px;
+  line-height: 1em;
   border: 2px solid ${({ theme }) => theme.color.yellow};
-  padding-left: 10px;
+  padding: 12px 0 0 10px;
   box-sizing: border-box;
   border-radius: 5px;
 
