@@ -1,0 +1,6 @@
+{
+  "short_name": "smim App",
+  "name": "Apps for Multi-Generation Conversations",
+  "start_url": "https://smim.kro.kr/intro",
+  "display": "standalone"
+}
