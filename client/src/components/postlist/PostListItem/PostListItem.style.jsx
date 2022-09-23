@@ -104,7 +104,6 @@ const PostTagDiv = styled.div`
 `;
 const TagItem = styled(Tag)`
   background-color: ${({ theme, color }) => theme.tagColor[color]};
-  font-weight: 600;
   & + span {
     margin-left: 5px;
   }

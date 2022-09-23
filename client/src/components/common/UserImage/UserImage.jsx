@@ -7,17 +7,21 @@ const MyImg = styled.img`
   border-radius: 100%;
   object-fit: contain;
   background-color: white;
-  border: 1px solid rgba(7, 7, 7, .6); // 추후에 지울것
+  border: 1px solid ${({ theme }) => theme.color.gray}; // 추후에 지울것
 `;
 
-function UserImage ({width, height, encodeImg, imgUrl}) {
+function UserImage({ width, height, encodeImg, imgUrl }) {
   const encoded = encodeURI(imgUrl);
   const decoded = decodeURI(encoded);
-  
+
   return (
-    <MyImg 
-      src={encodeImg ? encodeImg : "https://smim-image-bucket.s3.ap-northeast-2.amazonaws.com/" + decoded}
-      alt="user_profileImage"
+    <MyImg
+      src={
+        encodeImg
+          ? encodeImg
+          : 'https://smim-image-bucket.s3.ap-northeast-2.amazonaws.com/' + decoded
+      }
+      alt='user_profileImage'
       width={width}
       height={height}
     />

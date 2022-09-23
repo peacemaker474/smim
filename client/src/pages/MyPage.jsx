@@ -7,7 +7,8 @@ import MyProfile from '../components/mypage/MyProfile/MyProfile';
 const MyPageSection = styled.section`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(127, 127, 127, .09);
+  min-height: 640px;
+  background-color: rgba(127, 127, 127, 0.09);
   position: relative;
 `;
 
@@ -42,7 +43,6 @@ const MyPageOverlay = styled.div`
     top: 5%;
     padding-top: 2rem;
   }
-
 `;
 
 export default function MyPage() {

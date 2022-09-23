@@ -7,7 +7,7 @@ export const Tag = styled.span`
   color: #183347;
   background: ${({ theme }) => theme.tagColor['yellow']};
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 12px;
   display: flex;
   align-items: center;
