@@ -7,11 +7,14 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
+    'prettier',
   ],
   rules: {
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
+    'react/react-in-jsx-scope': 'off',
+    'react/self-closing-comp': 'warn',
+    'no-console': 'off',
     'prettier/prettier': 0,
     'import/extensions': 0,
     'no-use-before-define': 0,
@@ -21,5 +24,6 @@ module.exports = {
     'react/prop-types': 0,
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state']}]
   },
 };

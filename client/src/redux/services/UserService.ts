@@ -1,55 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { UserData, LoginData, UpdateUserData, MyData, UpdateImageData, ImageData, ErrorMessage } from './type';
 import axios from 'axios';
 
 const http = process.env.REACT_APP_SERVER_URL;
 
-interface IUserError {
-  errorMessage: string;
-}
-
-interface IUserLogin {
-  id: string;
-  name: string;
-  email: string;
-  accessToken: string;
-  refreshToekn: string;
-  success: boolean;
-  imageUrl: string;
-  message: string;
-}
-
-interface ILoginData {
-  userId: string;
-  password: string;
-}
-
-interface IMy {
-  userId: string;
-  nickename: string;
-  email: string;
-  accessToken: string;
-}
-
-interface IResponse {
-  id: string;
-    name: string;
-    email: string;
-    success: boolean;
-    message: string;
-}
-
-interface IImage {
-  imageData: FormData;
-  accessToken: string;
-}
-
-interface IImageResponse {
-  success: boolean;
-      message: string;
-      imageUrl: string;
-}
-
-export const postUserLogin = createAsyncThunk<IUserLogin[], ILoginData>(
+export const postUserLogin = createAsyncThunk<UserData, LoginData, { rejectValue: ErrorMessage }>(
   'POST_LOGIN',
   async (loginData, { rejectWithValue }) => {
     try {
@@ -63,7 +18,7 @@ export const postUserLogin = createAsyncThunk<IUserLogin[], ILoginData>(
   }
 );
 
-export const putUpdateUser = createAsyncThunk<IResponse, IMy>(
+export const putUpdateUser = createAsyncThunk<UpdateUserData, MyData, { rejectValue: ErrorMessage }>(
   'PUT_UPDATE/USER',
   async (userData, { rejectWithValue }) => {
     try {
@@ -79,7 +34,7 @@ export const putUpdateUser = createAsyncThunk<IResponse, IMy>(
   }
 );
 
-export const putUserImage = createAsyncThunk<IImageResponse, IImage>(
+export const putUserImage = createAsyncThunk<UpdateImageData, ImageData, { rejectValue: ErrorMessage }>(
   'PUT_UPDATE/IMAGE',
   async (newData, { rejectWithValue }) => {
     try {
