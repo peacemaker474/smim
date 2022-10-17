@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UserData, LoginData, UpdateUserData, MyData, UpdateImageData, ImageData, ErrorMessage } from './type';
 import axios from 'axios';
+import { UserData, LoginData, UpdateUserData, MyData, UpdateImageData, ImageData, ErrorMessage } from './type';
 
 const http = process.env.REACT_APP_SERVER_URL;
 

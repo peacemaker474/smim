@@ -1,20 +1,15 @@
-import styled from 'styled-components';
+import LoginSection from './components/login/LoginSection';
 import { useAppSelector } from './redux/hooks';
-
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
+import AppRoute from './routes/AppRoute';
 
 function App () {
-  const { menuToggled } = useAppSelector((state) => state.toggle);
-
-  console.log(menuToggled);
+  const { loginToggled } = useAppSelector(state => state.toggle);
 
   return (
-    <Wrapper>
-      hi
-    </Wrapper>
+    <>
+      {loginToggled && <LoginSection />}
+      <AppRoute />
+    </>
   );
 }
 
