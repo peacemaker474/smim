@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { useAppSelector } from "./redux/hooks";
+import styled from 'styled-components';
+import { useAppSelector } from './redux/hooks';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -13,7 +13,7 @@ function App () {
 
   return (
     <Wrapper>
-
+      hi
     </Wrapper>
   );
 }
