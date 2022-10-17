@@ -11,6 +11,9 @@ module.exports = {
   ],
   rules: {
     'linebreak-style': 0,
+    'consistent-return': 'off',
+    'no-alert': 'off',
+    '@typescript-eslint/no-explicit-any': ["off"],
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 'off',
     'react/self-closing-comp': 'warn',

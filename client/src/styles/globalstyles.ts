@@ -46,7 +46,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'MaruBuri-Regular';
   }
   
-  input,select,textarea{
+  input,select,textarea {
+    all: unset;
     outline : none;
     font-family: 'MaruBuri-Regular';
   }
