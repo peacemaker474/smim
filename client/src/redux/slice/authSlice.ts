@@ -7,7 +7,7 @@ interface TokenState {
   authenticated: boolean;
   accessToken: string | null;
   expireTime: number | null;
-};
+}
 
 const initialState: TokenState = {
   authenticated: false,
@@ -30,15 +30,14 @@ export const authSlice = createSlice({
       state.expireTime = null;
     },
   },
-  extraReducers : (builder) => {
-    builder
-      .addCase(postUserLogin.fulfilled, (state, action) => {
-        state.authenticated = true;
-        state.accessToken = action.payload.accessToken;
-        state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
-      })
-  }
-})
+  extraReducers: (builder) => {
+    builder.addCase(postUserLogin.fulfilled, (state, action) => {
+      state.authenticated = true;
+      state.accessToken = action.payload.accessToken;
+      state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
+    });
+  },
+});
 
 export const { SET_TOKEN, DELETE_TOKEN } = authSlice.actions;
 
