@@ -11,8 +11,8 @@ module.exports = {
   ],
   rules: {
     'linebreak-style': 0,
-    'consistent-return': 'off',
-    'no-alert': 'off',
+    'consistent-return': 'off', // 화살표 함수에 대해
+    'no-alert': 'off', // alert창에 대해
     '@typescript-eslint/no-explicit-any': ["off"],
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 'off',
