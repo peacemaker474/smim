@@ -1,4 +1,4 @@
-import NavLists from './components/common/molecules/NavLists';
+import Navbar from './components/common/organisms/Navbar';
 import LoginSection from './components/login/LoginSection';
 import { useAppSelector } from './redux/hooks';
 import AppRoute from './routes/AppRoute';
@@ -8,7 +8,7 @@ function App () {
 
   return (
     <>
-      <NavLists />
+      <Navbar />
       {loginToggled && <LoginSection />}
       <AppRoute />
     </>

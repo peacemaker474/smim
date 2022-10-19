@@ -22,22 +22,12 @@ const GenerationLink = styled(Link)<{ current: boolean }>`
     ${({ current, theme }) => (current ? `${theme.color.black}` : 'transparent')};
 `;
 
-const List = styled.li`
-  &:nth-child(6) {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-`;
-
-function NavList ({ url, current, children }: LinkProps) {
+function GNLink ({ url, current, children }: LinkProps) {
   return (
-    <List>
-      <GenerationLink to={url} current={current}>
-        {children}
-      </GenerationLink>
-    </List>
+    <GenerationLink to={url} current={current}>
+      {children}
+    </GenerationLink>
   );
 }
 
-export default NavList;
+export default GNLink;
