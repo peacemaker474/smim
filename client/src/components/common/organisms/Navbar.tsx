@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import MainLogo from '../molecules/MainLogo';
 import NavLists from '../molecules/NavLists';
 
 function Navbar () {
   return (
     <NavContainer>
       <NavWrapper>
+        <MainLogo />
         <NavLists />
       </NavWrapper>
     </NavContainer>

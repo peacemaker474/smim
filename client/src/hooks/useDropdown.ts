@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 function useDropdown () {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLElement>();
   const btnRef = useRef<HTMLElement>();
 
   const handleDropdownShow = () => {

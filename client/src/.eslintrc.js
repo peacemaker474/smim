@@ -13,7 +13,8 @@ module.exports = {
     'linebreak-style': 0,
     'consistent-return': 'off', // 화살표 함수에 대해
     'no-alert': 'off', // alert창에 대해
-    '@typescript-eslint/no-explicit-any': ["off"],
+    'react/require-default-props': 'off', // default value 설정에 대해
+    '@typescript-eslint/no-explicit-any': ['off'],
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 'off',
     'react/self-closing-comp': 'warn',

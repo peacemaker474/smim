@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: any[] = [];
-
 interface CreatedItem {
   _id: string;
   writer: string;
@@ -11,7 +9,9 @@ interface CreatedItem {
   text: string;
   like: boolean;
   like_count: number;
-}
+};
+
+const initialState: CreatedItem[] = [];
 
 const commentCreateSlice = createSlice({
   name: 'commentCreate',
