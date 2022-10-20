@@ -37,9 +37,9 @@ const ItemDate = styled.div`
 function InventoryItem() {
   return (
     <ItemBox>
-      <ItemAnchor to="/post/view/632bc900b4a156b3ed2f7a28">
+      <ItemAnchor to='/post/view/632bc900b4a156b3ed2f7a28'>
         <ItemTitle>요즘 학업에 너무 집중이 안되요.</ItemTitle>
-        <Profile width="23px" height="23px" imgUrl="users/default.png">
+        <Profile width='23px' height='23px' imgUrl='users/default.png'>
           한국사
         </Profile>
         <ItemPara>
@@ -47,8 +47,8 @@ function InventoryItem() {
           아니네요..
         </ItemPara>
         <ItemEtc>
-          <IconWithValue icon={eye} value="2" />
-          <IconWithValue icon={heartFill} value="2" />
+          <IconWithValue icon={eye} value='2' />
+          <IconWithValue icon={heartFill} value='2' />
         </ItemEtc>
         <TagList hashtagArr={['학업', '집중', '스트레스']} />
         <ItemDate>2022년 9월 22일</ItemDate>

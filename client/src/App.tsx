@@ -1,5 +1,5 @@
 import Navbar from './components/common/organisms/Navbar';
-import LoginSection from './components/login/LoginSection';
+import LoginPage from './pages/LoginPage';
 import { useAppSelector } from './redux/hooks';
 import AppRoute from './routes/AppRoute';
 
@@ -9,7 +9,7 @@ function App () {
   return (
     <>
       <Navbar />
-      {loginToggled && <LoginSection />}
+      {loginToggled && <LoginPage />}
       <AppRoute />
     </>
   );

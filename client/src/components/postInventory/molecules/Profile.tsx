@@ -5,7 +5,6 @@ interface ProfileProps {
   width: string;
   height: string;
   imgUrl: string;
-  encodeImg?: string;
   children: string;
 }
 
@@ -21,10 +20,10 @@ const UserName = styled.span`
   margin-left: 6px;
 `;
 
-function Profile({ width, height, imgUrl, children, encodeImg }: ProfileProps) {
+function Profile({ width, height, imgUrl, children }: ProfileProps) {
   return (
     <ProfileDiv>
-      <UserImage width={width} height={height} imgUrl={imgUrl} encodeImg={encodeImg} />
+      <UserImage width={width} height={height} imgUrl={imgUrl} />
       <UserName>{children}</UserName>
     </ProfileDiv>
   );

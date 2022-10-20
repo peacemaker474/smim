@@ -1,7 +1,9 @@
+// 추후에 memo 추가할 것!
+
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import UserImage from './UserImage';
-import DownArrow from '../../../assets/icon/icon-down.svg';
+import DownArrow from '../../../asset/icons/icon-down.svg';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 
 function UserLink () {
