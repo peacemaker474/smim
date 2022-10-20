@@ -1,5 +1,100 @@
+import { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { useInfiniteQuery } from 'react-query';
 import styled from 'styled-components';
-import InventoryBody from '../components/postInventory/organisms/InventoryBody';
+import axios from 'axios';
+import InventoryItem from '../components/postInventory/molecules/InventoryItem';
+
+const http = 'http://localhost:4000';
+
+// interface QueryKey {
+//   pageParam: number;
+// }
+
+interface SearchList {
+  inputs: string;
+  option: string;
+}
+
+const getPostListRead = (targetAge: string | undefined, filter: any, data: any, page = 1) => {
+  return axios.get(
+    `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.inputs}`,
+  );
+};
+
+function PostInventoryPage() {
+  const obsRef = useRef(null);
+  const { age } = useParams();
+  const postFilter = '';
+  const searchList: SearchList = { inputs: '', option: '' };
+
+  console.log(age);
+
+  const loadedPostListData = async (pageParam: number) => {
+    try {
+      const response = await getPostListRead(age, postFilter, searchList, pageParam);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    'postArray',
+    ({ pageParam }) => loadedPostListData(pageParam),
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return currentPage.lastPage ? null : nextPage;
+      },
+    },
+  );
+
+  useEffect(() => {
+    if (!hasNextPage) {
+      return;
+    }
+    const observer = new IntersectionObserver((entries) =>
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          fetchNextPage();
+        }
+      }),
+    );
+    const el = obsRef && obsRef.current;
+    if (!el) {
+      return;
+    }
+    observer.observe(el);
+    return () => {
+      observer.unobserve(el);
+    };
+  }, [hasNextPage, fetchNextPage]);
+
+  console.log(isLoading);
+  console.log(data);
+
+  if (age === '10' || age === '20' || age === '30' || age === '40' || age === '50') {
+    return (
+      <InventoryMain>
+        <InventoryContainer>
+          <InventoryHeading>{age}대 질문리스트</InventoryHeading>
+          <PostListBodyContainer>
+            <PostListBodyLayout>
+              <InventoryItem />
+              <InventoryItem />
+              <InventoryItem />
+              <div ref={obsRef} />
+            </PostListBodyLayout>
+          </PostListBodyContainer>
+        </InventoryContainer>
+      </InventoryMain>
+    );
+  }
+  return <>NotFound</>;
+}
+
+export default PostInventoryPage;
 
 const InventoryMain = styled.main``;
 
@@ -26,15 +121,21 @@ const InventoryHeading = styled.h2`
   }
 `;
 
-function PostInventoryPage() {
-  return (
-    <InventoryMain>
-      <InventoryContainer>
-        <InventoryHeading>20대 질문리스트</InventoryHeading>
-        <InventoryBody />
-      </InventoryContainer>
-    </InventoryMain>
-  );
-}
+const PostListBodyContainer = styled.div`
+  margin-top: 67px;
+`;
 
-export default PostInventoryPage;
+const PostListBodyLayout = styled.div`
+  display: grid;
+  grid-template-columns: 234px 234px 234px;
+  gap: 20px 14px;
+  position: relative;
+  // height: 250px;
+  @media screen and (max-width: 588px) {
+    grid-template-columns: 252px;
+    margin-top: 35px;
+  }
+  @media (min-width: 588px) and (max-width: 850px) {
+    grid-template-columns: 234px 234px;
+  }
+`;
