@@ -7,9 +7,10 @@ import InventoryItem from '../components/postInventory/molecules/InventoryItem';
 
 const http = 'http://localhost:4000';
 
-// interface QueryKey {
-//   pageParam: number;
-// }
+interface loadedDataProps {
+  pageParam: number;
+  queryKey: any;
+}
 
 interface SearchList {
   inputs: string;
@@ -28,27 +29,26 @@ function PostInventoryPage() {
   const postFilter = '';
   const searchList: SearchList = { inputs: '', option: '' };
 
-  console.log(age);
-
-  const loadedPostListData = async (pageParam: number) => {
+  const loadedPostListData = async ({ queryKey, pageParam = 1 }: loadedDataProps) => {
     try {
-      const response = await getPostListRead(age, postFilter, searchList, pageParam);
+      const response = await getPostListRead(queryKey[1], postFilter, searchList, pageParam);
       return response.data;
     } catch (error) {
       console.error(error);
     }
   };
 
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    'postArray',
-    ({ pageParam }) => loadedPostListData(pageParam),
-    {
-      getNextPageParam: (currentPage) => {
-        const nextPage = currentPage.page + 1;
-        return currentPage.lastPage ? null : nextPage;
-      },
+  const {
+    data: postData,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery(['postArray', age], ({ queryKey, pageParam }) => loadedPostListData({ queryKey, pageParam }), {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return currentPage.lastPage ? null : nextPage;
     },
-  );
+  });
 
   useEffect(() => {
     if (!hasNextPage) {
@@ -72,7 +72,6 @@ function PostInventoryPage() {
   }, [hasNextPage, fetchNextPage]);
 
   console.log(isLoading);
-  console.log(data);
 
   if (age === '10' || age === '20' || age === '30' || age === '40' || age === '50') {
     return (
@@ -81,9 +80,13 @@ function PostInventoryPage() {
           <InventoryHeading>{age}대 질문리스트</InventoryHeading>
           <PostListBodyContainer>
             <PostListBodyLayout>
-              <InventoryItem />
-              <InventoryItem />
-              <InventoryItem />
+              {postData ? (
+                <>
+                  {postData.pages.map((item) => {
+                    return item.data.map((el: any) => <InventoryItem key={el._id} postData={el} />);
+                  })}
+                </>
+              ) : null}
               <div ref={obsRef} />
             </PostListBodyLayout>
           </PostListBodyContainer>

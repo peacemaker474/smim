@@ -8,50 +8,71 @@ import IconWithValue from '../atoms/IconWithValue';
 import heartFill from '../../../asset/icons/icon-heart-fill.svg';
 import eye from '../../../asset/icons/icon-eye.svg';
 
-const ItemBox = styled.div`
-  position: relative;
-  height: 255px;
-  border: 2px solid ${({ theme }) => theme.color.lightGray};
-  border-radius: 20px;
-  padding: 31px 21px;
-  cursor: pointer;
-`;
+interface PostData {
+  meta: any;
+  content: string;
+  updateAt: string;
+  hashtag: Array<string>;
+  title: string;
+  _id: string;
+  owner: any;
+}
 
-const ItemAnchor = styled(Link)``;
+interface InventoryItemProps {
+  postData: PostData;
+}
 
-const ItemEtc = styled.div`
-  display: flex;
-  margin-left: 4px;
-  margin-bottom: 10px;
-`;
+function InventoryItem({ postData }: InventoryItemProps) {
+  const {
+    meta,
+    content,
+    updateAt,
+    hashtag,
+    title,
+    _id,
+    owner: { nickname, imageUrl },
+  } = postData;
 
-const ItemDate = styled.div`
-  width: 100%;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 16px;
-  text-align: right;
-  color: ${({ theme }) => theme.color.darkGray};
-`;
+  const ItemBox = styled.div`
+    position: relative;
+    height: 255px;
+    border: 2px solid ${({ theme }) => theme.color.lightGray};
+    border-radius: 20px;
+    padding: 31px 21px;
+    cursor: pointer;
+  `;
 
-function InventoryItem() {
+  const ItemAnchor = styled(Link)``;
+
+  const ItemEtc = styled.div`
+    display: flex;
+    margin-left: 4px;
+    margin-bottom: 10px;
+  `;
+
+  const ItemDate = styled.div`
+    width: 100%;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: right;
+    color: ${({ theme }) => theme.color.darkGray};
+  `;
+
   return (
     <ItemBox>
-      <ItemAnchor to='/post/view/632bc900b4a156b3ed2f7a28'>
-        <ItemTitle>요즘 학업에 너무 집중이 안되요.</ItemTitle>
-        <Profile width='23px' height='23px' imgUrl='users/default.png'>
-          한국사
+      <ItemAnchor to={`/post/view/${_id}`}>
+        <ItemTitle>{title}</ItemTitle>
+        <Profile width="23px" height="23px" imgUrl={imageUrl}>
+          {nickname}
         </Profile>
-        <ItemPara>
-          요즘 학업에 너무 집중이 안 되서 그러는데, 혹시 집중할 수 있는 방법 알고 계신분 계실까요? 스트레스가 장난이
-          아니네요..
-        </ItemPara>
+        <ItemPara>{content}</ItemPara>
         <ItemEtc>
-          <IconWithValue icon={eye} value='2' />
-          <IconWithValue icon={heartFill} value='2' />
+          <IconWithValue icon={eye} value={meta.likes} />
+          <IconWithValue icon={heartFill} value={meta.views} />
         </ItemEtc>
-        <TagList hashtagArr={['학업', '집중', '스트레스']} />
-        <ItemDate>2022년 9월 22일</ItemDate>
+        <TagList hashtagArr={hashtag} />
+        <ItemDate>{updateAt}</ItemDate>
       </ItemAnchor>
     </ItemBox>
   );
