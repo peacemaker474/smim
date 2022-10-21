@@ -1,24 +1,22 @@
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { FieldValues, UseFormRegister, Path, RegisterOptions } from 'react-hook-form';
 import { LoginInput } from '../../../styles/common/Input';
 
-interface Pattern {
-  value: RegExp;
-  message: string;
-}
-
-interface InputProps {
-  register: UseFormRegister<FieldValues>;
-  name: string;
-  required: string;
-  pattern: Pattern;
+type FormInputProps = {
+  register: UseFormRegister<any>;
+  name: Path<FieldValues>;
+  rules: RegisterOptions;
   type: string;
   placeholder: string;
-}
+  autoComplete?: string | undefined;
+};
 
-function Input ({ register, name, required, pattern, type, placeholder }: InputProps) {
+function Input ({ register, name, rules, type, placeholder, autoComplete }: FormInputProps) {
   return (
     <LoginInput
-      {...register(name, { required, pattern })} type={type} placeholder={placeholder}
+      type={type}
+      placeholder={placeholder}
+      {...(register && register(name, rules))}
+      autoComplete={autoComplete}
     />
   );
 }
