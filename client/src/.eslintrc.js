@@ -10,6 +10,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'no-underscore-dangle': 0, // _ 포함된 변수 허용
     'linebreak-style': 0,
     'consistent-return': 'off', // 화살표 함수에 대해
     'no-alert': 'off', // alert창에 대해
@@ -33,9 +34,6 @@ module.exports = {
       'error',
       {
         props: true,
-        types: {
-          '{}': false,
-        },
         ignorePropertyModificationsFor: ['state'],
       },
     ],

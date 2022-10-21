@@ -19,7 +19,7 @@ const Para = styled.p`
 `;
 
 function ItemPara({ children }: ItemParaProps) {
-  return <Para>{children}</Para>;
+  return <Para dangerouslySetInnerHTML={{ __html: children }} />;
 }
 
 export default ItemPara;
