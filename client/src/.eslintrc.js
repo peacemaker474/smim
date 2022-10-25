@@ -37,5 +37,15 @@ module.exports = {
         ignorePropertyModificationsFor: ['state'],
       },
     ],
+    '@typescript-eslint/ban-types': [
+      // any non-nullish value
+      'error',
+      {
+        extendDefaults: true,
+        types: {
+          '{}': false,
+        },
+      },
+    ],
   },
 };
