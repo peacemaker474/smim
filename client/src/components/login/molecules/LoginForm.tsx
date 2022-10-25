@@ -1,7 +1,12 @@
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { shallowEqual } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { postUserLogin } from '../../../redux/services/UserService';
+import { loginToggle } from '../../../redux/slice/toggleSlice';
+import Button from '../../common/atoms/Button';
 import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
 import Input from '../atoms/Input';
@@ -24,8 +29,29 @@ function LoginForm () {
     shallowEqual
   );
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (success) {
+      navigate('/');
+    }
+  }, [navigate, success]);
+
+  const handleLoginSubmit = useCallback(({ userId, password}: FormValue) => {
+    const body = {
+      userId,
+      password,
+    };
+
+    dispatch(postUserLogin(body))
+      .then((res) => {
+        if (res.payload?.success) dispatch(loginToggle());
+      })
+  }, [dispatch])
+
   return (
-    <FormBox>
+    <FormBox onSubmit={handleSubmit(handleLoginSubmit)}>
       <InputWrapper>
         <Label> 아이디 </Label>
         <Input
@@ -41,7 +67,7 @@ function LoginForm () {
           type='text'
           placeholder='아이디를 입력하세요.'
         />
-        {errors.userId && <ValidSpan padding='0.6em 0.3em 0 0'> {errors.userId?.message} </ValidSpan>}
+        {errors.userId && <ValidSpan padding='1em 0.3em 0 0'> {errors.userId?.message} </ValidSpan>}
       </InputWrapper>
       <InputWrapper>
         <Label> 비밀번호 </Label>
@@ -59,9 +85,10 @@ function LoginForm () {
           placeholder='비밀번호를 입력하세요.'
           autoComplete='off'
         />
-        {errors.password && <ValidSpan padding='0.6em 0.3em 0 0'> {errors.password?.message} </ValidSpan>}
-        {Object.keys(errors).length === 0 && message && <ValidSpan padding='0.6em 0.3em 0 0'> {message} </ValidSpan>}
+        {errors.password && <ValidSpan padding='1em 0.3em 0 0'> {errors.password?.message} </ValidSpan>}
+        {!Object.keys(errors).length && message && <ValidSpan padding='1em 0.3em 0 0'> {message} </ValidSpan>}
       </InputWrapper>
+      <Button width='95%' height='15%' border='none'> 로그인 </Button>
     </FormBox>
   );
 }
@@ -70,19 +97,31 @@ export default LoginForm;
 
 const FormBox = styled.form`
   width: 90%;
-  height: 90%;
+  height: 70%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding-top: 1.2em;
   margin: 0 auto;
   gap: 5px;
 `;
 
 const InputWrapper = styled.div`
   width: 95%;
-  height: 30%;
+  height: 35%;
   display: flex;
   flex-direction: column;
+
+  @media ${({ theme }) => theme.device.mobileMiddle} {
+    span {
+      font-size: 0.6rem;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    span {
+      font-size: 0.45rem;
+    }
+  }
 `;

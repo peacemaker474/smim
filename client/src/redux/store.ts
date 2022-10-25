@@ -3,7 +3,7 @@ import rootReducer from './rootReducer';
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [...getDefaultMiddleware({ thunk: true })]
+  middleware: getDefaultMiddleware(),
 });
 
 export default store;
