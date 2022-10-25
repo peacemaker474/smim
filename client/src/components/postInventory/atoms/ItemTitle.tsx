@@ -4,6 +4,12 @@ interface ItemTitleProps {
   children: string;
 }
 
+function ItemTitle({ children }: ItemTitleProps) {
+  return <Title>{children}</Title>;
+}
+
+export default ItemTitle;
+
 const Title = styled.h2`
   height: 21px;
   margin-bottom: 10px;
@@ -15,9 +21,3 @@ const Title = styled.h2`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
-
-function ItemTitle({ children }: ItemTitleProps) {
-  return <Title>{children}</Title>;
-}
-
-export default ItemTitle;
