@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ItemTitle from '../atoms/ItemTitle';
 import ItemPara from '../atoms/ItemPara';
-import Profile from './Profile';
-import TagList from './TagList';
+import Profile from '../atoms/Profile';
+import TagList from '../atoms/TagList';
+import getDate from '../../../utils/changeDate';
+import limitHashtag from '../../../utils/limitHashtag';
 import IconWithValue from '../atoms/IconWithValue';
 import heartFill from '../../../asset/icons/icon-heart-fill.svg';
 import eye from '../../../asset/icons/icon-eye.svg';
@@ -33,31 +35,8 @@ function InventoryItem({ postData }: InventoryItemProps) {
     owner: { nickname, imageUrl },
   } = postData;
 
-  const ItemBox = styled.div`
-    position: relative;
-    height: 255px;
-    border: 2px solid ${({ theme }) => theme.color.lightGray};
-    border-radius: 20px;
-    padding: 31px 21px;
-    cursor: pointer;
-  `;
-
-  const ItemAnchor = styled(Link)``;
-
-  const ItemEtc = styled.div`
-    display: flex;
-    margin-left: 4px;
-    margin-bottom: 10px;
-  `;
-
-  const ItemDate = styled.div`
-    width: 100%;
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 16px;
-    text-align: right;
-    color: ${({ theme }) => theme.color.darkGray};
-  `;
+  const postDate = getDate(updateAt);
+  const hashtagEdition = limitHashtag(hashtag);
 
   return (
     <ItemBox>
@@ -71,11 +50,37 @@ function InventoryItem({ postData }: InventoryItemProps) {
           <IconWithValue icon={eye} value={meta.likes} />
           <IconWithValue icon={heartFill} value={meta.views} />
         </ItemEtc>
-        <TagList hashtagArr={hashtag} />
-        <ItemDate>{updateAt}</ItemDate>
+        <TagList hashtagArr={hashtagEdition} marginLeft="5px" />
+        <ItemDate>{postDate}</ItemDate>
       </ItemAnchor>
     </ItemBox>
   );
 }
 
 export default InventoryItem;
+
+const ItemBox = styled.div`
+  position: relative;
+  height: 255px;
+  border: 2px solid ${({ theme }) => theme.color.lightGray};
+  border-radius: 20px;
+  padding: 31px 21px;
+  cursor: pointer;
+`;
+
+const ItemAnchor = styled(Link)``;
+
+const ItemEtc = styled.div`
+  display: flex;
+  margin-left: 4px;
+  margin-bottom: 10px;
+`;
+
+const ItemDate = styled.div`
+  width: 100%;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+  color: ${({ theme }) => theme.color.darkGray};
+`;

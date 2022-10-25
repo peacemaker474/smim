@@ -4,6 +4,12 @@ interface ItemParaProps {
   children: string;
 }
 
+function ItemPara({ children }: ItemParaProps) {
+  return <Para dangerouslySetInnerHTML={{ __html: children }} />;
+}
+
+export default ItemPara;
+
 const Para = styled.p`
   height: 35px;
   font-size: 12px;
@@ -17,9 +23,3 @@ const Para = styled.p`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
-
-function ItemPara({ children }: ItemParaProps) {
-  return <Para dangerouslySetInnerHTML={{ __html: children }} />;
-}
-
-export default ItemPara;

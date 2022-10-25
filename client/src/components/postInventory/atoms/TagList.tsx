@@ -1,10 +1,34 @@
 import styled from 'styled-components';
 
-interface TagProps {
-  children: string;
-  padding?: string;
+interface TagListProps {
   marginLeft?: string;
+  padding?: string;
+  hashtagArr: Array<string>;
 }
+
+function TagList({ hashtagArr, padding, marginLeft }: TagListProps) {
+  return (
+    <TagListDiv>
+      <TagUl>
+        {hashtagArr.map((el) => (
+          <Tag key={el} padding={padding} marginLeft={marginLeft}>
+            {el}
+          </Tag>
+        ))}
+      </TagUl>
+    </TagListDiv>
+  );
+}
+
+export default TagList;
+
+const TagListDiv = styled.div`
+  margin-bottom: 20px;
+`;
+const TagUl = styled.div`
+  display: flex;
+  height: 24px;
+`;
 
 const Tag = styled.span<{ padding?: string; marginLeft?: string }>`
   display: inline-block;
@@ -23,13 +47,3 @@ const Tag = styled.span<{ padding?: string; marginLeft?: string }>`
     margin-left: ${({ marginLeft }) => marginLeft || 'none'};
   }
 `;
-
-function HashTag({ children, padding, marginLeft }: TagProps) {
-  return (
-    <Tag padding={padding} marginLeft={marginLeft}>
-      {children}
-    </Tag>
-  );
-}
-
-export default HashTag;

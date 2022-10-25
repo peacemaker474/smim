@@ -1,29 +1,26 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, RefObject } from 'react';
 
-function useDropdown () {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef<HTMLElement>();
-  const btnRef = useRef<HTMLElement>();
+type Event = MouseEvent | TouchEvent;
 
-  const handleDropdownShow = () => {
-    setIsDropdownVisible(prev => !prev);
-  };
-
+const useOnClickOutside = <T extends HTMLElement = HTMLElement>(ref: RefObject<T>, handler: (event: Event) => void) => {
   useEffect(() => {
-    const checkIfClickedOutside = (evt: Event) => {
-      if (isDropdownVisible && btnRef.current && !btnRef.current.contains(evt.target as Node)) {
-        setIsDropdownVisible(false);
+    const listener = (event: Event) => {
+      const el = ref?.current;
+      if (!el || el.contains((event?.target as Node) || null)) {
+        return;
       }
+
+      handler(event); // Call the handler only if the click is outside of the element passed.
     };
 
-    document.addEventListener('mousedown', checkIfClickedOutside);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      document.removeEventListener('mousedown', checkIfClickedOutside);
+      document.addEventListener('mousedown', listener);
+      document.addEventListener('touchstart', listener);
     };
-  }, [isDropdownVisible]);
+  }, [ref, handler]);
+};
 
-  return [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow];
-}
-
-export default useDropdown;
+export default useOnClickOutside;

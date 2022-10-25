@@ -5,6 +5,12 @@ interface IconWithValueProps {
   value: string;
 }
 
+function IconWithValue({ icon, value }: IconWithValueProps) {
+  return <WithValue icon={icon}>{value}</WithValue>;
+}
+
+export default IconWithValue;
+
 const WithValue = styled.span<{ icon: string }>`
   display: flex;
   align-items: center;
@@ -24,9 +30,3 @@ const WithValue = styled.span<{ icon: string }>`
     margin-left: 10px;
   }
 `;
-
-function IconWithValue({ icon, value }: IconWithValueProps) {
-  return <WithValue icon={icon}>{value}</WithValue>;
-}
-
-export default IconWithValue;

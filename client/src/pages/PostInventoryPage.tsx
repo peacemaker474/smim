@@ -1,37 +1,30 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useInfiniteQuery } from 'react-query';
 import styled from 'styled-components';
-import axios from 'axios';
+import useObserve from '../hooks/useObserve';
+import { getPostListRead } from '../networks/post/http';
 import InventoryItem from '../components/postInventory/molecules/InventoryItem';
-
-const http = 'http://localhost:4000';
+import SearchBox from '../components/search/molecules/SearchBox';
 
 interface loadedDataProps {
   pageParam: number;
   queryKey: any;
 }
 
-interface SearchList {
-  inputs: string;
-  option: string;
-}
-
-const getPostListRead = (targetAge: string | undefined, filter: any, data: any, page = 1) => {
-  return axios.get(
-    `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.inputs}`,
-  );
-};
-
 function PostInventoryPage() {
   const obsRef = useRef(null);
   const { age } = useParams();
-  const postFilter = '';
-  const searchList: SearchList = { inputs: '', option: '' };
+  const [postFilter, setPostFilter] = useState('newer');
+  const [searchData, setSearchData] = useState({
+    option: '',
+    inputs: '',
+  });
 
   const loadedPostListData = async ({ queryKey, pageParam = 1 }: loadedDataProps) => {
+    const { age, postFilter, searchData } = queryKey[1];
     try {
-      const response = await getPostListRead(queryKey[1], postFilter, searchList, pageParam);
+      const response = await getPostListRead(age, postFilter, searchData, pageParam);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -40,44 +33,26 @@ function PostInventoryPage() {
 
   const {
     data: postData,
-    isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteQuery(['postArray', age], ({ queryKey, pageParam }) => loadedPostListData({ queryKey, pageParam }), {
-    getNextPageParam: (currentPage) => {
-      const nextPage = currentPage.page + 1;
-      return currentPage.lastPage ? null : nextPage;
+  } = useInfiniteQuery(
+    ['postArray', { age, postFilter, searchData }],
+    ({ queryKey, pageParam }) => loadedPostListData({ queryKey, pageParam }),
+    {
+      getNextPageParam: (currentPage) => {
+        const nextPage = currentPage.page + 1;
+        return currentPage.lastPage ? null : nextPage;
+      },
     },
-  });
-
-  useEffect(() => {
-    if (!hasNextPage) {
-      return;
-    }
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          fetchNextPage();
-        }
-      }),
-    );
-    const el = obsRef && obsRef.current;
-    if (!el) {
-      return;
-    }
-    observer.observe(el);
-    return () => {
-      observer.unobserve(el);
-    };
-  }, [hasNextPage, fetchNextPage]);
-
-  console.log(isLoading);
+  );
+  useObserve(obsRef, hasNextPage, fetchNextPage);
 
   if (age === '10' || age === '20' || age === '30' || age === '40' || age === '50') {
     return (
       <InventoryMain>
         <InventoryContainer>
           <InventoryHeading>{age}대 질문리스트</InventoryHeading>
+          <SearchBox postFilter={postFilter} setSearchData={setSearchData} setPostFilter={setPostFilter} age={age} />
           <PostListBodyContainer>
             <PostListBodyLayout>
               {postData ? (
