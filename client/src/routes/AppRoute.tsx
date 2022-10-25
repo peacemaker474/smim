@@ -5,7 +5,7 @@ function AppRoute() {
   return (
     <Routes>
       <Route path="/intro" element={<div>test</div>} />
-      <Route path="/generation/:age" element={<PostInventoryPage />} />
+      {/* <Route path="/generation/:age" element={<PostInventoryPage />} /> */}
     </Routes>
   );
 }

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import EtcBox from '../components/login/molecules/EtcBox';
 import LoginForm from '../components/login/molecules/LoginForm';
 import LoginHeader from '../components/login/molecules/LoginHeader';
 import { useAppDispatch } from '../redux/hooks';
@@ -18,6 +19,7 @@ function LoginPage () {
       <LoginWrapper>
         <LoginHeader onLoginClose={handleLoginClose}/>
         <LoginForm />
+        <EtcBox />
       </LoginWrapper>
     </LoginContainer>
   );

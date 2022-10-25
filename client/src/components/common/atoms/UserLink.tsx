@@ -1,5 +1,4 @@
-// 추후에 memo 추가할 것!
-
+import { memo } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import UserImage from './UserImage';
@@ -27,7 +26,7 @@ function UserLink () {
       </>
 }
 
-export default UserLink;
+export default memo(UserLink);
 
 const LoginLink = styled.span`
   font-size: 1.1rem;
