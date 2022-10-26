@@ -1,18 +1,14 @@
-import { useState, useRef } from 'react';
 import styled from 'styled-components';
-import useOnClickOutside from '../../../hooks/useDropdown';
 import Dropdown from '../atoms/Dropdown';
-import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
+import useDropdown from '../../../hooks/useDropdown';
+// import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
 
 export default function DropdownBox() {
-  const btnRef = useRef<HTMLDivElement>(null);
-  // State for our modal
-  const [isModalOpen, setModalOpen] = useState(false);
-  useOnClickOutside(btnRef, (prev) => setModalOpen(!prev));
+  const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: Array<any> = useDropdown();
   return (
-    <PostDropdownBtnDiv ref={btnRef} onClick={() => setModalOpen(true)}>
+    <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
       <PostDropdownBtn />
-      {isModalOpen && <Dropdown />}
+      {isDropdownVisible && <Dropdown dropdownRef={dropdownRef} />}
     </PostDropdownBtnDiv>
   );
 }
@@ -22,9 +18,9 @@ const PostDropdownBtnDiv = styled.div`
 `;
 
 const PostDropdownBtn = styled.button`
-  background: url(${moreIcon});
-  width: '24px';
-  height: '24px';
+  background-color: red;
+  width: 24px;
+  height: 24px;
   background-repeat: no-repeat;
   background-size: 'contain';
 `;
