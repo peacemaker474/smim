@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ItemTitle from '../atoms/ItemTitle';
-import ItemPara from '../atoms/ItemPara';
-import Profile from '../atoms/Profile';
-import TagList from '../atoms/TagList';
+import ItemTitle from './ItemTitle';
+import ItemPara from './ItemPara';
+import Profile from './Profile';
+import TagList from './TagList';
 import getDate from '../../../utils/changeDate';
 import limitHashtag from '../../../utils/limitHashtag';
-import IconWithValue from '../atoms/IconWithValue';
+import IconWithValue from './IconWithValue';
 import heartFill from '../../../asset/icons/icon-heart-fill.svg';
 import eye from '../../../asset/icons/icon-eye.svg';
 
