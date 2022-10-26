@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
-function useObserve(obsRef: any, hasNextPage: any, fetchNextPage: any) {
+function useObserve(
+  obsRef: React.RefObject<HTMLInputElement>,
+  hasNextPage: boolean | undefined,
+  fetchNextPage: () => void,
+) {
   useEffect(() => {
     if (!hasNextPage) {
       return;
@@ -21,6 +25,6 @@ function useObserve(obsRef: any, hasNextPage: any, fetchNextPage: any) {
     return () => {
       observer.unobserve(el);
     };
-  }, [hasNextPage, fetchNextPage]);
+  }, [hasNextPage, fetchNextPage, obsRef]);
 }
 export default useObserve;
