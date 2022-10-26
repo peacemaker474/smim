@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export default function DropDown() {
+interface DropDownProps {
+  dropdownRef: any;
+}
+
+export default function DropDown({ dropdownRef }: DropDownProps) {
   return (
-    <DropdownWrraper>
+    <DropdownWrraper ref={dropdownRef}>
       <DropdownLists>
         <DropdownList>
           <DropdownLink to="post/edit/123"> 수정</DropdownLink>

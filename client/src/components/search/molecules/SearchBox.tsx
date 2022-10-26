@@ -1,4 +1,4 @@
-import { useEffect, Dispatch, SetStateAction } from 'react';
+import { useEffect, Dispatch, SetStateAction, memo } from 'react';
 import styled from 'styled-components';
 import SearchForm from '../atoms/SelectForm';
 import SelectBox from '../atoms/SelectBox';
@@ -55,7 +55,7 @@ function SearchBox({ setSearchData, postFilter, setPostFilter, age }: SearchBoxO
   );
 }
 
-export default SearchBox;
+export default memo(SearchBox);
 
 const SearchContainer = styled.div`
   display: flex;

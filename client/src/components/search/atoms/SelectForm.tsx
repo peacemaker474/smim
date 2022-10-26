@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import React, { memo, useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import Search from '../../../asset/icons/icon-search-line.svg';
 
@@ -18,7 +18,6 @@ interface SelectFormOption {
   optionArr: Array<Option>;
   name: string;
   age: string;
-  // inputRef: React.RefObject<HTMLInputElement> | null;
 }
 
 function SelectForm({ setPostFilter, setSearchData, optionArr, name, age }: SelectFormOption) {
@@ -63,7 +62,7 @@ function SelectForm({ setPostFilter, setSearchData, optionArr, name, age }: Sele
   );
 }
 
-export default SelectForm;
+export default memo(SelectForm);
 
 const PostListHeadDiv = styled.div`
   display: flex;
