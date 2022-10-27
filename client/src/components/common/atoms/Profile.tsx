@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import UserImage from '../../common/atoms/UserImage';
+import UserImage from './UserImage';
 
 interface ProfileProps {
   width: string;
