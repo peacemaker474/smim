@@ -4,18 +4,19 @@ import { useInfiniteQuery } from 'react-query';
 import styled from 'styled-components';
 import useObserve from '../../../hooks/useObserve';
 import { getPostListRead } from '../../../networks/post/http';
+import { useAppSelector } from '../../../redux/hooks';
 import InventoryItem from '../atoms/InventoryItem';
 import DropdownBox from '../../common/molecules/DropdownBox';
 
-interface SearchData {
-  option: string;
-  inputs: string;
-}
+// interface SearchData {
+//   option: string;
+//   inputs: string;
+// }
 
-interface InventoryProps {
-  postFilter: string;
-  searchData: SearchData;
-}
+// interface InventoryProps {
+//   postFilter: string;
+//   searchData: SearchData;
+// }
 
 // interface QueryKey {
 //   age: string | undefined;
@@ -28,9 +29,11 @@ interface LoadedPostProps {
   pageParam: number;
 }
 
-function InventoryList({ postFilter, searchData }: InventoryProps) {
+function InventoryList() {
   const obsRef = useRef(null);
   const { age } = useParams();
+  const searchData = useAppSelector((state) => state.searchKeyword);
+  const postFilter = useAppSelector((state) => state.searchFilter);
 
   const loadedPostListData = async ({ queryKey, pageParam = 1 }: LoadedPostProps) => {
     const { age, postFilter, searchData } = queryKey[1];
@@ -56,7 +59,7 @@ function InventoryList({ postFilter, searchData }: InventoryProps) {
 
   return (
     <PostListBodyContainer>
-      <DropdownBox></DropdownBox>
+      <DropdownBox />
       <PostListBodyLayout>
         {postData && (
           <>

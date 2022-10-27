@@ -1,5 +1,7 @@
-import React, { memo, useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../../redux/hooks';
+import { getSearchContent } from '../../../redux/slice/searchKeywordSlice';
 import Search from '../../../asset/icons/icon-search-line.svg';
 
 interface Option {
@@ -7,23 +9,24 @@ interface Option {
   text: string;
 }
 
-interface PostFilterOption {
-  option: string;
-  inputs: string;
-}
+// interface PostFilterOption {
+//   option: string;
+//   inputs: string;
+// }
 
-interface SelectFormOption {
-  setPostFilter: Dispatch<SetStateAction<string>>;
-  setSearchData: Dispatch<SetStateAction<PostFilterOption>>;
+interface SearchFormOption {
+  // setPostFilter: Dispatch<SetStateAction<string>>;
+  // setSearchData: Dispatch<SetStateAction<PostFilterOption>>;
   optionArr: Array<Option>;
   name: string;
   age: string;
 }
 
-function SelectForm({ setPostFilter, setSearchData, optionArr, name, age }: SelectFormOption) {
-  const [searchText, setSearchText] = useState('');
+function searchForm({ optionArr, name }: SearchFormOption) {
   const [searchOption, setSearchOption] = useState('');
+  const [searchText, setSearchText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = '';
@@ -39,8 +42,7 @@ function SelectForm({ setPostFilter, setSearchData, optionArr, name, age }: Sele
 
   const handleSearchSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setSearchData({ option: searchOption, inputs: searchText });
-    setPostFilter('newer');
+    dispatch(getSearchContent({ option: searchOption, inputs: searchText }));
   }; // search data submit function
 
   return (
@@ -62,7 +64,7 @@ function SelectForm({ setPostFilter, setSearchData, optionArr, name, age }: Sele
   );
 }
 
-export default memo(SelectForm);
+export default searchForm;
 
 const PostListHeadDiv = styled.div`
   display: flex;
