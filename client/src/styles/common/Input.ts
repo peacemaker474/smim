@@ -6,7 +6,7 @@ const CommonInput = styled.input`
 `;
 
 export const LoginInput = styled(CommonInput)`
-  width: 95%;
+  width: 100%;
   height: 40%;
   border: 1px solid rgba(12, 12, 12, .4);
   padding-left: 10px;
