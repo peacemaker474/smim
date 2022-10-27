@@ -1,31 +1,30 @@
-import { useEffect, Dispatch, SetStateAction, memo } from 'react';
 import styled from 'styled-components';
-import SearchForm from '../atoms/SelectForm';
+import SearchForm from '../atoms/SearchForm';
 import SelectBox from '../atoms/SelectBox';
 
-interface PostFilterOption {
-  option: string;
-  inputs: string;
-}
+// interface PostFilterOption {
+//   option: string;
+//   inputs: string;
+// }
 
 interface SearchBoxOption {
-  setPostFilter: Dispatch<SetStateAction<string>>;
-  setSearchData: Dispatch<SetStateAction<PostFilterOption>>;
+  // setPostFilter: Dispatch<SetStateAction<string>>;
+  // setSearchData: Dispatch<SetStateAction<PostFilterOption>>;
   age: string;
-  postFilter: any;
+  // postFilter: any;
 }
 
-function SearchBox({ setSearchData, postFilter, setPostFilter, age }: SearchBoxOption) {
-  useEffect(() => {
-    // search Data and post filter reset
-    setSearchData({ option: '', inputs: '' });
-    setPostFilter('newer');
+function SearchBox({ age }: SearchBoxOption) {
+  // useEffect(() => {
+  //   // search Data and post filter reset
+  //   setSearchData({ option: '', inputs: '' });
+  //   setPostFilter('newer');
 
-    return () => {
-      setSearchData({ option: '', inputs: '' });
-      setPostFilter('newer');
-    };
-  }, [age, setPostFilter, setSearchData]);
+  //   return () => {
+  //     setSearchData({ option: '', inputs: '' });
+  //     setPostFilter('newer');
+  //   };
+  // }, [age, setPostFilter, setSearchData]);
 
   return (
     <SearchContainer>
@@ -37,13 +36,9 @@ function SearchBox({ setSearchData, postFilter, setPostFilter, age }: SearchBoxO
           { value: 'hashtag', text: '태그' },
           { value: 'content', text: '내용' },
         ]}
-        setPostFilter={setPostFilter}
-        setSearchData={setSearchData}
         age={age}
       />
       <SelectBox
-        selectedValue={postFilter}
-        setPostFilter={setPostFilter}
         optionArr={[
           { value: 'newer', text: '최근 게시물' },
           { value: 'popular', text: '인기 게시물' },
@@ -55,7 +50,7 @@ function SearchBox({ setSearchData, postFilter, setPostFilter, age }: SearchBoxO
   );
 }
 
-export default memo(SearchBox);
+export default SearchBox;
 
 const SearchContainer = styled.div`
   display: flex;

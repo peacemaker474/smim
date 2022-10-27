@@ -1,5 +1,7 @@
-import React, { useCallback, Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { selectFilter } from '../../../redux/slice/searchFilterSlice';
 
 interface Option {
   value: string;
@@ -7,23 +9,22 @@ interface Option {
 }
 
 interface SelectBoxProps {
-  selectedValue?: string;
+  // selectedValue?: string;
   optionArr: Array<Option>;
   name: string;
-  setPostFilter: Dispatch<SetStateAction<string>>;
+  // setPostFilter: Dispatch<SetStateAction<string>>;
 }
 
-function SelectBox({ selectedValue, optionArr, name, setPostFilter }: SelectBoxProps) {
-  const handlePostFilter = useCallback(
-    (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      setPostFilter(evt.target.value);
-    },
-    [setPostFilter],
-  );
+function SelectBox({ optionArr, name }: SelectBoxProps) {
+  const { filter } = useAppSelector((state) => state.searchFilter);
+  const dispatch = useAppDispatch();
+  const handlePostFilter = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(selectFilter(evt.target.value));
+  };
 
   return (
     <SelectDiv>
-      <Select name={name} onChange={handlePostFilter} value={selectedValue}>
+      <Select name={name} onChange={handlePostFilter} value={filter}>
         {optionArr.map((el) => (
           <option key={el.value} value={el.value}>
             {el.text}

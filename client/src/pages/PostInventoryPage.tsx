@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBox from '../components/search/molecules/SearchBox';
@@ -6,19 +5,14 @@ import InventoryList from '../components/postInventory/molecules/InventoryList';
 
 function PostInventoryPage() {
   const { age } = useParams();
-  const [postFilter, setPostFilter] = useState('newer');
-  const [searchData, setSearchData] = useState({
-    option: '',
-    inputs: '',
-  });
 
   if (age === '10' || age === '20' || age === '30' || age === '40' || age === '50') {
     return (
       <InventoryMain>
         <InventoryContainer>
           <InventoryHeading>{age}대 질문리스트</InventoryHeading>
-          <SearchBox postFilter={postFilter} setSearchData={setSearchData} setPostFilter={setPostFilter} age={age} />
-          <InventoryList searchData={searchData} postFilter={postFilter} />
+          <SearchBox age={age} />
+          <InventoryList />
         </InventoryContainer>
       </InventoryMain>
     );
