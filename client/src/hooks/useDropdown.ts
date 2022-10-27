@@ -2,9 +2,9 @@ import { useEffect, useState, useRef } from 'react';
 
 const useDropdown = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef<any>(null);
-  const btnRef = useRef<any>(null);
-  const handleDropdownShow = (prev: boolean) => setIsDropdownVisible(!prev);
+  const dropdownRef = useRef<HTMLElement>(null);
+  const btnRef = useRef<HTMLElement>(null);
+  const handleDropdownShow = () => setIsDropdownVisible(!isDropdownVisible);
 
   useEffect(() => {
     const checkIfClickedOutside = (event: MouseEvent) => {

@@ -6,6 +6,7 @@ function AppRoute() {
     <Routes>
       <Route path="/intro" element={<div>test</div>} />
       <Route path="/generation/:age" element={<PostInventoryPage />} />
+      <Route path='/my' element={<div>my</div>} />
     </Routes>
   );
 }

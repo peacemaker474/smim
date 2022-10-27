@@ -1,10 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDropdown } from '../../../hooks';
 import GNLink from '../atoms/GNLink';
 import UserLink from '../atoms/UserLink';
 
 function NavLists () {
   const { pathname } = useLocation();
+  const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ]: any[] = useDropdown();
 
   return (
     <Lists>
@@ -33,8 +35,12 @@ function NavLists () {
           50대에게
         </GNLink>
       </List>
-      <List>
-        <UserLink />
+      <List ref={btnRef} onClick={() => handleDropdownShow()}>
+        <UserLink
+          isDropdownVisible={isDropdownVisible}
+          dropdownRef={dropdownRef}
+          handleDropdownShow={handleDropdownShow}
+        />
       </List>
     </Lists>
   );
