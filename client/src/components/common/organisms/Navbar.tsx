@@ -1,14 +1,40 @@
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { getUserLogOut } from '../../../redux/services/UserService';
+import { DELETE_TOKEN } from '../../../redux/slice/authSlice';
+import { menuToggle } from '../../../redux/slice/toggleSlice';
+import Toggle from '../atoms/Toggle';
 import MainLogo from '../molecules/MainLogo';
 import NavLists from '../molecules/NavLists';
+import AppNavBar from './AppNavBar';
+
+type LOGOUT = (cb?: any) => () => void;
 
 function Navbar () {
+  const { menuToggled } = useAppSelector(state => state.toggle);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogoutClick: LOGOUT = useCallback((cb) => () => {
+    dispatch(getUserLogOut());
+    dispatch(DELETE_TOKEN());
+    if (cb) cb();
+    if (menuToggled) dispatch(menuToggle());
+
+    navigate('/');
+  }, [dispatch, menuToggled, navigate])
+
+
   return (
     <NavContainer>
       <NavWrapper>
         <MainLogo />
-        <NavLists />
+        <NavLists handleLogoutClick={handleLogoutClick}/>
+        <Toggle />
       </NavWrapper>
+      {menuToggled && <AppNavBar handleLogoutClick={handleLogoutClick}/>}
     </NavContainer>
   );
 }

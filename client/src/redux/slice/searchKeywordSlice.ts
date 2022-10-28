@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface SearchKeyword {
-  option: string;
-  keyword: string;
-}
-
-const initialState: SearchKeyword = {
+const initialState = {
   option: '',
   keyword: '',
 };
