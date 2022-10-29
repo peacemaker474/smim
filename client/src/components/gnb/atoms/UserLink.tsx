@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import UserImage from './UserImage';
+import UserImage from '../../common/atoms/UserImage';
 import DownArrow from '../../../asset/icons/icon-down.svg';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import MyPageModal from '../molecules/MyPageModal';

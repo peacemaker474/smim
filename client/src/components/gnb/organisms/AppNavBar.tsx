@@ -12,7 +12,6 @@ function AppNavBar ({ handleLogoutClick }: AppProps) {
   const dispatch = useAppDispatch();
 
   const handleLoginClick = () => {
-    dispatch(menuToggle());
     dispatch(loginToggle());
   };
 
@@ -22,39 +21,39 @@ function AppNavBar ({ handleLogoutClick }: AppProps) {
 
   return (
     <MobileNavBox>
-      <MobileLists>
+      <MobileLists onClick={handleMenuClick}>
         {!authenticated ? (
           <MobileList>
             <MobileSignBox>
               <MobileSignIn onClick={handleLoginClick}> 로그인 하기 </MobileSignIn>
               <MobileSignUpTitle> 아직 회원이 아니신가요? </MobileSignUpTitle>
-              <MobileSignUp to='signup' onClick={handleMenuClick}> 회원가입 </MobileSignUp>
+              <MobileSignUp to='signup'> 회원가입 </MobileSignUp>
             </MobileSignBox>
           </MobileList>
         ) : (
           <>
             <MobileList>
-              <MobileLink to='post/create' onClick={handleMenuClick}> 새 글 작성 </MobileLink>
+              <MobileLink to='post/create'> 새 글 작성 </MobileLink>
             </MobileList>
             <MobileList>
-              <MobileLink to='my' onClick={handleMenuClick}> 마이페이지 </MobileLink>
+              <MobileLink to='my'> 마이페이지 </MobileLink>
             </MobileList>
           </>
         )}
         <MobileList>
-          <MobileLink to='generation/10' onClick={handleMenuClick}> 10대에게 </MobileLink>
+          <MobileLink to='generation/10'> 10대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation/20' onClick={handleMenuClick}> 20대에게 </MobileLink>
+          <MobileLink to='generation/20'> 20대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation/30' onClick={handleMenuClick}> 30대에게 </MobileLink>
+          <MobileLink to='generation/30'> 30대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation/40' onClick={handleMenuClick}> 40대에게 </MobileLink>
+          <MobileLink to='generation/40'> 40대에게 </MobileLink>
         </MobileList>
         <MobileList>
-          <MobileLink to='generation/50' onClick={handleMenuClick}> 50대에게 </MobileLink>
+          <MobileLink to='generation/50'> 50대에게 </MobileLink>
         </MobileList>
         {authenticated && (
           <MobileList>

@@ -1,4 +1,4 @@
-import Navbar from './components/common/organisms/Navbar';
+import Navbar from './components/gnb/organisms/Navbar';
 import LoginPage from './pages/LoginPage';
 import { useAppSelector } from './redux/hooks';
 import AppRoute from './routes/AppRoute';
