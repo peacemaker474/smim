@@ -3,17 +3,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface ModalProps {
-  handleLogoutClick: () => void;
+  handleLogoutClick: (cb?: any) => () => void;
+  handleDropdownShow: () => void;
 }
 
-function MyPageModal ({ handleLogoutClick }: ModalProps, ref: any) {
+function MyPageModal ({ handleLogoutClick, handleDropdownShow }: ModalProps, ref: any) {
   return (
     <MyPageModalWrraper ref={ref}>
       <MyPageModalLists>
         <MyPageModalList>
           <MyPageLink to="/my"> 마이페이지 </MyPageLink>
         </MyPageModalList>
-        <MyPageModalList onClick={handleLogoutClick}>
+        <MyPageModalList onClick={handleLogoutClick(handleDropdownShow)}>
           로그아웃
         </MyPageModalList>
       </MyPageModalLists>

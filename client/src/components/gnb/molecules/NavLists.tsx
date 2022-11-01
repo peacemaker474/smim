@@ -4,7 +4,11 @@ import { useDropdown } from '../../../hooks';
 import GNLink from '../atoms/GNLink';
 import UserLink from '../atoms/UserLink';
 
-function NavLists () {
+interface NavProps {
+  handleLogoutClick: (cb?:any) => () => void;
+}
+
+function NavLists ({ handleLogoutClick }: NavProps) {
   const { pathname } = useLocation();
   const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ]: any[] = useDropdown();
 
@@ -40,6 +44,7 @@ function NavLists () {
           isDropdownVisible={isDropdownVisible}
           dropdownRef={dropdownRef}
           handleDropdownShow={handleDropdownShow}
+          handleLogoutClick={handleLogoutClick}
         />
       </List>
     </Lists>

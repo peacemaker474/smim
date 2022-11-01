@@ -1,38 +1,25 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import UserImage from './UserImage';
+import UserImage from '../../common/atoms/UserImage';
 import DownArrow from '../../../asset/icons/icon-down.svg';
-import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
+import { loginToggle } from '../../../redux/slice/toggleSlice';
 import MyPageModal from '../molecules/MyPageModal';
-import { getUserLogOut } from '../../../redux/services/UserService';
-import { DELETE_TOKEN } from '../../../redux/slice/authSlice';
 
 interface DropDownProps {
   isDropdownVisible: boolean;
   dropdownRef: React.RefObject<HTMLElement> | null | undefined;
   handleDropdownShow: () => void;
+  handleLogoutClick: (cb?:any) => () => void;
 }
 
-function UserLink ({ isDropdownVisible, dropdownRef, handleDropdownShow }: DropDownProps) {
+function UserLink ({ isDropdownVisible, dropdownRef, handleDropdownShow, handleLogoutClick }: DropDownProps) {
   const { authenticated } = useAppSelector((state) => state.auth);
   const { imgUrl } = useAppSelector((state) => state.user);
-  const { menuToggled } = useAppSelector((state) => state.toggle);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const handleLoginClick = () => {
     dispatch(loginToggle());
-  }
-
-  const handleLogoutClick = () => {
-    dispatch(getUserLogOut());
-    dispatch(DELETE_TOKEN());
-    handleDropdownShow();
-    if (menuToggled) dispatch(menuToggle());
-
-    navigate('/');
   }
 
   return !authenticated
@@ -48,6 +35,7 @@ function UserLink ({ isDropdownVisible, dropdownRef, handleDropdownShow }: DropD
           <MyPageModal
             ref={dropdownRef}
             handleLogoutClick={handleLogoutClick}
+            handleDropdownShow={handleDropdownShow}
           />
         }
       </>
