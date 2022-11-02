@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +38,7 @@ function LoginForm () {
     }
   }, [navigate, success]);
 
-  const handleLoginSubmit = useCallback(({ userId, password}: FormValue) => {
+  const handleLoginSubmit = ({ userId, password }: FormValue) => {
     const body = {
       userId,
       password,
@@ -48,7 +48,7 @@ function LoginForm () {
       .then((res) => {
         if (res.payload?.success) dispatch(loginToggle());
       })
-  }, [dispatch])
+  };
 
   return (
     <FormBox onSubmit={handleSubmit(handleLoginSubmit)}>
