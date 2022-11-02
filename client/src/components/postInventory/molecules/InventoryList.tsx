@@ -6,23 +6,6 @@ import useObserve from '../../../hooks/useObserve';
 import { getPostListRead } from '../../../networks/post/http';
 import { useAppSelector } from '../../../redux/hooks';
 import InventoryItem from '../atoms/InventoryItem';
-import DropdownBox from '../../common/molecules/DropdownBox';
-
-// interface SearchData {
-//   option: string;
-//   inputs: string;
-// }
-
-// interface InventoryProps {
-//   postFilter: string;
-//   searchData: SearchData;
-// }
-
-// interface QueryKey {
-//   age: string | undefined;
-//   postFilter: string;
-//   searchData: SearchData;
-// }
 
 interface LoadedPostProps {
   queryKey: any;
@@ -59,7 +42,6 @@ function InventoryList() {
 
   return (
     <PostListBodyContainer>
-      <DropdownBox />
       <PostListBodyLayout>
         {postData && (
           <>
