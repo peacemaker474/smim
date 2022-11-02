@@ -12,7 +12,14 @@ import { theme } from './styles/theme';
 import GlobalStyle from './styles/globalstyles';
 import store from './redux/store';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      suspense: true,
+    }
+  }
+});
 
 
 const root = ReactDOM.createRoot(

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useCallback } from 'react';
 import { Cookies } from 'react-cookie';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { MainPageData } from '../types';
 const MainListsComponent = lazy(() => import('../components/main/molecules/MainLists'));
 
 function MainPage () {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const cookies = new Cookies();
   // const entryCheck = cookies.get('entry');
 
@@ -21,18 +21,43 @@ function MainPage () {
 
   const { data } = useQuery<MainPageData>(['mainLists'], getMainPostLists);
 
+  const handleMovePostDetail = useCallback((evt: React.MouseEvent<HTMLLIElement>) => {
+    const postId = evt.currentTarget.id;
+    navigate(`post/view/${postId}`);
+  }, [navigate]);
+
   return (
     <MainBody>
       <MainContainer>
         <Suspense fallback={<div>Loading...</div>}>
           <MainWrapper>
-            <MainListsComponent age='10' posts={data?.lists['10'] || []} />
-            <MainListsComponent age='20' posts={data?.lists['20'] || []} />
-            <MainListsComponent age='30' posts={data?.lists['30'] || []} />
+            <MainListsComponent
+              age='10'
+              posts={data?.lists['10'] || []}
+              handleMovePostDetail={handleMovePostDetail}
+            />
+            <MainListsComponent
+              age='20'
+              posts={data?.lists['20'] || []}
+              handleMovePostDetail={handleMovePostDetail}
+            />
+            <MainListsComponent
+              age='30'
+              posts={data?.lists['30'] || []}
+              handleMovePostDetail={handleMovePostDetail}
+            />
           </MainWrapper>
           <MainWrapper>
-            <MainListsComponent age='40' posts={data?.lists['40'] || []} />
-            <MainListsComponent age='50' posts={data?.lists['50'] || []} />
+            <MainListsComponent
+              age='40'
+              posts={data?.lists['40'] || []}
+              handleMovePostDetail={handleMovePostDetail}
+            />
+            <MainListsComponent
+              age='50'
+              posts={data?.lists['50'] || []}
+              handleMovePostDetail={handleMovePostDetail}
+            />
           </MainWrapper>
         </Suspense>
       </MainContainer>
