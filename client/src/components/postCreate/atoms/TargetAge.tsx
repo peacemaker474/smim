@@ -1,14 +1,15 @@
-import { UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, FieldError } from 'react-hook-form';
 import styled from 'styled-components';
 
 type TargetAgeProps = {
   register: UseFormRegister<any>;
+  errors: FieldError | undefined;
 };
 
-function TargetAge({ register }: TargetAgeProps) {
+function TargetAge({ register, errors }: TargetAgeProps) {
   return (
     <TargetWrap>
-      <TargetAgeSelect error={false} {...register('age', { required: 'This is required' })}>
+      <TargetAgeSelect errors={errors} {...register('age', { required: '연령층을 선택해주세요' })}>
         <option value="">질문하고 싶은 연령층을 선택해주세요.</option>
         <option value="10">10대에게</option>
         <option value="20">20대에게</option>
@@ -25,10 +26,10 @@ const TargetWrap = styled.div`
   margin-top: 30px;
 `;
 
-const TargetAgeSelect = styled.select<{ error: boolean }>`
+const TargetAgeSelect = styled.select<{ errors: FieldError | undefined }>`
   width: 250px;
   height: 40px;
-  border: 2px solid ${({ error, theme }) => (error ? theme.color.lightGray : theme.color.yellow)};
+  border: 2px solid ${({ errors, theme }) => (errors ? theme.color.lightGray : theme.color.yellow)};
   border-radius: 3px;
   @media screen and (max-width: 550px) {
     width: 100%;
