@@ -1,36 +1,41 @@
-import { UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, FieldError } from 'react-hook-form';
 import styled from 'styled-components';
+import Input from '../../common/atoms/Input';
 
 type TitleProps = {
   register: UseFormRegister<any>;
+  errors: FieldError | undefined;
 };
 
-function Title({ register }: TitleProps) {
+function Title({ register, errors }: TitleProps) {
   return (
-    <TitleWrap>
-      <TitleInput
+    <TitleWrap errors={errors}>
+      <Input
+        type="input"
         placeholder="제목"
-        error={false}
+        errors={errors}
         maxLength={25}
-        {...register('title', { required: 'This is required' })}
+        name="title"
+        rules={{
+          required: '제목을 입력하세요',
+        }}
+        register={register}
+        width="100%"
+        height="40px"
       />
     </TitleWrap>
   );
 }
 export default Title;
 
-const TitleWrap = styled.div`
+const TitleWrap = styled.div<{ errors: FieldError | undefined }>`
   margin-top: 30px;
-`;
-
-const TitleInput = styled.input<{ error: boolean }>`
-  height: 40px;
-  border: 2px solid ${({ theme, error }) => (error ? theme.color.lightGray : theme.color.yellow)};
-  border-radius: 3px;
-  @media screen and (max-width: 612px) {
-    width: 100%;
-  }
-  @media (min-width: 612px) {
-    width: 413px;
+  & input {
+    @media screen and (max-width: 612px) {
+      width: 100%;
+    }
+    @media (min-width: 612px) {
+      width: 413px;
+    }
   }
 `;

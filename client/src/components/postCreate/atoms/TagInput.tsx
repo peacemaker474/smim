@@ -1,60 +1,96 @@
-import { useState } from 'react';
-// import { UseFormRegister } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormClearErrors,
+  UseFormWatch,
+  // UseFormSetError,
+  // FieldError,
+} from 'react-hook-form';
 import styled from 'styled-components';
 import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icons/icon-del.svg';
 
-// interface TagInputProps {
-//   setValue: UseFormRegister<any>;
-//   clearErrors: UseFormRegister<any>;
-// }
+interface TagInputProps {
+  setValue: UseFormSetValue<any>;
+  clearErrors: UseFormClearErrors<any>;
+  watch: UseFormWatch<any>;
+  // setError: UseFormSetError<any>;
+  register: UseFormRegister<any>;
+  // errors: FieldError | undefined;
+}
 
-function TagInput() {
+function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
   const [text, setText] = useState('');
-  const tagArray: Array<string> = []; // watch('tagArray');
+  const tagArray = watch('tagArray');
 
-  //   const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
-  //     const reg = /[^\wㄱ-힣]/g;
+  useEffect(() => {
+    register('tagArray', { required: '태그를 입력해주세요' });
+  }, [register]);
 
-  //     if (reg.exec(e.target?.value)) {
-  //       setText(e.target?.value.replace(reg, ''));
-  //     }
+  const handleInputReset = () => {
+    setText('');
+    // if (watch('tagArray').length === 0) {
+    // setError('tagArray', { required: true });
+    // }
+  };
 
-  //     if (e.keyCode === 188 || (e.keyCode === 32 && e.target.value !== '')) {
-  //       const tagText = e.target.value.replace(reg, '');
-  //       if (tagText.length === 0) {
-  //         setText('');
-  //       } else if (!tagArray.includes(tagText)) {
-  //         setValue('tagArray', [...tagArray, tagText]);
-  //         setText('');
-  //         clearErrors('tagArray');
-  //       } else {
-  //         setText('');
-  //       }
-  //     }
-  //   };
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const reg = /[^\wㄱ-힣]/g;
+    if (reg.exec(e.key)) {
+      setText(e.key.replace(reg, ''));
+    }
+
+    if (e.code === 'Comma' || (e.code === 'Space' && e.key !== '')) {
+      const tagText = e.key.replace(reg, '');
+      if (tagText.length === 0) {
+        setText('');
+      } else if (!tagArray.includes(tagText)) {
+        setValue('tagArray', [...tagArray, tagText]);
+        setText('');
+        clearErrors('tagArray');
+      } else {
+        setText('');
+      }
+    }
+  };
+
+  const handleTagWrite = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  const handleTagDelete = (e: any) => {
+    const tag = e?.target?.previousSibling.innerText;
+    const newHashTagArray = tagArray.filter((el: string) => el !== tag);
+    setValue('tagArray', [...newHashTagArray]);
+    setText('');
+    // if (watch('tagArray').length === 0) {
+    //   setError('tagArray', { required: true });
+    // }
+  };
+
+  const handleDeleteBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    handleTagDelete(e);
+  };
 
   return (
-    <HashContainer error={false}>
+    <HashContainer>
       <HashWrapBox>
         {tagArray &&
-          tagArray.map((el) => (
+          tagArray.map((el: string) => (
             <HashItem key={el}>
               <span>{el}</span>
-              <HashDelBtn
-                type="button"
-                //   onClick={onDeleteBtnClick}
-              ></HashDelBtn>
+              <HashDelBtn type="button" onClick={handleDeleteBtnClick} />
             </HashItem>
           ))}
       </HashWrapBox>
       <HashInput
         type="text"
         placeholder="해시태그를 입력해주시고 콤마로 구분해주세요"
-        // onKeyUp={handleKeyUp}
-        // onChange={onTagWrite}
-        // onBlur={onInputReset}
-        value={text}
+        onKeyUp={handleKeyUp}
+        onChange={handleTagWrite}
+        onBlur={handleInputReset}
+        defaultValue={text}
         maxLength={10}
       />
     </HashContainer>
@@ -63,7 +99,7 @@ function TagInput() {
 
 export default TagInput;
 
-const HashContainer = styled.div<{ error: boolean }>`
+const HashContainer = styled.div`
   height: auto;
   margin-top: 30px;
   padding: 5px;
@@ -73,7 +109,7 @@ const HashContainer = styled.div<{ error: boolean }>`
   flex-wrap: wrap;
   letter-spacing: -0.6px;
   color: #444241;
-  border: 2px solid ${({ theme, error }) => (error ? theme.color.lightGray : theme.color.yellow)};
+  border: 2px solid ${({ theme }) => theme.color.yellow};
   @media screen and (max-width: 1200px) {
     display: block;
   }
