@@ -9,19 +9,19 @@ type FormInputProps = {
   placeholder: string;
   autoComplete?: string | undefined;
   maxLength?: number | undefined;
-  errors: FieldError | undefined;
+  errors?: FieldError | undefined;
   width: string;
   height: string;
+  border: string;
 };
 
-const CommonInput = styled.input<{ errors: FieldError | undefined; width: string; height: string }>`
-  border-radius: 5px;
+const CommonInput = styled.input<{ errors: FieldError | undefined; width: string; height: string; border: string }>`
   font-size: 0.8rem;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  border: 2px solid ${({ theme, errors }) => (errors ? theme.color.lightGray : theme.color.yellow)};
+  border: ${({ theme, errors, border }) => (errors ? `2px solid ${theme.color.lightGray}` : border)};
   padding-left: 10px;
-  border-radius: 3px;
+  border-radius: 5px;
 `;
 
 function Input({
@@ -35,6 +35,7 @@ function Input({
   errors,
   width,
   height,
+  border,
 }: FormInputProps) {
   return (
     <CommonInput
@@ -46,6 +47,7 @@ function Input({
       autoComplete={autoComplete}
       width={width}
       height={height}
+      border={border}
     />
   );
 }
