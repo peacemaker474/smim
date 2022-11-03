@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-type LoginToggle = () => void;
-
-function LoginHeader ({ onLoginClose }: {onLoginClose: LoginToggle}) {
+function LoginHeader ({ onLoginClose }: {onLoginClose: () => void}) {
   return (
     <Header>
       <LoginTitle> 스며들다 </LoginTitle>

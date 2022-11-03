@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { postUserLogin } from '../../../redux/services/UserService';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
+import Input from '../../common/atoms/Input';
 import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import Input from '../atoms/Input';
 
 interface FormValue {
   userId: string;
@@ -55,6 +55,9 @@ function LoginForm () {
       <InputWrapper>
         <Label> 아이디 </Label>
         <Input
+          width='100%'
+          height='40%'
+          border='1px solid rgba(12, 12, 12, .4)'
           register={register}
           name='userId'
           rules={{
@@ -72,6 +75,9 @@ function LoginForm () {
       <InputWrapper>
         <Label> 비밀번호 </Label>
         <Input
+          width='100%'
+          height='40%'
+          border='1px solid rgba(12, 12, 12, .4)'
           register={register}
           name='password'
           rules={{
