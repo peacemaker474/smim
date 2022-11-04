@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
+import Editor from '../atoms/Editor';
 
 interface ParaProps {
-  para: string;
+  p: string;
   img: Array<string>;
 }
 interface FormValue {
@@ -29,7 +30,7 @@ function CreateForm() {
 
   useEffect(() => {
     setValue('title', '');
-    setValue('para', { para: '', img: [] });
+    setValue('para', { p: '', img: [] });
     setValue('age', '');
     setValue('tagArray', []);
   }, [setValue]);
@@ -45,6 +46,14 @@ function CreateForm() {
         watch={watch}
         // setError={setError}
         // errors={errors.tagArray}
+      />
+      <Editor
+        register={register}
+        setValue={setValue}
+        clearErrors={clearErrors}
+        watch={watch}
+        // setError={setError}
+        // errors={errors.para}
       />
     </form>
   );
