@@ -42,8 +42,8 @@ function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
     }
 
     if (e.code === 'Comma' || (e.code === 'Space' && e.key !== '')) {
-      const tagText = e.key.replace(reg, '');
-      if (tagText.length === 0) {
+      const tagText = text.replace(reg, '');
+      if (!tagText.length) {
         setText('');
       } else if (!tagArray.includes(tagText)) {
         setValue('tagArray', [...tagArray, tagText]);
@@ -56,7 +56,7 @@ function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
   };
 
   const handleTagWrite = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setText(e.currentTarget.value);
   };
 
   const handleTagDelete = (e: any) => {
@@ -90,7 +90,7 @@ function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
         onKeyUp={handleKeyUp}
         onChange={handleTagWrite}
         onBlur={handleInputReset}
-        defaultValue={text}
+        value={text}
         maxLength={10}
       />
     </HashContainer>
