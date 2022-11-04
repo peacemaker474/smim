@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface PostHeaderProps {
-  answer: boolean;
+  answer: string;
   title: string;
 }
 
@@ -9,8 +9,8 @@ interface PostHeaderProps {
 function PostHeader ({ answer, title }: PostHeaderProps) {
   return (
     <ListHeader>
-      <ListisAnswer> {!answer ? '답변 대기' : '답변 완료'} </ListisAnswer>
-      <ListTitle>{title.length <= 15 ? title : `${title.substring(0, 15)}...`}</ListTitle>
+      <ListisAnswer> {answer} </ListisAnswer>
+      <ListTitle>{title}</ListTitle>
     </ListHeader>
   );
 }

@@ -20,12 +20,12 @@ function MainLists({ age, posts, handleMovePostDetail }: ListsPorps) {
           posts.map((post) => (
             <PostsList id={post._id} key={post._id} onClick={handleMovePostDetail}>
               <PostHeader
-                answer={post.meta.answer}
-                title={post.title}
+                answer={!post.meta.answer ? '답변 대기' : '답변 완료'}
+                title={post.title.length <= 15 ? post.title : `${post.title.substring(0, 15)}...`}
               />
               <PostContent
                 nickname={post.owner.nickname}
-                createAt={post.createAt}
+                createAt={post.createAt.slice(5, 10).replaceAll('-', '.')}
                 likes={post.meta.likes}
               />
             </PostsList>
