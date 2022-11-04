@@ -22,7 +22,7 @@ function Title({ register, errors }: TitleProps) {
         register={register}
         width="100%"
         height="40px"
-        border="2px solid black"
+        border="2px solid #FFC306"
       />
     </TitleWrap>
   );
