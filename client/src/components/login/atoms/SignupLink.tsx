@@ -4,6 +4,23 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import Span from './Span';
 
+function SignupLink () {
+  const dispatch = useAppDispatch();
+
+  const handleLoginClick = () => {
+    dispatch(loginToggle());
+  }
+
+  return (
+    <SignBox>
+      <Span fontSize='0.8rem'> 아직 회원이 아니신가요? </Span>
+      <SignLink to='/signup' onClick={handleLoginClick}> 회원가입 </SignLink>
+    </SignBox>
+  );
+}
+
+export default SignupLink;
+
 const SignBox = styled.div`
   span {
     color: ${({theme}) => theme.color.gray};
@@ -24,20 +41,3 @@ const SignLink = styled(Link)`
     font-size: 0.8rem;
   }
 `;
-
-function SignupLink () {
-  const dispatch = useAppDispatch();
-
-  const handleLoginClick = () => {
-    dispatch(loginToggle());
-  }
-
-  return (
-    <SignBox>
-      <Span fontSize='0.8rem'> 아직 회원이 아니신가요? </Span>
-      <SignLink to='/signup' onClick={handleLoginClick}> 회원가입 </SignLink>
-    </SignBox>
-  );
-}
-
-export default SignupLink;

@@ -12,9 +12,7 @@ const Text = styled.span<SpanProps>`
 
 function Span ({ children, fontSize }: SpanProps) {
   return (
-    <Text
-      fontSize={fontSize}
-    >
+    <Text fontSize={fontSize}>
       {children}
     </Text>
   );
