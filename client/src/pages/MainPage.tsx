@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getMainPostLists } from '../networks/main/http';
 import { MainPageData } from '../types';
+import LoadingPage from './LoadingPage';
 
 const MainListsComponent = lazy(() => import('../components/main/molecules/MainLists'));
 
@@ -29,7 +30,7 @@ function MainPage () {
   return (
     <MainBody>
       <MainContainer>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingPage />}>
           <MainWrapper>
             <MainListsComponent
               age='10'
