@@ -6,13 +6,14 @@ type FormInputProps = {
   name: Path<FieldValues>;
   rules: RegisterOptions;
   type: string;
-  placeholder: string;
+  placeholder?: string | undefined;
   autoComplete?: string | undefined;
   maxLength?: number | undefined;
   errors?: FieldError | undefined;
   width: string;
   height: string;
   border: string;
+  id?: string | undefined;
 };
 
 const CommonInput = styled.input<{ errors: FieldError | undefined; width: string; height: string; border: string }>`
@@ -36,6 +37,7 @@ function Input({
   width,
   height,
   border,
+  id,
 }: FormInputProps) {
   return (
     <CommonInput
@@ -48,6 +50,7 @@ function Input({
       width={width}
       height={height}
       border={border}
+      id={id}
     />
   );
 }
