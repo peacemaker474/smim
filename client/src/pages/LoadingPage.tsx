@@ -1,7 +1,7 @@
 import { HashLoader } from 'react-spinners';
 import styled from 'styled-components';
 
-const LoadingWrapper = styled.section<LoadingProps>`
+const LoadingWrapper = styled.section`
   position: fixed;
   top: 50%;
   left: 50%;

@@ -10,9 +10,9 @@ interface PostContentProps {
 function PostContent ({ nickname, createAt, likes }: PostContentProps) {
   return (
     <ListContent>
-      <PostOwner>{nickname}</PostOwner>
-      <PostCreateDate>{createAt.slice(5, 10).replaceAll('-', '.')}</PostCreateDate>
-      <PostLike>{likes}</PostLike>
+      <PostOwner> {nickname} </PostOwner>
+      <PostCreateDate> {createAt} </PostCreateDate>
+      <PostLike> {likes} </PostLike>
     </ListContent>
   );
 }
