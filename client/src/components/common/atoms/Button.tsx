@@ -5,6 +5,7 @@ interface ButtonProps {
   height: string;
   border: string;
   children: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => void;
 }
 
@@ -24,13 +25,14 @@ const CommonBtn = styled.button<{ width: string, height: string, border: string}
   }
 `;
 
-function Button ({ width, height, border, children, onClick }: ButtonProps) {
+function Button ({ width, height, border, children, type, onClick }: ButtonProps) {
   return (
     <CommonBtn
       width={width}
       height={height}
       border={border}
       onClick={onClick}
+      type={type}
     >
       {children}
     </CommonBtn>
