@@ -1,15 +1,15 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { useCallback } from 'react';
-import styled from 'styled-components';
-import CheckSVG from '../../../asset/icons/icon-check.svg';
 import { getCheckId } from '../../../networks/signup/http';
+import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
 import Input from '../../common/atoms/Input';
+import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
 import { SignupProps } from '../types';
 
 function SignupId ({ register, errors, valid, setValid }: SignupProps) {
   
-  const handleExistedId = useCallback(() => async (value: Record<string, any>) => {
+  const handleExistedId = useCallback(() => async (value: string) => {
     try {
       const { data } = await getCheckId(value);
       if (data.success) setValid({...valid, userId: true});
@@ -22,7 +22,13 @@ function SignupId ({ register, errors, valid, setValid }: SignupProps) {
   
   return (
     <InputWrapper>
-      <SignupTitle htmlFor='userId'> 아이디 </SignupTitle>
+      <Label
+        fontSize='14px'
+        margin='0 0 5px 3px'
+        htmlFor='userId'
+      > 
+        아이디
+      </Label>
       <Input
         type='text'
         id='userId'
@@ -54,29 +60,3 @@ function SignupId ({ register, errors, valid, setValid }: SignupProps) {
 }
 
 export default SignupId;
-
-const InputWrapper = styled.div`
-  width: 100%;
-  height: 14%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
-`;
-
-const SignupTitle = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0 0 5px 3px;
-  align-self: flex-start;
-`
-
-const CheckBox = styled.div`
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
-  background-image: url(${CheckSVG});
-`;

@@ -53,7 +53,12 @@ function LoginForm () {
   return (
     <FormBox onSubmit={handleSubmit(handleLoginSubmit)}>
       <InputWrapper>
-        <Label> 아이디 </Label>
+        <Label
+          margin='0 0 10px 0'
+          fontSize='0.9rem'
+        >
+          아이디 
+        </Label>
         <Input
           width='100%'
           height='40%'
@@ -73,7 +78,12 @@ function LoginForm () {
         {errors.userId && <ValidSpan padding='1em 0.3em 0 0'> {errors.userId?.message} </ValidSpan>}
       </InputWrapper>
       <InputWrapper>
-        <Label> 비밀번호 </Label>
+        <Label 
+          margin='0 0 10px 0'
+          fontSize='0.9rem'
+        > 
+          비밀번호
+        </Label>
         <Input
           width='100%'
           height='40%'

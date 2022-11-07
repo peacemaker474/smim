@@ -1,14 +1,14 @@
-import styled from 'styled-components';
 import { useCallback } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import { SignupProps } from '../types';
 import { getCheckEmail } from '../../../networks/signup/http';
 import Input from '../../common/atoms/Input';
-import CheckSVG from '../../../asset/icons/icon-check.svg';
 import ValidSpan from '../../common/atoms/ValidSpan';
+import Label from '../../common/atoms/Label';
+import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
 
 function SignupEmail ({ register, errors, valid, setValid}: SignupProps) {
-  const handleCheckExistedEmail = useCallback(() => async (value: Record<string, any>) => {
+  const handleCheckExistedEmail = useCallback(() => async (value: string) => {
     try {
       const { data } = await getCheckEmail(value);
       if (data.success) setValid({...valid, email: true});
@@ -21,7 +21,13 @@ function SignupEmail ({ register, errors, valid, setValid}: SignupProps) {
 
   return (
     <InputWrapper>
-      <SignupTitle htmlFor='email'> 이메일 </SignupTitle>
+      <Label
+        fontSize='14px'
+        margin='0 0 5px 3px'
+        htmlFor='email'
+      > 
+        이메일
+      </Label>
       <Input
         type='text'
         id='email'
@@ -53,29 +59,3 @@ function SignupEmail ({ register, errors, valid, setValid}: SignupProps) {
 }
 
 export default SignupEmail;
-
-const InputWrapper = styled.div`
-  width: 100%;
-  height: 14%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
-`;
-
-const SignupTitle = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0 0 5px 3px;
-  align-self: flex-start;
-`
-
-const CheckBox = styled.div`
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
-  background-image: url(${CheckSVG});
-`;
