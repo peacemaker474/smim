@@ -5,11 +5,11 @@ interface ButtonProps {
   height: string;
   border: string;
   children: string;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
-  onClick?: () => void;
 }
 
-const CommonBtn = styled.button<{ width: string, height: string, border: string}>`
+const CommonBtn = styled.button<{ width: string; height: string; border: string }>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   padding: 0;
