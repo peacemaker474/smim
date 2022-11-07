@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postSignupSubmit } from '../../../networks/signup/http';
+import SignupBirth from '../atoms/SignupBirth';
+import SignupBtns from '../atoms/SignupBtns';
+import SignupEmail from '../atoms/SignupEmail';
 import SignupId from '../atoms/SignupId';
+import SignupName from '../atoms/SignupName';
+import SignupPw from '../atoms/SignupPw';
 import { ResponseSignup, SignupFormData } from '../types';
 
 function SignupForm () {
@@ -22,32 +27,57 @@ function SignupForm () {
 
   const navigate = useNavigate();
 
-  // const handleSignupSubmit = (data: SignupFormData) => {
-  //   let day = +data.dd < 10 ? `0${data.dd}` : data.dd;
+  const handleSignupSubmit = (data: SignupFormData) => {
+    const day = +data.dd < 10 ? `0${data.dd}` : data.dd;
 
-  //   let body = {
-  //     userId: data.userId,
-  //     email: data.email,
-  //     nickname: data.nickName,
-  //     birthday: data.yy + data.mm + day,
-  //     password: data.password
-  //   };
+    const body = {
+      userId: data.userId,
+      email: data.email,
+      nickname: data.nickName,
+      birthday: data.yy + data.mm + day,
+      password: data.password
+    };
     
-  //   postSignupSubmit(body).then((res: ResponseSignup) => {
-  //       if (res.data.success) {
-  //         navigate('/');
-  //       }
-  //     });
-  // };
+    postSignupSubmit(body).then((res: ResponseSignup) => {
+        if (res.data.success) {
+          navigate('/');
+        }
+      });
+  };
 
   return (
-    <SignupFormBox>
+    <SignupFormBox onSubmit={handleSubmit(handleSignupSubmit)}>
       <SignupId
         register={register}
         errors={errors}
         valid={valid}
         setValid={setValid}
       />
+      <SignupEmail
+        register={register}
+        errors={errors}
+        valid={valid}
+        setValid={setValid}
+      />
+      <SignupName
+        register={register}
+        errors={errors}
+        valid={valid}
+        setValid={setValid}
+      />
+      <SignupBirth
+        register={register}
+        errors={errors}
+        getValues={getValues}
+      />
+      <SignupPw
+        register={register}
+        errors={errors}
+        valid={valid}
+        setValid={setValid}
+        getValues={getValues}
+      />
+      <SignupBtns />
     </SignupFormBox>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldError, FieldValues, Path, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { FieldError, FieldValues, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
 export interface SignupFormData {
   userId: string;
@@ -28,10 +28,20 @@ interface ValidValue {
   check: boolean,
 }
 
-export interface SignupProps {
+interface UseFormProps {
   register: UseFormRegister<any>;
   errors?: FieldError | any;
+}
+
+export interface SignupProps extends UseFormProps{
   valid: ValidValue;
   setValid: React.Dispatch<React.SetStateAction<ValidValue>>;
-  getValues?: UseFormGetValues<FieldValues> | undefined;
+}
+
+export interface BirthProps extends UseFormProps {
+  getValues: UseFormGetValues<SignupFormData>;
+}
+
+export interface PasswordProps extends SignupProps {
+  getValues: UseFormGetValues<SignupFormData>;
 }
