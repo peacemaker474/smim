@@ -56,7 +56,7 @@ function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
   };
 
   const handleTagWrite = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget.value);
+    setText(e.currentTarget?.value);
   };
 
   const handleTagDelete = (e: any) => {

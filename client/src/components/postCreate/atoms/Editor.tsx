@@ -34,7 +34,6 @@ function Editor({
   clearErrors,
 }: EditorProps) {
   const postText = watch('para');
-  console.log(postText);
   const quillRef = useRef<ReactQuill>();
   const [text, setText] = useState('');
   const [img, setImg] = useState('');
@@ -50,7 +49,8 @@ function Editor({
         const formData = new FormData();
         formData.append('img', file[0]);
         try {
-          const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/post/img`, formData);
+          const result = await axios.post(`https://httpstest.smimsv.ga/post/img`, formData);
+          console.log(result);
           const { url } = result.data;
           setImg(result.data.key);
           const range = quillRef.current?.getEditor().getSelection()?.index;
