@@ -5,37 +5,37 @@ import GNLink from '../atoms/GNLink';
 import UserLink from '../atoms/UserLink';
 
 interface NavProps {
-  handleLogoutClick: (cb?:any) => () => void;
+  handleLogoutClick: (cb?: any) => () => void;
 }
 
-function NavLists ({ handleLogoutClick }: NavProps) {
+function NavLists({ handleLogoutClick }: NavProps) {
   const { pathname } = useLocation();
-  const [ isDropdownVisible, dropdownRef, btnRef, handleDropdownShow ]: any[] = useDropdown();
+  const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: any[] = useDropdown();
 
   return (
     <Lists>
       <List>
-        <GNLink url='/generation/10' current={pathname === '/generation/10'}> 
+        <GNLink url="/generation/10" current={pathname === '/generation/10'}>
           10대에게
         </GNLink>
       </List>
       <List>
-        <GNLink url='/generation/20' current={pathname === '/generation/20'}> 
+        <GNLink url="/generation/20" current={pathname === '/generation/20'}>
           20대에게
         </GNLink>
       </List>
       <List>
-        <GNLink url='/generation/30' current={pathname === '/generation/30'}> 
+        <GNLink url="/generation/30" current={pathname === '/generation/30'}>
           30대에게
         </GNLink>
       </List>
       <List>
-        <GNLink url='/generation/40' current={pathname === '/generation/40'}> 
+        <GNLink url="/generation/40" current={pathname === '/generation/40'}>
           40대에게
         </GNLink>
       </List>
       <List>
-        <GNLink url='/generation/50' current={pathname === '/generation/50'}> 
+        <GNLink url="/generation/50" current={pathname === '/generation/50'}>
           50대에게
         </GNLink>
       </List>

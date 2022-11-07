@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Dropdown from '../atoms/Dropdown';
-import useDropdown from '../../../hooks/useDropdown';
+import { useDropdown } from '../../../hooks';
 // import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
 
 export default function DropdownBox() {

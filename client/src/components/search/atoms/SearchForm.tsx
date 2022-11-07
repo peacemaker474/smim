@@ -22,7 +22,7 @@ interface SearchFormOption {
   age: string;
 }
 
-function searchForm({ optionArr, name }: SearchFormOption) {
+function SearchForm({ optionArr, name, age }: SearchFormOption) {
   const [searchOption, setSearchOption] = useState('');
   const [searchText, setSearchText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -64,7 +64,7 @@ function searchForm({ optionArr, name }: SearchFormOption) {
   );
 }
 
-export default searchForm;
+export default SearchForm;
 
 const PostListHeadDiv = styled.div`
   display: flex;
