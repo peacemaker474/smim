@@ -2,12 +2,12 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useCallback } from 'react';
 import { getCheckId } from '../../../networks/signup/http';
 import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
+import { UseFormSignupProps } from '../../../type/formTypes';
 import Input from '../../common/atoms/Input';
 import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import { SignupProps } from '../types';
 
-function SignupId ({ register, errors, valid, setValid }: SignupProps) {
+function SignupId ({ register, errors, valid, setValid }: UseFormSignupProps) {
   
   const handleExistedId = useCallback(() => async (value: string) => {
     try {

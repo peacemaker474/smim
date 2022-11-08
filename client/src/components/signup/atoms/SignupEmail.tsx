@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
-import { SignupProps } from '../types';
 import { getCheckEmail } from '../../../networks/signup/http';
 import Input from '../../common/atoms/Input';
 import ValidSpan from '../../common/atoms/ValidSpan';
 import Label from '../../common/atoms/Label';
 import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
+import { UseFormSignupProps } from '../../../type/formTypes';
 
-function SignupEmail ({ register, errors, valid, setValid}: SignupProps) {
+function SignupEmail ({ register, errors, valid, setValid}: UseFormSignupProps) {
   const handleCheckExistedEmail = useCallback(() => async (value: string) => {
     try {
       const { data } = await getCheckEmail(value);

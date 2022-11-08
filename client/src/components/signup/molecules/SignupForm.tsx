@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postSignupSubmit } from '../../../networks/signup/http';
+import { AxiosResponseSignup, SignupFormData } from '../../../type/signupTypes';
 import SignupBirth from '../atoms/SignupBirth';
 import SignupBtns from '../atoms/SignupBtns';
 import SignupEmail from '../atoms/SignupEmail';
 import SignupId from '../atoms/SignupId';
 import SignupName from '../atoms/SignupName';
 import SignupPw from '../atoms/SignupPw';
-import { ResponseSignup, SignupFormData } from '../types';
+
 
 function SignupForm () {
   const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignupFormData>({
@@ -38,7 +39,7 @@ function SignupForm () {
       password: data.password
     };
     
-    postSignupSubmit(body).then((res: ResponseSignup) => {
+    postSignupSubmit(body).then((res: AxiosResponseSignup) => {
         if (res.data.success) {
           navigate('/');
         }

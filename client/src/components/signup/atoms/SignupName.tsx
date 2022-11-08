@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 import { getCheckName } from '../../../networks/signup/http';
 import Input from '../../common/atoms/Input';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import { SignupProps } from '../types';
 import Label from '../../common/atoms/Label';
 import { InputWrapper, CheckBox } from '../../../styles/SignupStyles';
+import { UseFormSignupProps } from '../../../type/formTypes';
 
-function SignupName ({ register, errors, valid, setValid }: SignupProps) {
+function SignupName ({ register, errors, valid, setValid }: UseFormSignupProps) {
   const handleExistedName = useCallback(() => async (value: string) => {
     try {
       const { data } = await getCheckName(value);

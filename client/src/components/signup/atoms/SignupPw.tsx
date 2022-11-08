@@ -2,11 +2,11 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useCallback } from 'react';
 import Input from '../../common/atoms/Input';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import { PasswordProps } from '../types';
 import Label from '../../common/atoms/Label';
 import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
+import { SignupPasswordProps } from '../../../type/formTypes';
 
-function SignupPw ({ register, errors, valid, setValid, getValues }: PasswordProps) {
+function SignupPw ({ register, errors, valid, setValid, getValues }: SignupPasswordProps) {
   const handleCheckPwBlur = useCallback(() => (value: string) => {
     const { password } = getValues();
     if (password !== value) {

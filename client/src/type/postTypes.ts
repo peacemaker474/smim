@@ -1,8 +1,12 @@
-export interface OwnerData {
+interface MainPageLists {
+  [key: string] : PostListData[];
+}
+
+export interface PostOwnerData {
   nickname: string;
 }
 
-export interface BookMarkData {
+export interface PostBookMarkData {
   bookmarks: string[];
   pinnedCmnt: string | null;
   views: number;
@@ -10,13 +14,13 @@ export interface BookMarkData {
   answer: boolean;
 }
 
-export interface MainListsData {
+export interface PostListData {
   being: boolean;
   content: string;
   createAt: string;
   hashtag: string[];
-  meta: BookMarkData;
-  owner: OwnerData;
+  meta: PostBookMarkData;
+  owner: PostOwnerData;
   targetAge: number;
   title: string;
   updateAt: string;
@@ -24,11 +28,7 @@ export interface MainListsData {
   _id: string;
 }
 
-interface Lists {
-  [key: string] : MainListsData[];
-}
-
-export interface MainPageData {
+export interface AxiosResponseMainPage {
   success: boolean;
-  lists: Lists;
+  lists: MainPageLists
 }
