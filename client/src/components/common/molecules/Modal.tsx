@@ -70,6 +70,7 @@ const ModalText = styled.h2`
 const BtnBox = styled.div`
   width: 127px;
   margin: 25px auto;
+  display: flex;
   & button {
     background: ${({ theme }) => theme.color.yellow};
     border: none;

@@ -2,8 +2,34 @@ import axios from 'axios';
 
 const http = 'http://localhost:4000';
 
+interface ParaProps {
+  para: string;
+  img: Array<string>;
+}
+
+interface CreateDataProps {
+  title: string | null;
+  content: ParaProps;
+  targetAge: string | null;
+  hashtag: Array<string>;
+}
+
+export const postCreatePost = (data: CreateDataProps, header: any) => {
+  return axios.post(`${http}/post/create`, data, header);
+};
+
+export const putPostEdit = (id: string, data: CreateDataProps, header: any) => {
+  return axios.put(`${http}/post/${id}`, data, header);
+};
+
 export const getPostListRead = (targetAge: string | undefined, filter: any, data: any, page = 1) => {
   return axios.get(
     `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.inputs}`,
   );
+};
+
+export const getReadPostDetail = (id: string) => {
+  return axios.get(`${http}/post/${id}`, {
+    withCredentials: true,
+  });
 };
