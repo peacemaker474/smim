@@ -8,7 +8,8 @@ import { InputWrapper, CheckBox } from '../../../styles/SignupStyles';
 import { UseFormSignupProps } from '../../../type/formTypes';
 
 function SignupName ({ register, errors, valid, setValid }: UseFormSignupProps) {
-  const handleExistedName = useCallback(() => async (value: string) => {
+  
+  const handleExistedName = useCallback(async (value: string) => {
     try {
       const { data } = await getCheckName(value);
       if (data.success) setValid({...valid, nickName: true});
@@ -41,7 +42,7 @@ function SignupName ({ register, errors, valid, setValid }: UseFormSignupProps) 
             message: "3~8 자리의 한글, 영문, 숫자만 가능합니다.",
           },
           validate: {
-            checkExistedName: handleExistedName(),
+            checkExistedName: handleExistedName,
           }
         }}
         width='100%'

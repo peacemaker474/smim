@@ -9,7 +9,7 @@ import ValidSpan from '../../common/atoms/ValidSpan';
 
 function SignupId ({ register, errors, valid, setValid }: UseFormSignupProps) {
   
-  const handleExistedId = useCallback(() => async (value: string) => {
+  const handleExistedId = useCallback(async (value: string) => {
     try {
       const { data } = await getCheckId(value);
       if (data.success) setValid({...valid, userId: true});
@@ -41,7 +41,7 @@ function SignupId ({ register, errors, valid, setValid }: UseFormSignupProps) {
             message: "4~12자리의 영문, 숫자만 가능합니다."
           },
           validate: {
-            checkExistsId: handleExistedId(),
+            checkExistsId: handleExistedId,
           }
         }}
         width='100%'

@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 // import { usePrompt } from '../../../utils/blocker';
 import { postUploadToggle, modalToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../networks/post/http';
-import { MainListsData } from '../../../types';
+import { PostListData } from '../../../type/postTypes';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
@@ -29,7 +29,7 @@ interface FormValue {
 interface CreateFormProps {
   postId: string;
   pathValue: string;
-  postData: MainListsData;
+  postData: PostListData;
 }
 
 function CreateForm({ postData, pathValue, postId }: CreateFormProps) {

@@ -8,7 +8,8 @@ import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
 import { UseFormSignupProps } from '../../../type/formTypes';
 
 function SignupEmail ({ register, errors, valid, setValid}: UseFormSignupProps) {
-  const handleCheckExistedEmail = useCallback(() => async (value: string) => {
+
+  const handleCheckExistedEmail = useCallback(async (value: string) => {
     try {
       const { data } = await getCheckEmail(value);
       if (data.success) setValid({...valid, email: true});
@@ -40,7 +41,7 @@ function SignupEmail ({ register, errors, valid, setValid}: UseFormSignupProps) 
             message: "이메일 형식의 맞춰서 작성해주세요."
           },
           validate: {
-            checkExistsEmail: handleCheckExistedEmail(),
+            checkExistsEmail: handleCheckExistedEmail,
           }
         }}
         width='100%'
