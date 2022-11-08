@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { InputWrapper } from '../../../styles/SignupStyles';
+import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
 import { BirthProps } from '../types';
 
@@ -25,7 +27,13 @@ function SignupBirth ({ register, errors, getValues }: BirthProps) {
   
   return (
     <InputWrapper>
-      <SignupTitle htmlFor='yy'> 생년월일 </SignupTitle>
+      <Label
+        fontSize='14px'
+        margin='0 0 5px 3px'
+        htmlFor='yy'
+      > 
+        생년월일
+      </Label>
       <BirthBox>
         <BirthYear
           id='yy'
@@ -81,16 +89,8 @@ function SignupBirth ({ register, errors, getValues }: BirthProps) {
 
 export default SignupBirth;
 
-const InputWrapper = styled.div`
-  width: 100%;
-  height: 14%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
-`;
 
-export const BirthBox = styled.div`
+const BirthBox = styled.div`
   width: 100%;
   height: 50%;
   display: flex;
@@ -98,14 +98,7 @@ export const BirthBox = styled.div`
   gap: 15px;
 `;
 
-const SignupTitle = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0 0 5px 3px;
-  align-self: flex-start;
-`
-
-export const BirthYear = styled.input`
+const BirthYear = styled.input`
   all: unset;
   width: 30%;
   height: 45px;
@@ -123,7 +116,7 @@ export const BirthYear = styled.input`
   }
 `;
 
-export const BirthMonth = styled.select`
+const BirthMonth = styled.select`
   all: unset;
   width: 30%;
   height: 45px;

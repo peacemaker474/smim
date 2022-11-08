@@ -1,10 +1,10 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { useCallback } from 'react';
-import styled from 'styled-components';
 import Input from '../../common/atoms/Input';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import CheckSVG from '../../../asset/icons/icon-check.svg';
 import { PasswordProps } from '../types';
+import Label from '../../common/atoms/Label';
+import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
 
 function SignupPw ({ register, errors, valid, setValid, getValues }: PasswordProps) {
   const handleCheckPwBlur = useCallback(() => (value: string) => {
@@ -20,7 +20,13 @@ function SignupPw ({ register, errors, valid, setValid, getValues }: PasswordPro
   return (
     <>
       <InputWrapper>
-        <SignupTitle htmlFor="password"> 비밀번호 </SignupTitle>
+        <Label
+          fontSize='14px'
+          margin='0 0 5px 3px'
+          htmlFor='password'
+        > 
+          비밀번호
+        </Label>
         <Input
           type="password"
           id="password"
@@ -46,7 +52,13 @@ function SignupPw ({ register, errors, valid, setValid, getValues }: PasswordPro
         }
       </InputWrapper>
       <InputWrapper>
-        <SignupTitle htmlFor="check"> 비밀번호 재확인 </SignupTitle>
+        <Label
+          fontSize='14px'
+          margin='0 0 5px 3px'
+          htmlFor='check'
+        > 
+          비밀번호 재확인
+        </Label>
         <Input
           type="password"
           id="check"
@@ -77,30 +89,4 @@ function SignupPw ({ register, errors, valid, setValid, getValues }: PasswordPro
 }
 
 export default SignupPw;
-
-const InputWrapper = styled.div`
-  width: 100%;
-  height: 14%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
-`;
-
-const SignupTitle = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0 0 5px 3px;
-  align-self: flex-start;
-`
-
-const CheckBox = styled.div`
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
-  background-image: url(${CheckSVG});
-`;
 
