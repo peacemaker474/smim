@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MainListsData } from '../../../types';
+import { PostListData } from '../../../type/postTypes';
 import PostContent from '../atoms/PostContent';
 import PostHeader from '../atoms/PostHeader';
 import PostsTitle from '../atoms/PostsTitle';
 
 interface ListsPorps {
   age: string;
-  posts: MainListsData[];
+  posts: PostListData[];
   handleMovePostDetail: (evt: React.MouseEvent<HTMLLIElement>) => void;
 }
 

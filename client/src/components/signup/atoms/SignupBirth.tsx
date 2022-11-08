@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { InputWrapper } from '../../../styles/SignupStyles';
+import { UseFormBirthProps } from '../../../type/formTypes';
 import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
-import { BirthProps } from '../types';
 
-function SignupBirth ({ register, errors, getValues }: BirthProps) {
+function SignupBirth ({ register, errors, getValues }: UseFormBirthProps) {
   const handleBirthYearInput = () => (value: string) => {
     const myYear = value;
     const nowYear = new Date().getFullYear();

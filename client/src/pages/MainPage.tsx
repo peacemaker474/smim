@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getMainPostLists } from '../networks/main/http';
-import { MainPageData } from '../types';
+import { AxiosResponseMainPage } from '../type/postTypes';
 import LoadingPage from './LoadingPage';
 
 const MainListsComponent = lazy(() => import('../components/main/molecules/MainLists'));
@@ -20,7 +20,7 @@ function MainPage () {
   //   }
   // }, [entryCheck, navigate])
 
-  const { data } = useQuery<MainPageData>(['mainLists'], getMainPostLists);
+  const { data } = useQuery<AxiosResponseMainPage>(['mainLists'], getMainPostLists);
 
   const handleMovePostDetail = useCallback((evt: React.MouseEvent<HTMLLIElement>) => {
     const postId = evt.currentTarget.id;
