@@ -1,16 +1,49 @@
 import styled from 'styled-components';
+import { useEffect, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useAppDispatch } from '../redux/hooks';
+import { SET_TOKEN } from '../redux/slice/authSlice';
+import { getReadPostDetail } from '../networks/post/http';
+import { getCreateAccessToken } from '../networks/main/http';
+import LoadingPage from './LoadingPage';
 import CreateForm from '../components/postCreate/molecules/CreateForm';
 
 function PostCreatePage() {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
+  const postId = pathArr[3];
+
+  useEffect(() => {
+    getCreateAccessToken().then((res) => {
+      if (res.data.success) {
+        dispatch(SET_TOKEN(res.data.accessToken));
+      }
+    });
+  }, [dispatch]);
+
+  const loadPost = async () => {
+    try {
+      if (postId) {
+        const response = await getReadPostDetail(postId);
+        return response.data;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data: postData } = useQuery(['postEdit'], loadPost);
+
   return (
     <PostCreateMain>
       <PostCreateContainer>
-        <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
-        <CreateForm />
+        <Suspense fallback={<LoadingPage />}>
+          <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
+          <CreateForm postData={postData} pathValue={pathValue} postId={postId} />
+        </Suspense>
       </PostCreateContainer>
     </PostCreateMain>
   );

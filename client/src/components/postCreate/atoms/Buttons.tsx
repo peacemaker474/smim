@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useAppDispatch } from '../../../redux/hooks';
+import { modalToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
 
 const BtnWrap = styled.div`
@@ -14,16 +16,38 @@ const BtnDiv = styled.div`
   justify-content: space-between;
 `;
 
-function Buttons() {
+interface formStateProps {
+  formState: string;
+}
+
+function Buttons({ formState }: formStateProps) {
+  const dispatch = useAppDispatch();
+
+  const handleFormCancle = () => {
+    dispatch(modalToggle());
+  };
   return (
     <BtnWrap>
       <BtnDiv>
-        <Button type="button" height="2rem" border="2px solid black" width="5rem">
-          작성 취소
-        </Button>
-        <Button type="submit" border="2px solid black" height="2rem" width="5rem">
-          게시물 등록
-        </Button>
+        {formState === 'create' ? (
+          <>
+            <Button type="button" height="2rem" border="2px solid black" width="5rem" onClick={handleFormCancle}>
+              작성 취소
+            </Button>
+            <Button type="submit" border="2px solid black" height="2rem" width="5rem">
+              게시물 등록
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button type="button" height="2rem" border="2px solid black" width="5rem" onClick={handleFormCancle}>
+              수정 취소
+            </Button>
+            <Button type="submit" border="2px solid black" height="2rem" width="5rem">
+              재등록
+            </Button>
+          </>
+        )}
       </BtnDiv>
     </BtnWrap>
   );
