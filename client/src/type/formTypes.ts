@@ -1,14 +1,14 @@
 import { FieldError, FieldValues, Path, RegisterOptions, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 import { SignupValid, SignupFormData } from './signupTypes';
 
-interface UseFormTypes {
+export interface UseFormTypes {
   register: UseFormRegister<any>;
   errors?: FieldError | any | undefined;
 }
 
 export interface UseFormInputProps extends UseFormTypes {
   name: Path<FieldValues>;
-  rules: RegisterOptions;
+  rules?: RegisterOptions | undefined;
   type: string;
   placeholder?: string | undefined;
   autoComplete?: string | undefined;

@@ -3,6 +3,7 @@ import MainPage from '../pages/MainPage';
 import PostInventoryPage from '../pages/PostInventoryPage';
 import PostCreatePage from '../pages/PostCreatePage';
 import SignupPage from '../pages/SignupPage';
+import MyPageRoute from './MyPageRoute';
 
 function AppRoute() {
   return (
@@ -12,7 +13,7 @@ function AppRoute() {
       <Route path='/signup' element={<SignupPage />} />
       <Route path='/generation/:age' element={<PostInventoryPage />} />
       <Route path="/post/create" element={<PostCreatePage />} />
-      <Route path='/my' element={<div>my</div>} />
+      <Route path='/my/*' element={<MyPageRoute />} />
     </Routes>
   );
 }
