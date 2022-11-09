@@ -4,9 +4,10 @@ import {
   UseFormSetValue,
   UseFormClearErrors,
   UseFormWatch,
-  // UseFormSetError,
-  // FieldError,
+  UseFormSetError,
+  FieldError,
 } from 'react-hook-form';
+// import useText from '../../../hooks/useText';
 import styled from 'styled-components';
 import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icons/icon-del.svg';
@@ -15,13 +16,14 @@ interface TagInputProps {
   setValue: UseFormSetValue<any>;
   clearErrors: UseFormClearErrors<any>;
   watch: UseFormWatch<any>;
-  // setError: UseFormSetError<any>;
+  setError: UseFormSetError<any>;
   register: UseFormRegister<any>;
-  // errors: FieldError | undefined;
+  errors?: FieldError | any | undefined;
 }
 
-function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
+function TagInput({ setValue, clearErrors, watch, register, setError, errors }: TagInputProps) {
   const [text, setText] = useState('');
+  // const [text, setText, handleTagWrite] = useText();
   const tagArray = watch('tagArray');
 
   useEffect(() => {
@@ -38,7 +40,8 @@ function TagInput({ setValue, clearErrors, watch, register }: TagInputProps) {
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const reg = /[^\wㄱ-힣]/g;
     if (reg.exec(e.key)) {
-      setText(e.key.replace(reg, ''));
+      const txt = e.key.replace(reg, '');
+      setText(txt);
     }
 
     if (e.code === 'Comma' || (e.code === 'Space' && e.key !== '')) {

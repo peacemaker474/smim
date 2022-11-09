@@ -1,5 +1,5 @@
 interface MainPageLists {
-  [key: string] : PostListData[];
+  [key: string]: PostListData[];
 }
 
 export interface PostOwnerData {
@@ -30,5 +30,5 @@ export interface PostListData {
 
 export interface AxiosResponseMainPage {
   success: boolean;
-  lists: MainPageLists
+  lists: MainPageLists;
 }

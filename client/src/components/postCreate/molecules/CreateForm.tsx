@@ -7,42 +7,25 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 // import { usePrompt } from '../../../utils/blocker';
 import { postUploadToggle, modalToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../networks/post/http';
-import { MainListsData } from '../../../types';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
 import Editor from '../atoms/Editor';
 import Buttons from '../atoms/Buttons';
 import Modal from '../../common/molecules/Modal';
+import { PostCreateFormProps, PostCreateFormValue } from '../../../type/postFormTypes';
 
-interface ParaProps {
-  para: string;
-  img: Array<string>;
-}
-interface FormValue {
-  title: string | null;
-  tagArray: Array<string>;
-  para: ParaProps;
-  age: string | null;
-}
-
-interface CreateFormProps {
-  postId: string;
-  pathValue: string;
-  postData: MainListsData;
-}
-
-function CreateForm({ postData, pathValue, postId }: CreateFormProps) {
+function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
   const {
     register,
     setValue,
-    // setError,
+    setError,
     handleSubmit,
     clearErrors,
     watch,
     getValues,
     formState: { errors },
-  } = useForm<FormValue>({
+  } = useForm<PostCreateFormValue>({
     mode: 'onBlur',
   });
 
@@ -201,8 +184,8 @@ function CreateForm({ postData, pathValue, postId }: CreateFormProps) {
           setValue={setValue}
           clearErrors={clearErrors}
           watch={watch}
-          // setError={setError}
-          // errors={errors.tagArray}
+          setError={setError}
+          errors={errors.tagArray}
         />
         <Editor
           register={register}
