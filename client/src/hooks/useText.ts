@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 function useText() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
 
   const handleTagWrite = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget?.value);
+    setText(e.target?.value);
   };
 
   return [text, setText, handleTagWrite];

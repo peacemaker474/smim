@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   UseFormRegister,
@@ -12,7 +12,7 @@ import ReactQuill from 'react-quill';
 // import  { Quill } from 'react-quill';
 // import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
+import useCreateImage from '../../../hooks/useCreateImage';
 
 // Quill.register('modules/imageResize', ImageResize);
 
@@ -34,41 +34,8 @@ function Editor({
   clearErrors,
 }: EditorProps) {
   const postText = watch('para');
-  const quillRef = useRef<ReactQuill>();
   const [text, setText] = useState('');
-  const [img, setImg] = useState('');
-
-  const imageHandler = useCallback(() => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-    input.addEventListener('change', async () => {
-      const file = input.files;
-      if (file !== null) {
-        const formData = new FormData();
-        formData.append('img', file[0]);
-        try {
-          const result = await axios.post(`https://httpstest.smimsv.ga/post/img`, formData);
-          console.log(result);
-          const { url } = result.data;
-          setImg(result.data.key);
-          const range = quillRef.current?.getEditor().getSelection()?.index;
-          if (range !== null && range !== undefined) {
-            const quill = quillRef.current?.getEditor();
-
-            quill?.setSelection(range, 1);
-
-            quill?.clipboard.dangerouslyPasteHTML(range, `<img src=${url} alt="이미지 태그가 삽입됩니다." />`);
-          }
-
-          return;
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    });
-  }, [setImg]);
+  const [img, imageHandler, quillRef] = useCreateImage();
 
   const modules = useMemo(
     () => ({
@@ -127,7 +94,7 @@ function Editor({
   //     setText(postText.para);
   //   }, [register, watch, postText]);
 
-  const { ref: registerRef } = register('para.p', { required: true });
+  const { ref: registerRef } = register('para.para', { required: true });
 
   const handleEditorStateChange = (editorState: any) => {
     setText(editorState);
@@ -149,7 +116,7 @@ function Editor({
 
   const settingRegisterRef = (ele: any) => {
     registerRef(ele);
-    quillRef.current = ele;
+    // if (typeof quillRef !== 'string') quillRef.current = ele;
   };
   return (
     <PostEditorWrap
