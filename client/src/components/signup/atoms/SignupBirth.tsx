@@ -5,7 +5,8 @@ import Label from '../../common/atoms/Label';
 import ValidSpan from '../../common/atoms/ValidSpan';
 
 function SignupBirth ({ register, errors, getValues }: UseFormBirthProps) {
-  const handleBirthYearInput = () => (value: string) => {
+  
+  const handleBirthYearInput = (value: string) => {
     const myYear = value;
     const nowYear = new Date().getFullYear();
     if (nowYear - +myYear >= 100 && myYear.length === 4) {
@@ -13,7 +14,7 @@ function SignupBirth ({ register, errors, getValues }: UseFormBirthProps) {
     }
   };
 
-  const handleBirthDayInput = () => (value: string) => {
+  const handleBirthDayInput = (value: string) => {
     const month = +getValues('mm');
     const day = +value;
 
@@ -47,7 +48,7 @@ function SignupBirth ({ register, errors, getValues }: UseFormBirthProps) {
               message: '태어난 연도를 입력해주세요.'
             },
             validate: {
-              checkBirthYear: handleBirthYearInput(),
+              checkBirthYear: handleBirthYearInput,
             }
           })}
         />
@@ -77,7 +78,7 @@ function SignupBirth ({ register, errors, getValues }: UseFormBirthProps) {
           {...register('dd', {
             required: '태어난 일을 입력해주세요.',
             validate: {
-              checkBirthDay: handleBirthDayInput(),
+              checkBirthDay: handleBirthDayInput,
             }
           })}
         />

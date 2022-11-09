@@ -7,7 +7,8 @@ import { CheckBox, InputWrapper } from '../../../styles/SignupStyles';
 import { SignupPasswordProps } from '../../../type/formTypes';
 
 function SignupPw ({ register, errors, valid, setValid, getValues }: SignupPasswordProps) {
-  const handleCheckPwBlur = useCallback(() => (value: string) => {
+  
+  const handleCheckPwBlur = useCallback((value: string) => {
     const { password } = getValues();
     if (password !== value) {
       setValid({...valid, check: false});
@@ -67,7 +68,7 @@ function SignupPw ({ register, errors, valid, setValid, getValues }: SignupPassw
           rules={{
             required: "비밀번호를 입력하세요.",
             validate: {
-              matchesPreviousPassword: handleCheckPwBlur(),
+              matchesPreviousPassword: handleCheckPwBlur,
             },
           }}
           width='100%'
