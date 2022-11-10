@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { shallowEqual } from 'react-redux';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-// import { usePrompt } from '../../../utils/blocker';
+import { useValueInit, usePrompt } from '../../../hooks';
 import { postUploadToggle, modalToggle } from '../../../redux/slice/toggleSlice';
 import { postCreatePost, putPostEdit } from '../../../networks/post/http';
 import Title from '../atoms/Title';
@@ -42,34 +42,28 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
   const navigate = useNavigate();
   const [view, setView] = useState(true);
 
-  // usePrompt(
-  //   '현재 페이지를 벗어나시겠습니까?',
-  //   async () => {
-  //     const delData = getValues('para');
-  //     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
-  //       data: {
-  //         content: delData,
-  //       },
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     });
-  //   },
-  //   view,
-  // );
+  usePrompt(
+    '현재 페이지를 벗어나시겠습니까?',
+    async () => {
+      const delData = getValues('para');
+      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
+        data: {
+          content: delData,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    },
+    view,
+  );
 
-  useEffect(() => {
-    setValue('title', '');
-    setValue('para', { para: '', img: [] });
-    setValue('age', '');
-    setValue('tagArray', []);
-  }, [setValue]);
+  useValueInit(setValue);
 
   useEffect(() => {
     if (postData) {
       const { title, content, targetAge, hashtag } = postData;
-
       const myRegExp1 = /https:(.*?)(png|jpg|jpeg)/gi;
       const imgArray = (content.match(myRegExp1) || []).map((el) => decodeURI(el.split('com/')[1]));
 
@@ -87,42 +81,27 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
 
   const uploadPost = async (accessToken: string | null) => {
     const { title, para, tagArray, age } = watch();
+    const data = {
+      title,
+      content: para,
+      hashtag: tagArray,
+      targetAge: age,
+    };
+    const headers = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
 
     if (pathValue === 'create') {
-      postCreatePost(
-        {
-          title,
-          content: para,
-          hashtag: tagArray,
-          targetAge: age,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      )
+      postCreatePost(data, headers)
         .then(() => {
           navigate(`/generation/${age}`);
         })
         .catch((err: any) => console.log(err));
     } else if (pathValue === 'edit') {
-      putPostEdit(
-        postId,
-        {
-          title,
-          content: para,
-          hashtag: tagArray,
-          targetAge: age,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      )
+      putPostEdit(postId, data, headers)
         .then(() => {
           navigate(-1);
         })
@@ -192,8 +171,8 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
           setValue={setValue}
           clearErrors={clearErrors}
           watch={watch}
-          // setError={setError}
-          // errors={errors.para}
+          setError={setError}
+          errors={errors.para}
         />
         <Buttons formState={pathValue} />
       </form>
