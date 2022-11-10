@@ -1,38 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormClearErrors,
-  UseFormWatch,
-  // UseFormSetError,
-  //   FieldError,
-} from 'react-hook-form';
-import ReactQuill from 'react-quill';
-// import  { Quill } from 'react-quill';
+import { FieldError } from 'react-hook-form';
+import ReactQuill, { Quill } from 'react-quill';
 // import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
 import useCreateImage from '../../../hooks/useCreateImage';
+import { PostCreateProps } from '../../../type/formTypes';
 
 // Quill.register('modules/imageResize', ImageResize);
 
-interface EditorProps {
-  setValue: UseFormSetValue<any>;
-  clearErrors: UseFormClearErrors<any>;
-  watch: UseFormWatch<any>;
-  // setError: UseFormSetError<any>;
-  register: UseFormRegister<any>;
-  //   errors: FieldError | undefined;
-}
-
-function Editor({
-  register,
-  // errors,
-  // setError,
-  setValue,
-  watch,
-  clearErrors,
-}: EditorProps) {
+function Editor({ register, errors, setError, setValue, watch, clearErrors }: PostCreateProps) {
   const postText = watch('para');
   const [text, setText] = useState('');
   const [img, imageHandler, quillRef] = useCreateImage();
@@ -41,7 +18,6 @@ function Editor({
     () => ({
       toolbar: {
         container: [
-          // [{ 'font': [] }],
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike', 'blockquote'],
           [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
@@ -72,7 +48,6 @@ function Editor({
   );
 
   const formats = [
-    // 'font',
     'header',
     'bold',
     'italic',
@@ -89,26 +64,26 @@ function Editor({
     'background',
   ];
 
-  //   useEffect(() => {
-  //     register('para.p', { required: true });
-  //     setText(postText.para);
-  //   }, [register, watch, postText]);
+  useEffect(() => {
+    register('para.p', { required: true });
+    setText(postText.para);
+  }, [register, watch, postText]);
 
   const { ref: registerRef } = register('para.para', { required: true });
 
-  const handleEditorStateChange = (editorState: any) => {
-    setText(editorState);
-  };
-
   const handleEditorSetValue = () => {
     if ((postText.para === '' || postText.para === '<p><br></p>') && (text === '' || text === '<p><br></p>')) {
-      setValue('para', { p: '', img: [] });
-      //   setError('para.para', { required: true });
+      setValue('para', { para: '', img: [] });
+      setError('para.para', {
+        types: {
+          required: true,
+        },
+      });
     } else {
       if (img === '' || postText.img.includes(img)) {
-        setValue('para', { p: text, img: [...postText.img] });
+        setValue('para', { para: text, img: [...postText.img] });
       } else {
-        setValue('para', { p: text, img: [...postText.img, img] });
+        setValue('para', { para: text, img: [...postText.img, img] });
       }
       clearErrors('para');
     }
@@ -116,39 +91,22 @@ function Editor({
 
   const settingRegisterRef = (ele: any) => {
     registerRef(ele);
-    // if (typeof quillRef !== 'string') quillRef.current = ele;
+    quillRef.current = ele;
   };
+
   return (
-    <PostEditorWrap
-      //   errors={errors.para}
-      onBlur={handleEditorSetValue}
-    >
-      <CustomReactQuill
-        ref={settingRegisterRef}
-        modules={modules}
-        formats={formats}
-        onChange={handleEditorStateChange}
-        value={text}
-      />
+    <PostEditorWrap errors={errors} onBlur={handleEditorSetValue}>
+      <CustomReactQuill ref={settingRegisterRef} modules={modules} formats={formats} onChange={setText} value={text} />
     </PostEditorWrap>
   );
 }
 
 export default Editor;
 
-// const PostEditorWrap = styled.div<{ errors: FieldError | undefined }>`
-//   margin-top: 30px;
-//   height: 580px;
-//   border: 2px solid ${({ errors, theme }) => (errors ? theme.color.lightGray : theme.color.yellow)};
-//   @media screen and (max-width: 550px) {
-//     height: 602px;
-//   }
-// `;
-
-const PostEditorWrap = styled.div`
+const PostEditorWrap = styled.div<{ errors: FieldError | undefined }>`
   margin-top: 30px;
   height: 580px;
-  border: 2px solid ${({ theme }) => theme.color.yellow};
+  border: 2px solid ${({ errors, theme }) => (errors ? theme.color.lightGray : theme.color.yellow)};
   @media screen and (max-width: 550px) {
     height: 602px;
   }

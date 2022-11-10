@@ -1,29 +1,13 @@
-import { useState, useEffect } from 'react';
-import {
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormClearErrors,
-  UseFormWatch,
-  UseFormSetError,
-  FieldError,
-} from 'react-hook-form';
-// import useText from '../../../hooks/useText';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import { FieldError } from 'react-hook-form';
+import useText from '../../../hooks/useText';
+import { PostCreateProps } from '../../../type/formTypes';
 import { theme } from '../../../styles/theme';
 import DelBtn from '../../../asset/icons/icon-del.svg';
 
-interface TagInputProps {
-  setValue: UseFormSetValue<any>;
-  clearErrors: UseFormClearErrors<any>;
-  watch: UseFormWatch<any>;
-  setError: UseFormSetError<any>;
-  register: UseFormRegister<any>;
-  errors?: FieldError | any | undefined;
-}
-
-function TagInput({ setValue, clearErrors, watch, register, setError, errors }: TagInputProps) {
-  const [text, setText] = useState('');
-  // const [text, setText, handleTagWrite] = useText();
+function TagInput({ setValue, clearErrors, watch, register, setError, errors }: PostCreateProps) {
+  const [text, setText, handleTextWrite] = useText();
   const tagArray = watch('tagArray');
 
   useEffect(() => {
@@ -32,16 +16,19 @@ function TagInput({ setValue, clearErrors, watch, register, setError, errors }: 
 
   const handleInputReset = () => {
     setText('');
-    // if (watch('tagArray').length === 0) {
-    // setError('tagArray', { required: true });
-    // }
+    if (watch('tagArray').length === 0) {
+      setError('tagArray', {
+        types: {
+          required: true,
+        },
+      });
+    }
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const reg = /[^\wㄱ-힣]/g;
     if (reg.exec(e.key)) {
-      const txt = e.key.replace(reg, '');
-      setText(txt);
+      setText(e.key.replace(reg, ''));
     }
 
     if (e.code === 'Comma' || (e.code === 'Space' && e.key !== '')) {
@@ -58,32 +45,28 @@ function TagInput({ setValue, clearErrors, watch, register, setError, errors }: 
     }
   };
 
-  const handleTagWrite = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget?.value);
-  };
-
   const handleTagDelete = (e: any) => {
     const tag = e?.target?.previousSibling.innerText;
     const newHashTagArray = tagArray.filter((el: string) => el !== tag);
     setValue('tagArray', [...newHashTagArray]);
     setText('');
-    // if (watch('tagArray').length === 0) {
-    //   setError('tagArray', { required: true });
-    // }
-  };
-
-  const handleDeleteBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    handleTagDelete(e);
+    if (watch('tagArray').length === 0) {
+      setError('tagArray', {
+        types: {
+          required: true,
+        },
+      });
+    }
   };
 
   return (
-    <HashContainer>
+    <HashContainer errors={errors}>
       <HashWrapBox>
         {tagArray &&
           tagArray.map((el: string) => (
             <HashItem key={el}>
               <span>{el}</span>
-              <HashDelBtn type="button" onClick={handleDeleteBtnClick} />
+              <HashDelBtn type="button" onClick={handleTagDelete} />
             </HashItem>
           ))}
       </HashWrapBox>
@@ -91,7 +74,7 @@ function TagInput({ setValue, clearErrors, watch, register, setError, errors }: 
         type="text"
         placeholder="해시태그를 입력해주시고 콤마로 구분해주세요"
         onKeyUp={handleKeyUp}
-        onChange={handleTagWrite}
+        onChange={handleTextWrite}
         onBlur={handleInputReset}
         value={text}
         maxLength={10}
@@ -102,7 +85,7 @@ function TagInput({ setValue, clearErrors, watch, register, setError, errors }: 
 
 export default TagInput;
 
-const HashContainer = styled.div`
+const HashContainer = styled.div<{ errors: FieldError | undefined }>`
   height: auto;
   margin-top: 30px;
   padding: 5px;

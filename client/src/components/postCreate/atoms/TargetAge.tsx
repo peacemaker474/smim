@@ -1,12 +1,8 @@
-import { UseFormRegister, FieldError } from 'react-hook-form';
 import styled from 'styled-components';
+import { FieldError } from 'react-hook-form';
+import { UseFormTypes } from '../../../type/formTypes';
 
-type TargetAgeProps = {
-  register: UseFormRegister<any>;
-  errors: FieldError | undefined;
-};
-
-function TargetAge({ register, errors }: TargetAgeProps) {
+function TargetAge({ register, errors }: UseFormTypes) {
   return (
     <TargetWrap>
       <TargetAgeSelect errors={errors} {...register('age', { required: '연령층을 선택해주세요' })}>
