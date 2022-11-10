@@ -1,28 +1,19 @@
 import styled from 'styled-components';
-import { useEffect, Suspense } from 'react';
+import { Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { useAppDispatch } from '../redux/hooks';
-import { SET_TOKEN } from '../redux/slice/authSlice';
 import { getReadPostDetail } from '../networks/post/http';
-import { getCreateAccessToken } from '../networks/main/http';
 import LoadingPage from './LoadingPage';
 import CreateForm from '../components/postCreate/molecules/CreateForm';
+import { useGetToken } from '../hooks';
 
 function PostCreatePage() {
   const { pathname } = useLocation();
-  const dispatch = useAppDispatch();
   const pathArr = pathname.split('/');
   const pathValue = pathArr[2];
   const postId = pathArr[3];
 
-  useEffect(() => {
-    getCreateAccessToken().then((res) => {
-      if (res.data.success) {
-        dispatch(SET_TOKEN(res.data.accessToken));
-      }
-    });
-  }, [dispatch]);
+  useGetToken();
 
   const loadPost = async () => {
     try {

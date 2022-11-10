@@ -36,7 +36,7 @@ function useCreateImage() {
       }
     });
   }, [setImg]);
-  return [img, imageHandler, quillRef];
+  return [img, imageHandler, quillRef] as const;
 }
 
 export default useCreateImage;

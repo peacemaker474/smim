@@ -1,7 +1,18 @@
-import { FieldError, FieldValues, Path, RegisterOptions, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import {
+  FieldError,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormClearErrors,
+  UseFormWatch,
+  UseFormSetError,
+} from 'react-hook-form';
 import { SignupValid, SignupFormData } from './signupTypes';
 
-interface UseFormTypes {
+export interface UseFormTypes {
   register: UseFormRegister<any>;
   errors?: FieldError | any | undefined;
 }
@@ -30,4 +41,18 @@ export interface UseFormBirthProps extends UseFormTypes {
 
 export interface SignupPasswordProps extends UseFormSignupProps {
   getValues: UseFormGetValues<SignupFormData>;
+}
+
+export interface PostCreateProps extends UseFormTypes {
+  setValue: UseFormSetValue<any>;
+  clearErrors: UseFormClearErrors<any>;
+  watch: UseFormWatch<any>;
+  setError: UseFormSetError<any>;
+}
+
+export interface PostCreateProps extends UseFormTypes {
+  setValue: UseFormSetValue<any>;
+  clearErrors: UseFormClearErrors<any>;
+  watch: UseFormWatch<any>;
+  setError: UseFormSetError<any>;
 }

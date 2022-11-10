@@ -3,19 +3,6 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
 
-const BtnWrap = styled.div`
-  width: 100%;
-  margin-top: 30px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const BtnDiv = styled.div`
-  width: 183px;
-  display: flex;
-  justify-content: space-between;
-`;
-
 interface formStateProps {
   formState: string;
 }
@@ -53,3 +40,16 @@ function Buttons({ formState }: formStateProps) {
   );
 }
 export default Buttons;
+
+const BtnWrap = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const BtnDiv = styled.div`
+  width: 183px;
+  display: flex;
+  justify-content: space-between;
+`;

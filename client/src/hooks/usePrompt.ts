@@ -27,7 +27,7 @@ export function useBlocker(blocker: (tx: Transition) => void, when = true) {
   }, [navigator, blocker, when]);
 }
 
-export function usePrompt(message: string, action: () => void, when = true) {
+function usePrompt(message: string, action: () => void, when = true) {
   const blocker = useCallback(
     (tx: Transition) => {
       if (window.confirm(message)) {
@@ -40,3 +40,5 @@ export function usePrompt(message: string, action: () => void, when = true) {
 
   useBlocker(blocker, when);
 }
+
+export default usePrompt;

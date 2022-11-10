@@ -1,13 +1,9 @@
-import { UseFormRegister, FieldError } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import styled from 'styled-components';
+import { UseFormTypes } from '../../../type/formTypes';
 import Input from '../../common/atoms/Input';
 
-type TitleProps = {
-  register: UseFormRegister<any>;
-  errors: FieldError | undefined;
-};
-
-function Title({ register, errors }: TitleProps) {
+function Title({ register, errors }: UseFormTypes) {
   return (
     <TitleWrap errors={errors}>
       <Input
