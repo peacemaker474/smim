@@ -19,7 +19,7 @@ export interface UseFormTypes {
 
 export interface UseFormInputProps extends UseFormTypes {
   name: Path<FieldValues>;
-  rules: RegisterOptions;
+  rules?: RegisterOptions | undefined;
   type: string;
   placeholder?: string | undefined;
   autoComplete?: string | undefined;

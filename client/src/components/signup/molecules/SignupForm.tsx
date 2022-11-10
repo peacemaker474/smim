@@ -39,7 +39,8 @@ function SignupForm () {
       password: data.password
     };
     
-    postSignupSubmit(body).then((res: AxiosResponseSignup) => {
+    postSignupSubmit(body)
+      .then((res: AxiosResponseSignup) => {
         if (res.data.success) {
           navigate('/');
         }
