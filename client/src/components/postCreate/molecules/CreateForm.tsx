@@ -1,18 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { shallowEqual } from 'react-redux';
-import axios from 'axios';
+import { postUploadToggle } from '../../../redux/slice/toggleSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { useValueInit, usePrompt } from '../../../hooks';
-import { postUploadToggle, modalToggle } from '../../../redux/slice/toggleSlice';
-import { postCreatePost, putPostEdit } from '../../../networks/post/http';
+// import { usePrompt } from '../../../hooks';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
 import Editor from '../atoms/Editor';
 import Buttons from '../atoms/Buttons';
-import Modal from '../../common/molecules/Modal';
+import Modals from '../atoms/Modals';
 import { PostCreateFormProps, PostCreateFormValue } from '../../../type/postFormTypes';
 
 function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
@@ -29,37 +25,34 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
     mode: 'onBlur',
   });
 
-  const { postUploadToggled, modalToggled } = useAppSelector(
-    (state) => ({
-      postUploadToggled: state.toggle.postUploadToggled,
-      modalToggled: state.toggle.modalToggled,
-    }),
-    shallowEqual,
-  );
-
   const { accessToken } = useAppSelector((state) => state.auth);
+  const { postUploadToggled } = useAppSelector((state) => state.toggle);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [view, setView] = useState(true);
 
-  usePrompt(
-    '현재 페이지를 벗어나시겠습니까?',
-    async () => {
-      const delData = getValues('para');
-      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
-        data: {
-          content: delData,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    },
-    view,
-  );
+  // usePrompt(
+  //   '현재 페이지를 벗어나시겠습니까?',
+  //   async () => {
+  //     const delData = getValues('para');
+  //     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
+  //       data: {
+  //         content: delData,
+  //       },
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+  //   },
+  //   view,
+  // );
 
-  useValueInit(setValue);
+  useEffect(() => {
+    setValue('title', '');
+    setValue('para', { para: '', img: [] });
+    setValue('age', '');
+    setValue('tagArray', []);
+  }, [setValue]);
 
   useEffect(() => {
     if (postData) {
@@ -79,82 +72,22 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
     }
   }, [postData, setValue]);
 
-  const uploadPost = async (accessToken: string | null) => {
-    const { title, para, tagArray, age } = watch();
-    const data = {
-      title,
-      content: para,
-      hashtag: tagArray,
-      targetAge: age,
-    };
-    const headers = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-
-    if (pathValue === 'create') {
-      postCreatePost(data, headers)
-        .then(() => {
-          navigate(`/generation/${age}`);
-        })
-        .catch((err: any) => console.log(err));
-    } else if (pathValue === 'edit') {
-      putPostEdit(postId, data, headers)
-        .then(() => {
-          navigate(-1);
-        })
-        .catch((err: any) => console.log(err));
-    }
-  };
-
-  const uploadActionFunc = () => {
-    setView(false);
-    uploadPost(accessToken);
-    dispatch(postUploadToggle());
-  };
-
-  const uploadCancleFunc = useCallback(() => {
-    dispatch(postUploadToggle());
-  }, [dispatch]);
-
-  const postActionFunc = useCallback(async () => {
-    setView(false);
-    const delData = getValues('para');
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
-      data: {
-        content: delData,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    dispatch(modalToggle());
-    navigate(-1);
-  }, [dispatch, navigate, getValues, accessToken]);
-
-  const postCancelFunc = useCallback(() => {
-    dispatch(modalToggle());
-  }, [dispatch]);
-
   const openPostFormModal = useCallback(() => {
     dispatch(postUploadToggle());
   }, [dispatch]);
 
   return (
     <>
-      {postUploadToggled && (
-        <Modal actionFunc={uploadActionFunc} cancelFunc={uploadCancleFunc}>
-          {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
-        </Modal>
-      )}
-      {modalToggled && (
-        <Modal actionFunc={postActionFunc} cancelFunc={postCancelFunc}>
-          {'게시물을 취소하시겠습니까? \n 작성한 내용은 저장되지 않습니다.'}
-        </Modal>
-      )}
+      <Modals
+        postId={postId}
+        pathValue={pathValue}
+        postUploadToggled={postUploadToggled}
+        watch={watch}
+        accessToken={accessToken}
+        // setView={setView}
+        getValues={getValues}
+        openPostFormModal={openPostFormModal}
+      />
       <form id="upload" method="POST" onSubmit={handleSubmit(openPostFormModal)}>
         <Title register={register} errors={errors.title} />
         <TargetAge register={register} errors={errors.age} />

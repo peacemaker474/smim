@@ -7,6 +7,10 @@ interface ParaProps {
   img: Array<string>;
 }
 
+interface DelData {
+  para: ParaProps;
+}
+
 interface CreateDataProps {
   title: string | null;
   content: ParaProps;
@@ -14,12 +18,20 @@ interface CreateDataProps {
   hashtag: Array<string>;
 }
 
-export const postCreatePost = (data: CreateDataProps, header: any) => {
-  return axios.post(`${http}/post/create`, data, header);
-};
+export const postCreateAndEditPost = (data: CreateDataProps, accessToken: string | null, id?: string | null) => {
+  if (id) {
+    return axios.post(`${http}/post/create`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
 
-export const putPostEdit = (id: string, data: CreateDataProps, header: any) => {
-  return axios.put(`${http}/post/${id}`, data, header);
+  return axios.put(`${http}/post/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const getPostListRead = (targetAge: string | undefined, filter: any, data: any, page = 1) => {
@@ -31,5 +43,17 @@ export const getPostListRead = (targetAge: string | undefined, filter: any, data
 export const getReadPostDetail = (id: string) => {
   return axios.get(`${http}/post/${id}`, {
     withCredentials: true,
+  });
+};
+
+export const deletePostImg = (delData: ParaProps, accessToken: string | null) => {
+  axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/img`, {
+    data: {
+      content: delData,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 };
