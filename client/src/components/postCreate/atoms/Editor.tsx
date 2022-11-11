@@ -65,8 +65,8 @@ function Editor({ register, errors, setError, setValue, watch, clearErrors }: Po
   ];
 
   useEffect(() => {
-    register('para.p', { required: true });
-    setText(postText.para);
+    register('para.para', { required: true });
+    setText(postText?.para);
   }, [register, watch, postText]);
 
   const { ref: registerRef } = register('para.para', { required: true });
