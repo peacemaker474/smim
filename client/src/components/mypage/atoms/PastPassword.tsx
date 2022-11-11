@@ -21,7 +21,7 @@ function PastPassword ({ register, errors }: UseFormTypes) {
         height='70%'
         border='1px solid black'
       />
-      { errors.oldPassword && <ValidSpan padding='0'> {errors.oldPassword.message} </ValidSpan>}
+      { errors.oldPassword && <ValidSpan padding='0.9em 0 0 0'> {errors.oldPassword.message} </ValidSpan>}
     </ChangeInputWrapper>
   );
 }

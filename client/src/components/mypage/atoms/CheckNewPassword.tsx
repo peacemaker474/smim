@@ -24,7 +24,7 @@ function CheckNewPassword ({ register, errors, handleCheckNewPwBlur }: CheckNewP
         height='70%'
         border='1px solid black'
       />
-      { errors.newPassword2 && <ValidSpan padding='0'> {errors.newPassword2.message} </ValidSpan>}
+      { errors.newPassword2 && <ValidSpan padding='0.9em 0 0 0'> {errors.newPassword2.message} </ValidSpan>}
     </ChangeInputWrapper>
   );
 }
