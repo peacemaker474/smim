@@ -4,11 +4,13 @@ import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { putUpdateUser } from '../../../redux/services/UserService';
+import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
 import UserImage from '../../common/atoms/UserImage';
 import MyPageEmail from '../atoms/MyPageEmail';
 import MyPageId from '../atoms/MyPageId';
 import MyPageName from '../atoms/MyPageName';
+import UpdateUserImage from './UpdateUserImage';
 
 interface UseFormMyPage {
   userId: string;
@@ -29,6 +31,7 @@ function MyInfo () {
   );
 
   const { accessToken } = useAppSelector((state) => state.auth);
+  const { imageToggled } = useAppSelector((state) => state.toggle);
 
   const { register, handleSubmit, formState: { errors } } = useForm<UseFormMyPage>({
     mode: 'onBlur',
@@ -42,6 +45,11 @@ function MyInfo () {
   });
 
   const dispatch = useAppDispatch();
+
+  const handleImageModal = () => {
+    dispatch(userImageToggle());
+  }
+
   
   const handleInfoUpdate = (userInfo: any) => {
       const lastIdCheck = userInfo.userId.indexOf('\b');
@@ -49,37 +57,40 @@ function MyInfo () {
 
       if (
         !(id === userInfo.userId || nickname === userInfo.nickname) &&
-        lastIdCheck !== 0 &&
-        lastNameCheck !== 0
+        lastIdCheck &&
+        lastNameCheck
       ) {
         dispatch(putUpdateUser(userInfo));
       }
   }
 
   return (
-      <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={handleSubmit(handleInfoUpdate)}>
-        <UserInfoWrapper>
-          <UserImageWrapper>
-            <UserImageTitle> 사진 </UserImageTitle>
-            <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
-            <UserImage
-              width='40px'
-              height='40px'
-              imgUrl={imgUrl}
-            />
-          </UserImageWrapper>
-          <MyPageId register={register} errors={errors} />
-          <MyPageName register={register} errors={errors} />
-          <MyPageEmail register={register} />
-          <Button
-            width='100px'
-            height='50px'
-            border='none'
-          > 
-            수정 
-          </Button>
-        </UserInfoWrapper>
-      </MyInfoForm>
+      <>
+        <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={handleSubmit(handleInfoUpdate)}>
+          <UserInfoWrapper>
+            <UserImageWrapper onClick={handleImageModal}>
+              <UserImageTitle> 사진 </UserImageTitle>
+              <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
+              <UserImage
+                width='40px'
+                height='40px'
+                imgUrl={imgUrl}
+              />
+            </UserImageWrapper>
+            <MyPageId register={register} errors={errors} />
+            <MyPageName register={register} errors={errors} />
+            <MyPageEmail register={register} />
+            <Button
+              width='100px'
+              height='50px'
+              border='none'
+            > 
+              수정 
+            </Button>
+          </UserInfoWrapper>
+        </MyInfoForm>
+        { imageToggled && <UpdateUserImage />}
+      </>
   );
 }
 
@@ -90,6 +101,12 @@ const MyInfoForm = styled.form`
   height: 75%;
   display: flex;
   justify-content: space-around;
+
+  button {
+    align-self: flex-end !important;
+    margin-right: 20px !important;
+  }
+  
   @media screen and (max-width: 1180px) {
     width: 90%;
     height: 80%;

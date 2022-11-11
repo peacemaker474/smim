@@ -8,6 +8,14 @@ interface UpdateUserData {
   accessToken: string;
 }
 
+interface UpdatePasswordData {
+  userId: string;
+  oldPassword: string;
+  newPassword: string;
+  newPassword2: string;
+  accessToken: string | null;
+}
+
 const http = process.env.REACT_APP_SERVER_URL;
 
 // export const getMyWriteLists = async (userId) => {
@@ -54,7 +62,7 @@ export const getCheckMyName = (data: string) => {
   })
 };
 
-export const putChangePassWord = (data: UpdateUserData) => {
+export const putChangePassWord = (data: UpdatePasswordData) => {
   return axios.put(`${http}/my/changepw`, data, {
     headers: {
       Authorization: `Bearer ${data.accessToken}`,

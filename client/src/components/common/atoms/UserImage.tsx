@@ -4,7 +4,7 @@ interface UserImageProps {
   width: string;
   height: string;
   imgUrl: string;
-  encodeImg?: string | null;
+  encodeImg?: string | undefined;
 }
 
 const MyImg = styled.img<{ width: string; height: string; }>`
@@ -17,7 +17,7 @@ const MyImg = styled.img<{ width: string; height: string; }>`
 `;
 
 
-function UserImage({ width, height, imgUrl, encodeImg = null}: UserImageProps) {
+function UserImage({ width, height, imgUrl, encodeImg}: UserImageProps) {
   const encoded = encodeURI(imgUrl);
   const decoded = decodeURI(encoded);
 

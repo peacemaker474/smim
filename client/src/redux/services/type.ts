@@ -37,7 +37,7 @@ export interface UpdateImageData {
 
 export interface ImageData {
   imageData: FormData;
-  accessToken: string;
+  accessToken: string | null;
 }
 
 export interface ErrorMessage {
