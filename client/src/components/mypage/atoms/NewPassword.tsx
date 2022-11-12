@@ -21,7 +21,7 @@ function NewPassword ({ register, errors }: UseFormTypes) {
         height='70%'
         border='1px solid black'
       />
-      { errors.newPassword && <ValidSpan padding='0'> {errors.newPassword.message} </ValidSpan>}
+      { errors.newPassword && <ValidSpan padding='0.9em 0 0 0'> {errors.newPassword.message} </ValidSpan>}
     </ChangeInputWrapper>
   );
 }
