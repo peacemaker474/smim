@@ -14,7 +14,7 @@ function BookMark ({ bookMarkList, handleBookMarkMove }: BookMarkProps) {
     <NotWriteLists> {bookMarkList} </NotWriteLists> :
     <ListsUl list={bookMarkList.length}>
       {bookMarkList.map(item => 
-        <Listli key={item.createAt} id={item._id} onClick={handleBookMarkMove}>
+        <Listli key={item._id} id={item._id} onClick={handleBookMarkMove}>
           <Title> {item.title.length <= 13 ? item.title : `${item.title.substring(0, 13)}...`} </Title>
           <ListContent dangerouslySetInnerHTML={{__html: item.content.value}} />
           <FooterBox current={item.content.check}>
