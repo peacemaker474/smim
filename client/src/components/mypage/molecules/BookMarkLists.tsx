@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense, useCallback } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,8 @@ import { useAppSelector } from '../../../redux/hooks';
 import { getBookMarkLists } from '../../../networks/mypage/http';
 import { BookMarkListData } from '../../../type/postTypes';
 import LoadingPage from '../../../pages/LoadingPage';
-import BookMark from '../atoms/BookMark';
+
+const BookMarkComponent = lazy(() => import('../atoms/BookMark'));
 
 function BookMarkLists () {
   const { id } = useAppSelector((state) => state.user);
@@ -15,15 +16,15 @@ function BookMarkLists () {
   const { data } = useQuery<BookMarkListData[] | string>(['BookMarkLists'], fetchAPI);
   const navigate = useNavigate();
 
-  const handleBookMarkMove = (evt: React.MouseEvent<HTMLLIElement>) => {
+  const handleBookMarkMove = useCallback((evt: React.MouseEvent<HTMLLIElement>) => {
     const url = evt.currentTarget.id;
     navigate(`/post/view/${url}`);
-  }
+  }, [navigate]);
 
   return (
     <Suspense fallback={<LoadingPage position='absolute' top='50%' left='60%'/>}>
       <BookMarkWrapper bookMarkList={typeof(data) === 'string'}>
-        <BookMark bookMarkList={data || []} handleBookMarkMove={handleBookMarkMove}/>
+        <BookMarkComponent bookMarkList={data || []} handleBookMarkMove={handleBookMarkMove}/>
       </BookMarkWrapper>
     </Suspense>
   );
@@ -36,7 +37,7 @@ const BookMarkWrapper = styled.div<{ bookMarkList: boolean; }>`
   height: 75%;
   display: flex;
   flex-direction: column;
-  justify-content: ${({ bookMarkList }) => !bookMarkList ? "center" : "space-between"};
+  justify-content: ${({ bookMarkList }) => bookMarkList ? "center" : "space-between"};
   align-items: center;
   position: relative;
   overflow-y: scroll;
