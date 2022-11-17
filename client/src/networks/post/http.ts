@@ -7,10 +7,6 @@ interface ParaProps {
   img: Array<string>;
 }
 
-interface DelData {
-  para: ParaProps;
-}
-
 interface CreateDataProps {
   title: string | null;
   content: ParaProps;
@@ -56,4 +52,8 @@ export const deletePostImg = (delData: ParaProps, accessToken: string | null) =>
       Authorization: `Bearer ${accessToken}`,
     },
   });
+};
+
+export const getPostView = (id: string) => {
+  return axios.get(`${http}/post/${id}/view`);
 };
