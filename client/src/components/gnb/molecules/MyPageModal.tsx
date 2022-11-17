@@ -1,9 +1,10 @@
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { LogoutCb } from '../organisms/Navbar';
 
 interface ModalProps {
-  handleLogoutClick: (cb?: any) => () => void;
+  handleLogoutClick: (cb?: LogoutCb | undefined) => () => void;
   handleDropdownShow: () => void;
 }
 

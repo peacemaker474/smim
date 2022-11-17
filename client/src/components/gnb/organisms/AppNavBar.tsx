@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { loginToggle, menuToggle } from '../../../redux/slice/toggleSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { LogoutCb } from './Navbar';
 
 interface AppProps {
-  handleLogoutClick: (cb?: any) => () => void;
+  handleLogoutClick: (cb?: LogoutCb | undefined) => () => void;
 }
 
 function AppNavBar ({ handleLogoutClick }: AppProps) {

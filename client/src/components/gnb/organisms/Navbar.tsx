@@ -10,7 +10,8 @@ import MainLogo from '../molecules/MainLogo';
 import NavLists from '../molecules/NavLists';
 import AppNavBar from './AppNavBar';
 
-type LOGOUT = (cb?: any) => () => void;
+export type LogoutCb = () => void;
+type LOGOUT = (cb?: LogoutCb | undefined) => () => void;
 
 function Navbar () {
   const { menuToggled } = useAppSelector(state => state.toggle);

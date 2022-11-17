@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useDropdown } from '../../../hooks';
 import GNLink from '../atoms/GNLink';
 import UserLink from '../atoms/UserLink';
+import { LogoutCb } from '../organisms/Navbar';
 
 interface NavProps {
-  handleLogoutClick: (cb?: any) => () => void;
+  handleLogoutClick: (cb?: LogoutCb | undefined) => () => void;
 }
 
 function NavLists({ handleLogoutClick }: NavProps) {
