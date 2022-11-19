@@ -1,42 +1,57 @@
-import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
 
+interface fetchAPIProps {
+  queryKey: any;
+}
 interface PostHeadProps {
   postDetail: PostDetailData;
 }
 
 function PostHead({ postDetail }: PostHeadProps) {
   const { owner: author, updateAt } = postDetail;
-  const [view, setView] = useState(0);
 
-  const fetchAPI = useCallback(async () => {
-    const view = await getPostView(postDetail._id);
-    setView(view.data.data.views);
-  }, [postDetail._id]);
+  const channelId = postDetail?._id;
 
-  useEffect(() => {
-    fetchAPI();
-  }, [fetchAPI]);
+  const fetchAPIOne = async ({ queryKey }: fetchAPIProps) => {
+    const { channelId } = queryKey[1];
+
+    try {
+      const { data } = await getPostView(channelId);
+      console.log('action');
+      return data;
+    } catch (error: any) {
+      return error.response.status;
+    }
+  };
+
+  const { data: views } = useQuery(['postView', { channelId }], ({ queryKey }) => fetchAPIOne({ queryKey }), {
+    enabled: !!channelId,
+  });
 
   const date = new Date(updateAt);
   const postDate = date.toLocaleDateString();
 
   return (
-    <PostHeadDiv>
-      <PostAuthor>
-        <Profile width="42px" height="42px" imgUrl={author.imageUrl}>
-          {author.nickname}
-        </Profile>
-      </PostAuthor>
-      <PostAddOns>
-        <AddOnSpan>{postDate}</AddOnSpan>
-        <AddOnSpan>조회수 {view}</AddOnSpan>
-        {/* {author.userId === userId && <PostDropdownBtn />} */}
-      </PostAddOns>
-    </PostHeadDiv>
+    <>
+      <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
+      <PostTitle>{postDetail.title}</PostTitle>
+      <PostHeadDiv>
+        <PostAuthor>
+          <Profile width="42px" height="42px" imgUrl={author.imageUrl}>
+            {author.nickname}
+          </Profile>
+        </PostAuthor>
+        <PostAddOns>
+          <AddOnSpan>{postDate}</AddOnSpan>
+          <AddOnSpan>조회수 {views?.data.views}</AddOnSpan>
+          {/* {author.userId === userId && <PostDropdownBtn />} */}
+        </PostAddOns>
+      </PostHeadDiv>
+    </>
   );
 }
 export default PostHead;
@@ -48,6 +63,23 @@ const PostHeadDiv = styled.div`
   padding-bottom: 17px;
   border-bottom: 1px ${({ theme }) => theme.color.lightGray} solid;
   margin-bottom: 30px;
+`;
+
+const PostViewH2 = styled.h1`
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  color: ${({ theme }) => theme.color.black};
+  margin: 0 auto 12px;
+`;
+
+const PostTitle = styled.h3`
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 68px;
+  color: ${({ theme }) => theme.color.black};
+  margin-bottom: 56px;
 `;
 
 const PostAuthor = styled.h4`
