@@ -89,7 +89,7 @@ function MyInfo () {
             </Button>
           </UserInfoWrapper>
         </MyInfoForm>
-        { imageToggled && <UpdateUserImage />}
+        { imageToggled && <UpdateUserImage /> }
       </>
   );
 }
@@ -103,8 +103,8 @@ const MyInfoForm = styled.form`
   justify-content: space-around;
 
   button {
-    align-self: flex-end !important;
-    margin-right: 20px !important;
+    align-self: flex-end;
+    margin-right: 20px;
   }
   
   @media screen and (max-width: 1180px) {
