@@ -57,7 +57,7 @@ const MyWriteWrapper = styled.div<{ writeList: boolean }>`
     height: 80%;
   }
   @media screen and (max-width: 769px) {
-    width: 90%;
+    width: 95%;
     height: 50%;
   }
   @media screen and (max-height: 796px) {
