@@ -1,13 +1,16 @@
+import { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getReadPostDetail } from '../../../networks/post/http';
-import PostHead from '../atoms/PostHead';
-import PostBody from '../atoms/PostBody';
+import LoadingPage from '../../../pages/LoadingPage';
 
 interface fetchAPIProps {
   queryKey: any;
 }
+
+const PostHeadComponent = lazy(() => import('../atoms/PostHead'));
+const PostBodyComponent = lazy(() => import('../atoms/PostBody'));
 
 function PostContent() {
   const { id: postId } = useParams();
@@ -17,7 +20,6 @@ function PostContent() {
 
     try {
       const { data } = await getReadPostDetail(postId);
-
       return data;
     } catch (error: any) {
       return error.response.status;
@@ -28,10 +30,10 @@ function PostContent() {
 
   return (
     <PostBox>
-      <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
-      <PostTitle>{postDetail.title}</PostTitle>
-      <PostHead postDetail={postDetail} />
-      <PostBody postDetail={postDetail} />
+      <Suspense fallback={<LoadingPage position="absolute" top="50%" left="60%" />}>
+        <PostHeadComponent postDetail={postDetail} />
+        <PostBodyComponent postDetail={postDetail} />
+      </Suspense>
     </PostBox>
   );
 }
@@ -39,20 +41,4 @@ export default PostContent;
 
 const PostBox = styled.div`
   margin-bottom: 32px;
-`;
-const PostViewH2 = styled.h1`
-  width: 100%;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  color: ${({ theme }) => theme.color.black};
-  margin: 0 auto 12px;
-`;
-
-const PostTitle = styled.h3`
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 68px;
-  color: ${({ theme }) => theme.color.black};
-  margin-bottom: 56px;
 `;

@@ -40,7 +40,7 @@ export interface PostListData {
 }
 
 export interface PostDetailData {
-  being: boolean;
+  bookmark: boolean;
   content: string;
   createAt: string;
   hashtag: string[];
