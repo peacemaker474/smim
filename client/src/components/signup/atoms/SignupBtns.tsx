@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../common/atoms/Button';
@@ -31,7 +32,7 @@ function SignupBtns () {
   );
 }
 
-export default SignupBtns;
+export default memo(SignupBtns);
 
 const BtnBox = styled.div`
   width: 100%;
