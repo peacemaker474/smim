@@ -36,6 +36,15 @@ export const getPostListRead = (targetAge: string | undefined, filter: any, data
   );
 };
 
+export const deletePost = (id: string | undefined, accessToken: string | null) => {
+  return axios.delete(`${http}/post/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
 export const getReadPostDetail = (id: string) => {
   return axios.get(`${http}/post/${id}`, {
     withCredentials: true,
@@ -56,4 +65,40 @@ export const deletePostImg = (delData: ParaProps, accessToken: string | null) =>
 
 export const getPostView = (id: string) => {
   return axios.get(`${http}/post/${id}/view`);
+};
+
+export const getPostLike = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/post/${id}/like`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getPostUnlike = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/post/${id}/unlike`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getBookmark = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/post/${id}/bookmark`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getUnbookmark = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/post/${id}/unbookmark`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
