@@ -3,15 +3,17 @@ import { useQuery } from 'react-query';
 import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
+import DropdownBox from '../../common/molecules/DropdownBox';
 
 interface fetchAPIProps {
   queryKey: any;
 }
 interface PostHeadProps {
   postDetail: PostDetailData;
+  loginState: boolean;
 }
 
-function PostHead({ postDetail }: PostHeadProps) {
+function PostHead({ postDetail, loginState }: PostHeadProps) {
   const { owner: author, updateAt } = postDetail;
 
   const channelId = postDetail?._id;
@@ -21,7 +23,6 @@ function PostHead({ postDetail }: PostHeadProps) {
 
     try {
       const { data } = await getPostView(channelId);
-      console.log('action');
       return data;
     } catch (error: any) {
       return error.response.status;
@@ -48,7 +49,7 @@ function PostHead({ postDetail }: PostHeadProps) {
         <PostAddOns>
           <AddOnSpan>{postDate}</AddOnSpan>
           <AddOnSpan>조회수 {views?.data.views}</AddOnSpan>
-          {/* {author.userId === userId && <PostDropdownBtn />} */}
+          <DropdownBox />
         </PostAddOns>
       </PostHeadDiv>
     </>

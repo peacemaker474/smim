@@ -1,18 +1,28 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../../redux/hooks';
+import { modalToggle } from '../../../redux/slice/toggleSlice';
 
 interface DropDownProps {
   dropdownRef: any;
 }
 
 export default function DropDown({ dropdownRef }: DropDownProps) {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+
+  const handleModalShow = () => {
+    dispatch(modalToggle());
+  };
+
   return (
     <DropdownWrraper ref={dropdownRef}>
       <DropdownLists>
         <DropdownList>
-          <DropdownLink to="post/edit/123"> 수정</DropdownLink>
+          <DropdownLink to={`/post/edit/${id}`}>수정</DropdownLink>
         </DropdownList>
-        <DropdownList>삭제</DropdownList>
+        <DropdownList onClick={handleModalShow}>삭제</DropdownList>
       </DropdownLists>
     </DropdownWrraper>
   );

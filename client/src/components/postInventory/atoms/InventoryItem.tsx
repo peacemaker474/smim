@@ -44,8 +44,8 @@ function InventoryItem({ postData }: InventoryItemProps) {
         </Profile>
         <Para dangerouslySetInnerHTML={{ __html: content }} />
         <ItemEtc>
-          <WithValue icon={eye}>{meta.likes}</WithValue>
-          <WithValue icon={heartFill}>{meta.views}</WithValue>
+          <WithValue icon={heartFill}>{meta.likes}</WithValue>
+          <WithValue icon={eye}>{meta.views}</WithValue>
         </ItemEtc>
         <TagList hashtagArr={hashtagEdition} marginLeft="5px" />
         <ItemDate>{postDate}</ItemDate>

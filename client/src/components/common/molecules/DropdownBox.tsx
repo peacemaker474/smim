@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Dropdown from '../atoms/Dropdown';
 import { useDropdown } from '../../../hooks';
-// import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
+import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
 
 export default function DropdownBox() {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: Array<any> = useDropdown();
@@ -18,7 +18,7 @@ const PostDropdownBtnDiv = styled.div`
 `;
 
 const PostDropdownBtn = styled.button`
-  background-color: red;
+  background: url(${moreIcon});
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
