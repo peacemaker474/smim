@@ -6,13 +6,13 @@ export const TOKEN_TIME_OUT = 600 * 1000; // 10분
 interface TokenState {
   authenticated: boolean;
   accessToken: string | null;
-  expireTime: number | null;
+  expireTime: number;
 }
 
 const initialState: TokenState = {
   authenticated: false,
   accessToken: null,
-  expireTime: null,
+  expireTime: 0,
 };
 
 export const authSlice = createSlice({
@@ -27,7 +27,7 @@ export const authSlice = createSlice({
     DELETE_TOKEN: (state) => {
       state.authenticated = false;
       state.accessToken = null;
-      state.expireTime = null;
+      state.expireTime = 0;
     },
   },
   extraReducers: (builder) => {
