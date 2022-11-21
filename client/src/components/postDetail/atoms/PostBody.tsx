@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import TagList from '../../common/atoms/TagList';
 import { PostDetailData } from '../../../type/postTypes';
+import TagList from '../../common/atoms/TagList';
 import EtcSpan from '../../common/atoms/EtcSpan';
 
 interface PostBodyProps {
   postDetail: PostDetailData;
+  loginState: boolean;
 }
 
-function PostBody({ postDetail }: PostBodyProps) {
+function PostBody({ postDetail, loginState }: PostBodyProps) {
   return (
     <BodyBox>
       <PostContent>
@@ -15,15 +16,8 @@ function PostBody({ postDetail }: PostBodyProps) {
       </PostContent>
       <TagList hashtagArr={postDetail.hashtag} />
       <PostLikeBox>
-        <EtcSpan
-          value={postDetail.meta.likes}
-          clickState={postDetail.like}
-          clickHandler={() => {
-            console.log('like');
-          }}
-          type="like"
-        />
-        {/* {postDetail.owner.userId !== user.id && <PostBookmark bookmark={postDetail.bookmark} />} */}
+        <EtcSpan value={postDetail.meta.likes} clickState={postDetail.like} type="like" />
+        {loginState && <EtcSpan clickState={postDetail.bookmark} value={-1} type="bookmark" />}
       </PostLikeBox>
     </BodyBox>
   );
