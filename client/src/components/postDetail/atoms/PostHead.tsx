@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import { useAppSelector } from '../../../redux/hooks';
 import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
@@ -10,12 +11,11 @@ interface fetchAPIProps {
 }
 interface PostHeadProps {
   postDetail: PostDetailData;
-  loginState: boolean;
 }
 
-function PostHead({ postDetail, loginState }: PostHeadProps) {
+function PostHead({ postDetail }: PostHeadProps) {
   const { owner: author, updateAt } = postDetail;
-
+  const { loginCheck } = useAppSelector((state) => state.user);
   const channelId = postDetail?._id;
 
   const fetchAPIOne = async ({ queryKey }: fetchAPIProps) => {
@@ -49,7 +49,7 @@ function PostHead({ postDetail, loginState }: PostHeadProps) {
         <PostAddOns>
           <AddOnSpan>{postDate}</AddOnSpan>
           <AddOnSpan>조회수 {views?.data.views}</AddOnSpan>
-          <DropdownBox />
+          {loginCheck && <DropdownBox />}
         </PostAddOns>
       </PostHeadDiv>
     </>

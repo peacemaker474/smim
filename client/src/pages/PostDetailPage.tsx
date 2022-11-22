@@ -1,16 +1,29 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getReadPostDetail } from '../networks/post/http';
 import PostContent from '../components/postDetail/molecules/PostContent';
+import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
+  const { id: postId } = useParams();
+  const fetchAPI = async () => {
+    try {
+      const { data } = await getReadPostDetail(postId);
+      return data;
+    } catch (error: any) {
+      return error.response.status;
+    }
+  };
+
+  const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
+
+  if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
+
   return (
     <PostViewMain>
       <PostViewContainer>
-        {/* {modalToggled && (
-            <Modal actionFunc={postViewActionFunc} cancelFunc={postViewCancelFunc}>
-              게시물을 삭제하시겠습니까?
-            </Modal>
-          )} */}
-        <PostContent />
+        <PostContent postDetail={postDetail} />
       </PostViewContainer>
     </PostViewMain>
   );

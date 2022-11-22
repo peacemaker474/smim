@@ -1,51 +1,29 @@
 // import { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
-import { getReadPostDetail, deletePost } from '../../../networks/post/http';
-import { getPostData } from '../../../redux/slice/postSlice';
+import { deletePost } from '../../../networks/post/http';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
-import LoadingPage from '../../../pages/LoadingPage';
+import { PostDetailData } from '../../../type/postTypes';
 import PostHead from '../atoms/PostHead';
 import PostBody from '../atoms/PostBody';
 import Modal from '../../common/molecules/Modal';
 
-interface fetchAPIProps {
-  queryKey: any;
+interface PostContentProps {
+  postDetail: PostDetailData;
 }
 
-function PostContent() {
+function PostContent({ postDetail }: PostContentProps) {
   const { id: postId } = useParams();
-  const user = useAppSelector((state) => state.user);
   const { modalToggled } = useAppSelector((state) => state.toggle);
   const { accessToken } = useAppSelector((state) => state.auth);
-  const { postAge } = useAppSelector((state) => state.post);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const fetchAPI = async ({ queryKey }: fetchAPIProps) => {
-    const { postId } = queryKey[1];
-
-    try {
-      const { data } = await getReadPostDetail(postId);
-      dispatch(
-        getPostData({
-          postId: data._id,
-          postWriter: data.owner.nickname,
-          postAge: data.targetAge,
-        }),
-      );
-      return data;
-    } catch (error: any) {
-      return error.response.status;
-    }
-  };
-
   const requestDelete = async (id: string | undefined, accessToken: string | null) => {
     await deletePost(id, accessToken);
-    navigate(`/generation/${postAge}`);
+    navigate(`/generation/${postDetail.targetAge}`);
   };
 
   const postViewActionFunc = () => {
@@ -57,14 +35,6 @@ function PostContent() {
     dispatch(modalToggle());
   };
 
-  const {
-    data: postDetail,
-    isLoading,
-    isFetching,
-  } = useQuery(['postDetail', { postId }], ({ queryKey }) => fetchAPI({ queryKey }));
-
-  if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
-
   return (
     <PostBox>
       {modalToggled && (
@@ -72,8 +42,8 @@ function PostContent() {
           게시물을 삭제하시겠습니까?
         </Modal>
       )}
-      <PostHead postDetail={postDetail} loginState={user.loginCheck} />
-      <PostBody postDetail={postDetail} loginState={user.loginCheck} />
+      <PostHead postDetail={postDetail} />
+      <PostBody postDetail={postDetail} />
     </PostBox>
   );
 }

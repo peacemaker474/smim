@@ -45,7 +45,7 @@ export const deletePost = (id: string | undefined, accessToken: string | null) =
   });
 };
 
-export const getReadPostDetail = (id: string) => {
+export const getReadPostDetail = (id: string | undefined) => {
   return axios.get(`${http}/post/${id}`, {
     withCredentials: true,
   });
