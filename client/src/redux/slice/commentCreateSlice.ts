@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface WriterProp {
+  userId: string;
+  nickname: string;
+  imageUrl: string;
+}
 interface CreatedItem {
   _id: string;
-  writer: string;
+  writer: WriterProp;
   parent_id: string;
   group_id: string;
   post_id: string;
   text: string;
-  like: boolean;
-  like_count: number;
-};
+}
 
 const initialState: CreatedItem[] = [];
 
