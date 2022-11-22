@@ -1,14 +1,17 @@
 import styled from 'styled-components';
+import { useAppSelector } from '../../../redux/hooks';
 import { PostDetailData } from '../../../type/postTypes';
 import TagList from '../../common/atoms/TagList';
-import EtcSpan from '../../common/atoms/EtcSpan';
+import Like from '../../common/atoms/Like';
+import Bookmark from '../../common/atoms/Bookmark';
 
 interface PostBodyProps {
   postDetail: PostDetailData;
-  loginState: boolean;
 }
 
-function PostBody({ postDetail, loginState }: PostBodyProps) {
+function PostBody({ postDetail }: PostBodyProps) {
+  const { loginCheck } = useAppSelector((state) => state.user);
+
   return (
     <BodyBox>
       <PostContent>
@@ -16,8 +19,8 @@ function PostBody({ postDetail, loginState }: PostBodyProps) {
       </PostContent>
       <TagList hashtagArr={postDetail.hashtag} />
       <PostLikeBox>
-        <EtcSpan value={postDetail.meta.likes} clickState={postDetail.like} type="like" />
-        {loginState && <EtcSpan clickState={postDetail.bookmark} value={-1} type="bookmark" />}
+        <Like value={postDetail.meta.likes} clickState={postDetail.like} />
+        {loginCheck && <Bookmark clickState={postDetail.bookmark} />}
       </PostLikeBox>
     </BodyBox>
   );
