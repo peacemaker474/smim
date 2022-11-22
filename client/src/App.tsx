@@ -1,3 +1,4 @@
+import Auth from './components/common/molecules/Auth';
 import Navbar from './components/gnb/organisms/Navbar';
 import LoginPage from './pages/LoginPage';
 import { useAppSelector } from './redux/hooks';
@@ -9,6 +10,7 @@ function App () {
   return (
     <>
       <Navbar />
+      <Auth />
       {loginToggled && <LoginPage />}
       <AppRoute />
     </>

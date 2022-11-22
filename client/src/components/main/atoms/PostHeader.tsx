@@ -10,7 +10,7 @@ function PostHeader ({ answer, title }: PostHeaderProps) {
   return (
     <ListHeader>
       <ListisAnswer> {answer} </ListisAnswer>
-      <ListTitle>{title}</ListTitle>
+      <ListTitle> {title} </ListTitle>
     </ListHeader>
   );
 }
