@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
 import PostContent from '../components/postDetail/molecules/PostContent';
+import CmntContent from '../components/comment/molecules/CmntContent';
 import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
@@ -24,6 +25,7 @@ function PostDetailPage() {
     <PostViewMain>
       <PostViewContainer>
         <PostContent postDetail={postDetail} />
+        <CmntContent postDetail={postDetail} />
       </PostViewContainer>
     </PostViewMain>
   );

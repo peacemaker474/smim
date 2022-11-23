@@ -8,9 +8,9 @@ interface WriterProp {
 interface CreatedItem {
   _id: string;
   writer: WriterProp;
-  parent_id: string;
-  group_id: string;
-  post_id: string;
+  parent_id: string | null;
+  group_id: string | null;
+  post_id: string | undefined;
   text: string;
 }
 
