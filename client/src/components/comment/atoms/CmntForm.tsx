@@ -5,76 +5,75 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { createComment } from '../../../redux/slice/commentCreateSlice';
 import { postCommentCreate, putCommentEdit } from '../../../networks/comment/http';
 import TextArea from '../../../components/common/atoms/Textarea';
+import UserImage from '../../common/atoms/UserImage';
 
+// interface CreateDataProps {
+//   post_id: string;
+//   content: string;
+//   parent_id: string | null;
+// }
+
+interface CmntFormValue {
+  comment: string;
+}
 interface CmntFromProps {
-  parentId: string;
-  id: string;
-  groupId: string;
-  onFormInputCancel: () => void | null;
-  isTargetVisible: boolean;
-  changedText: string;
-  onTextChange: () => void;
-  writer: string;
+  parentId?: string | null;
+  id?: string | undefined;
+  groupId?: string | null;
+  // onFormInputCancel: () => void | null;
+  // isTargetVisible: boolean;
+  // changedText: string;
+  // onTextChange: () => void;
+  // writer: string;
+  postId: string | undefined;
 }
 
 function CmntForm({
-  parentId,
-  id,
-  groupId,
-  isTargetVisible,
-  onFormInputCancel,
-  changedText,
-  onTextChange,
-  writer,
+  // parentId,
+  id = undefined,
+  groupId = null,
+  // isTargetVisible,
+  // onFormInputCancel,
+  // changedText,
+  // onTextChange,
+  // writer,
+  postId,
+  parentId = null,
 }: CmntFromProps) {
   const loginState = useAppSelector((state) => state.user);
   const { accessToken } = useAppSelector((state) => state.auth);
-  const { register, handleSubmit, setValue, setFocus, watch } = useForm();
+  const { register, handleSubmit, setValue, setFocus, watch } = useForm<CmntFormValue>();
   const dispatch = useAppDispatch();
-  let data = watch('comment');
+  const data = watch('comment');
 
-  let STATE = '';
-  if (!parentId && !id) {
-    STATE = 'main';
-  } else if (!parentId && id) {
-    STATE = 'main Edit';
-  } else if (parentId === groupId && !id) {
-    STATE = 'main Reply';
-  } else if (parentId === groupId && id) {
-    STATE = 'main Reply Edit';
-  } else if (parentId !== groupId && id) {
-    STATE = 'Reply Reply Edit';
-  } else {
-    STATE = 'Reply Reply';
-  }
+  const STATE = 'main';
 
-  if (!onFormInputCancel) {
-    onFormInputCancel = () => setValue('comment', '');
-  }
+  // if (!onFormInputCancel) {
+  const onFormInputCancel = () => setValue('comment', '');
+  // }
 
-  const handleCommentTextareaSubmit = (data: any, e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleCommentTextareaSubmit = (data: CmntFormValue) => {
     const addData = data.comment.replaceAll('\n', '<br>');
 
-    // if (accessToken) {
-    //   if (id) {
-    //     handleCommentEdit(e, addData);
-    //   } else {
-    //     handleCommentCreate(e, addData);
-    //   }
-    //   setValue('comment', '');
-    // }
+    if (accessToken) {
+      // if (id) {
+      //   handleCommentEdit(e, addData);
+      // } else {
+      handleCommentCreate(addData);
+      // }
+      setValue('comment', '');
+    }
   };
 
-  useEffect(() => {
-    if (isTargetVisible) {
-      setFocus('comment');
-      setValue('comment', changedText);
-    }
-  }, [isTargetVisible, setFocus, changedText, setValue]);
+  // useEffect(() => {
+  //   if (isTargetVisible) {
+  //     setFocus('comment');
+  //     setValue('comment', changedText);
+  //   }
+  // }, [isTargetVisible, setFocus, changedText, setValue]);
 
-  const handleCommentCreate = async (e: any, data: string) => {
-    const response = await postCommentCreate({ post_id: id, content: data, parent_id: parentId }, accessToken);
+  const handleCommentCreate = async (data: string) => {
+    const response = await postCommentCreate({ post_id: postId, content: data, parent_id: parentId }, accessToken);
 
     if (response.data.success) {
       dispatch(
@@ -87,43 +86,42 @@ function CmntForm({
           },
           parent_id: parentId,
           group_id: groupId,
-          post_id: id,
+          post_id: postId,
           text: data,
         }),
       );
-      //   if (parentId) {
-      //     onFormInputCancel(e);
-      //   }
+
+      onFormInputCancel();
     }
   };
 
-  const handleCommentEdit = async (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
-    const response = await putCommentEdit(id, { post_id: id, content: data }, accessToken);
+  // const handleCommentEdit = async (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
+  //   const response = await putCommentEdit(id, { post_id: id, content: data }, accessToken);
 
-    // if (response.data.success) {
-    //   onTextChange(data.replace('<br>', '\n'));
-    //   onFormInputCancel(e);
-    // }
-  };
+  //   if (response.data.success) {
+  //     onTextChange(data.replace('<br>', '\n'));
+  //     onFormInputCancel();
+  //   }
+  // };
 
   const handleKeyDownCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.code === '13' && e.shiftKey === true) {
+    // Textarea line-change event
+    if (e.code === 'Enter' && e.shiftKey === true) {
       e.preventDefault();
-      setValue('comment', data + '\n');
-    }
-    if (e.code === '13' && e.shiftKey === false) {
+      setValue('comment', `${data}\n`);
+    } else if (e.code === 'Enter' && e.shiftKey === false) {
       e.preventDefault();
-      //   handleSubmit(handleCommentTextareaSubmit(watch(), e));
+      handleSubmit(() => handleCommentTextareaSubmit(watch()));
     }
   };
 
   return (
-    <CmntFormTag
+    <CmntFormForm
       groupId={groupId}
       method="POST"
       //   onSubmit={handleSubmit(handleCommentTextareaSubmit)}
     >
-      {/* <UserImage width={'42px'} height={'42px'} imgUrl={loginState.imgUrl} /> */}
+      <UserImage width="42px" height="42px" imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={STATE}>
         <TextArea
           onKeyDownCheck={handleKeyDownCheck}
@@ -133,7 +131,7 @@ function CmntForm({
           groupId={groupId}
           parentId={parentId}
           id={id}
-          writer={writer}
+          // writer={writer}
         />
         {id ? (
           <CmntBtnBox state={STATE}>
@@ -155,13 +153,13 @@ function CmntForm({
           </CmntBtnBox>
         )}
       </CmntInputDiv>
-    </CmntFormTag>
+    </CmntFormForm>
   );
 }
 
 export default CmntForm;
 
-const CmntFormTag = styled.form<{ groupId: string }>`
+const CmntFormForm = styled.form<{ groupId: string | null }>`
   width: auto;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};
@@ -170,111 +168,17 @@ const CmntFormTag = styled.form<{ groupId: string }>`
 `;
 
 const CmntInputDiv = styled.div<{ state: string }>`
-  @media (max-width: 612px) {
-    width: ${({ state }) =>
-      state === 'main'
-        ? '283px'
-        : state === 'main Edit'
-        ? '283px'
-        : state === 'main Reply'
-        ? '193px'
-        : state === 'main Reply Edit'
-        ? '218px'
-        : state === 'Reply Reply'
-        ? '128px'
-        : '218px'};
-    display: ${({ state }) =>
-      state === 'main'
-        ? 'flex'
-        : state === 'main Edit'
-        ? 'flex'
-        : state === 'main Reply'
-        ? 'block'
-        : state === 'main Reply Edit'
-        ? 'block'
-        : state === 'Reply Reply'
-        ? 'block'
-        : 'block'};
-  }
-  @media (min-width: 612px) and (max-width: 768px) {
-    width: ${({ state }) =>
-      state === 'main'
-        ? '460px'
-        : state === 'main Edit'
-        ? '460px'
-        : state === 'main Reply'
-        ? '374px'
-        : state === 'main Reply Edit'
-        ? '396px'
-        : state === 'Reply Reply'
-        ? '308px'
-        : '396px'};
-  }
-  @media (min-width: 768px) and (max-width: 992px) {
-    width: ${({ state }) =>
-      state === 'main'
-        ? '595px'
-        : state === 'main Edit'
-        ? '595px'
-        : state === 'main Reply'
-        ? '506px'
-        : state === 'main Reply Edit'
-        ? '530px'
-        : state === 'Reply Reply'
-        ? '441px'
-        : '530px'};
-  }
-  @media (min-width: 992px) and (max-width: 1200px) {
-    width: ${({ state }) =>
-      state === 'main'
-        ? '725px'
-        : state === 'main Edit'
-        ? '725px'
-        : state === 'main Reply'
-        ? '636px'
-        : state === 'main Reply Edit'
-        ? '660px'
-        : state === 'Reply Reply'
-        ? '572px'
-        : '660px'};
-  }
-  @media (min-width: 1200px) {
-    width: ${({ state }) =>
-      state === 'main'
-        ? '855px'
-        : state === 'main Edit'
-        ? '855px'
-        : state === 'main Reply'
-        ? '766px'
-        : state === 'main Reply Edit'
-        ? '790px'
-        : state === 'Reply Reply'
-        ? '701px'
-        : '790px'};
-  }
+  // width: 283px;
   display: flex;
   align-items: flex-end;
 `;
 
 const CmntBtnBox = styled.div<{ state: string }>`
   display: flex;
-  @media (max-width: 612px) {
-    margin: ${({ state }) =>
-      state === 'main'
-        ? '0px'
-        : state === 'main Edit'
-        ? '0px'
-        : state === 'main Reply'
-        ? '5px 0 0 103px'
-        : state === 'main Reply Edit'
-        ? '5px 0 0 127px'
-        : state === 'Reply Reply'
-        ? '5px 0 0 37px'
-        : '5px 0 0 127px'};
-  }
+  margin: 0px;
 `;
 
-const CmntBtn = styled.button<{ groupId?: string; parentId?: string }>`
+const CmntBtn = styled.button<{ groupId?: string | null; parentId?: string | null }>`
   width: 28px;
   padding: 0;
   margin-left: 17px;

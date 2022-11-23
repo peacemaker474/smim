@@ -3,13 +3,13 @@ import axios from 'axios';
 const http = 'http://localhost:4000';
 
 interface CreateProps {
-  post_id: string;
+  post_id: string | undefined;
   content: string;
-  parent_id: string;
+  parent_id: string | null;
 }
 
 interface EditProps {
-  post_id: string;
+  post_id: string | undefined;
   content: string;
 }
 
@@ -21,7 +21,7 @@ export const postCommentCreate = (data: CreateProps, accessToken: string | null)
   });
 };
 
-export const putCommentEdit = (id: string, data: EditProps, accessToken: string | null) => {
+export const putCommentEdit = (id: string | undefined, data: EditProps, accessToken: string | null) => {
   return axios.put(`${http}/comment/${id}`, data, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

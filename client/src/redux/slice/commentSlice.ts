@@ -47,16 +47,16 @@ const commentSlice = createSlice({
       state.pinnedId = null;
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getPinnedCommentData.fulfilled, (state) => {
-        state.pinnedId;
-        state.pinnedData;
-      })
-      .addCase(getPinnedCommentData.rejected, (state, action) => {
-        state.result = action.payload;
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(getPinnedCommentData.fulfilled, (state) => {
+  //       state.pinnedId;
+  //       state.pinnedData;
+  //     })
+  //     .addCase(getPinnedCommentData.rejected, (state, action) => {
+  //       state.result = action.payload;
+  //     });
+  // },
 });
 
 export const {
@@ -68,4 +68,4 @@ export const {
   unpinnedCommentId,
 } = commentSlice.actions;
 
-export default commentSlice.reducer;
+export default commentSlice;

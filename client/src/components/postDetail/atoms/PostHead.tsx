@@ -6,9 +6,6 @@ import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
 import DropdownBox from '../../common/molecules/DropdownBox';
 
-interface fetchAPIProps {
-  queryKey: any;
-}
 interface PostHeadProps {
   postDetail: PostDetailData;
 }
@@ -18,9 +15,7 @@ function PostHead({ postDetail }: PostHeadProps) {
   const { loginCheck } = useAppSelector((state) => state.user);
   const channelId = postDetail?._id;
 
-  const fetchAPIOne = async ({ queryKey }: fetchAPIProps) => {
-    const { channelId } = queryKey[1];
-
+  const fetchAPI = async () => {
     try {
       const { data } = await getPostView(channelId);
       return data;
@@ -29,7 +24,7 @@ function PostHead({ postDetail }: PostHeadProps) {
     }
   };
 
-  const { data: views } = useQuery(['postView', { channelId }], ({ queryKey }) => fetchAPIOne({ queryKey }), {
+  const { data: views } = useQuery(['postView', { channelId }], () => fetchAPI(), {
     enabled: !!channelId,
   });
 
