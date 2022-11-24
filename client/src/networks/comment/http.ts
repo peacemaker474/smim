@@ -28,3 +28,9 @@ export const putCommentEdit = (id: string | undefined, data: EditProps, accessTo
     },
   });
 };
+
+export const getCommentListRead = (id: string | undefined) => {
+  return axios.get(`${http}/post/${id}/comment`, {
+    withCredentials: true,
+  });
+};
