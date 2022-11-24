@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
 import PostContent from '../components/postDetail/molecules/PostContent';
-import CmntContent from '../components/comment/molecules/CmntContent';
+import CmntForm from '../components/comment/atoms/CmntForm';
+import CommentUploaded from '../components/comment/molecules/CommentUploaded';
 import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
@@ -25,7 +26,11 @@ function PostDetailPage() {
     <PostViewMain>
       <PostViewContainer>
         <PostContent postDetail={postDetail} />
-        <CmntContent postDetail={postDetail} />
+        <CommentSection>
+          <CommentH2>답변하기</CommentH2>
+          <CmntForm postId={postId} />
+          <CommentUploaded />
+        </CommentSection>
       </PostViewContainer>
     </PostViewMain>
   );
@@ -55,3 +60,17 @@ const PostViewContainer = styled.div`
     width: 900px;
   }
 `;
+
+const CommentSection = styled.div`
+  width: 100%;
+  margin: 20px auto;
+`;
+
+const CommentH2 = styled.h2`
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  margin-bottom: 28px;
+`;
+
+const CommentContainer = styled.div``;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -20,7 +20,7 @@ interface CmntFromProps {
   parentId?: string | null;
   id?: string | undefined;
   groupId?: string | null;
-  // onFormInputCancel: () => void | null;
+  // onFormInputCancel;
   // isTargetVisible: boolean;
   // changedText: string;
   // onTextChange: () => void;
@@ -30,7 +30,7 @@ interface CmntFromProps {
 
 function CmntForm({
   // parentId,
-  id = undefined,
+  id,
   groupId = null,
   // isTargetVisible,
   // onFormInputCancel,
@@ -45,6 +45,7 @@ function CmntForm({
   const { register, handleSubmit, setValue, setFocus, watch } = useForm<CmntFormValue>();
   const dispatch = useAppDispatch();
   const data = watch('comment');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const STATE = 'main';
 
@@ -52,18 +53,18 @@ function CmntForm({
   const onFormInputCancel = () => setValue('comment', '');
   // }
 
-  const handleCommentTextareaSubmit = (data: CmntFormValue) => {
-    const addData = data.comment.replaceAll('\n', '<br>');
+  // const handleCommentTextareaSubmit = (data: CmntFormValue) => {
+  //   const addData = data.comment.replaceAll('\n', '<br>');
 
-    if (accessToken) {
-      // if (id) {
-      //   handleCommentEdit(e, addData);
-      // } else {
-      handleCommentCreate(addData);
-      // }
-      setValue('comment', '');
-    }
-  };
+  //   if (accessToken) {
+  //     // if (id) {
+  //     //   handleCommentEdit(e, addData);
+  //     // } else {
+  //     handleCommentCreate(addData);
+  //     // }
+  //     setValue('comment', '');
+  //   }
+  // };
 
   // useEffect(() => {
   //   if (isTargetVisible) {
@@ -107,11 +108,10 @@ function CmntForm({
   const handleKeyDownCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Textarea line-change event
     if (e.code === 'Enter' && e.shiftKey === true) {
-      e.preventDefault();
-      setValue('comment', `${data}\n`);
+      e.preventDefault(); // Enter prevent
+      setValue('comment', `${data}\n`); // value에 enter값 추가하기
     } else if (e.code === 'Enter' && e.shiftKey === false) {
-      e.preventDefault();
-      handleSubmit(() => handleCommentTextareaSubmit(watch()));
+      e.preventDefault(); // Enter prevent
     }
   };
 
@@ -119,7 +119,8 @@ function CmntForm({
     <CmntFormForm
       groupId={groupId}
       method="POST"
-      //   onSubmit={handleSubmit(handleCommentTextareaSubmit)}
+      ref={formRef}
+      onSubmit={handleSubmit((d: CmntFormValue) => handleCommentCreate(d.comment))}
     >
       <UserImage width="42px" height="42px" imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={STATE}>
