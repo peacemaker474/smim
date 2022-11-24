@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { shallowEqual } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { getCreateAccessToken } from '../../../networks/main/http';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getUserLogOut } from '../../../redux/services/UserService';
@@ -16,22 +15,32 @@ function Auth() {
   );
 
   const dispatch = useAppDispatch();
-  const { pathname } = useLocation();
+
+  const settingToken = () => {
+    if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
+      getCreateAccessToken().then((res) => {
+        if (res.data.success) {
+          dispatch(SET_TOKEN(res.data.accessToken));
+        }
+      });
+    } else {
+      dispatch(DELETE_TOKEN());
+      dispatch(getUserLogOut());
+    }
+  }
 
   useEffect(() => {
-    if (authenticated && expireTime - new Date().getTime() < 3000) {
-      if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
-        getCreateAccessToken().then((res) => {
-          if (res.data.success) {
-            dispatch(SET_TOKEN(res.data.accessToken));
-          }
-        });
-      } else {
-        dispatch(DELETE_TOKEN());
-        dispatch(getUserLogOut());
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (!timer && authenticated) {
+      timer = setTimeout(settingToken, expireTime - new Date().getTime());
+    }
+    
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
       }
     }
-  }, [pathname, authenticated, dispatch, expireTime]);
+  }, [settingToken, authenticated, dispatch, expireTime]);
 
   return (
     <>
