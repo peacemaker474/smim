@@ -2,7 +2,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getCommentListRead } from '../../../networks/comment/http';
-import CommentWrapper from './CommentWrapper';
+import CommentWrapper from '../molecules/CommentWrapper';
 import { CommentData } from '../../../type/cmntTypes';
 import LoadingPage from '../../../pages/LoadingPage';
 

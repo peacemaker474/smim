@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
 import PostContent from '../components/postDetail/molecules/PostContent';
 import CmntForm from '../components/comment/atoms/CmntForm';
-import CommentUploaded from '../components/comment/molecules/CommentUploaded';
+import CommentUploaded from '../components/comment/organisms/CommentUploaded';
 import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
@@ -28,7 +28,7 @@ function PostDetailPage() {
         <PostContent postDetail={postDetail} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
-          <CmntForm postId={postId} />
+          <CmntForm postId={postId} isTargetVisible />
           <CommentUploaded />
         </CommentSection>
       </PostViewContainer>

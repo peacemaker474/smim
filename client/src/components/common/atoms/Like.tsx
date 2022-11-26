@@ -1,20 +1,23 @@
-import styled from 'styled-components';
 import { useState } from 'react';
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { getPostLike, getPostUnlike } from '../../../networks/post/http';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import PostLike from '../../../asset/icons/icon-heart-fill.svg';
 import PostUnlike from '../../../asset/icons/icon-heart-line.svg';
 
 interface LikeProps {
   clickState: boolean;
-  value: number;
+  value: number | undefined;
+  getLike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
+  getUnlike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
 }
 
-function Like({ clickState, value }: LikeProps) {
+function Like({ clickState, value, getLike, getUnlike }: LikeProps) {
+  console.log(value, clickState);
   const [isLikeChecked, setIsLikeChecked] = useState(clickState);
-  const [likeValue, setLikeValue] = useState(value);
+  const [likeValue, setLikeValue] = useState(value || 0);
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -27,11 +30,11 @@ function Like({ clickState, value }: LikeProps) {
 
     try {
       if (isLikeChecked) {
-        await getPostUnlike(id, accessToken);
+        await getLike(id, accessToken);
         setIsLikeChecked(false);
         setLikeValue((prev) => prev - 1);
       } else {
-        await getPostLike(id, accessToken);
+        await getUnlike(id, accessToken);
         setIsLikeChecked(true);
         setLikeValue((prev) => prev + 1);
       }

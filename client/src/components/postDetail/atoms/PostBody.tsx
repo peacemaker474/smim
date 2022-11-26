@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useAppSelector } from '../../../redux/hooks';
 import { PostDetailData } from '../../../type/postTypes';
+import { getPostLike, getPostUnlike } from '../../../networks/post/http';
 import TagList from '../../common/atoms/TagList';
 import Like from '../../common/atoms/Like';
 import Bookmark from '../../common/atoms/Bookmark';
@@ -19,7 +20,12 @@ function PostBody({ postDetail }: PostBodyProps) {
       </PostContent>
       <TagList hashtagArr={postDetail.hashtag} />
       <PostLikeBox>
-        <Like value={postDetail.meta.likes} clickState={postDetail.like} />
+        <Like
+          getLike={getPostLike}
+          getUnlike={getPostUnlike}
+          value={postDetail.meta.likes}
+          clickState={postDetail.like}
+        />
         {loginCheck && <Bookmark clickState={postDetail.bookmark} />}
       </PostLikeBox>
     </BodyBox>
