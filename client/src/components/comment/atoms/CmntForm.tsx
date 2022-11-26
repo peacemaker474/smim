@@ -7,32 +7,26 @@ import { postCommentCreate, putCommentEdit } from '../../../networks/comment/htt
 import TextArea from '../../../components/common/atoms/Textarea';
 import UserImage from '../../common/atoms/UserImage';
 
-// interface CreateDataProps {
-//   post_id: string;
-//   content: string;
-//   parent_id: string | null;
-// }
-
 interface CmntFormValue {
   comment: string;
 }
 interface CmntFromProps {
   parentId?: string | null;
   id?: string | undefined;
-  groupId?: string | null;
+  groupId?: string | null | undefined;
   // onFormInputCancel;
-  // isTargetVisible: boolean;
+  isTargetVisible?: boolean;
+  postId: string | undefined;
   // changedText: string;
   // onTextChange: () => void;
   // writer: string;
-  postId: string | undefined;
 }
 
 function CmntForm({
   // parentId,
   id,
-  groupId = null,
-  // isTargetVisible,
+  groupId,
+  isTargetVisible,
   // onFormInputCancel,
   // changedText,
   // onTextChange,
@@ -48,10 +42,7 @@ function CmntForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const STATE = 'main';
-
-  // if (!onFormInputCancel) {
   const onFormInputCancel = () => setValue('comment', '');
-  // }
 
   // const handleCommentTextareaSubmit = (data: CmntFormValue) => {
   //   const addData = data.comment.replaceAll('\n', '<br>');
@@ -160,7 +151,7 @@ function CmntForm({
 
 export default CmntForm;
 
-const CmntFormForm = styled.form<{ groupId: string | null }>`
+const CmntFormForm = styled.form<{ groupId: string | null | undefined }>`
   width: auto;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};

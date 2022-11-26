@@ -34,3 +34,19 @@ export const getCommentListRead = (id: string | undefined) => {
     withCredentials: true,
   });
 };
+
+export const getCommentLike = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/comment/${id}/like`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getCommentUnlike = (id: string | undefined, accessToken: string | null) => {
+  return axios.get(`${http}/comment/${id}/unlike`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

@@ -9,7 +9,7 @@ interface CreatedItem {
   _id: string;
   writer: WriterProp;
   parent_id: string | null;
-  group_id: string | null;
+  group_id: string | null | undefined;
   post_id: string | undefined;
   text: string;
 }

@@ -7,7 +7,7 @@ interface TextAreaProps {
   register: UseFormRegister<any>;
   setValue: UseFormSetValue<any>;
   value: string;
-  groupId: string | null;
+  groupId: string | null | undefined;
   parentId: string | null;
   id: string | undefined;
   // writer: string;

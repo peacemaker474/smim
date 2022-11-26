@@ -2,10 +2,11 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useVisible } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
-import CmntForm from './CmntForm';
+// import CmntForm from './CmntForm';
 import UserImage from '../../common/atoms/UserImage';
 import { CommentData } from '../../../type/cmntTypes';
 // import CommentItemInner from '../CommentItemInner/CommentItemInner';
+import CmntItemEtc from './CmntItemEtc';
 
 interface Writer {
   nickname: string;
@@ -33,9 +34,22 @@ export default function CommentItem({ key, cmntData, groupId }: CmntItemProps) {
               <CommentStrongName>{cmntData?.writer.nickname}</CommentStrongName>
               <CommentTextPara>{cmntData?.text}</CommentTextPara>
             </CommentText>
-            {/* <CommentItemEtc cmntData={cmntData} groupId={groupId} writer={cmntData.writer.nickname} /> */}
+            <CmntItemEtc cmntData={cmntData} groupId={groupId} writer={cmntData?.writer.nickname} />
           </CommentContentBox>
         </CommentItemContent>
+        {/* <PostDropdownBtnDiv ref={btnRef} onClick={onDropdownBtnClick}>
+          <CommentDropdownBtn />
+          {isDropdownVisible && (
+            <CommentDropdown
+              ref={dropdownRef}
+              writer={cmntData.writer.nickname}
+              onClickShow={onClickShow}
+              commentId={cmntData._id}
+              parentId={cmntData.parent_id}
+              isDropdownVisible={isDropdownVisible}
+            />
+          )}
+        </PostDropdownBtnDiv> */}
       </CommentItemInner>
     </CommentItemContainer>
   );
