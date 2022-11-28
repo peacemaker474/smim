@@ -5,6 +5,8 @@ import { getReadPostDetail } from '../networks/post/http';
 import PostContent from '../components/postDetail/molecules/PostContent';
 import CmntForm from '../components/comment/atoms/CmntForm';
 import CommentUploaded from '../components/comment/organisms/CommentUploaded';
+import CommentPinned from '../components/comment/organisms/CommentPinned';
+import CommentCreated from '../components/comment/organisms/CommentCreated';
 import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
@@ -20,16 +22,35 @@ function PostDetailPage() {
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
 
+  const postDetailReset = {
+    bookmark: false,
+    content: '',
+    createAt: '',
+    hashtag: [],
+    like: false,
+    meta: { views: 0, likes: 0, bookmarks: [], pinnedCmnt: null, answer: false },
+    owner: { _id: '', userId: '', nickname: '', imageUrl: '' },
+    targetAge: '',
+    title: '',
+    updateAt: '',
+    __v: 0,
+    _id: '',
+  };
+
   if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
+
+  console.log(postDetail);
 
   return (
     <PostViewMain>
       <PostViewContainer>
-        <PostContent postDetail={postDetail} />
+        <PostContent postDetail={postDetail || postDetailReset} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
           <CmntForm postId={postId} isTargetVisible />
           <CommentUploaded />
+          <CommentPinned postWriter={postDetail?.owner.nickname} />
+          <CommentCreated />
         </CommentSection>
       </PostViewContainer>
     </PostViewMain>

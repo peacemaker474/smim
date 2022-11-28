@@ -1,13 +1,13 @@
-// import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { useAppSelector } from '../../../redux/hooks';
 import { getCommentListRead } from '../../../networks/comment/http';
 import CommentWrapper from '../molecules/CommentWrapper';
 import { CommentData } from '../../../type/cmntTypes';
 import LoadingPage from '../../../pages/LoadingPage';
 
 export default function CommentUploaded() {
-  //   const { pinnedId } = useSelector((state) => state.comment);
+  const { pinnedId } = useAppSelector((state) => state.comment);
   const { id: postid } = useParams();
 
   const loadComments = async () => {
@@ -28,7 +28,7 @@ export default function CommentUploaded() {
   }
 
   const sortedLoadedComments = loadedComments
-    .filter((el: Array<CommentData>) => String(el[0]._id))
+    .filter((el: Array<CommentData>) => String(el[0]._id) !== pinnedId)
     .sort((a: Array<CommentData>, b: Array<CommentData>) => {
       if (a[0].createAt > b[0].createAt) {
         return -1;

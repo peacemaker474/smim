@@ -8,13 +8,9 @@ interface ContentData {
 }
 
 export interface PostOwnerData {
-  nickname: string;
-}
-
-export interface PostOwnerDetail extends PostOwnerData {
-  _id: string;
-  userId: string;
   imageUrl: string;
+  userId: string;
+  nickname: string;
 }
 
 export interface PostBookMarkData {
@@ -46,7 +42,7 @@ export interface PostDetailData {
   hashtag: string[];
   like: boolean;
   meta: PostBookMarkData;
-  owner: PostOwnerDetail;
+  owner: PostOwnerData;
   targetAge: number;
   title: string;
   updateAt: string;

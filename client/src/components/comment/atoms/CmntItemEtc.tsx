@@ -21,7 +21,7 @@ function CommentItemEtc({ cmntData, groupId, writer }: CommentItemEtc) {
 
   const handleReplyClickShow = () => {
     if (accessToken) {
-      handleTargetShow(true);
+      handleTargetShow();
     } else {
       //   dispatch(isLoginCheckToggle());
     }

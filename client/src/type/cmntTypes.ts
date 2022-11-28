@@ -1,4 +1,4 @@
-import { PostOwnerDetail } from './postTypes';
+import { PostOwnerData } from './postTypes';
 
 export interface CommentData {
   children: Array<string>;
@@ -7,9 +7,9 @@ export interface CommentData {
   like_count: number;
   like_users: Array<string>;
   parent_id: string | null;
-  post_id: string;
+  post_id: string | undefined;
   text: string;
-  writer: PostOwnerDetail;
+  writer: PostOwnerData;
   __v: number;
   _id: string;
 }
