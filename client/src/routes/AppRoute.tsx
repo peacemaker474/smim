@@ -6,10 +6,12 @@ import SignupPage from '../pages/SignupPage';
 import PostDetailPage from '../pages/PostDetailPage';
 import MyPageRoute from './MyPageRoute';
 import PrivateRoute from './PrivateRoute';
+import IntroPage from '../pages/IntroPage';
 
 function AppRoute() {
   return (
     <Routes>
+      <Route path='/intro' element={<IntroPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/intro" element={<div>test</div>} />
       <Route path="/signup" element={<SignupPage />} />
