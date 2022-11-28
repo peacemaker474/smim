@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getPinnedCommentData } from '../services/comment';
+import { CommentData } from '../../type/cmntTypes';
 
 interface InitialState {
   commentId: string | null;
   deletedIdArray: Array<string>;
   pinnedId: string | null;
-  pinnedData: string | null;
+  pinnedData: CommentData[] | null;
   check: string | null;
   result: any;
 }
@@ -49,12 +50,18 @@ const commentSlice = createSlice({
   },
   // extraReducers: (builder) => {
   //   builder
-  //     .addCase(getPinnedCommentData.fulfilled, (state) => {
-  //       state.pinnedId;
-  //       state.pinnedData;
+  //     .addCase(getPinnedCommentData.fulfilled, (state, { payload }) => {
+  //       return {
+  //         ...state,
+  //         pinnedId: payload.pinnedId,
+  //         pinnedData: payload.pinnedData,
+  //       };
   //     })
-  //     .addCase(getPinnedCommentData.rejected, (state, action) => {
-  //       state.result = action.payload;
+  //     .addCase(getPinnedCommentData.rejected, (state, { payload }) => {
+  //       return {
+  //         ...state,
+  //         result: payload,
+  //       };
   //     });
   // },
 });

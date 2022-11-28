@@ -1,57 +1,81 @@
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useVisible } from '../../../hooks';
+import { useDropdown } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
-// import CmntForm from './CmntForm';
+import CmntForm from './CmntForm';
 import UserImage from '../../common/atoms/UserImage';
 import { CommentData } from '../../../type/cmntTypes';
 // import CommentItemInner from '../CommentItemInner/CommentItemInner';
 import CmntItemEtc from './CmntItemEtc';
-
-interface Writer {
-  nickname: string;
-  imageUrl: string;
-}
+import CmntDropdown from './CmntDropdown';
+import moreIcon from '../../../asset/icons/icon-more-vertical.svg';
 
 interface CmntItemProps {
   key: string | undefined;
-  cmntData: CommentData | undefined;
+  cmntData: CommentData;
   groupId: string | null | undefined;
 }
 
 export default function CommentItem({ key, cmntData, groupId }: CmntItemProps) {
-  // const [itemText, setItemText] = useState(cmntData.text);
-  // const [isTargetVisible, handleClickShow] = useVisible(false);
-  // const delComment = useAppSelector((state) => state.comment).deletedIdArray.find((el) => el === cmntData._id);
+  const [itemText, setItemText] = useState(cmntData.text);
+  const [isTargetVisible, handleClickShow] = useVisible(false);
+  const delComment = useAppSelector((state) => state.comment).deletedIdArray.find((el) => el === cmntData._id);
+  const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: any[] = useDropdown();
+
+  const handleFormInputCancel = useCallback(() => {
+    handleClickShow();
+  }, [handleClickShow]);
+
+  const handleTextChange = (text: string) => {
+    setItemText(text);
+  };
+
+  const changedText = itemText.replaceAll('<br>', '\n');
 
   return (
-    <CommentItemContainer>
-      <CommentItemInner>
-        {/* <UserImage width="42px" height="42px" imgUrl={cmntData?.writer.imageUrl} /> */}
-        <CommentItemContent>
-          <CommentContentBox>
-            <CommentText>
-              <CommentStrongName>{cmntData?.writer.nickname}</CommentStrongName>
-              <CommentTextPara>{cmntData?.text}</CommentTextPara>
-            </CommentText>
-            <CmntItemEtc cmntData={cmntData} groupId={groupId} writer={cmntData?.writer.nickname} />
-          </CommentContentBox>
-        </CommentItemContent>
-        {/* <PostDropdownBtnDiv ref={btnRef} onClick={onDropdownBtnClick}>
-          <CommentDropdownBtn />
-          {isDropdownVisible && (
-            <CommentDropdown
-              ref={dropdownRef}
-              writer={cmntData.writer.nickname}
-              onClickShow={onClickShow}
-              commentId={cmntData._id}
-              parentId={cmntData.parent_id}
-              isDropdownVisible={isDropdownVisible}
-            />
-          )}
-        </PostDropdownBtnDiv> */}
-      </CommentItemInner>
-    </CommentItemContainer>
+    <div>
+      {isTargetVisible ? (
+        <CmntForm
+          postId={cmntData.post_id}
+          parentId={cmntData.parent_id}
+          groupId={groupId}
+          isTargetVisible={isTargetVisible}
+          onFormInputCancel={handleFormInputCancel}
+          id={cmntData._id}
+          onTextChange={handleTextChange}
+          changedText={changedText}
+        />
+      ) : (
+        <CommentItemContainer>
+          <CommentItemInner>
+            <UserImage width="42px" height="42px" imgUrl={cmntData.writer.imageUrl} />
+            <CommentItemContent>
+              <CommentContentBox>
+                <CommentText>
+                  <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
+                  <CommentTextPara>{cmntData.text}</CommentTextPara>
+                </CommentText>
+                <CmntItemEtc cmntData={cmntData} groupId={groupId} writer={cmntData.writer.nickname} />
+              </CommentContentBox>
+            </CommentItemContent>
+            <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
+              <CommentDropdownBtn />
+              {isDropdownVisible && (
+                <CmntDropdown
+                  dropdownRef={dropdownRef}
+                  writer={cmntData.writer.nickname}
+                  onClickShow={handleClickShow}
+                  commentId={cmntData._id}
+                  parentId={cmntData.parent_id}
+                  isDropdownVisible={isDropdownVisible}
+                />
+              )}
+            </PostDropdownBtnDiv>
+          </CommentItemInner>
+        </CommentItemContainer>
+      )}
+    </div>
   );
 }
 
@@ -95,20 +119,25 @@ const CommentTextPara = styled.p`
   white-space: pre-line;
 `;
 
-// const PostDropdownBtnDiv = styled.div`
-//   position: relative;
-// `;
+const PostDropdownBtnDiv = styled.div`
+  position: relative;
+`;
 
-// const CommentDropdownBtn = styled(DropdownBtn)`
-//   background: url(${moreIcon});
-//   ${CommentItemInner}:hover > ${PostDropdownBtnDiv} > & {
-//     background: url(${moreIcon});
-//     background-repeat: no-repeat;
-//   }
-//   &:hover,
-//   &:focus {
-//     background: url(${moreIcon});
-//     background-repeat: no-repeat;
-//   }
-//   // background: none;
-// `;
+const CommentDropdownBtn = styled.div`
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  background: url(${moreIcon});
+  ${CommentItemInner}:hover > ${PostDropdownBtnDiv} > & {
+    background: url(${moreIcon});
+    background-repeat: no-repeat;
+  }
+  &:hover,
+  &:focus {
+    background: url(${moreIcon});
+    background-repeat: no-repeat;
+  }
+  // background: none;
+`;

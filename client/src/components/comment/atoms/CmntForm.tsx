@@ -14,11 +14,11 @@ interface CmntFromProps {
   parentId?: string | null;
   id?: string | undefined;
   groupId?: string | null | undefined;
-  // onFormInputCancel;
+  onFormInputCancel?: () => void | undefined;
   isTargetVisible?: boolean;
   postId: string | undefined;
-  // changedText: string;
-  // onTextChange: () => void;
+  changedText?: string;
+  onTextChange?: (text: string) => void;
   // writer: string;
 }
 
@@ -27,9 +27,9 @@ function CmntForm({
   id,
   groupId,
   isTargetVisible,
-  // onFormInputCancel,
-  // changedText,
-  // onTextChange,
+  onFormInputCancel,
+  changedText,
+  onTextChange,
   // writer,
   postId,
   parentId = null,
@@ -42,7 +42,7 @@ function CmntForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const STATE = 'main';
-  const onFormInputCancel = () => setValue('comment', '');
+  const handleFormInputCancel = () => setValue('comment', '');
 
   // const handleCommentTextareaSubmit = (data: CmntFormValue) => {
   //   const addData = data.comment.replaceAll('\n', '<br>');
@@ -83,7 +83,11 @@ function CmntForm({
         }),
       );
 
-      onFormInputCancel();
+      if (onFormInputCancel) {
+        onFormInputCancel();
+      } else {
+        handleFormInputCancel();
+      }
     }
   };
 
