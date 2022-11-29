@@ -1,4 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storageSession from 'redux-persist/lib/storage/session';
+
 import authSlice from './slice/authSlice';
 import toggleSlice from './slice/toggleSlice';
 import userSlice from './slice/userSlice';
@@ -8,9 +11,21 @@ import commentSlice from './slice/commentSlice';
 import commentCreateSlice from './slice/commentCreateSlice';
 import postSlice from './slice/postSlice';
 
+const persistConfig = {
+  key: 'root',
+  storage: storageSession,
+  blacklist: ['user', 'toggle', 'comment', 'commentCreate'],
+};
+
+const userPersistConfig = {
+  key: 'user',
+  storage: storageSession,
+  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social'],
+}
+
 const rootReducer = combineReducers({
   toggle: toggleSlice.reducer,
-  user: userSlice.reducer,
+  user: persistReducer(userPersistConfig, userSlice.reducer),
   auth: authSlice.reducer,
   searchKeyword: searchKeywordSlice.reducer,
   searchFilter: searchFilterSlice.reducer,
@@ -19,4 +34,6 @@ const rootReducer = combineReducers({
   post: postSlice.reducer,
 });
 
-export default rootReducer;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export default persistedReducer;

@@ -1,7 +1,6 @@
 // import { lazy, Suspense } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { deletePost } from '../../../networks/post/http';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
