@@ -4,12 +4,12 @@ import axios from 'axios';
 const http = process.env.REACT_APP_SERVER_URL;
 
 interface PinnedData {
-  pinnedId: string;
+  pinnedId: string | null;
   pinnedData: string;
 }
 
 interface PinnedId {
-  pinnedId: string;
+  pinnedId: string | null;
 }
 
 interface ErrorMessage {

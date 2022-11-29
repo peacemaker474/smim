@@ -4,11 +4,7 @@ import { useAppSelector } from '../../../redux/hooks';
 import CommentWrapper from '../molecules/CommentWrapper';
 import pinIcon from '../../../asset/icons/icon-pin.svg';
 
-interface CommentPinnedProps {
-  postWriter: string;
-}
-
-function CommentPinned({ postWriter }: CommentPinnedProps) {
+function CommentPinned() {
   const { pinnedData, pinnedId } = useAppSelector(
     (state) => ({
       pinnedData: state.comment.pinnedData,
@@ -16,6 +12,8 @@ function CommentPinned({ postWriter }: CommentPinnedProps) {
     }),
     shallowEqual,
   );
+
+  const { postWriter } = useAppSelector((state) => state.post);
 
   return (
     <div>

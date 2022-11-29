@@ -19,7 +19,6 @@ interface CmntFromProps {
   postId: string | undefined;
   changedText?: string;
   onTextChange?: (text: string) => void;
-  // writer: string;
 }
 
 function CmntForm({
@@ -30,7 +29,6 @@ function CmntForm({
   onFormInputCancel,
   changedText,
   onTextChange,
-  // writer,
   postId,
   parentId = null,
 }: CmntFromProps) {
@@ -42,29 +40,25 @@ function CmntForm({
   const formRef = useRef<HTMLFormElement>(null);
 
   const STATE = 'main';
+
   const handleFormInputCancel = () => setValue('comment', '');
 
-  // const handleCommentTextareaSubmit = (data: CmntFormValue) => {
-  //   const addData = data.comment.replaceAll('\n', '<br>');
+  const handleCommentEdit = async (data: string) => {
+    // 댓글 수정 함수
+    const response = await putCommentEdit(id, { post_id: postId, content: data }, accessToken);
 
-  //   if (accessToken) {
-  //     // if (id) {
-  //     //   handleCommentEdit(e, addData);
-  //     // } else {
-  //     handleCommentCreate(addData);
-  //     // }
-  //     setValue('comment', '');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isTargetVisible) {
-  //     setFocus('comment');
-  //     setValue('comment', changedText);
-  //   }
-  // }, [isTargetVisible, setFocus, changedText, setValue]);
+    if (response.data.success) {
+      if (onTextChange) {
+        onTextChange(data.replace('<br>', '\n'));
+      }
+      if (onFormInputCancel) {
+        onFormInputCancel();
+      }
+    }
+  };
 
   const handleCommentCreate = async (data: string) => {
+    // 댓글 생성 함수
     const response = await postCommentCreate({ post_id: postId, content: data, parent_id: parentId }, accessToken);
 
     if (response.data.success) {
@@ -91,14 +85,25 @@ function CmntForm({
     }
   };
 
-  // const handleCommentEdit = async (e: React.MouseEvent<HTMLButtonElement>, data: string) => {
-  //   const response = await putCommentEdit(id, { post_id: id, content: data }, accessToken);
+  const handleCommentTextareaSubmit = (data: string) => {
+    const addData = data.replaceAll('\n', '<br>');
 
-  //   if (response.data.success) {
-  //     onTextChange(data.replace('<br>', '\n'));
-  //     onFormInputCancel();
-  //   }
-  // };
+    if (accessToken) {
+      if (id) {
+        handleCommentEdit(addData);
+      } else {
+        handleCommentCreate(addData);
+      }
+      setValue('comment', '');
+    }
+  };
+
+  useEffect(() => {
+    if (isTargetVisible && changedText) {
+      setFocus('comment');
+      setValue('comment', changedText);
+    }
+  }, [isTargetVisible, setFocus, changedText, setValue]);
 
   const handleKeyDownCheck = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Textarea line-change event
@@ -115,7 +120,7 @@ function CmntForm({
       groupId={groupId}
       method="POST"
       ref={formRef}
-      onSubmit={handleSubmit((d: CmntFormValue) => handleCommentCreate(d.comment))}
+      onSubmit={handleSubmit((d: CmntFormValue) => handleCommentTextareaSubmit(d.comment))}
     >
       <UserImage width="42px" height="42px" imgUrl={loginState.imgUrl} />
       <CmntInputDiv state={STATE}>
