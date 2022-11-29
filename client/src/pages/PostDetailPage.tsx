@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
+import { useAppDispatch } from '../redux/hooks';
+import { getPostData } from '../redux/slice/postSlice';
+import { getPinnedCommentData } from '../redux/services/comment';
+import { pinnedInitCommentId } from '../redux/slice/commentSlice';
 import PostContent from '../components/postDetail/molecules/PostContent';
 import CmntForm from '../components/comment/atoms/CmntForm';
 import CommentUploaded from '../components/comment/organisms/CommentUploaded';
@@ -11,9 +15,25 @@ import LoadingPage from './LoadingPage';
 
 function PostDetailPage() {
   const { id: postId } = useParams();
+  const dispatch = useAppDispatch();
   const fetchAPI = async () => {
     try {
       const { data } = await getReadPostDetail(postId);
+
+      if (data.meta.pinnedCmnt) {
+        dispatch(getPinnedCommentData({ pinnedId: data.meta.pinnedCmnt }));
+      } else {
+        dispatch(pinnedInitCommentId());
+      }
+
+      dispatch(
+        getPostData({
+          postId: data._id,
+          postWriter: data.owner.nickname,
+          postAge: data.targetAge,
+        }),
+      );
+
       return data;
     } catch (error: any) {
       return error.response.status;
@@ -39,8 +59,6 @@ function PostDetailPage() {
 
   if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
 
-  console.log(postDetail);
-
   return (
     <PostViewMain>
       <PostViewContainer>
@@ -49,7 +67,7 @@ function PostDetailPage() {
           <CommentH2>답변하기</CommentH2>
           <CmntForm postId={postId} isTargetVisible />
           <CommentUploaded />
-          <CommentPinned postWriter={postDetail?.owner.nickname} />
+          <CommentPinned />
           <CommentCreated />
         </CommentSection>
       </PostViewContainer>

@@ -25,6 +25,7 @@ function PostBody({ postDetail }: PostBodyProps) {
           getUnlike={getPostUnlike}
           value={postDetail.meta.likes}
           clickState={postDetail.like}
+          id={postDetail._id}
         />
         {loginCheck && <Bookmark clickState={postDetail.bookmark} />}
       </PostLikeBox>

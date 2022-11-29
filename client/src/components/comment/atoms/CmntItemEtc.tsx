@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-// import { isLoginCheckToggle } from '../../../../redux/slice/toggleSlice';
+import { isLoginCheckToggle } from '../../../redux/slice/toggleSlice';
 import useVisible from '../../../hooks/useVisible';
+import { getCommentLike, getCommentUnlike } from '../../../networks/comment/http';
 import { elapsedText } from '../../../utils/elapsedText';
 import CmntForm from './CmntForm';
 import Like from '../../common/atoms/Like';
 import { CommentData } from '../../../type/cmntTypes';
-import { getCommentLike, getCommentUnlike } from '../../../networks/comment/http';
 
 interface CommentItemEtc {
   cmntData: CommentData | undefined;
   groupId: string | null | undefined;
-  writer: string | undefined;
 }
 
-function CommentItemEtc({ cmntData, groupId, writer }: CommentItemEtc) {
+function CommentItemEtc({ cmntData, groupId }: CommentItemEtc) {
   const { accessToken } = useAppSelector((state) => state.auth);
+  const { id } = useAppSelector((state) => state.user);
   const [isTargetVisible, handleTargetShow] = useVisible(false);
   const dispatch = useAppDispatch();
 
@@ -23,11 +23,12 @@ function CommentItemEtc({ cmntData, groupId, writer }: CommentItemEtc) {
     if (accessToken) {
       handleTargetShow();
     } else {
-      //   dispatch(isLoginCheckToggle());
+      dispatch(isLoginCheckToggle());
     }
   };
 
   const createAt = elapsedText(cmntData?.createAt);
+  const likeState = Boolean(cmntData?.like_users.includes(id)); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
 
   return (
     <CommentEtcContainer>
@@ -37,9 +38,9 @@ function CommentItemEtc({ cmntData, groupId, writer }: CommentItemEtc) {
         <Like
           getLike={getCommentLike}
           getUnlike={getCommentUnlike}
-          clickState
-          // clickState user와 비교하기
+          clickState={likeState}
           value={cmntData?.like_count}
+          id={cmntData?._id}
         />
       </CommentEtc>
       {isTargetVisible && (
@@ -47,8 +48,7 @@ function CommentItemEtc({ cmntData, groupId, writer }: CommentItemEtc) {
           groupId={groupId}
           postId={cmntData?.post_id}
           parentId={cmntData?._id}
-          //   writer={writer}
-          //   onFormInputCancel={handleTargetShow}
+          onFormInputCancel={handleTargetShow}
           isTargetVisible={isTargetVisible}
         />
       )}

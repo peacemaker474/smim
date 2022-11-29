@@ -12,15 +12,14 @@ interface LikeProps {
   value: number | undefined;
   getLike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
   getUnlike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
+  id: string | undefined;
 }
 
-function Like({ clickState, value, getLike, getUnlike }: LikeProps) {
-  console.log(value, clickState);
+function Like({ clickState, value, getLike, getUnlike, id }: LikeProps) {
   const [isLikeChecked, setIsLikeChecked] = useState(clickState);
   const [likeValue, setLikeValue] = useState(value || 0);
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
 
   const clickHandler = async () => {
     if (!accessToken) {
@@ -30,11 +29,11 @@ function Like({ clickState, value, getLike, getUnlike }: LikeProps) {
 
     try {
       if (isLikeChecked) {
-        await getLike(id, accessToken);
+        await getUnlike(id, accessToken);
         setIsLikeChecked(false);
         setLikeValue((prev) => prev - 1);
       } else {
-        await getUnlike(id, accessToken);
+        await getLike(id, accessToken);
         setIsLikeChecked(true);
         setLikeValue((prev) => prev + 1);
       }
