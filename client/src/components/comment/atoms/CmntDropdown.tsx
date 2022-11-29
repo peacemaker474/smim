@@ -71,12 +71,17 @@ export default function CommentDropdown({
 
   return (
     <CommentDropdownWrraper ref={dropdownRef}>
-      {/* <CommentDropdownLists>
-        {name === postWriter && !parentId && commentId === pinnedId ? (
-          <CommentDropdownList onClick={handleCommentUnpinned}>고정해제</CommentDropdownList>
-        ) : name === postWriter && !parentId ? (
-          <CommentDropdownList onClick={handleCommentPinned}>고정</CommentDropdownList>
+      <CommentDropdownLists>
+        {name === postWriter && !parentId ? (
+          <div>
+            {commentId === pinnedId ? (
+              <CommentDropdownList onClick={handleCommentUnpinned}>고정해제</CommentDropdownList>
+            ) : (
+              <CommentDropdownList onClick={handleCommentPinned}>고정</CommentDropdownList>
+            )}
+          </div>
         ) : null}
+
         {name === writer ? (
           <>
             <CommentDropdownList onClick={handleCommentEdit}>수정</CommentDropdownList>
@@ -85,7 +90,7 @@ export default function CommentDropdown({
         ) : (
           <CommentDropdownList onClick={handleCommentDeclaration}>신고</CommentDropdownList>
         )}
-      </CommentDropdownLists> */}
+      </CommentDropdownLists>
     </CommentDropdownWrraper>
   );
 }

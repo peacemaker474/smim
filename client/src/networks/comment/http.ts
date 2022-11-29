@@ -29,6 +29,15 @@ export const putCommentEdit = (id: string | undefined, data: EditProps, accessTo
   });
 };
 
+export const deleteComment = (id: string | null, accessToken: string | null) => {
+  return axios.delete(`${http}/comment/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
 export const getCommentListRead = (id: string | undefined) => {
   return axios.get(`${http}/post/${id}/comment`, {
     withCredentials: true,
@@ -46,6 +55,24 @@ export const getCommentLike = (id: string | undefined, accessToken: string | nul
 export const getCommentUnlike = (id: string | undefined, accessToken: string | null) => {
   return axios.get(`${http}/comment/${id}/unlike`, {
     headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getCommentPinned = (id: string | null, accessToken: string | null) => {
+  return axios.get(`${http}/comment/${id}/pinned`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const getCommentUnpinned = (id: string | null, accessToken: string | null) => {
+  return axios.get(`${http}/comment/${id}/unpinned`, {
+    headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   });

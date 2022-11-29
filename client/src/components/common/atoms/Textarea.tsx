@@ -10,26 +10,12 @@ interface TextAreaProps {
   groupId: string | null | undefined;
   parentId: string | null;
   id: string | undefined;
-  // writer: string;
 }
 
 function TextArea({ onKeyDownCheck, register, setValue, value, groupId, parentId, id }: TextAreaProps) {
   const inputRef = useRef<HTMLTextAreaElement>(); // 값 설정하게 되면 읽기전용이 됨
 
-  let STATE = 'main';
-  if (!parentId && !id) {
-    STATE = 'main';
-  } else if (!parentId && id) {
-    STATE = 'main Edit';
-  } else if (parentId === groupId && !id) {
-    STATE = 'main Reply';
-  } else if (parentId === groupId && id) {
-    STATE = 'main Reply Edit';
-  } else if (parentId !== groupId && id) {
-    STATE = 'Reply Reply Edit';
-  } else {
-    STATE = 'Reply Reply';
-  }
+  const STATE = 'main';
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue('comment', e.target.value);
@@ -53,7 +39,6 @@ function TextArea({ onKeyDownCheck, register, setValue, value, groupId, parentId
 
   return (
     <TextareaBox
-      // type="submit"
       placeholder="답변을 기다립니다."
       ref={settingRegisterRef}
       value={value}

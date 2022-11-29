@@ -4,7 +4,6 @@ import CommentWrapper from '../molecules/CommentWrapper';
 export default function CommentCreated() {
   const { pinnedId } = useAppSelector((state) => state.comment);
   const createdComments = useAppSelector((state) => state.commentCreate);
-  console.log(createdComments);
 
   const uploadingComments = createdComments
     .filter((el) => !el.parent_id)
