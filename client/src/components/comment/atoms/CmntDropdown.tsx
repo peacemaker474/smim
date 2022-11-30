@@ -21,7 +21,6 @@ export default function CommentDropdown({
   parentId,
   isDropdownVisible,
 }: CommentDropdownProp) {
-  // const dropdownRef = useRef(null);
   const dispatch = useAppDispatch();
   const { pinnedId } = useAppSelector((state) => state.comment);
   const { accessToken } = useAppSelector((state) => state.auth);

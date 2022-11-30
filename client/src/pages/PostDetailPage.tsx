@@ -21,7 +21,7 @@ function PostDetailPage() {
       const { data } = await getReadPostDetail(postId);
 
       if (data.meta.pinnedCmnt) {
-        dispatch(getPinnedCommentData({ pinnedId: data.meta.pinnedCmnt }));
+        dispatch(getPinnedCommentData(data.meta.pinnedCmnt));
       } else {
         dispatch(pinnedInitCommentId());
       }
@@ -47,7 +47,7 @@ function PostDetailPage() {
   return (
     <PostViewMain>
       <PostViewContainer>
-        {postDetail && <PostContent postDetail={postDetail} />}
+        <PostContent postDetail={postDetail} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
           <CmntForm postId={postId} isTargetVisible />
@@ -96,5 +96,3 @@ const CommentH2 = styled.h2`
   line-height: 25px;
   margin-bottom: 28px;
 `;
-
-const CommentContainer = styled.div``;

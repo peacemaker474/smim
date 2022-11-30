@@ -13,7 +13,7 @@ interface PostHeadProps {
 function PostHead({ postDetail }: PostHeadProps) {
   const { owner: author, updateAt } = postDetail;
   const { loginCheck } = useAppSelector((state) => state.user);
-  const channelId = postDetail?._id;
+  const channelId = postDetail._id;
 
   const fetchAPI = async () => {
     try {
