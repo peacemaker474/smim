@@ -22,7 +22,6 @@ interface CmntFromProps {
 }
 
 function CmntForm({
-  // parentId,
   id,
   groupId,
   isTargetVisible,

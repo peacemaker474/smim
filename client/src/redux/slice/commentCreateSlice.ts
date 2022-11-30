@@ -13,6 +13,7 @@ interface CreatedItem {
   children: Array<string>;
   complain_count: number;
   like_users: Array<string>;
+  like: boolean;
   __v: number;
 }
 
@@ -25,15 +26,21 @@ interface CreatedItemProps {
   text: string;
 }
 
-const initialState: CreatedItem[] = [];
+interface initialStateProps {
+  commentArray: Array<CreatedItem>; // this is an array, but array of what?
+}
+
+const initialState: initialStateProps = {
+  commentArray: [],
+};
 
 const commentCreateSlice = createSlice({
   name: 'commentCreate',
   initialState,
   reducers: {
     createComment(state, action: PayloadAction<CreatedItemProps>) {
-      return [
-        ...state,
+      state.commentArray = [
+        ...state.commentArray,
         {
           _id: action.payload._id,
           writer: action.payload.writer,
@@ -51,8 +58,8 @@ const commentCreateSlice = createSlice({
         },
       ];
     },
-    resetComment() {
-      return [];
+    resetComment(state) {
+      state.commentArray = [];
     },
   },
 });

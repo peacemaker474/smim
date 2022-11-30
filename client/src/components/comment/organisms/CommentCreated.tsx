@@ -3,9 +3,9 @@ import CommentWrapper from '../molecules/CommentWrapper';
 
 export default function CommentCreated() {
   const { pinnedId } = useAppSelector((state) => state.comment);
-  const createdComments = useAppSelector((state) => state.commentCreate);
+  const { commentArray } = useAppSelector((state) => state.commentCreate);
 
-  const uploadingComments = createdComments
+  const uploadingComments = commentArray
     .filter((el) => !el.parent_id)
     .filter((el) => String(el._id) !== pinnedId)
     .sort((a, b) => {

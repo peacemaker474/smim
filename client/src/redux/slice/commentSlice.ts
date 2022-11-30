@@ -48,22 +48,19 @@ const commentSlice = createSlice({
       state.pinnedId = null;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(getPinnedCommentData.fulfilled, (state, { payload }) => {
-  //       return {
-  //         ...state,
-  //         pinnedId: payload.pinnedId,
-  //         pinnedData: payload.pinnedData,
-  //       };
-  //     })
-  //     .addCase(getPinnedCommentData.rejected, (state, { payload }) => {
-  //       return {
-  //         ...state,
-  //         result: payload,
-  //       };
-  //     });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getPinnedCommentData.fulfilled, (state, { payload }) => {
+        state.pinnedId = state.commentId;
+        state.pinnedData = payload;
+      })
+      .addCase(getPinnedCommentData.rejected, (state, { payload }) => {
+        return {
+          ...state,
+          result: payload,
+        };
+      });
+  },
 });
 
 export const {

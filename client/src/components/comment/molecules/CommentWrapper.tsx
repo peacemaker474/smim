@@ -8,7 +8,7 @@ import { unpinnedCommentId, deleteCommentId } from '../../../redux/slice/comment
 import { getPinnedCommentData } from '../../../redux/services/comment';
 import { CommentData } from '../../../type/cmntTypes';
 import Modal from '../../common/molecules/Modal';
-import CmntItem from '../atoms/CmntItem';
+import CmntItem from './CmntItem';
 
 interface CommentWrapperProps {
   cmntData: Array<CommentData> | null;
@@ -17,7 +17,7 @@ interface CommentWrapperProps {
 export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   const [isTargetVisible, handleTargetShow] = useVisible(false);
   const { commentToggled } = useAppSelector((state) => state.toggle);
-  const createdComments = useAppSelector((state) => state.commentCreate);
+  const { commentArray: createdComments } = useAppSelector((state) => state.commentCreate);
   const { commentId, check, pinnedId } = useAppSelector(
     (state) => ({
       commentId: state.comment.commentId,
@@ -44,8 +44,9 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   };
 
   const handleCommentPinned = async () => {
+    console.log('hey');
     await getCommentPinned(commentId, accessToken);
-    dispatch(getPinnedCommentData({ pinnedId: commentId }));
+    dispatch(getPinnedCommentData(commentId));
     dispatch(commentModalToggle());
   };
 
@@ -60,18 +61,25 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   };
 
   let modalText = '';
-  let actionFunc;
 
   if (check === 'delete') {
     modalText = '댓글을 완전히 삭제하시겠습니까?';
-    actionFunc = handleCommentDelete;
   } else if (check === 'pinned') {
     modalText = '이 댓글을 고정하시겠습니까?\n이미 고정한 댓글이 있으면\n이 댓글로 바뀝니다.';
-    actionFunc = handleCommentPinned;
   } else {
     modalText = '고정 댓글을 해제하시겠습니까? ';
-    actionFunc = handleCommentUnpinned;
   }
+
+  const actionFunc = () => {
+    if (check === 'delete') {
+      handleCommentDelete();
+    } else if (check === 'pinned') {
+      handleCommentPinned();
+    } else {
+      handleCommentUnpinned();
+    }
+  };
+
   return (
     <>
       {commentToggled && (

@@ -21,7 +21,7 @@ function PostDetailPage() {
       const { data } = await getReadPostDetail(postId);
 
       if (data.meta.pinnedCmnt) {
-        dispatch(getPinnedCommentData({ pinnedId: data.meta.pinnedCmnt }));
+        dispatch(getPinnedCommentData(data.meta.pinnedCmnt));
       } else {
         dispatch(pinnedInitCommentId());
       }
@@ -42,27 +42,27 @@ function PostDetailPage() {
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
 
-  const postDetailReset = {
-    bookmark: false,
-    content: '',
-    createAt: '',
-    hashtag: [],
-    like: false,
-    meta: { views: 0, likes: 0, bookmarks: [], pinnedCmnt: null, answer: false },
-    owner: { _id: '', userId: '', nickname: '', imageUrl: '' },
-    targetAge: '',
-    title: '',
-    updateAt: '',
-    __v: 0,
-    _id: '',
-  };
+  // const postDetailReset = {
+  //   bookmark: false,
+  //   content: '',
+  //   createAt: '',
+  //   hashtag: [],
+  //   like: false,
+  //   meta: { views: 0, likes: 0, bookmarks: [], pinnedCmnt: null, answer: false },
+  //   owner: { _id: '', userId: '', nickname: '', imageUrl: '' },
+  //   targetAge: '',
+  //   title: '',
+  //   updateAt: '',
+  //   __v: 0,
+  //   _id: '',
+  // };
 
   if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
 
   return (
     <PostViewMain>
       <PostViewContainer>
-        <PostContent postDetail={postDetail || postDetailReset} />
+        <PostContent postDetail={postDetail} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
           <CmntForm postId={postId} isTargetVisible />
@@ -111,5 +111,3 @@ const CommentH2 = styled.h2`
   line-height: 25px;
   margin-bottom: 28px;
 `;
-
-const CommentContainer = styled.div``;
