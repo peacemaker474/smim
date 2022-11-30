@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useVisible } from '../../../hooks';
 import { useDropdown } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
-import CmntForm from './CmntForm';
+import CmntForm from '../atoms/CmntForm';
 import UserImage from '../../common/atoms/UserImage';
 import { CommentData } from '../../../type/cmntTypes';
-import CmntItemEtc from './CmntItemEtc';
-import CmntDropdown from './CmntDropdown';
+import CmntItemEtc from '../atoms/CmntItemEtc';
+import CmntDropdown from '../atoms/CmntDropdown';
 import moreIcon from '../../../asset/icons/icon-more-vertical.svg';
 
 interface CmntItemProps {
