@@ -3,23 +3,9 @@ import axios from 'axios';
 
 const http = process.env.REACT_APP_SERVER_URL;
 
-interface PinnedData {
-  pinnedId: string | null;
-  pinnedData: string;
-}
-
-interface PinnedId {
-  pinnedId: string | null;
-}
-
-interface ErrorMessage {
-  success: boolean;
-  message: string;
-}
-
-export const getPinnedCommentData = createAsyncThunk<PinnedData, PinnedId, { rejectValue: ErrorMessage }>(
+export const getPinnedCommentData = createAsyncThunk(
   'PIN_COMMENT',
-  async ({ pinnedId }, { rejectWithValue }) => {
+  async (pinnedId: string | null, { rejectWithValue }) => {
     try {
       const {
         data: { data },
