@@ -7,8 +7,20 @@ import Banner2 from '../asset/img2.png';
 import Banner3 from '../asset/img3.png';
 import useLocalStorage from '../hooks/useLocalStorage';
 
+const Wrapper = styled.div`
+  width: 100%;
+  max-height: 100vh;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+
+  & > div {
+    scroll-snap-align: end;
+  }
+`;
+
 const Content = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +30,7 @@ const Content = styled.div`
 `;
 
 const Content2 = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,7 +154,7 @@ function IntroPage () {
   }
 
   return (
-    <>
+    <Wrapper>
       <Content>
           <IntroImg1>
             <img src={Banner2} alt='Slide이미지1' />
@@ -179,7 +191,7 @@ function IntroPage () {
             </Button>
           </IntroDesc>
         </Content2>
-    </>
+    </Wrapper>
   );
 }
 

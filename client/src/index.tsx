@@ -14,8 +14,6 @@ import { theme } from './styles/theme';
 import GlobalStyle from './styles/globalstyles';
 import store from './redux/store';
 
-const persistor = persistStore(store);
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
