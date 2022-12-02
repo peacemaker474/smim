@@ -7,16 +7,18 @@ import PostDetailPage from '../pages/PostDetailPage';
 import MyPageRoute from './MyPageRoute';
 import PrivateRoute from './PrivateRoute';
 import IntroPage from '../pages/IntroPage';
+import PublicRoute from './PublicRoute';
 
 function AppRoute() {
   return (
     <Routes>
       <Route path='/intro' element={<IntroPage />} />
-      <Route path="/" element={<MainPage />} />
-      <Route path="/intro" element={<div>test</div>} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/generation/:age" element={<PostInventoryPage />} />
-      <Route path="/post/view/:id" element={<PostDetailPage />} />
+      <Route element={ <PublicRoute />}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/generation/:age" element={<PostInventoryPage />} />
+        <Route path="/post/view/:id" element={<PostDetailPage />} />
+      </Route>
       <Route element={ <PrivateRoute /> }>
         <Route path="/post/create" element={<PostCreatePage />} />
         <Route path="/post/edit/:id" element={<PostCreatePage />} />

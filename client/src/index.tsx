@@ -22,6 +22,8 @@ const queryClient = new QueryClient({
   },
 });
 
+const persistor = persistStore(store);
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(

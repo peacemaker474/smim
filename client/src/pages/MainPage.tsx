@@ -1,8 +1,8 @@
-import React, { lazy, Suspense, useEffect, useCallback } from 'react';
-import { Cookies } from 'react-cookie';
+import React, { lazy, Suspense, useCallback, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { getMainPostLists } from '../networks/main/http';
 import { AxiosResponseMainPage } from '../type/postTypes';
 import LoadingPage from './LoadingPage';
@@ -10,15 +10,8 @@ import LoadingPage from './LoadingPage';
 const MainListsComponent = lazy(() => import('../components/main/molecules/MainLists'));
 
 function MainPage () {
+  const [entry, _] = useLocalStorage('entry', false);
   const navigate = useNavigate();
-  // const cookies = new Cookies();
-  // const entryCheck = cookies.get('entry');
-
-  // useEffect(() => {
-  //   if (!entryCheck) {
-  //     navigate('/intro');
-  //   }
-  // }, [entryCheck, navigate])
 
   const { data } = useQuery<AxiosResponseMainPage>(['mainLists'], getMainPostLists);
 
@@ -26,6 +19,13 @@ function MainPage () {
     const postId = evt.currentTarget.id;
     navigate(`post/view/${postId}`);
   }, [navigate]);
+
+  useEffect(() => {
+    if (!entry) {
+      navigate('/intro');
+    }
+  }, [entry, navigate])
+  
 
   return (
     <MainBody>
