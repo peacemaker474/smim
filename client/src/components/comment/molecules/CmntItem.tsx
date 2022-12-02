@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { useVisible } from '../../../hooks';
-import { useDropdown } from '../../../hooks';
+import { useVisible, useDropdown } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
 import CmntForm from '../atoms/CmntForm';
 import UserImage from '../../common/atoms/UserImage';
@@ -29,11 +28,11 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
     setItemText(text);
   };
 
-  const changedText = itemText.replaceAll('<br>', '\n');
+  const changedText = itemText?.replaceAll('<br>', '\n');
 
   return (
     <div>
-      {delComment ? null : (
+      {Boolean(delComment) || (
         <div>
           {isTargetVisible ? (
             <CmntForm
@@ -68,7 +67,6 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
                       onClickShow={handleClickShow}
                       commentId={cmntData._id}
                       parentId={cmntData.parent_id}
-                      isDropdownVisible={isDropdownVisible}
                     />
                   )}
                 </PostDropdownBtnDiv>

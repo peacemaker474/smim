@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { shallowEqual } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped, useAppSelector } from '../../../redux/hooks';
 import useVisible from '../../../hooks/useVisible';
 import { getCommentUnpinned, deleteComment, getCommentPinned } from '../../../networks/comment/http';
 import { commentModalToggle } from '../../../redux/slice/toggleSlice';
-import { unpinnedCommentId, deleteCommentId } from '../../../redux/slice/commentSlice';
+import { initPinnedComment, deleteCommentId } from '../../../redux/slice/commentSlice';
 import { getPinnedCommentData } from '../../../redux/services/comment';
 import { CommentData } from '../../../type/cmntTypes';
 import Modal from '../../common/molecules/Modal';
@@ -16,27 +15,32 @@ interface CommentWrapperProps {
 
 export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   const [isTargetVisible, handleTargetShow] = useVisible(false);
-  const { commentToggled } = useAppSelector((state) => state.toggle);
-  const { commentArray: createdComments } = useAppSelector((state) => state.commentCreate);
-  const { commentId, check, pinnedId } = useAppSelector(
-    (state) => ({
-      commentId: state.comment.commentId,
-      pinnedId: state.comment.pinnedId,
-      check: state.comment.check,
-    }),
-    shallowEqual,
-  );
+  const {
+    commentArray: createdComments,
+    commentId,
+    check,
+    pinnedId,
+    commentToggled,
+    deletedIdArray,
+  } = useAppSelectorTyped((state) => ({
+    commentArray: state.commentCreate.commentArray,
+    commentId: state.comment.commentId,
+    pinnedId: state.comment.pinnedId,
+    check: state.comment.check,
+    commentToggled: state.toggle.commentToggled,
+    deletedIdArray: state.comment.deletedIdArray,
+  }));
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const parentData = cmntData?.find((el: CommentData) => el.parent_id === null);
-  const delComment = useAppSelector((state) => state.comment).deletedIdArray.includes(parentData?._id || '');
+  const delComment = deletedIdArray.includes(parentData?._id || '');
   const childrenData = cmntData?.slice(1);
   const uploadingReplies = createdComments.filter((el) => el.group_id === parentData?._id);
 
   const handleCommentDelete = async () => {
     if (commentId === pinnedId) {
       await getCommentUnpinned(commentId, accessToken);
-      dispatch(unpinnedCommentId());
+      dispatch(initPinnedComment());
     }
     await deleteComment(commentId, accessToken);
     dispatch(deleteCommentId(commentId));
@@ -44,7 +48,6 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   };
 
   const handleCommentPinned = async () => {
-    console.log('hey');
     await getCommentPinned(commentId, accessToken);
     dispatch(getPinnedCommentData(commentId));
     dispatch(commentModalToggle());
@@ -52,7 +55,7 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
 
   const handleCommentUnpinned = async () => {
     await getCommentUnpinned(commentId, accessToken);
-    dispatch(unpinnedCommentId());
+    dispatch(initPinnedComment());
     dispatch(commentModalToggle());
   };
 
@@ -87,30 +90,34 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
           {modalText}
         </Modal>
       )}
-      {delComment ? null : (
+
+      {delComment || (
         <CommentInner>
           {parentData && <CmntItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />}
-          {(childrenData?.length !== 0 || (uploadingReplies && uploadingReplies.length !== 0)) && (
-            <ReplyContainer>
-              {childrenData?.length === 0 ? null : (
-                <ReplyShowingBtn onClick={handleTargetShow}>
-                  ----- 답글 {isTargetVisible ? '닫기' : '보기'}
-                </ReplyShowingBtn>
-              )}
-              {isTargetVisible && (
-                <ReplyListBox>
-                  {childrenData?.map((el) => (
-                    <CmntItem key={el._id} cmntData={el} groupId={parentData?._id} />
-                  ))}
-                </ReplyListBox>
-              )}
+          <ReplyContainer>
+            {Boolean(childrenData?.length) && (
+              <>
+                {Boolean(childrenData?.length) && (
+                  <ReplyShowingBtn onClick={handleTargetShow}>
+                    ----- 답글 {isTargetVisible ? '닫기' : '보기'}
+                  </ReplyShowingBtn>
+                )}
+                {isTargetVisible && (
+                  <ReplyListBox>
+                    {childrenData?.map((el) => (
+                      <CmntItem key={el._id} cmntData={el} groupId={parentData?._id} />
+                    ))}
+                  </ReplyListBox>
+                )}
+              </>
+            )}
+            {Boolean(uploadingReplies?.length) && (
               <ReplyUploadListBox>
                 {uploadingReplies &&
-                  uploadingReplies.length !== 0 &&
                   uploadingReplies.map((el) => <CmntItem key={el._id} cmntData={el} groupId={parentData?._id} />)}
               </ReplyUploadListBox>
-            </ReplyContainer>
-          )}
+            )}
+          </ReplyContainer>
         </CommentInner>
       )}
     </>

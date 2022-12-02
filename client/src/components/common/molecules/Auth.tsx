@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
-import { shallowEqual } from 'react-redux';
 import { getCreateAccessToken } from '../../../networks/main/http';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { getUserLogOut } from '../../../redux/services/UserService';
 import { DELETE_TOKEN, SET_TOKEN } from '../../../redux/slice/authSlice';
 
 function Auth() {
-  const { authenticated, expireTime } = useAppSelector(
-    (state) => ({
-      authenticated: state.auth.authenticated,
-      expireTime: state.auth.expireTime,
-    }),
-    shallowEqual
-  );
+  const { authenticated, expireTime } = useAppSelectorTyped((state) => ({
+    authenticated: state.auth.authenticated,
+    expireTime: state.auth.expireTime,
+  }));
 
   const dispatch = useAppDispatch();
 
@@ -27,25 +23,22 @@ function Auth() {
       dispatch(DELETE_TOKEN());
       dispatch(getUserLogOut());
     }
-  }
+  };
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
     if (!timer && authenticated) {
       timer = setTimeout(settingToken, expireTime - new Date().getTime());
     }
-    
+
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
-    }
+    };
   }, [settingToken, authenticated, dispatch, expireTime]);
 
-  return (
-    <>
-    </>
-  );
+  return <div></div>;
 }
 
 export default Auth;

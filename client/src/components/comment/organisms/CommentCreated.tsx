@@ -1,13 +1,15 @@
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppSelectorTyped } from '../../../redux/hooks';
 import CommentWrapper from '../molecules/CommentWrapper';
 
 export default function CommentCreated() {
-  const { pinnedId } = useAppSelector((state) => state.comment);
-  const { commentArray } = useAppSelector((state) => state.commentCreate);
+  const { pinnedId, commentArray } = useAppSelectorTyped((state) => ({
+    pinnedId: state.comment.pinnedId,
+    commentArray: state.commentCreate.commentArray,
+  }));
 
   const uploadingComments = commentArray
-    .filter((el) => !el.parent_id)
-    .filter((el) => String(el._id) !== pinnedId)
+    .filter((el) => !el.parent_id) // 최상위 댓글인지 확인
+    .filter((el) => String(el._id) !== pinnedId) // 고정댓글인지 확인
     .sort((a, b) => {
       if (a?.createAt > b?.createAt) return -1;
       if (a?.createAt < b?.createAt) return 1;

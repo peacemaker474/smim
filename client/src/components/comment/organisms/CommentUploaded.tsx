@@ -30,12 +30,8 @@ export default function CommentUploaded() {
   const sortedLoadedComments = loadedComments
     .filter((el: Array<CommentData>) => String(el[0]._id) !== pinnedId)
     .sort((a: Array<CommentData>, b: Array<CommentData>) => {
-      if (a[0].createAt > b[0].createAt) {
-        return -1;
-      }
-      if (a[0].createAt < b[0].createAt) {
-        return 1;
-      }
+      if (a[0].createAt > b[0].createAt) return -1;
+      if (a[0].createAt < b[0].createAt) return 1;
       return 0;
     });
 

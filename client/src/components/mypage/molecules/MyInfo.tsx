@@ -1,8 +1,7 @@
 import { memo } from 'react';
 import { useForm } from 'react-hook-form';
-import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector, useAppSelectorTyped } from '../../../redux/hooks';
 import { putUpdateUser } from '../../../redux/services/UserService';
 import { userImageToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
@@ -19,78 +18,71 @@ interface UseFormMyPage {
   accessToken?: string | null | undefined;
 }
 
-function MyInfo () {
-  const { id, name: nickname, email, imgUrl } = useAppSelector(
-    (state) => ({
-      id: state.user.id,
-      name: state.user.name,
-      email: state.user.email,
-      imgUrl: state.user.imgUrl,
-    }),
-    shallowEqual
-  );
+function MyInfo() {
+  const {
+    id,
+    name: nickname,
+    email,
+    imgUrl,
+  } = useAppSelectorTyped((state) => ({
+    id: state.user.id,
+    name: state.user.name,
+    email: state.user.email,
+    imgUrl: state.user.imgUrl,
+  }));
 
   const { accessToken } = useAppSelector((state) => state.auth);
   const { imageToggled } = useAppSelector((state) => state.toggle);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UseFormMyPage>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UseFormMyPage>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
       userId: id,
       nickname,
       email,
-      accessToken
-    }
+      accessToken,
+    },
   });
 
   const dispatch = useAppDispatch();
 
   const handleImageModal = () => {
     dispatch(userImageToggle());
-  }
+  };
 
-  
   const handleInfoUpdate = (userInfo: any) => {
-      const lastIdCheck = userInfo.userId.indexOf('\b');
-      const lastNameCheck = userInfo.nickname.indexOf('\b');
+    const lastIdCheck = userInfo.userId.indexOf('\b');
+    const lastNameCheck = userInfo.nickname.indexOf('\b');
 
-      if (
-        !(id === userInfo.userId || nickname === userInfo.nickname) &&
-        lastIdCheck &&
-        lastNameCheck
-      ) {
-        dispatch(putUpdateUser(userInfo));
-      }
-  }
+    if (!(id === userInfo.userId || nickname === userInfo.nickname) && lastIdCheck && lastNameCheck) {
+      dispatch(putUpdateUser(userInfo));
+    }
+  };
 
   return (
-      <>
-        <MyInfoForm method='POST' encType='multipart/form-data' onSubmit={handleSubmit(handleInfoUpdate)}>
-          <UserInfoWrapper>
-            <UserImageWrapper onClick={handleImageModal}>
-              <UserImageTitle> 사진 </UserImageTitle>
-              <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
-              <UserImage
-                width='40px'
-                height='40px'
-                imgUrl={imgUrl}
-              />
-            </UserImageWrapper>
-            <MyPageId register={register} errors={errors} />
-            <MyPageName register={register} errors={errors} />
-            <MyPageEmail register={register} />
-            <Button
-              width='100px'
-              height='50px'
-              border='none'
-            > 
-              수정 
-            </Button>
-          </UserInfoWrapper>
-        </MyInfoForm>
-        { imageToggled && <UpdateUserImage /> }
-      </>
+    <>
+      <MyInfoForm method="POST" encType="multipart/form-data" onSubmit={handleSubmit(handleInfoUpdate)}>
+        <UserInfoWrapper>
+          <UserImageWrapper onClick={handleImageModal}>
+            <UserImageTitle> 사진 </UserImageTitle>
+            <UserImageText> 사진을 추가하여 계정을 맞춤설정할 수 있습니다. </UserImageText>
+            <UserImage width="40px" height="40px" imgUrl={imgUrl} />
+          </UserImageWrapper>
+          <MyPageId register={register} errors={errors} />
+          <MyPageName register={register} errors={errors} />
+          <MyPageEmail register={register} />
+          <Button width="100px" height="50px" border="none">
+            수정
+          </Button>
+        </UserInfoWrapper>
+      </MyInfoForm>
+      {imageToggled && <UpdateUserImage />}
+    </>
   );
 }
 
@@ -106,7 +98,7 @@ const MyInfoForm = styled.form`
     align-self: flex-end;
     margin-right: 20px;
   }
-  
+
   @media screen and (max-width: 1180px) {
     width: 90%;
     height: 80%;
@@ -130,10 +122,10 @@ const UserImageWrapper = styled.div`
   align-items: center;
   box-sizing: border-box;
   &:hover {
-    background-color: rgba(240, 240, 240, .4);
+    background-color: rgba(240, 240, 240, 0.4);
   }
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, .5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   margin-bottom: 10px;
 `;

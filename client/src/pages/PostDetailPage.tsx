@@ -5,7 +5,7 @@ import { getReadPostDetail } from '../networks/post/http';
 import { useAppDispatch } from '../redux/hooks';
 import { getPostData } from '../redux/slice/postSlice';
 import { getPinnedCommentData } from '../redux/services/comment';
-import { pinnedInitCommentId } from '../redux/slice/commentSlice';
+import { initPinnedComment } from '../redux/slice/commentSlice';
 import PostContent from '../components/postDetail/molecules/PostContent';
 import CmntForm from '../components/comment/atoms/CmntForm';
 import CommentUploaded from '../components/comment/organisms/CommentUploaded';
@@ -16,6 +16,7 @@ import LoadingPage from './LoadingPage';
 function PostDetailPage() {
   const { id: postId } = useParams();
   const dispatch = useAppDispatch();
+
   const fetchAPI = async () => {
     try {
       const { data } = await getReadPostDetail(postId);
@@ -23,7 +24,7 @@ function PostDetailPage() {
       if (data.meta.pinnedCmnt) {
         dispatch(getPinnedCommentData(data.meta.pinnedCmnt));
       } else {
-        dispatch(pinnedInitCommentId());
+        dispatch(initPinnedComment());
       }
 
       dispatch(
@@ -51,9 +52,9 @@ function PostDetailPage() {
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
           <CmntForm postId={postId} isTargetVisible />
-          <CommentUploaded />
           <CommentPinned />
           <CommentCreated />
+          <CommentUploaded />
         </CommentSection>
       </PostViewContainer>
     </PostViewMain>

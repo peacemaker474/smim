@@ -28,31 +28,27 @@ const commentSlice = createSlice({
       state.commentId = action.payload;
       state.check = 'delete';
     },
-    deleteCommentId(state, action) {
-      state.deletedIdArray.push(action.payload);
-    },
     getPinnedCommentId(state, action) {
       state.commentId = action.payload;
       state.check = 'pinned';
-    },
-    pinnedInitCommentId(state) {
-      state.pinnedId = null;
-      state.pinnedData = null;
     },
     getUnpinnedCommentId(state, action) {
       state.commentId = action.payload;
       state.check = 'unpinned';
     },
-    unpinnedCommentId(state) {
-      state.pinnedData = null;
+    deleteCommentId(state, action) {
+      state.deletedIdArray = [...state.deletedIdArray, action.payload];
+    },
+    initPinnedComment(state) {
       state.pinnedId = null;
+      state.pinnedData = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getPinnedCommentData.fulfilled, (state, { payload }) => {
-        state.pinnedId = state.commentId;
-        state.pinnedData = payload;
+        state.pinnedId = payload.pinnedId;
+        state.pinnedData = payload.pinnedData;
       })
       .addCase(getPinnedCommentData.rejected, (state, { payload }) => {
         return {
@@ -63,13 +59,7 @@ const commentSlice = createSlice({
   },
 });
 
-export const {
-  getDeleteCommentId,
-  deleteCommentId,
-  getPinnedCommentId,
-  pinnedInitCommentId,
-  getUnpinnedCommentId,
-  unpinnedCommentId,
-} = commentSlice.actions;
+export const { getDeleteCommentId, getUnpinnedCommentId, getPinnedCommentId, deleteCommentId, initPinnedComment } =
+  commentSlice.actions;
 
 export default commentSlice;
