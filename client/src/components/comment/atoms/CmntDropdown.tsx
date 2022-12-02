@@ -10,7 +10,6 @@ interface CommentDropdownProp {
   writer: string;
   commentId: string;
   parentId: string | null;
-  isDropdownVisible: boolean;
 }
 
 export default function CommentDropdown({
@@ -19,7 +18,6 @@ export default function CommentDropdown({
   writer,
   commentId,
   parentId,
-  isDropdownVisible,
 }: CommentDropdownProp) {
   const dispatch = useAppDispatch();
   const { pinnedId } = useAppSelector((state) => state.comment);

@@ -13,7 +13,7 @@ export const getPinnedCommentData = createAsyncThunk(
         withCredentials: true,
       });
 
-      return data;
+      return { pinnedData: data, pinnedId };
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }

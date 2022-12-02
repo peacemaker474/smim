@@ -14,14 +14,14 @@ import postSlice from './slice/postSlice';
 const persistConfig = {
   key: 'root',
   storage: storageSession,
-  blacklist: ['user', 'toggle', 'commentCreate'],
+  blacklist: ['user', 'toggle', 'comment', 'commentCreate'],
 };
 
 const userPersistConfig = {
   key: 'user',
   storage: storageSession,
   whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social'],
-}
+};
 
 const rootReducer = combineReducers({
   toggle: toggleSlice.reducer,

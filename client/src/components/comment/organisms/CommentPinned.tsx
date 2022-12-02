@@ -1,31 +1,26 @@
 import styled from 'styled-components';
-import { shallowEqual } from 'react-redux';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppSelectorTyped } from '../../../redux/hooks';
 import CommentWrapper from '../molecules/CommentWrapper';
 import pinIcon from '../../../asset/icons/icon-pin.svg';
 
 function CommentPinned() {
-  const { pinnedData, pinnedId } = useAppSelector(
-    (state) => ({
-      pinnedData: state.comment.pinnedData,
-      pinnedId: state.comment.pinnedId,
-    }),
-    shallowEqual,
-  );
-
-  const { postWriter } = useAppSelector((state) => state.post);
+  const { pinnedData, pinnedId, postWriter } = useAppSelectorTyped((state) => ({
+    pinnedData: state.comment.pinnedData,
+    pinnedId: state.comment.pinnedId,
+    postWriter: state.post.postWriter,
+  }));
 
   return (
-    <div>
+    <CommentPinnedDiv>
       {pinnedId && (
-        <CommentPinnedDiv>
+        <>
           <CommentPinnedSpan>
             <CommentPinnedId>{postWriter}</CommentPinnedId>님이 고정함
           </CommentPinnedSpan>
           <CommentWrapper cmntData={pinnedData} />
-        </CommentPinnedDiv>
+        </>
       )}
-    </div>
+    </CommentPinnedDiv>
   );
 }
 

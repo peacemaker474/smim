@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { postUserLogin } from '../../../redux/services/UserService';
 import { loginToggle } from '../../../redux/slice/toggleSlice';
 import Button from '../../common/atoms/Button';
@@ -16,18 +15,19 @@ interface FormValue {
   password: string;
 }
 
-function LoginForm () {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValue>({
+function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
   });
-  const { success, message } = useAppSelector(
-    state => ({
-      success: state.user.success,
-      message: state.user.message,
-    }),
-    shallowEqual
-  );
+  const { success, message } = useAppSelectorTyped((state) => ({
+    success: state.user.success,
+    message: state.user.message,
+  }));
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -44,67 +44,62 @@ function LoginForm () {
       password,
     };
 
-    dispatch(postUserLogin(body))
-      .then((res) => {
-        if (res.payload?.success) dispatch(loginToggle());
-      })
+    dispatch(postUserLogin(body)).then((res) => {
+      if (res.payload?.success) dispatch(loginToggle());
+    });
   };
 
   return (
     <FormBox onSubmit={handleSubmit(handleLoginSubmit)}>
       <InputWrapper>
-        <Label
-          margin='0 0 10px 0'
-          fontSize='0.9rem'
-        >
-          아이디 
+        <Label margin="0 0 10px 0" fontSize="0.9rem">
+          아이디
         </Label>
         <Input
-          width='100%'
-          height='40%'
-          border='1px solid rgba(12, 12, 12, .4)'
+          width="100%"
+          height="40%"
+          border="1px solid rgba(12, 12, 12, .4)"
           register={register}
-          name='userId'
+          name="userId"
           rules={{
             required: '아이디를 입력하세요',
-            pattern : {
+            pattern: {
               value: /^[a-zA-Z0-9]{4,12}$/,
-              message: '4~12자리의 영문, 숫자만 가능합니다.'
-            }
+              message: '4~12자리의 영문, 숫자만 가능합니다.',
+            },
           }}
-          type='text'
-          placeholder='아이디를 입력하세요.'
+          type="text"
+          placeholder="아이디를 입력하세요."
         />
-        {errors.userId && <ValidSpan padding='1em 0.3em 0 0'> {errors.userId?.message} </ValidSpan>}
+        {errors.userId && <ValidSpan padding="1em 0.3em 0 0"> {errors.userId?.message} </ValidSpan>}
       </InputWrapper>
       <InputWrapper>
-        <Label 
-          margin='0 0 10px 0'
-          fontSize='0.9rem'
-        > 
+        <Label margin="0 0 10px 0" fontSize="0.9rem">
           비밀번호
         </Label>
         <Input
-          width='100%'
-          height='40%'
-          border='1px solid rgba(12, 12, 12, .4)'
+          width="100%"
+          height="40%"
+          border="1px solid rgba(12, 12, 12, .4)"
           register={register}
-          name='password'
+          name="password"
           rules={{
             required: '비밀번호를 입력하세요.',
-            pattern : {
+            pattern: {
               value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/,
-              message: '8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.'
-            }
+              message: '8~16자, 최소 하나의 숫자와 특수문자가 필요합니다.',
+            },
           }}
-          type='password'
-          placeholder='비밀번호를 입력하세요.'
-          autoComplete='off'
+          type="password"
+          placeholder="비밀번호를 입력하세요."
+          autoComplete="off"
         />
-        {errors.password && <ValidSpan padding='1em 0.3em 0 0'> {errors.password?.message} </ValidSpan>}
-        {!Object.keys(errors).length && message && <ValidSpan padding='1em 0.3em 0 0'> {message} </ValidSpan>}
+        {errors.password && <ValidSpan padding="1em 0.3em 0 0"> {errors.password?.message} </ValidSpan>}
+        {!Object.keys(errors).length && message && <ValidSpan padding="1em 0.3em 0 0"> {message} </ValidSpan>}
       </InputWrapper>
-      <Button width='95%' height='15%' border='none'> 로그인 </Button>
+      <Button width="95%" height="15%" border="none">
+        로그인
+      </Button>
     </FormBox>
   );
 }
