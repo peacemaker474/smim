@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useVisible, useDropdown } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
@@ -17,12 +17,8 @@ interface CmntItemProps {
 export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
   const [itemText, setItemText] = useState(cmntData.text);
   const [isTargetVisible, handleClickShow] = useVisible(false);
-  const delComment = useAppSelector((state) => state.comment).deletedIdArray.includes(cmntData._id);
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: any[] = useDropdown();
-
-  const handleFormInputCancel = useCallback(() => {
-    handleClickShow();
-  }, [handleClickShow]);
+  const delComment = useAppSelector((state) => state.comment).deletedIdArray.includes(cmntData._id);
 
   const handleTextChange = (text: string) => {
     setItemText(text);
@@ -32,7 +28,7 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
 
   return (
     <div>
-      {Boolean(delComment) || (
+      {!delComment && (
         <div>
           {isTargetVisible ? (
             <CmntForm
@@ -40,7 +36,7 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
               parentId={cmntData.parent_id}
               groupId={groupId}
               isTargetVisible={isTargetVisible}
-              onFormInputCancel={handleFormInputCancel}
+              onFormInputCancel={handleClickShow}
               id={cmntData._id}
               onTextChange={handleTextChange}
               changedText={changedText}
@@ -89,17 +85,19 @@ export const CommentItemContainer = styled.div`
 `;
 
 export const CommentItemInner = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
 `;
 
 const CommentItemContent = styled.div`
+  width: 100%;
   margin-left: 20px;
   display: flex;
 `;
 
 const CommentContentBox = styled.div`
-  width: 811px;
+  width: 100%;
 `;
 
 const CommentText = styled.span`

@@ -8,11 +8,14 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import App from './App';
+import ScrollToTop from './components/common/atoms/ScrollToTop';
 import reportWebVitals from './reportWebVitals';
 
 import { theme } from './styles/theme';
 import GlobalStyle from './styles/globalstyles';
 import store from './redux/store';
+
+const persistor = persistStore(store);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +35,7 @@ root.render(
           <BrowserRouter>
             <ThemeProvider theme={theme}>
               <GlobalStyle />
+              <ScrollToTop />
               <App />
             </ThemeProvider>
           </BrowserRouter>

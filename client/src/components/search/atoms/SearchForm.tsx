@@ -1,26 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from '../../../redux/hooks';
+import useDebounce from '../../../hooks/useDeboucedEffect';
 import { getSearchContent } from '../../../redux/slice/searchKeywordSlice';
+import { SearchFormOption } from '../../../type/postTypes';
 import Search from '../../../asset/icons/icon-search-line.svg';
-
-interface Option {
-  value: string;
-  text: string;
-}
-
-// interface PostFilterOption {
-//   option: string;
-//   inputs: string;
-// }
-
-interface SearchFormOption {
-  // setPostFilter: Dispatch<SetStateAction<string>>;
-  // setSearchData: Dispatch<SetStateAction<PostFilterOption>>;
-  optionArr: Array<Option>;
-  name: string;
-  age: string;
-}
 
 function SearchForm({ optionArr, name, age }: SearchFormOption) {
   const [searchOption, setSearchOption] = useState('');
@@ -36,13 +20,13 @@ function SearchForm({ optionArr, name, age }: SearchFormOption) {
     setSearchOption(evt.target.value);
   }; // search option change function
 
-  const handleSearchText = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchText = useDebounce((evt: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(evt.target.value);
-  }; // search text change function
+  }, 500); // search text change function
 
   const handleSearchSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(getSearchContent({ option: searchOption, inputs: searchText }));
+    dispatch(getSearchContent({ option: searchOption, keyword: searchText }));
   }; // search data submit function
 
   return (

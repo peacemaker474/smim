@@ -81,3 +81,22 @@ export interface AxiosResponseMainPage {
   success: boolean;
   lists: MainPageLists;
 }
+
+export interface SearchHTTPProps {
+  option: string;
+  keyword: string;
+}
+
+export interface Option {
+  value: string;
+  text: string;
+}
+
+export interface SelectBoxProps {
+  optionArr: Array<Option>;
+  name: string;
+}
+
+export interface SearchFormOption extends SelectBoxProps {
+  age: string;
+}

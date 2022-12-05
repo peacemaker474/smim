@@ -90,8 +90,7 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
           {modalText}
         </Modal>
       )}
-
-      {delComment || (
+      {!delComment && (
         <CommentInner>
           {parentData && <CmntItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />}
           <ReplyContainer>

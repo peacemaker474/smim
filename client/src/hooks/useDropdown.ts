@@ -5,12 +5,12 @@ const useDropdown = () => {
   const dropdownRef = useRef<HTMLElement>(null);
   const btnRef = useRef<HTMLElement>(null);
   const handleDropdownShow = useCallback(() => {
-    setIsDropdownVisible(prev => !prev);
+    setIsDropdownVisible((prev) => !prev);
   }, []);
 
   useEffect(() => {
     const checkIfClickedOutside = (event: MouseEvent) => {
-      if (isDropdownVisible && btnRef.current && !btnRef.current.contains((event?.target as any) || null)) {
+      if (isDropdownVisible && btnRef.current && !btnRef.current.contains((event?.target as Element) || null)) {
         setIsDropdownVisible(false);
       }
     };

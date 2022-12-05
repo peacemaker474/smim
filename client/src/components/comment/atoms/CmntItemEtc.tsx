@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { isLoginCheckToggle } from '../../../redux/slice/toggleSlice';
 import useVisible from '../../../hooks/useVisible';
 import { getCommentLike, getCommentUnlike } from '../../../networks/comment/http';
@@ -8,14 +8,16 @@ import CmntForm from './CmntForm';
 import Like from '../../common/atoms/Like';
 import { CommentData } from '../../../type/cmntTypes';
 
-interface CommentItemEtc {
-  cmntData: CommentData | undefined;
+interface CommentItemEtcProps {
+  cmntData: CommentData;
   groupId: string | null | undefined;
 }
 
-function CommentItemEtc({ cmntData, groupId }: CommentItemEtc) {
-  const { accessToken } = useAppSelector((state) => state.auth);
-  const { id } = useAppSelector((state) => state.user);
+function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {
+  const { accessToken, id } = useAppSelectorTyped((state) => ({
+    accessToken: state.auth.accessToken,
+    id: state.user.id,
+  }));
   const [isTargetVisible, handleTargetShow] = useVisible(false);
   const dispatch = useAppDispatch();
 
@@ -28,7 +30,7 @@ function CommentItemEtc({ cmntData, groupId }: CommentItemEtc) {
   };
 
   const createAt = elapsedText(cmntData?.createAt);
-  const likeState = Boolean(cmntData?.like_users.includes(id)); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
+  const likeState = cmntData?.like_users.includes(id); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
 
   return (
     <CommentEtcContainer>
