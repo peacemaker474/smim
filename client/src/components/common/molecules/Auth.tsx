@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getCreateAccessToken } from '../../../networks/main/http';
 import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { getUserLogOut } from '../../../redux/services/UserService';
@@ -12,7 +12,7 @@ function Auth() {
 
   const dispatch = useAppDispatch();
 
-  const settingToken = () => {
+  const settingToken = useCallback(() => {
     if (window.confirm('로그인 만료되셨습니다. 연장하시겠습니까?')) {
       getCreateAccessToken().then((res) => {
         if (res.data.success) {
@@ -23,7 +23,7 @@ function Auth() {
       dispatch(DELETE_TOKEN());
       dispatch(getUserLogOut());
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -38,7 +38,10 @@ function Auth() {
     };
   }, [settingToken, authenticated, dispatch, expireTime]);
 
-  return <div></div>;
+  return (
+    <>
+    </>
+  );
 }
 
 export default Auth;
