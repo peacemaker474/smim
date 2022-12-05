@@ -144,7 +144,7 @@ function IntroPage () {
     if (store) {
       navigate('/');
     }
-  }, []);
+  }, [store, navigate]);
 
   const handleStartClick = () => {
     if (!store) {
