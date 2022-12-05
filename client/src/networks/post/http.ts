@@ -1,20 +1,10 @@
 import axios from 'axios';
+import { SearchHTTPProps } from '../../type/postTypes';
+import { CreateDataHTTPProps, ParaProps } from '../../type/postFormTypes';
 
 const http = 'http://localhost:4000';
 
-interface ParaProps {
-  para: string;
-  img: Array<string>;
-}
-
-interface CreateDataProps {
-  title: string | null;
-  content: ParaProps;
-  targetAge: string | null;
-  hashtag: Array<string>;
-}
-
-export const postCreateAndEditPost = (data: CreateDataProps, accessToken: string | null, id?: string | null) => {
+export const postCreateAndEditPost = (data: CreateDataHTTPProps, accessToken: string | null, id?: string | null) => {
   if (id) {
     return axios.post(`${http}/post/create`, data, {
       headers: {
@@ -30,9 +20,9 @@ export const postCreateAndEditPost = (data: CreateDataProps, accessToken: string
   });
 };
 
-export const getPostListRead = (targetAge: string | undefined, filter: any, data: any, page = 1) => {
+export const getPostListRead = (targetAge: string | undefined, filter: string, data: SearchHTTPProps, page = 1) => {
   return axios.get(
-    `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.inputs}`,
+    `${http}/post/target?age=${targetAge}&page=${page}&filter=${filter}&tag=${data.option}&keyword=${data.keyword}`,
   );
 };
 

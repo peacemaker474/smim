@@ -2,18 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { selectFilter } from '../../../redux/slice/searchFilterSlice';
-
-interface Option {
-  value: string;
-  text: string;
-}
-
-interface SelectBoxProps {
-  // selectedValue?: string;
-  optionArr: Array<Option>;
-  name: string;
-  // setPostFilter: Dispatch<SetStateAction<string>>;
-}
+import { SelectBoxProps } from '../../../type/postTypes';
 
 function SelectBox({ optionArr, name }: SelectBoxProps) {
   const { filter } = useAppSelector((state) => state.searchFilter);

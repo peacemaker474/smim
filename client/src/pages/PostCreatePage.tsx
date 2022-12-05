@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
 import LoadingPage from './LoadingPage';
-import CreateForm from '../components/postCreate/molecules/CreateForm';
 import { useGetToken } from '../hooks';
+
+const PostCreateFormComponent = lazy(() => import('../components/postCreate/molecules/CreateForm'));
 
 function PostCreatePage() {
   const { pathname } = useLocation();
@@ -31,9 +32,9 @@ function PostCreatePage() {
   return (
     <PostCreateMain>
       <PostCreateContainer>
+        <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
         <Suspense fallback={<LoadingPage />}>
-          <PostHeader>{pathValue === 'create' ? '질문하기' : ' 질문 수정 하기'}</PostHeader>
-          <CreateForm postData={postData} pathValue={pathValue} postId={postId} />
+          <PostCreateFormComponent postData={postData} pathValue={pathValue} postId={postId} />
         </Suspense>
       </PostCreateContainer>
     </PostCreateMain>

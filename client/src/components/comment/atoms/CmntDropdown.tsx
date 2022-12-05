@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { getDeleteCommentId, getPinnedCommentId, getUnpinnedCommentId } from '../../../redux/slice/commentSlice';
 import { commentModalToggle, isLoginCheckToggle } from '../../../redux/slice/toggleSlice';
 
@@ -20,10 +20,13 @@ export default function CommentDropdown({
   parentId,
 }: CommentDropdownProp) {
   const dispatch = useAppDispatch();
-  const { pinnedId } = useAppSelector((state) => state.comment);
-  const { accessToken } = useAppSelector((state) => state.auth);
-  const { name } = useAppSelector((state) => state.user);
-  const { postWriter } = useAppSelector((state) => state.post);
+  const { pinnedId, name, postWriter, accessToken } = useAppSelectorTyped((state) => ({
+    pinnedId: state.comment.pinnedId,
+    name: state.user.name,
+    postWriter: state.post.postWriter,
+    accessToken: state.auth.accessToken,
+  }));
+  const pinnedText = commentId === pinnedId ? '고정해제' : '고정';
 
   const handleCommentEdit = useCallback(
     (e: React.MouseEvent<HTMLLIElement>) => {
@@ -42,23 +45,14 @@ export default function CommentDropdown({
     [dispatch, commentId],
   );
 
-  const handleCommentPinned = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
-      e.preventDefault();
-      dispatch(getPinnedCommentId(commentId));
-      dispatch(commentModalToggle());
-    },
-    [dispatch, commentId],
-  );
-
-  const handleCommentUnpinned = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
-      e.preventDefault();
+  const handleCommentPinned = (e: React.MouseEvent<HTMLLIElement>) => {
+    if (commentId === pinnedId) {
       dispatch(getUnpinnedCommentId(commentId));
-      dispatch(commentModalToggle());
-    },
-    [dispatch, commentId],
-  );
+    } else {
+      dispatch(getPinnedCommentId(commentId));
+    }
+    dispatch(commentModalToggle());
+  };
 
   const handleCommentDeclaration = useCallback(() => {
     if (!accessToken) {
@@ -69,16 +63,9 @@ export default function CommentDropdown({
   return (
     <CommentDropdownWrraper ref={dropdownRef}>
       <CommentDropdownLists>
-        {name === postWriter && !parentId ? (
-          <div>
-            {commentId === pinnedId ? (
-              <CommentDropdownList onClick={handleCommentUnpinned}>고정해제</CommentDropdownList>
-            ) : (
-              <CommentDropdownList onClick={handleCommentPinned}>고정</CommentDropdownList>
-            )}
-          </div>
-        ) : null}
-
+        {name === postWriter && !parentId && (
+          <CommentDropdownList onClick={handleCommentPinned}>{pinnedText}</CommentDropdownList>
+        )}
         {name === writer ? (
           <>
             <CommentDropdownList onClick={handleCommentEdit}>수정</CommentDropdownList>

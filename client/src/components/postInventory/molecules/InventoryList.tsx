@@ -6,9 +6,10 @@ import useObserve from '../../../hooks/useObserve';
 import { getPostListRead } from '../../../networks/post/http';
 import { useAppSelector } from '../../../redux/hooks';
 import InventoryItem from '../atoms/InventoryItem';
+import { PostDetailData } from '../../../type/postTypes';
 
 interface LoadedPostProps {
-  queryKey: any;
+  queryKey: any[]; // multi type Array
   pageParam: number;
 }
 
@@ -20,6 +21,7 @@ function InventoryList() {
 
   const loadedPostListData = async ({ queryKey, pageParam = 1 }: LoadedPostProps) => {
     const { age, postFilter, searchData } = queryKey[1];
+
     const response = await getPostListRead(age, postFilter, searchData, pageParam);
     return response.data;
   };
@@ -46,7 +48,7 @@ function InventoryList() {
         {postData && (
           <>
             {postData.pages.map((item) => {
-              return item.data.map((el: any) => <InventoryItem key={el._id} postData={el} />);
+              return item.data.map((el: PostDetailData) => <InventoryItem key={el._id} postData={el} />);
             })}
           </>
         )}

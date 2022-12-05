@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { createComment } from '../../../redux/slice/commentCreateSlice';
 import { postCommentCreate, putCommentEdit } from '../../../networks/comment/http';
 import TextArea from '../../../components/common/atoms/Textarea';
@@ -12,9 +12,9 @@ interface CmntFormValue {
 }
 interface CmntFromProps {
   parentId?: string | null;
-  id?: string | undefined;
-  groupId?: string | null | undefined;
-  onFormInputCancel?: () => void | undefined;
+  id?: string;
+  groupId?: string | null;
+  onFormInputCancel?: () => void;
   isTargetVisible?: boolean;
   postId: string | undefined;
   changedText?: string;
@@ -31,21 +31,20 @@ function CmntForm({
   postId,
   parentId = null,
 }: CmntFromProps) {
-  const loginState = useAppSelector((state) => state.user);
-  const { accessToken } = useAppSelector((state) => state.auth);
+  const { accessToken, loginState } = useAppSelectorTyped((state) => ({
+    loginState: state.user,
+    accessToken: state.auth.accessToken,
+  }));
   const { register, handleSubmit, setValue, setFocus, watch } = useForm<CmntFormValue>();
   const dispatch = useAppDispatch();
   const data = watch('comment');
   const formRef = useRef<HTMLFormElement>(null);
-
-  const STATE = 'main';
 
   const handleFormInputCancel = () => setValue('comment', '');
 
   const handleCommentEdit = async (data: string) => {
     // 댓글 수정 함수
     const response = await putCommentEdit(id, { post_id: postId, content: data }, accessToken);
-
     if (response.data.success) {
       if (onTextChange) {
         onTextChange(data.replace('<br>', '\n'));
@@ -59,7 +58,6 @@ function CmntForm({
   const handleCommentCreate = async (data: string) => {
     // 댓글 생성 함수
     const response = await postCommentCreate({ post_id: postId, content: data, parent_id: parentId }, accessToken);
-
     if (response.data.success) {
       dispatch(
         createComment({
@@ -122,7 +120,7 @@ function CmntForm({
       onSubmit={handleSubmit((d: CmntFormValue) => handleCommentTextareaSubmit(d.comment))}
     >
       <UserImage width="42px" height="42px" imgUrl={loginState.imgUrl} />
-      <CmntInputDiv state={STATE}>
+      <CmntInputDiv>
         <TextArea
           onKeyDownCheck={handleKeyDownCheck}
           register={register}
@@ -131,27 +129,15 @@ function CmntForm({
           groupId={groupId}
           parentId={parentId}
           id={id}
-          // writer={writer}
         />
-        {id ? (
-          <CmntBtnBox state={STATE}>
-            <CmntBtn type="button" onClick={onFormInputCancel}>
-              취소
-            </CmntBtn>
-            <CmntBtn type="submit" groupId={groupId} parentId={parentId}>
-              수정
-            </CmntBtn>
-          </CmntBtnBox>
-        ) : (
-          <CmntBtnBox state={STATE}>
-            <CmntBtn type="button" onClick={onFormInputCancel}>
-              취소
-            </CmntBtn>
-            <CmntBtn type="submit" groupId={groupId} parentId={parentId}>
-              게시
-            </CmntBtn>
-          </CmntBtnBox>
-        )}
+        <CmntBtnBox>
+          <CmntBtn type="button" onClick={onFormInputCancel}>
+            취소
+          </CmntBtn>
+          <CmntBtn type="submit" groupId={groupId} parentId={parentId}>
+            {id ? '수정' : '등록'}
+          </CmntBtn>
+        </CmntBtnBox>
       </CmntInputDiv>
     </CmntFormForm>
   );
@@ -160,20 +146,20 @@ function CmntForm({
 export default CmntForm;
 
 const CmntFormForm = styled.form<{ groupId: string | null | undefined }>`
-  width: auto;
+  width: 100%;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};
   display: flex;
   align-items: flex-start;
 `;
 
-const CmntInputDiv = styled.div<{ state: string }>`
-  // width: 283px;
+const CmntInputDiv = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-end;
 `;
 
-const CmntBtnBox = styled.div<{ state: string }>`
+const CmntBtnBox = styled.div`
   display: flex;
   margin: 0px;
 `;

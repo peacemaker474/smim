@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
 import TagList from '../../common/atoms/TagList';
 import getDate from '../../../utils/changeDate';
@@ -7,18 +8,8 @@ import limitHashtag from '../../../utils/limitHashtag';
 import heartFill from '../../../asset/icons/icon-heart-fill.svg';
 import eye from '../../../asset/icons/icon-eye.svg';
 
-interface PostData {
-  meta: any;
-  content: string;
-  updateAt: string;
-  hashtag: Array<string>;
-  title: string;
-  _id: string;
-  owner: any;
-}
-
 interface InventoryItemProps {
-  postData: PostData;
+  postData: PostDetailData;
 }
 
 function InventoryItem({ postData }: InventoryItemProps) {
