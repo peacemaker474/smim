@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { FieldError } from 'react-hook-form';
 import useText from '../../../hooks/useText';
@@ -45,8 +45,8 @@ function TagInput({ setValue, clearErrors, watch, register, setError, errors }: 
     }
   };
 
-  const handleTagDelete = (e: any) => {
-    const tag = e?.target?.previousSibling.innerText;
+  const handleTagDelete = (e: React.MouseEvent<HTMLElement>) => {
+    const tag = (e.target as Element).previousElementSibling?.innerHTML;
     const newHashTagArray = tagArray.filter((el: string) => el !== tag);
     setValue('tagArray', [...newHashTagArray]);
     setText('');

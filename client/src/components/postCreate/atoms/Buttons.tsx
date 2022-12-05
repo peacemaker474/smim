@@ -16,25 +16,12 @@ function Buttons({ formState }: formStateProps) {
   return (
     <BtnWrap>
       <BtnDiv>
-        {formState === 'create' ? (
-          <>
-            <Button type="button" height="2rem" border="2px solid black" width="5rem" onClick={handleFormCancle}>
-              작성 취소
-            </Button>
-            <Button type="submit" border="2px solid black" height="2rem" width="5rem">
-              게시물 등록
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button type="button" height="2rem" border="2px solid black" width="5rem" onClick={handleFormCancle}>
-              수정 취소
-            </Button>
-            <Button type="submit" border="2px solid black" height="2rem" width="5rem">
-              재등록
-            </Button>
-          </>
-        )}
+        <Button type="button" height="2rem" border="2px solid black" width="5rem" onClick={handleFormCancle}>
+          {formState === 'create' ? '작성 취소' : '수정 취소'}
+        </Button>
+        <Button type="submit" border="2px solid black" height="2rem" width="5rem">
+          {formState === 'create' ? '게시물 등록' : '재등록'}
+        </Button>
       </BtnDiv>
     </BtnWrap>
   );

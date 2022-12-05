@@ -13,7 +13,7 @@ interface ModalsProps {
   postUploadToggled: boolean;
   watch: UseFormWatch<any>;
   accessToken: string | null;
-  // setView: React.Dispatch<React.SetStateAction<boolean>>;
+  setView: React.Dispatch<React.SetStateAction<boolean>>;
   getValues: UseFormGetValues<PostCreateFormValue>;
   openPostFormModal: () => void;
 }
@@ -26,6 +26,7 @@ function Modals({
   watch,
   getValues,
   accessToken,
+  setView,
 }: ModalsProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function Modals({
   };
 
   const uploadActionFunc = () => {
+    setView(false);
     uploadPost(accessToken);
     dispatch(postUploadToggle());
   };
@@ -60,12 +62,13 @@ function Modals({
     dispatch(postUploadToggle());
   }, [dispatch]);
 
-  const postActionFunc = useCallback(async () => {
+  const postActionFunc = useCallback(() => {
+    setView(false);
     const delData = getValues('para');
-    await deletePostImg(delData, accessToken);
+    deletePostImg(delData, accessToken);
     dispatch(modalToggle());
     navigate(-1);
-  }, [dispatch, navigate, getValues, accessToken]);
+  }, [dispatch, navigate, getValues, accessToken, setView]);
 
   return (
     <>

@@ -1,7 +1,6 @@
-// import { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { deletePost } from '../../../networks/post/http';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 import { PostDetailData } from '../../../type/postTypes';
@@ -15,8 +14,10 @@ interface PostContentProps {
 
 function PostContent({ postDetail }: PostContentProps) {
   const { id: postId } = useParams();
-  const { modalToggled } = useAppSelector((state) => state.toggle);
-  const { accessToken } = useAppSelector((state) => state.auth);
+  const { modalToggled, accessToken } = useAppSelectorTyped((state) => ({
+    modalToggled: state.toggle.modalToggled,
+    accessToken: state.auth.accessToken,
+  }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

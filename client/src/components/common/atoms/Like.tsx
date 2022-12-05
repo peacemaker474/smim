@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { loginToggle } from '../../../redux/slice/toggleSlice';

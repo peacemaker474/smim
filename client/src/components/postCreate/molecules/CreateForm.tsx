@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { postUploadToggle } from '../../../redux/slice/toggleSlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-// import { usePrompt } from '../../../hooks';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
@@ -84,7 +83,7 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
         postUploadToggled={postUploadToggled}
         watch={watch}
         accessToken={accessToken}
-        // setView={setView}
+        setView={setView}
         getValues={getValues}
         openPostFormModal={openPostFormModal}
       />
