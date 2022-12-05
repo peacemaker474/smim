@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { FieldError } from 'react-hook-form';
 import ReactQuill, { Quill } from 'react-quill';
-// import ImageResize from 'quill-image-resize-module-react';
+// import { ImageResize } from 'quill-image-resize-module';
 import 'react-quill/dist/quill.snow.css';
 import useCreateImage from '../../../hooks/useCreateImage';
 import { PostCreateProps } from '../../../type/formTypes';
@@ -29,20 +29,20 @@ function Editor({ register, errors, setError, setValue, watch, clearErrors }: Po
           image: imageHandler,
         },
       },
-      //   imageResize: {
-      //     parchment: Quill.import('parchment'),
-      //     modules: ['Resize', 'DisplaySize', 'Toolbar'],
-      //     image: {
-      //       attribute: ['width'], // ['width', 'height']
-      //       limit: {
-      //         minWidth: 200,
-      //         maxWidth: 800,
-      //         minHeight: 200,
-      //         maxHeight: 800,
-      //         ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
-      //       },
-      //     },
-      //   },
+      imageResize: {
+        parchment: Quill.import('parchment'),
+        modules: ['Resize', 'DisplaySize', 'Toolbar'],
+        image: {
+          attribute: ['width'], // ['width', 'height']
+          limit: {
+            minWidth: 200,
+            maxWidth: 800,
+            minHeight: 200,
+            maxHeight: 800,
+            ratio: 0.5625, // keep width/height ratio. (ratio=height/width)
+          },
+        },
+      },
     }),
     [imageHandler],
   );
@@ -89,7 +89,7 @@ function Editor({ register, errors, setError, setValue, watch, clearErrors }: Po
     }
   };
 
-  const settingRegisterRef = (ele: any) => {
+  const settingRegisterRef = (ele: ReactQuill) => {
     registerRef(ele);
     quillRef.current = ele;
   };

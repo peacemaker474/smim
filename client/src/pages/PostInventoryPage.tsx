@@ -1,10 +1,20 @@
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import SearchBox from '../components/search/molecules/SearchBox';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../redux/hooks';
+import { resetSearch } from '../redux/slice/searchKeywordSlice';
+import { resetFilter } from '../redux/slice/searchFilterSlice';
 import InventoryList from '../components/postInventory/molecules/InventoryList';
+import SearchBox from '../components/search/molecules/SearchBox';
 
 function PostInventoryPage() {
   const { age } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetSearch());
+    dispatch(resetFilter());
+  });
 
   if (age === '10' || age === '20' || age === '30' || age === '40' || age === '50') {
     return (

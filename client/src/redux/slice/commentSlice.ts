@@ -43,6 +43,9 @@ const commentSlice = createSlice({
       state.pinnedId = null;
       state.pinnedData = null;
     },
+    initDeletedComment(state) {
+      state.deletedIdArray = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,7 +62,13 @@ const commentSlice = createSlice({
   },
 });
 
-export const { getDeleteCommentId, getUnpinnedCommentId, getPinnedCommentId, deleteCommentId, initPinnedComment } =
-  commentSlice.actions;
+export const {
+  getDeleteCommentId,
+  getUnpinnedCommentId,
+  getPinnedCommentId,
+  deleteCommentId,
+  initPinnedComment,
+  initDeletedComment,
+} = commentSlice.actions;
 
 export default commentSlice;

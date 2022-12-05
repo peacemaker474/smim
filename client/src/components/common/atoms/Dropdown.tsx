@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../redux/hooks';
 import { modalToggle } from '../../../redux/slice/toggleSlice';
 
