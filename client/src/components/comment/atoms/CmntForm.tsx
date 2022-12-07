@@ -10,7 +10,7 @@ import UserImage from '../../common/atoms/UserImage';
 interface CmntFormValue {
   comment: string;
 }
-interface CmntFromProps {
+interface CmntFormProps {
   parentId?: string | null;
   id?: string;
   groupId?: string | null;
@@ -30,7 +30,7 @@ function CmntForm({
   onTextChange,
   postId,
   parentId = null,
-}: CmntFromProps) {
+}: CmntFormProps) {
   const { accessToken, loginState } = useAppSelectorTyped((state) => ({
     loginState: state.user,
     accessToken: state.auth.accessToken,
@@ -40,7 +40,13 @@ function CmntForm({
   const data = watch('comment');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleFormInputCancel = () => setValue('comment', '');
+  let handleFormInputCancel = () => {
+    setValue('comment', '');
+  };
+
+  if (onFormInputCancel) {
+    handleFormInputCancel = onFormInputCancel;
+  }
 
   const handleCommentEdit = async (data: string) => {
     // 댓글 수정 함수
@@ -49,9 +55,7 @@ function CmntForm({
       if (onTextChange) {
         onTextChange(data.replace('<br>', '\n'));
       }
-      if (onFormInputCancel) {
-        onFormInputCancel();
-      }
+      handleFormInputCancel();
     }
   };
 
@@ -73,12 +77,7 @@ function CmntForm({
           text: data,
         }),
       );
-
-      if (onFormInputCancel) {
-        onFormInputCancel();
-      } else {
-        handleFormInputCancel();
-      }
+      handleFormInputCancel();
     }
   };
 
@@ -121,17 +120,9 @@ function CmntForm({
     >
       <UserImage width="42px" height="42px" imgUrl={loginState.imgUrl} />
       <CmntInputDiv>
-        <TextArea
-          onKeyDownCheck={handleKeyDownCheck}
-          register={register}
-          setValue={setValue}
-          value={data}
-          groupId={groupId}
-          parentId={parentId}
-          id={id}
-        />
+        <TextArea onKeyDownCheck={handleKeyDownCheck} register={register} setValue={setValue} value={data} />
         <CmntBtnBox>
-          <CmntBtn type="button" onClick={onFormInputCancel}>
+          <CmntBtn type="button" onClick={handleFormInputCancel}>
             취소
           </CmntBtn>
           <CmntBtn type="submit" groupId={groupId} parentId={parentId}>

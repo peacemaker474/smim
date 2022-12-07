@@ -1,10 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from '../redux/hooks';
+import Navbar from '../components/gnb/organisms/Navbar';
 
-function PrivateRoute () {
+function PrivateRoute() {
   const { authenticated } = useAppSelector((state) => state.auth);
   return (
-    authenticated ? <Outlet /> : <Navigate to='/' />
+    <>
+      <Navbar />
+      {authenticated ? <Outlet /> : <Navigate to="/" />}
+    </>
   );
 }
 

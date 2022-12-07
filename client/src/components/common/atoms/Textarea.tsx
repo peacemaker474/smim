@@ -7,12 +7,9 @@ interface TextAreaProps {
   register: UseFormRegister<any>;
   setValue: UseFormSetValue<any>;
   value: string;
-  groupId: string | null | undefined;
-  parentId: string | null;
-  id: string | undefined;
 }
 
-function TextArea({ onKeyDownCheck, register, setValue, value, groupId, parentId, id }: TextAreaProps) {
+function TextArea({ onKeyDownCheck, register, setValue, value }: TextAreaProps) {
   const inputRef = useRef<HTMLTextAreaElement>(); // 값 설정하게 되면 읽기전용이 됨
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

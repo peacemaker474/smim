@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import useDebounce from '../../../hooks/useDeboucedEffect';
 import { getSearchContent } from '../../../redux/slice/searchKeywordSlice';
 import { SearchFormOption } from '../../../type/postTypes';
@@ -8,25 +8,21 @@ import Search from '../../../asset/icons/icon-search-line.svg';
 
 function SearchForm({ optionArr, name, age }: SearchFormOption) {
   const [searchOption, setSearchOption] = useState('');
-  const [searchText, setSearchText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = '';
-  }, []);
+    setSearchOption('');
+  }, [age]);
 
   const handleSearchOption = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchOption(evt.target.value);
   }; // search option change function
 
-  const handleSearchText = useDebounce((evt: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(evt.target.value);
-  }, 500); // search text change function
-
   const handleSearchSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(getSearchContent({ option: searchOption, keyword: searchText }));
+    dispatch(getSearchContent({ option: searchOption, keyword: inputRef.current?.value }));
   }; // search data submit function
 
   return (
@@ -40,7 +36,7 @@ function SearchForm({ optionArr, name, age }: SearchFormOption) {
           ))}
         </Select>
         <Form onSubmit={handleSearchSubmit}>
-          <SearchInput onChange={handleSearchText} ref={inputRef} />
+          <SearchInput ref={inputRef} />
           <SearchBtn />
         </Form>
       </SearchDiv>
