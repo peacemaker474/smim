@@ -6,15 +6,16 @@ const http = 'http://localhost:4000';
 
 export const postCreateAndEditPost = (data: CreateDataHTTPProps, accessToken: string | null, id?: string | null) => {
   if (id) {
-    return axios.post(`${http}/post/create`, data, {
+    return axios.put(`${http}/post/${id}`, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
   }
 
-  return axios.put(`${http}/post/${id}`, data, {
+  return axios.post(`${http}/post/create`, data, {
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   });

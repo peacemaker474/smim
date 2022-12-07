@@ -13,9 +13,9 @@ import NotFoundPage from '../pages/NotFoundPage';
 function AppRoute() {
   return (
     <Routes>
+      <Route path="/intro" element={<IntroPage />} />
       <Route element={<PublicRoute />}>
         <Route path="/" element={<MainPage />} />
-        <Route path="/intro" element={<IntroPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/generation/:age" element={<PostInventoryPage />} />
         <Route path="/post/view/:id" element={<PostDetailPage />} />

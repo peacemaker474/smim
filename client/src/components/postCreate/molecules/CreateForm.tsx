@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { postUploadToggle } from '../../../redux/slice/toggleSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch } from '../../../redux/hooks';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
 import TagInput from '../atoms/TagInput';
@@ -24,8 +24,6 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
     mode: 'onBlur',
   });
 
-  const { accessToken } = useAppSelector((state) => state.auth);
-  const { postUploadToggled } = useAppSelector((state) => state.toggle);
   const dispatch = useAppDispatch();
   const [view, setView] = useState(true);
 
@@ -77,16 +75,7 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
 
   return (
     <>
-      <Modals
-        postId={postId}
-        pathValue={pathValue}
-        postUploadToggled={postUploadToggled}
-        watch={watch}
-        accessToken={accessToken}
-        setView={setView}
-        getValues={getValues}
-        openPostFormModal={openPostFormModal}
-      />
+      <Modals postId={postId} pathValue={pathValue} watch={watch} setView={setView} getValues={getValues} />
       <form id="upload" method="POST" onSubmit={handleSubmit(openPostFormModal)}>
         <Title register={register} errors={errors.title} />
         <TargetAge register={register} errors={errors.age} />

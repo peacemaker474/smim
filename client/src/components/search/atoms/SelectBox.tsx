@@ -7,6 +7,7 @@ import { SelectBoxProps } from '../../../type/postTypes';
 function SelectBox({ optionArr, name }: SelectBoxProps) {
   const { filter } = useAppSelector((state) => state.searchFilter);
   const dispatch = useAppDispatch();
+
   const handlePostFilter = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(selectFilter(evt.target.value));
   };

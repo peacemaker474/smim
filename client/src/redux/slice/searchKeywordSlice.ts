@@ -9,6 +9,18 @@ const searchKeywordSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
+    getSearchOption(state, action) {
+      return {
+        ...state,
+        option: action.payload,
+      };
+    },
+    getSearchKeyword(state, action) {
+      return {
+        ...state,
+        keyword: action.payload,
+      };
+    },
     getSearchContent(state, action) {
       return {
         ...state,
@@ -27,6 +39,6 @@ const searchKeywordSlice = createSlice({
   },
 });
 
-export const { getSearchContent, resetSearch } = searchKeywordSlice.actions;
+export const { getSearchOption, getSearchKeyword, getSearchContent, resetSearch } = searchKeywordSlice.actions;
 
 export default searchKeywordSlice;
