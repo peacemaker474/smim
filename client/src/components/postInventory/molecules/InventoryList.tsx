@@ -13,9 +13,13 @@ interface LoadedPostProps {
   pageParam: number;
 }
 
+type Params = {
+  age: string;
+};
+
 function InventoryList() {
   const obsRef = useRef(null);
-  const { age } = useParams();
+  const { age } = useParams<keyof Params>() as Params;
   const searchData = useAppSelector((state) => state.searchKeyword);
   const postFilter = useAppSelector((state) => state.searchFilter);
 

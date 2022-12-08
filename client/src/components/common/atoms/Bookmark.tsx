@@ -11,11 +11,15 @@ interface BookmarkProps {
   clickState: boolean;
 }
 
+type Params = {
+  id: string;
+};
+
 function Bookmark({ clickState }: BookmarkProps) {
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(clickState);
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id } = useParams<keyof Params>() as Params;
 
   const clickHandler = async () => {
     if (!accessToken) {

@@ -12,8 +12,12 @@ interface PostContentProps {
   postDetail: PostDetailData;
 }
 
+type Params = {
+  id: string;
+};
+
 function PostContent({ postDetail }: PostContentProps) {
-  const { id: postId } = useParams();
+  const { id: postId } = useParams<keyof Params>() as Params;
   const { modalToggled, accessToken } = useAppSelectorTyped((state) => ({
     modalToggled: state.toggle.modalToggled,
     accessToken: state.auth.accessToken,
@@ -21,7 +25,7 @@ function PostContent({ postDetail }: PostContentProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const requestDelete = async (id: string | undefined, accessToken: string | null) => {
+  const requestDelete = async (id: string, accessToken: string | null) => {
     await deletePost(id, accessToken);
     navigate(`/generation/${postDetail.targetAge}`);
   };

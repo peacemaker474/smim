@@ -6,7 +6,7 @@ interface CreatedItem {
   writer: PostOwnerData;
   parent_id: string | null;
   group_id: string | null | undefined;
-  post_id: string | undefined;
+  post_id: string;
   text: string;
   createAt: string;
   like_count: number;
@@ -22,7 +22,7 @@ interface CreatedItemProps {
   writer: PostOwnerData;
   parent_id: string | null;
   group_id: string | null | undefined;
-  post_id: string | undefined;
+  post_id: string;
   text: string;
 }
 

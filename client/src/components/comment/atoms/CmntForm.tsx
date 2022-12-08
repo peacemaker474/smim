@@ -6,6 +6,7 @@ import { createComment } from '../../../redux/slice/commentCreateSlice';
 import { postCommentCreate, putCommentEdit } from '../../../networks/comment/http';
 import TextArea from '../../../components/common/atoms/Textarea';
 import UserImage from '../../common/atoms/UserImage';
+import Button from '../../common/atoms/Button';
 
 interface CmntFormValue {
   comment: string;
@@ -15,8 +16,8 @@ interface CmntFormProps {
   id?: string;
   groupId?: string | null;
   onFormInputCancel?: () => void;
-  isTargetVisible?: boolean;
-  postId: string | undefined;
+  isTargetVisible: boolean;
+  postId: string;
   changedText?: string;
   onTextChange?: (text: string) => void;
 }
@@ -122,12 +123,12 @@ function CmntForm({
       <CmntInputDiv>
         <TextArea onKeyDownCheck={handleKeyDownCheck} register={register} setValue={setValue} value={data} />
         <CmntBtnBox>
-          <CmntBtn type="button" onClick={handleFormInputCancel}>
+          <Button width="28px" height="auto" border="none" type="button" onClick={handleFormInputCancel}>
             취소
-          </CmntBtn>
-          <CmntBtn type="submit" groupId={groupId} parentId={parentId}>
+          </Button>
+          <Button width="28px" height="auto" border="none" type="submit">
             {id ? '수정' : '등록'}
-          </CmntBtn>
+          </Button>
         </CmntBtnBox>
       </CmntInputDiv>
     </CmntFormForm>
@@ -152,11 +153,12 @@ const CmntInputDiv = styled.div`
 
 const CmntBtnBox = styled.div`
   display: flex;
-  margin: 0px;
-`;
-
-const CmntBtn = styled.button<{ groupId?: string | null; parentId?: string | null }>`
-  width: 28px;
-  padding: 0;
-  margin-left: 17px;
+  margin-left: 14px;
+  gap: 12px;
+  & > button {
+    background-color: transparent;
+    border-radius: 0;
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+  }
 `;
