@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getReadPostDetail } from '../networks/post/http';
-import { useAppDispatch } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getPostData } from '../redux/slice/postSlice';
 import { getPinnedCommentData } from '../redux/services/comment';
 import { initPinnedComment } from '../redux/slice/commentSlice';
@@ -13,8 +13,13 @@ import CommentPinned from '../components/comment/organisms/CommentPinned';
 import CommentCreated from '../components/comment/organisms/CommentCreated';
 import LoadingPage from './LoadingPage';
 
+type Params = {
+  id: string;
+};
+
 function PostDetailPage() {
-  const { id: postId } = useParams();
+  const { id: postId } = useParams<keyof Params>() as Params;
+  const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const fetchAPI = async () => {
@@ -51,10 +56,14 @@ function PostDetailPage() {
         <PostContent postDetail={postDetail} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
-          <CmntForm postId={postId} isTargetVisible />
-          <CommentPinned />
-          <CommentCreated />
-          <CommentUploaded />
+          {accessToken && (
+            <>
+              <CmntForm postId={postId} isTargetVisible />
+              <CommentPinned />
+              <CommentCreated />
+              <CommentUploaded />
+            </>
+          )}
         </CommentSection>
       </PostViewContainer>
     </PostViewMain>

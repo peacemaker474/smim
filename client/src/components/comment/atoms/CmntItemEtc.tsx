@@ -30,7 +30,7 @@ function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {
   };
 
   const createAt = elapsedText(cmntData?.createAt);
-  const likeState = cmntData?.like_users.includes(id); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
+  const likeState = cmntData.like_users.includes(id); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
 
   return (
     <CommentEtcContainer>
@@ -41,15 +41,15 @@ function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {
           getLike={getCommentLike}
           getUnlike={getCommentUnlike}
           clickState={likeState}
-          value={cmntData?.like_count}
-          id={cmntData?._id}
+          value={cmntData.like_count}
+          id={cmntData._id}
         />
       </CommentEtc>
       {isTargetVisible && (
         <CmntForm
           groupId={groupId}
-          postId={cmntData?.post_id}
-          parentId={cmntData?._id}
+          postId={cmntData.post_id}
+          parentId={cmntData._id}
           onFormInputCancel={handleTargetShow}
           isTargetVisible={isTargetVisible}
         />

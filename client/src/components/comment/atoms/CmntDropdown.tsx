@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
-import { getDeleteCommentId, getPinnedCommentId, getUnpinnedCommentId } from '../../../redux/slice/commentSlice';
-import { commentModalToggle, isLoginCheckToggle } from '../../../redux/slice/toggleSlice';
+import useCmntDropdown from '../../../hooks/useCmntDropdown';
+import { useAppSelectorTyped } from '../../../redux/hooks';
 
 interface CommentDropdownProp {
   dropdownRef: any;
@@ -19,14 +18,11 @@ export default function CommentDropdown({
   commentId,
   parentId,
 }: CommentDropdownProp) {
-  const dispatch = useAppDispatch();
-  const { pinnedId, name, postWriter, accessToken } = useAppSelectorTyped((state) => ({
-    pinnedId: state.comment.pinnedId,
+  const { name, postWriter } = useAppSelectorTyped((state) => ({
     name: state.user.name,
     postWriter: state.post.postWriter,
-    accessToken: state.auth.accessToken,
   }));
-  const pinnedText = commentId === pinnedId ? '고정해제' : '고정';
+  const [pinnedText, handleCommentDel, handleCommentPinned, handleCommentDeclaration] = useCmntDropdown(commentId);
 
   const handleCommentEdit = useCallback(
     (e: React.MouseEvent<HTMLLIElement>) => {
@@ -35,30 +31,6 @@ export default function CommentDropdown({
     },
     [onClickShow],
   );
-
-  const handleCommentDel = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
-      e.preventDefault();
-      dispatch(getDeleteCommentId(commentId));
-      dispatch(commentModalToggle());
-    },
-    [dispatch, commentId],
-  );
-
-  const handleCommentPinned = (e: React.MouseEvent<HTMLLIElement>) => {
-    if (commentId === pinnedId) {
-      dispatch(getUnpinnedCommentId(commentId));
-    } else {
-      dispatch(getPinnedCommentId(commentId));
-    }
-    dispatch(commentModalToggle());
-  };
-
-  const handleCommentDeclaration = useCallback(() => {
-    if (!accessToken) {
-      dispatch(isLoginCheckToggle());
-    }
-  }, [accessToken, dispatch]);
 
   return (
     <CommentDropdownWrraper ref={dropdownRef}>

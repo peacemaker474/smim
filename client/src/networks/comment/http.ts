@@ -38,7 +38,7 @@ export const deleteComment = (id: string | null, accessToken: string | null) => 
   });
 };
 
-export const getCommentListRead = (id: string | undefined) => {
+export const getCommentListRead = (id: string) => {
   return axios.get(`${http}/post/${id}/comment`, {
     withCredentials: true,
   });
