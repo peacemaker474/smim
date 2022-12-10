@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SearchHTTPProps } from '../../type/postTypes';
 import { CreateDataHTTPProps, ParaProps } from '../../type/postFormTypes';
 
-const http = 'http://localhost:4000';
+const http = process.env.REACT_APP_SERVER_URL;
 
 export const postCreateAndEditPost = (data: CreateDataHTTPProps, accessToken: string | null, id?: string | null) => {
   if (id) {
@@ -27,7 +27,7 @@ export const getPostListRead = (targetAge: string, filter: string, data: SearchH
   );
 };
 
-export const deletePost = (id: string | undefined, accessToken: string | null) => {
+export const deletePost = (id: string, accessToken: string | null) => {
   return axios.delete(`${http}/post/${id}`, {
     headers: {
       'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const getPostView = (id: string) => {
   return axios.get(`${http}/post/${id}/view`);
 };
 
-export const getPostLike = (id: string | undefined, accessToken: string | null) => {
+export const getPostLike = (id: string, accessToken: string | null) => {
   return axios.get(`${http}/post/${id}/like`, {
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export const getPostLike = (id: string | undefined, accessToken: string | null) 
   });
 };
 
-export const getPostUnlike = (id: string | undefined, accessToken: string | null) => {
+export const getPostUnlike = (id: string, accessToken: string | null) => {
   return axios.get(`${http}/post/${id}/unlike`, {
     headers: {
       'Content-Type': 'application/json',

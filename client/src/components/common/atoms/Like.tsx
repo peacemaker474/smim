@@ -2,16 +2,16 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { AxiosResponse } from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { loginToggle } from '../../../redux/slice/toggleSlice';
+import { isLoginCheckToggle } from '../../../redux/slice/toggleSlice';
 import PostLike from '../../../asset/icons/icon-heart-fill.svg';
 import PostUnlike from '../../../asset/icons/icon-heart-line.svg';
 
 interface LikeProps {
   clickState: boolean;
-  value: number | undefined;
-  getLike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
-  getUnlike: (id: string | undefined, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
-  id: string | undefined;
+  value: number;
+  getLike: (id: string, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
+  getUnlike: (id: string, accessToken: string | null) => Promise<AxiosResponse<any, any>>;
+  id: string;
 }
 
 function Like({ clickState, value, getLike, getUnlike, id }: LikeProps) {
@@ -22,7 +22,7 @@ function Like({ clickState, value, getLike, getUnlike, id }: LikeProps) {
 
   const clickHandler = async () => {
     if (!accessToken) {
-      dispatch(loginToggle());
+      dispatch(isLoginCheckToggle());
       return;
     }
 

@@ -11,7 +11,7 @@ import moreIcon from '../../../asset/icons/icon-more-vertical.svg';
 
 interface CmntItemProps {
   cmntData: CommentData;
-  groupId: string | null | undefined;
+  groupId: string | null;
 }
 
 export default function CmntItem({ cmntData, groupId }: CmntItemProps) {

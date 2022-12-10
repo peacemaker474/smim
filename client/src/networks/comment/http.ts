@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const http = 'http://localhost:4000';
+const http = process.env.REACT_APP_SERVER_URL;
 
 interface CreateProps {
   post_id: string | undefined;
@@ -44,7 +44,7 @@ export const getCommentListRead = (id: string) => {
   });
 };
 
-export const getCommentLike = (id: string | undefined, accessToken: string | null) => {
+export const getCommentLike = (id: string, accessToken: string | null) => {
   return axios.get(`${http}/comment/${id}/like`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -52,7 +52,7 @@ export const getCommentLike = (id: string | undefined, accessToken: string | nul
   });
 };
 
-export const getCommentUnlike = (id: string | undefined, accessToken: string | null) => {
+export const getCommentUnlike = (id: string, accessToken: string | null) => {
   return axios.get(`${http}/comment/${id}/unlike`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

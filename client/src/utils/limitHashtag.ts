@@ -12,7 +12,7 @@ export default function limitHashtag(hashtag: Array<string>) {
     }
   }
 
-  const limitLength = length[1] === 1 ? length[1] : length[1] - 1;
+  const limitLength = length[1];
 
   const hashtagEdition = hashtag.slice(0, limitLength);
 

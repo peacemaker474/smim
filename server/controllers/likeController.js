@@ -56,7 +56,9 @@ export const getPostUnlike = async (req, res) => {
 
     post.meta.likes -= 1;
     await post.save();
-    like.user_array = like.user_array.filter((el) => toString(el) !== toString(_id));
+    like.user_array = like.user_array.filter(
+      (el) => toString(el) !== toString(_id)
+    );
     await like.save();
 
     return res.status(200).send({
@@ -78,12 +80,12 @@ export const getPostUnlike = async (req, res) => {
 // 댓글 좋아요
 export const getCommentLike = async (req, res) => {
   const {
-    user: { _id },
+    user: { userId },
   } = req.body;
   const { comment } = req;
 
   try {
-    if (comment.like_users.includes(_id)) {
+    if (comment.like_users.includes(userId)) {
       return res.status(404).send({
         success: false,
         message: '이미 좋아요한 댓글입니다.',
@@ -91,7 +93,7 @@ export const getCommentLike = async (req, res) => {
     }
 
     comment.like_count += 1;
-    comment.like_users.push(_id);
+    comment.like_users.push(userId);
     await comment.save();
 
     return res.status(200).send({
@@ -113,12 +115,12 @@ export const getCommentLike = async (req, res) => {
 // 댓글 좋아요 취소
 export const getCommentUnlike = async (req, res) => {
   const {
-    user: { _id },
+    user: { userId },
   } = req.body;
   const { comment } = req;
 
   try {
-    if (!comment.like_users.includes(_id)) {
+    if (!comment.like_users.includes(userId)) {
       return res.status(404).send({
         success: false,
         message: '좋아요를 하지않은 댓글입니다.',
@@ -126,7 +128,9 @@ export const getCommentUnlike = async (req, res) => {
     }
 
     comment.like_count -= 1;
-    comment.like_users = comment.like_users.filter((el) => el !== String(_id));
+    comment.like_users = comment.like_users.filter(
+      (el) => el !== String(userId)
+    );
     await comment.save();
 
     return res.status(200).send({

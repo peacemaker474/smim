@@ -56,14 +56,14 @@ function PostDetailPage() {
         <PostContent postDetail={postDetail} />
         <CommentSection>
           <CommentH2>답변하기</CommentH2>
-          {accessToken && (
-            <>
-              <CmntForm postId={postId} isTargetVisible />
-              <CommentPinned />
-              <CommentCreated />
-              <CommentUploaded />
-            </>
+          {accessToken ? (
+            <CmntForm postId={postId} isTargetVisible />
+          ) : (
+            <CommentLogin> 로그인 후 답변을 작성해보세요.</CommentLogin>
           )}
+          <CommentPinned />
+          <CommentCreated />
+          <CommentUploaded />
         </CommentSection>
       </PostViewContainer>
     </PostViewMain>
@@ -104,4 +104,12 @@ const CommentH2 = styled.h2`
   font-weight: 700;
   line-height: 25px;
   margin-bottom: 28px;
+`;
+
+const CommentLogin = styled.div`
+  width: 100%;
+  margin-bottom: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.color.darkGray};
 `;

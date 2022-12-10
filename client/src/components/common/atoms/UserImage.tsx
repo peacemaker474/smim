@@ -4,7 +4,7 @@ interface UserImageProps {
   width: string;
   height: string;
   imgUrl: string;
-  encodeImg?: string | undefined;
+  encodeImg?: string;
 }
 
 const MyImg = styled.img<{ width: string; height: string }>`

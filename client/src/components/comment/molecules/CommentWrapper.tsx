@@ -34,21 +34,19 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
           {modalText}
         </Modal>
       )}
-      {!delComment && (
+      {!delComment && parentData && (
         <CommentInner>
-          {parentData && <CmntItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />}
+          <CmntItem key={parentData._id} cmntData={parentData} groupId={parentData._id} />
           <ReplyContainer>
             {Boolean(childrenData?.length) && (
               <>
-                {Boolean(childrenData?.length) && (
-                  <ReplyShowingBtn onClick={handleTargetShow}>
-                    ----- 답글 {isTargetVisible ? '닫기' : '보기'}
-                  </ReplyShowingBtn>
-                )}
+                <ReplyShowingBtn onClick={handleTargetShow}>
+                  ----- 답글 {isTargetVisible ? '닫기' : '보기'}
+                </ReplyShowingBtn>
                 {isTargetVisible && (
                   <ReplyListBox>
                     {childrenData?.map((el) => (
-                      <CmntItem key={el._id} cmntData={el} groupId={parentData?._id} />
+                      <CmntItem key={el._id} cmntData={el} groupId={parentData._id} />
                     ))}
                   </ReplyListBox>
                 )}
@@ -56,8 +54,9 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
             )}
             {Boolean(uploadingReplies?.length) && (
               <ReplyUploadListBox>
-                {uploadingReplies &&
-                  uploadingReplies.map((el) => <CmntItem key={el._id} cmntData={el} groupId={parentData?._id} />)}
+                {uploadingReplies.map((el) => (
+                  <CmntItem key={el._id} cmntData={el} groupId={parentData._id} />
+                ))}
               </ReplyUploadListBox>
             )}
           </ReplyContainer>
