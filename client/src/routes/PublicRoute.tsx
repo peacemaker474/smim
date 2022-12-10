@@ -1,15 +1,18 @@
-import { useCallback } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { isLoginCheckToggle, loginToggle } from '../redux/slice/toggleSlice';
 import Modal from '../components/common/molecules/Modal';
 import Navbar from '../components/gnb/organisms/Navbar';
 import PostWriteBtn from '../components/postCreate/atoms/WriteButton';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function PublicRoute() {
+  const [entry, _] = useLocalStorage('entry', false);
   const { isLoginCheckToggled } = useAppSelector((state) => state.toggle);
   const { authenticated } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const actionFunc = useCallback(() => {
     dispatch(isLoginCheckToggle());
@@ -19,6 +22,12 @@ function PublicRoute() {
   const cancelFunc = useCallback(() => {
     dispatch(isLoginCheckToggle());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!entry) {
+      navigate('/intro');
+    }
+  }, [entry, navigate])
 
   return (
     <>
