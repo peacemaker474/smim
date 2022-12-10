@@ -1,4 +1,4 @@
-export const elapsedText = (createAt: string | undefined) => {
+export const elapsedText = (createAt: string) => {
   const date = createAt ? new Date(createAt) : new Date(0);
   const seconds = 1;
   const minute = seconds * 60;

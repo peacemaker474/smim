@@ -137,7 +137,7 @@ function CmntForm({
 
 export default CmntForm;
 
-const CmntFormForm = styled.form<{ groupId: string | null | undefined }>`
+const CmntFormForm = styled.form<{ groupId?: string | null }>`
   width: 100%;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};

@@ -10,7 +10,7 @@ import { CommentData } from '../../../type/cmntTypes';
 
 interface CommentItemEtcProps {
   cmntData: CommentData;
-  groupId: string | null | undefined;
+  groupId: string | null;
 }
 
 function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {
@@ -29,7 +29,8 @@ function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {
     }
   };
 
-  const createAt = elapsedText(cmntData?.createAt);
+  const createAt = elapsedText(cmntData.createAt);
+
   const likeState = cmntData.like_users.includes(id); // like_users에는 _id이며, user에서 가져온 id는 로그인할 때 필요한 id => 수정필요함
 
   return (

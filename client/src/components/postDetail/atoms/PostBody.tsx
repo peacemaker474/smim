@@ -18,7 +18,7 @@ function PostBody({ postDetail }: PostBodyProps) {
       <PostContent>
         <PostPara dangerouslySetInnerHTML={{ __html: postDetail.content }} />
       </PostContent>
-      <TagList hashtagArr={postDetail.hashtag} />
+      <TagList hashtagArr={postDetail.hashtag} marginLeft="10px" />
       <PostLikeBox>
         <Like
           getLike={getPostLike}

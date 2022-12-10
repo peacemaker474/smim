@@ -21,7 +21,7 @@ function InventoryList() {
   const obsRef = useRef(null);
   const { age } = useParams<keyof Params>() as Params;
   const searchData = useAppSelector((state) => state.searchKeyword);
-  const postFilter = useAppSelector((state) => state.searchFilter);
+  const { filter: postFilter } = useAppSelector((state) => state.searchFilter);
 
   const loadedPostListData = async ({ queryKey, pageParam = 1 }: LoadedPostProps) => {
     const { age, postFilter, searchData } = queryKey[1];
@@ -51,6 +51,7 @@ function InventoryList() {
       <PostListBodyLayout>
         {postData && (
           <>
+            {postData.pages[0].data.length === 0 && <PostEmptyItem>게시물이 없습니다😢</PostEmptyItem>}
             {postData.pages.map((item) => {
               return item.data.map((el: PostDetailData) => <InventoryItem key={el._id} postData={el} />);
             })}
@@ -73,7 +74,6 @@ const PostListBodyLayout = styled.div`
   grid-template-columns: 234px 234px 234px;
   gap: 20px 14px;
   position: relative;
-  // height: 250px;
   @media screen and (max-width: 588px) {
     grid-template-columns: 252px;
     margin-top: 35px;
@@ -81,4 +81,17 @@ const PostListBodyLayout = styled.div`
   @media (min-width: 588px) and (max-width: 850px) {
     grid-template-columns: 234px 234px;
   }
+`;
+
+const PostEmptyItem = styled.div`
+  position: relative;
+  height: 255px;
+  border: 2px solid ${({ theme }) => theme.color.lightGray};
+  border-radius: 20px;
+  padding: 31px 21px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 186px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.color.darkGray};
 `;
