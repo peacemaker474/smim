@@ -89,6 +89,16 @@ const IntroDesc = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  & > button {
+    font-size: 2rem;
+  }
+
+  & > button:hover {
+    color: rgb(255, 195, 6);
+    background-color: #fff;
+    border: 1px solid rgb(255, 195, 6);
+  }
 `;
 
 const Title = styled.h1`
