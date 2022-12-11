@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
   imageUrl: { type: String, default: 'users/default.png' },
   createAt: { type: Date, default: Date.now, required: true },
   birthday: { type: Number, required: true },
+  ageGroup: { type: Number },
   being: { type: Boolean, default: true, require: true }, // 탈퇴유무
   posts: [{ type: String }], // 작성한 게시글
   bookmarks: [{ type: String }], // 즐겨찾기한 게시글
