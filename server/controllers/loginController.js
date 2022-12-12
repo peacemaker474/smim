@@ -31,6 +31,7 @@ export const postLogin = async (req, res) => {
       refreshToekn,
       success: true,
       imageUrl: user.imageUrl ? user.imageUrl : '',
+      ageGroup: user.ageGroup,
       message: '',
     });
   } catch (err) {
