@@ -208,3 +208,30 @@ export const checkCommentPinned = async (req, res, next) => {
     });
   }
 };
+
+export const addAgeGroup = (req, res, next) => {
+  const { birthday } = req.body;
+
+  const nowYear = new Date().getFullYear();
+  const age = +birthday.slice(0, 4);
+  const calculate = nowYear - age;
+  let ageGroup;
+
+  if (calculate < 20) {
+    ageGroup = 10;
+  } else if (calculate < 30) {
+    ageGroup = 20;
+  } else if (calculate < 40) {
+    ageGroup = 30;
+  } else if (calculate < 50) {
+    ageGroup = 40;
+  } else {
+    ageGroup = 50;
+  }
+  
+  req.body = {
+    ...req.body,
+    ageGroup,
+  };
+  next();
+}

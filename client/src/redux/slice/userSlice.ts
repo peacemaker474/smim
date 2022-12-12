@@ -9,6 +9,7 @@ const initialLoginState = {
   imgUrl: '',
   success: false,
   loginCheck: false,
+  ageGroup: 0,
 };
 
 const userSlice = createSlice({
@@ -26,6 +27,7 @@ const userSlice = createSlice({
           imgUrl: payload.imageUrl,
           message: payload.message,
           success: payload.success,
+          ageGroup: payload.ageGroup,
           loginCheck: true,
         };
       })

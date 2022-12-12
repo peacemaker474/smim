@@ -7,6 +7,7 @@ export interface UserData {
   success: boolean;
   imageUrl: string;
   message: string;
+  ageGroup: number;
 };
 
 export interface LoginData {
