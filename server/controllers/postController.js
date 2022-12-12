@@ -91,6 +91,7 @@ export const getPostDetail = async (req, res) => {
           userId: owner.userId,
           nickname: owner.nickname,
           imageUrl: owner.imageUrl,
+          ageGroup: owner.ageGroup,
         },
       });
     }
@@ -104,6 +105,7 @@ export const getPostDetail = async (req, res) => {
         userId: owner.userId,
         nickname: owner.nickname,
         imageUrl: owner.imageUrl,
+        ageGroup: owner.ageGroup,
       },
     });
   } catch (error) {
@@ -172,6 +174,7 @@ export const getPostList = async (req, res) => {
             nickname: user.nickname,
             userId: user.userId,
             imageUrl: user.imageUrl,
+            ageGroup: user.ageGroup,
           },
         };
       })
