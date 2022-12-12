@@ -11,6 +11,7 @@ export interface PostOwnerData {
   imageUrl: string;
   userId: string;
   nickname: string;
+  ageGroup: number;
 }
 
 export interface PostBookMarkData {

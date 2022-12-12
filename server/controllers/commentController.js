@@ -63,6 +63,7 @@ export const getCommentList = async (req, res) => {
     _id: undefined,
     nickname: undefined,
     userId: undefined,
+    ageGroup: undefined,
   };
 
   if (!postId) {
@@ -75,11 +76,12 @@ export const getCommentList = async (req, res) => {
   if (Object.keys(req.body).includes('user')) {
     // 로그인 했을 때
     const {
-      user: { _id, nickname, userId },
+      user: { _id, nickname, userId, ageGroup },
     } = req.body;
     userData._id = _id;
     userData.nickname = nickname;
     userData.userId = userId;
+    ageGroup.ageGroup = ageGroup;
   }
 
   try {
@@ -105,7 +107,10 @@ export const getCommentList = async (req, res) => {
       }
       const commentDataList = await Promise.all(
         comment.map(async (el) => {
-          const children = await Comment.find({ parent_id: el._id, post_id: el.post_id });
+          const children = await Comment.find({
+            parent_id: el._id,
+            post_id: el.post_id,
+          });
           const writer = await User.findOne({ _id: el.writer });
 
           if (userData._id) {
@@ -118,6 +123,7 @@ export const getCommentList = async (req, res) => {
                 _id: writer._id,
                 nickname: writer.nickname,
                 imageUrl: writer.imageUrl,
+                ageGroup: writer.ageGroup,
               },
               like: el._doc.like_users.includes(userData._id),
             };
@@ -131,6 +137,7 @@ export const getCommentList = async (req, res) => {
                 _id: writer._id,
                 nickname: writer.nickname,
                 imageUrl: writer.imageUrl,
+                ageGroup: writer.ageGroup,
               },
             };
           }
@@ -168,16 +175,18 @@ export const getComment = async (req, res) => {
     _id: undefined,
     nickname: undefined,
     userId: undefined,
+    ageGroup: undefined,
   };
 
   if (Object.keys(req.body).includes('user')) {
     // 로그인 했을 때
     const {
-      user: { _id, nickname, userId },
+      user: { _id, nickname, userId, ageGroup },
     } = req.body;
     userData._id = _id;
     userData.nickname = nickname;
     userData.userId = userId;
+    userData.ageGroup = ageGroup;
   }
 
   try {
@@ -192,6 +201,7 @@ export const getComment = async (req, res) => {
           _id: parentWriter._id,
           nickname: parentWriter.nickname,
           imageUrl: parentWriter.imageUrl,
+          ageGroup: parentWriter.ageGroup,
         },
         like: comment.like_users.includes(userData._id),
       });
@@ -204,6 +214,7 @@ export const getComment = async (req, res) => {
           _id: parentWriter._id,
           nickname: parentWriter.nickname,
           imageUrl: parentWriter.imageUrl,
+          ageGroup: parentWriter.ageGroup,
         },
       });
     }
@@ -227,6 +238,7 @@ export const getComment = async (req, res) => {
                 _id: writer._id,
                 nickname: writer.nickname,
                 imageUrl: writer.imageUrl,
+                ageGroup: writer.ageGroup,
               },
               like: child.like_users.includes(userData._id),
             });
@@ -239,6 +251,7 @@ export const getComment = async (req, res) => {
                 _id: writer._id,
                 nickname: writer.nickname,
                 imageUrl: writer.imageUrl,
+                ageGroup: writer.ageGroup,
               },
             });
           }
@@ -341,7 +354,9 @@ export const deleteComment = async (req, res) => {
       const parentComment = await Comment.findOne({
         _id: comment.parent_id,
       });
-      const childrenCmnts = parentComment.children.filter((el) => el !== commentId);
+      const childrenCmnts = parentComment.children.filter(
+        (el) => el !== commentId
+      );
       parentComment.children = childrenCmnts;
       await parentComment.save();
     }

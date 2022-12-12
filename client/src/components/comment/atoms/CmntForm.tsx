@@ -71,6 +71,7 @@ function CmntForm({
             userId: loginState.id,
             nickname: loginState.name,
             imageUrl: loginState.imgUrl,
+            ageGroup: loginState.ageGroup,
           },
           parent_id: parentId,
           group_id: groupId,

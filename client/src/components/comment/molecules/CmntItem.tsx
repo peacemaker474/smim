@@ -4,9 +4,10 @@ import { useVisible, useDropdown } from '../../../hooks';
 import { useAppSelector } from '../../../redux/hooks';
 import CmntForm from '../atoms/CmntForm';
 import UserImage from '../../common/atoms/UserImage';
-import { CommentData } from '../../../type/cmntTypes';
 import CmntItemEtc from '../atoms/CmntItemEtc';
 import CmntDropdown from '../atoms/CmntDropdown';
+import UserAge from '../../common/atoms/Age';
+import { CommentData } from '../../../type/cmntTypes';
 import moreIcon from '../../../asset/icons/icon-more-vertical.svg';
 
 interface CmntItemProps {
@@ -45,15 +46,18 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
             <CommentItemContainer>
               <CommentItemInner>
                 <UserImage width="42px" height="42px" imgUrl={cmntData.writer.imageUrl} />
-                <CommentItemContent>
-                  <CommentContentBox>
-                    <CommentText>
-                      <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
+                <CommentItemContentBox>
+                  <CommentContent>
+                    <CommentInner>
+                      <CommentUser>
+                        <CommentStrongName>{cmntData.writer.nickname}</CommentStrongName>
+                        <UserAge lineHeight="11px">{cmntData.writer.ageGroup}</UserAge>
+                      </CommentUser>
                       <CommentTextPara>{itemText}</CommentTextPara>
-                    </CommentText>
+                    </CommentInner>
                     <CmntItemEtc cmntData={cmntData} groupId={groupId} />
-                  </CommentContentBox>
-                </CommentItemContent>
+                  </CommentContent>
+                </CommentItemContentBox>
                 <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
                   <CommentDropdownBtn />
                   {isDropdownVisible && (
@@ -90,22 +94,24 @@ export const CommentItemInner = styled.div`
   display: flex;
 `;
 
-const CommentItemContent = styled.div`
+const CommentItemContentBox = styled.div`
   width: 100%;
   margin-left: 20px;
   display: flex;
 `;
 
-const CommentContentBox = styled.div`
+const CommentContent = styled.div`
   width: 100%;
 `;
 
-const CommentText = styled.span`
+const CommentInner = styled.span`
   display: block;
   margin: 0;
   margin-bottom: 4px;
   line-height: 23px;
 `;
+
+const CommentUser = styled.div``;
 
 const CommentStrongName = styled.strong`
   font-weight: 600;
@@ -137,5 +143,4 @@ const CommentDropdownBtn = styled.div`
     background: url(${moreIcon});
     background-repeat: no-repeat;
   }
-  // background: none;
 `;

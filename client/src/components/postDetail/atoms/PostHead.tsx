@@ -5,6 +5,7 @@ import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
 import DropdownBox from '../../common/molecules/DropdownBox';
+import UserAge from '../../common/atoms/Age';
 
 interface PostHeadProps {
   postDetail: PostDetailData;
@@ -40,6 +41,7 @@ function PostHead({ postDetail }: PostHeadProps) {
           <Profile width="42px" height="42px" imgUrl={author.imageUrl}>
             {author.nickname}
           </Profile>
+          <UserAge margin="0 0 15px 9px">{author.ageGroup}</UserAge>
         </PostAuthor>
         <PostAddOns>
           <AddOnSpan>{postDate}</AddOnSpan>
@@ -84,6 +86,11 @@ const PostAuthor = styled.h4`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.color.black};
+  & > div > span {
+    font-size: 14px;
+    line-height: 35px;
+    margin-left: 10px;
+  }
 `;
 
 const PostAddOns = styled.div`
