@@ -33,6 +33,7 @@ export const postPostCreate = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '새로운 게시글 작성이 완료되었습니다.',
+      postId: post.id,
     });
   } catch (error) {
     console.log(error);
@@ -55,6 +56,7 @@ export const putPostEdit = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
+      postId: postId,
     });
   } catch (error) {
     console.log(error);

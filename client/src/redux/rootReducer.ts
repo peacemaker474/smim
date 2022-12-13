@@ -20,7 +20,7 @@ const persistConfig = {
 const userPersistConfig = {
   key: 'user',
   storage: storageSession,
-  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social'],
+  whitelist: ['id', 'name', 'email', 'success', 'loginCheck', 'imgUrl', 'social', 'ageGroup'],
 };
 
 const rootReducer = combineReducers({
