@@ -33,12 +33,10 @@ function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
       targetAge: age,
     };
     postCreateAndEditPost(data, accessToken, postId)
-      .then(() => {
-        if (postId) {
-          navigate(`/generation/${age}`);
-        } else {
-          navigate(-1);
-        }
+      .then((result) => {
+        const { postId } = result.data;
+        navigate(`/post/loading`);
+        setTimeout(() => navigate(`/post/view/${postId}`), 7300);
       })
       .catch((err: any) => console.log(err));
   };

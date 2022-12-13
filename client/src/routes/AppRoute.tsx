@@ -9,6 +9,7 @@ import PostDetailPage from '../pages/PostDetailPage';
 import MyPageRoute from './MyPageRoute';
 import IntroPage from '../pages/IntroPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import PostLoadingPage from '../pages/PostLoadingPage';
 
 function AppRoute() {
   return (
@@ -25,6 +26,7 @@ function AppRoute() {
       <Route element={<PrivateRoute />}>
         <Route path="/post/create" element={<PostCreatePage />} />
         <Route path="/post/edit/:id" element={<PostCreatePage />} />
+        <Route path="/post/Loading" element={<PostLoadingPage />} />
         <Route path="/my/*" element={<MyPageRoute />} />
       </Route>
     </Routes>
