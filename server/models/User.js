@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
   being: { type: Boolean, default: true, require: true }, // 탈퇴유무
   posts: [{ type: String }], // 작성한 게시글
   bookmarks: [{ type: String }], // 즐겨찾기한 게시글
+  expiredAt: {
+    type: Date,
+    expires: 0,
+  }
 });
 
 userSchema.pre('save', async function (next) {
