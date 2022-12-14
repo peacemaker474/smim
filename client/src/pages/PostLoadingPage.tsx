@@ -12,10 +12,6 @@ export default function PostLoadingPage() {
         <MailSpan></MailSpan>
         <MailSpan></MailSpan>
         <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
         <MailIcon src={mail} />
       </LoadingContent>
       <MailTitle>질문을 다른 세대에게 전달 중...</MailTitle>
@@ -44,93 +40,63 @@ const MailTitle = styled.h2`
 
 const LoadingContent = styled.div`
   & :nth-child(1) {
-    animation-delay: 0.8s;
+    animation-delay: 0.5s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
 
   & :nth-child(2) {
-    animation-delay: 1.3s;
+    animation-delay: 1s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
 
   & :nth-child(3) {
-    animation-delay: 1.8s;
+    animation-delay: 1.5s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
 
   & :nth-child(4) {
-    animation-delay: 2.3s;
+    animation-delay: 2s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
   & :nth-child(5) {
-    animation-delay: 2.8s;
+    animation-delay: 2.5s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
   & :nth-child(6) {
-    animation-delay: 3.3s;
+    animation-delay: 3s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
 
   & :nth-child(7) {
-    animation-delay: 3.8s;
+    animation-delay: 3.5s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
 
   & :nth-child(8) {
-    animation-delay: 4.3s;
+    animation-delay: 4s;
     animation-iteration-count: infinite;
-    animation-duration: 7s;
-    animation-name: bounce;
-    animation-fill-mode: forwards;
-  }
-
-  & :nth-child(9) {
-    animation-delay: 4.8s;
-    animation-iteration-count: infinite;
-    animation-duration: 7s;
-    animation-name: bounce;
-    animation-fill-mode: forwards;
-  }
-
-  & :nth-child(10) {
-    animation-delay: 5.3s;
-    animation-iteration-count: infinite;
-    animation-duration: 7s;
-    animation-name: bounce;
-    animation-fill-mode: forwards;
-  }
-  & :nth-child(11) {
-    animation-delay: 5.8s;
-    animation-iteration-count: infinite;
-    animation-duration: 7s;
-    animation-name: bounce;
-    animation-fill-mode: forwards;
-  }
-  & :nth-child(12) {
-    animation-delay: 6.3s;
-    animation-iteration-count: infinite;
-    animation-duration: 7s;
+    animation-duration: 4s;
     animation-name: bounce;
     animation-fill-mode: forwards;
   }
