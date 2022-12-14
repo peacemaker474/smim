@@ -124,10 +124,10 @@ function CmntForm({
       <CmntInputDiv>
         <TextArea onKeyDownCheck={handleKeyDownCheck} register={register} setValue={setValue} value={data} />
         <CmntBtnBox>
-          <Button width="28px" height="auto" border="none" type="button" onClick={handleFormInputCancel}>
+          <Button width="28px" height="auto" type="button" onClick={handleFormInputCancel}>
             취소
           </Button>
-          <Button width="28px" height="auto" border="none" type="submit">
+          <Button width="28px" height="auto" type="submit">
             {id ? '수정' : '등록'}
           </Button>
         </CmntBtnBox>

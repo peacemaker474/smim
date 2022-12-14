@@ -36,7 +36,7 @@ function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
       .then((result) => {
         const { postId } = result.data;
         navigate(`/post/loading`);
-        setTimeout(() => navigate(`/post/view/${postId}`), 7300);
+        setTimeout(() => navigate(`/post/view/${postId}`), 4300);
       })
       .catch((err: any) => console.log(err));
   };
@@ -60,7 +60,7 @@ function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
   };
 
   const uploadCancelFunc = useCallback(() => {
-    dispatch(modalToggle());
+    dispatch(postUploadToggle());
   }, [dispatch]);
 
   return (

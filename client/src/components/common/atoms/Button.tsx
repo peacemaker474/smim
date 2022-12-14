@@ -3,13 +3,13 @@ import styled from 'styled-components';
 interface ButtonProps {
   width: string;
   height: string;
-  border: string;
+  border?: string;
   children: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
-const CommonBtn = styled.button<{ width: string; height: string; border: string }>`
+const CommonBtn = styled.button<{ width: string; height: string; border?: string }>`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   padding: 0;
@@ -21,7 +21,7 @@ const CommonBtn = styled.button<{ width: string; height: string; border: string 
   text-align: center;
 
   &:hover {
-    border: ${({ border }) => border};
+    color: black;
   }
 `;
 

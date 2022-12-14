@@ -26,10 +26,10 @@ export default function NotFoundPage() {
           입력하신 페이지의 주소가 정확한지 다시 한번 확인해주세요.
         </NotFoundPara>
         <NotFoundBtnBox>
-          <Button onClick={handlegoHome} type="button" width="90px" height="36px" border="none">
+          <Button onClick={handlegoHome} width="90px" height="36px" border="none">
             홈
           </Button>
-          <Button onClick={handlegoBack} type="button" width="90px" height="36px" border="none">
+          <Button onClick={handlegoBack} width="90px" height="36px" border="none">
             뒤로가기
           </Button>
         </NotFoundBtnBox>

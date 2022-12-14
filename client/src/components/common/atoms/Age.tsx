@@ -12,6 +12,7 @@ const AgeSpan = styled.span<{ margin?: string; lineHeight?: string; age: string 
   border-radius: 9px;
   padding: 4px;
   font-size: 10px;
+  font-weight: 600;
   margin: ${({ margin }) => margin};
   line-height: ${({ lineHeight }) => lineHeight};
   color: ${({ age }) => age};
