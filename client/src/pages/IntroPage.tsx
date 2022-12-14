@@ -30,7 +30,7 @@ const Content = styled.div`
   & > img:last-child {
     width: 50em;
   }
-  
+
   &:last-child {
     flex-direction: column;
   }
@@ -134,7 +134,7 @@ const SubText = styled.p`
   }
 `;
 
-function IntroPage () {
+function IntroPage() {
   const introData = [
     {
       id: 1,
@@ -142,7 +142,7 @@ function IntroPage () {
       alt: 'Slider이미지2',
       title: '세대간 궁금했던 이야기를 질문해보세요.',
       subText: `받는 나이대를 정해 질문을 올릴 수 있어요.`,
-      subText2: `평소 다른 세대에게 궁금했던 점을 태그를 이용해 질문해보세요.`
+      subText2: `평소 다른 세대에게 궁금했던 점을 태그를 이용해 질문해보세요.`,
     },
     {
       id: 2,
@@ -158,7 +158,7 @@ function IntroPage () {
       alt: 'Slider이미지1',
       title: '세대간 소통창구 스며들다, 바로 시작해보세요!',
     },
-  ]
+  ];
   const [store, setStore] = useLocalStorage('entry', false);
   const navigate = useNavigate();
 
@@ -173,27 +173,27 @@ function IntroPage () {
       setStore(true);
     }
     navigate('/');
-  }
+  };
 
   return (
     <Wrapper>
-      {introData.map(item => (
+      {introData.map((item) => (
         <Content key={item.id}>
           <IntroImg src={item.url} alt={item.alt} />
           <IntroDesc>
             <Title> {item.title} </Title>
-            {item.subText && 
+            {item.subText && (
               <SubText>
                 {item.subText}
-                <br /> 
+                <br />
                 {item.subText2}
               </SubText>
-            }
-            {item.id === 3 && 
-              <Button width='15rem' height='4rem' border='none' onClick={handleStartClick}>
+            )}
+            {item.id === 3 && (
+              <Button width="15rem" height="4rem" onClick={handleStartClick}>
                 시작하기
               </Button>
-            }
+            )}
           </IntroDesc>
         </Content>
       ))}

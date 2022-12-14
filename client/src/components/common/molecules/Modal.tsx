@@ -22,10 +22,10 @@ function Modal({ children, cancelFunc, actionFunc }: ModalProps) {
       <ModalBox>
         <ModalText>{children}</ModalText>
         <BtnBox>
-          <Button type="button" border="2px solid #FFC306" width="5rem" height="2rem" onClick={handleModalConfirm}>
+          <Button type="button" width="5rem" height="2rem" onClick={handleModalConfirm}>
             확인
           </Button>
-          <Button type="button" border="2px solid #FFC306" width="5rem" height="2rem" onClick={handleModalCancle}>
+          <Button type="button" width="5rem" height="2rem" onClick={handleModalCancle}>
             취소
           </Button>
         </BtnBox>
@@ -71,15 +71,5 @@ const BtnBox = styled.div`
   width: 127px;
   margin: 25px auto;
   display: flex;
-  & button {
-    background: ${({ theme }) => theme.color.yellow};
-    border: none;
-    & + button {
-      margin-left: 15px;
-    }
-    &:hover {
-      background: ${({ theme }) => theme.color.yellow};
-      color: #fff;
-    }
-  }
+  gap: 15px;
 `;
