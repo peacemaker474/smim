@@ -19,10 +19,6 @@ const CommonBtn = styled.button<{ width: string; height: string; border?: string
   color: rgb(255, 255, 255);
   line-height: ${({ height }) => height};
   text-align: center;
-
-  &:hover {
-    color: black;
-  }
 `;
 
 function Button({ width, height, border, children, type, onClick }: ButtonProps) {
