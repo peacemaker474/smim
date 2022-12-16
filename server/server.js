@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { getLogout } from './controllers/loginController.js';
-
 import { postRouter } from './routers/postRouter.js';
 import { commentRouter } from './routers/commentRouter.js';
+import reportRouter from './routers/reportRouter.js';
 import rootRouter from './routers/rootRouter.js';
 import loginRouter from './routers/loginRouter.js';
 import myRouter from './routers/myRouter.js';
@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', rootRouter);
 app.use('/post', postRouter);
 app.use('/comment', commentRouter);
+app.use('/report', reportRouter);
 app.use('/login', loginRouter);
 app.use('/my', myRouter);
 app.get('/logout', getLogout);
