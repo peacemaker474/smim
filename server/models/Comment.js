@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
   children: [{ type: String, default: null, required: true }],
   like_count: { type: Number, required: true, default: 0 },
   like_users: [{ type: String, default: null, required: true }],
-  complain_count: { type: Number, required: true, default: 0 },
+  block: { type: Boolean, default: false },
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
