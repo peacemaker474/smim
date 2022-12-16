@@ -13,6 +13,6 @@ myRouter.put("/update-user", verifyAccessToken, putChangeUserInfo);
 myRouter.get("/id-check", getExistedIdCheck);
 myRouter.get("/name-check", getExistedNameCheck);
 myRouter.put("/changepw", verifyAccessToken, putChangePassword);
-myRouter.delete('/user-delete', deleteUser);
+myRouter.delete('/user-delete', verifyAccessToken, deleteUser);
 
 export default myRouter;

@@ -142,6 +142,14 @@ export const deleteUser = async (req, res) => {
   }
 
   const user = await User.findOne({ userId });
+
+  if (user.expiredAt) {
+    return res.status(400).json({
+      success: false,
+      message: '이미 탈퇴를 요청한 아이디입니다.',
+    })
+  }
+
   const updateUser = await User.findByIdAndUpdate(user._id, {
     expiredAt: new Date(Date.now() + (24 * 3600 * 1000 * 7)),
   }, { new: true });
