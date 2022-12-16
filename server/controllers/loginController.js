@@ -13,8 +13,12 @@ export const postLogin = async (req, res) => {
     if (!match)
       return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
 
+    if (expiredAt)
+      return res.status(401).json({ success: false, message: '이미 탈퇴한 회원입니다.'})
+
     const accessToken = createAccessToken(user._id);
     const refreshToekn = createRefreshToken(user._id);
+
 
     res.cookie('users', refreshToekn, {
       httpOnly: true,
