@@ -4,6 +4,7 @@ const reportSchema = new mongoose.Schema({
   targetId: { type: String },
   target: { type: String },
   totalCount: { type: Number },
+  reporter: [{ type: String }],
   typeCount: {
     1: {
       content: { type: String, default: '성희롱' },
@@ -21,13 +22,9 @@ const reportSchema = new mongoose.Schema({
       content: { type: String, default: '스팸(광고)' },
       count: { type: Number, default: 0, required: true },
     },
-    5: {
-      content: [{ type: String, default: '' }],
-      count: { type: Number, default: 0, required: true },
-    },
   },
 });
-// Report type : 1 - 성희롱, 2 - 욕설, 3 - 악의적, 4 : 스팸(광고), 5 - 기타
+// Report type : 1 - 성희롱, 2 - 욕설, 3 - 악의적, 4 : 스팸(광고)
 
 const Report = mongoose.model('Report', reportSchema);
 
