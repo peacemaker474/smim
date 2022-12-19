@@ -1,31 +1,12 @@
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../redux/hooks';
-import { modalToggle } from '../../../redux/slice/toggleSlice';
 
 interface DropDownProps {
   dropdownRef: any;
+  children: JSX.Element;
 }
 
-export default function DropDown({ dropdownRef }: DropDownProps) {
-  const { id } = useParams();
-
-  const dispatch = useAppDispatch();
-
-  const handleModalShow = () => {
-    dispatch(modalToggle());
-  };
-
-  return (
-    <DropdownWrraper ref={dropdownRef}>
-      <DropdownLists>
-        <DropdownList>
-          <DropdownLink to={`/post/edit/${id}`}>수정</DropdownLink>
-        </DropdownList>
-        <DropdownList onClick={handleModalShow}>삭제</DropdownList>
-      </DropdownLists>
-    </DropdownWrraper>
-  );
+export default function DropDown({ dropdownRef, children }: DropDownProps) {
+  return <DropdownWrraper ref={dropdownRef}>{children}</DropdownWrraper>;
 }
 
 const DropdownWrraper = styled.div`
@@ -45,27 +26,4 @@ const DropdownWrraper = styled.div`
     display: block;
     clear: both;
   }
-`;
-
-const DropdownLists = styled.ul`
-  width: 100%;
-  height: 100%;
-  font-size: '13px';
-`;
-
-const DropdownList = styled.li`
-  width: 100%;
-  height: 50%;
-  text-align: center;
-  line-height: 34px;
-  cursor: pointer;
-  &:hover {
-    background-color: rgba(127, 127, 127, 0.1);
-  }
-`;
-
-const DropdownLink = styled(Link)`
-  width: 100%;
-  height: 100%;
-  display: inline-block;
 `;

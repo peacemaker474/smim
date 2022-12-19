@@ -3,12 +3,16 @@ import Dropdown from '../atoms/Dropdown';
 import { useDropdown } from '../../../hooks';
 import moreIcon from '../../../asset/icons/icon-more-horizontal.svg';
 
-export default function DropdownBox() {
+interface DropdownBoxProps {
+  children: JSX.Element;
+}
+
+export default function DropdownBox({ children }: DropdownBoxProps) {
   const [isDropdownVisible, dropdownRef, btnRef, handleDropdownShow]: Array<any> = useDropdown();
   return (
     <PostDropdownBtnDiv ref={btnRef} onClick={handleDropdownShow}>
       <PostDropdownBtn />
-      {isDropdownVisible && <Dropdown dropdownRef={dropdownRef} />}
+      {isDropdownVisible && <Dropdown dropdownRef={dropdownRef}>{children}</Dropdown>}
     </PostDropdownBtnDiv>
   );
 }
