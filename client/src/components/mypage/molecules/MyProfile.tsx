@@ -19,6 +19,9 @@ function MyProfile () {
         <ProfileList>
           <MyProfileLink to='/my/bookMarkLists' current={pathname === '/my/bookMarkLists'}> 즐겨찾기한 글목록 </MyProfileLink>
         </ProfileList>
+        <ProfileList>
+          <MyProfileLink to='/my/user-delete' current={pathname === '/my/user-delete'}> 회원 탈퇴 </MyProfileLink>
+        </ProfileList>
       </MyProfileLists>
     </MyProfileWrapper>
   );
