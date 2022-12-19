@@ -77,3 +77,12 @@ export const getCommentUnpinned = (id: string | null, accessToken: string | null
     },
   });
 };
+
+export const commentReport = (id: string | null, data: { type: string }, accessToken: string | null) => {
+  return axios.post(`${http}/report/comment/${id}`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

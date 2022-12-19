@@ -93,3 +93,12 @@ export const getUnbookmark = (id: string, accessToken: string | null) => {
     },
   });
 };
+
+export const postReport = (id: string, data: { type: string }, accessToken: string | null) => {
+  return axios.post(`${http}/report/post/${id}`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
