@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
-import { useAppSelector } from '../../../redux/hooks';
+import { Link, useParams } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { isLoginCheckToggle, modalToggle, postUploadToggle } from '../../../redux/slice/toggleSlice';
 import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
@@ -13,8 +15,15 @@ interface PostHeadProps {
 
 function PostHead({ postDetail }: PostHeadProps) {
   const { owner: author, updateAt } = postDetail;
-  const { loginCheck } = useAppSelector((state) => state.user);
+  const { accessToken } = useAppSelector((state) => state.auth);
+  const { id: userId } = useAppSelector((state) => state.user);
   const channelId = postDetail._id;
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+
+  const handleModalShow = () => {
+    dispatch(modalToggle());
+  };
 
   const fetchAPI = async () => {
     try {
@@ -32,6 +41,13 @@ function PostHead({ postDetail }: PostHeadProps) {
   const date = new Date(updateAt);
   const postDate = date.toLocaleDateString();
 
+  const handleCommentDeclaration = () => {
+    if (!accessToken) {
+      dispatch(isLoginCheckToggle());
+    }
+    dispatch(postUploadToggle());
+  };
+
   return (
     <>
       <PostViewH2>{postDetail.targetAge}대에게</PostViewH2>
@@ -46,7 +62,20 @@ function PostHead({ postDetail }: PostHeadProps) {
         <PostAddOns>
           <AddOnSpan>{postDate}</AddOnSpan>
           <AddOnSpan>조회수 {views?.data.views}</AddOnSpan>
-          {loginCheck && <DropdownBox />}
+          <DropdownBox>
+            <DropdownLists>
+              {author.userId === userId ? (
+                <>
+                  <DropdownList>
+                    <DropdownLink to={`/post/edit/${id}`}>수정</DropdownLink>
+                  </DropdownList>
+                  <DropdownList onClick={handleModalShow}>삭제</DropdownList>
+                </>
+              ) : (
+                <DropdownList onClick={handleCommentDeclaration}>신고</DropdownList>
+              )}
+            </DropdownLists>
+          </DropdownBox>
         </PostAddOns>
       </PostHeadDiv>
     </>
@@ -102,4 +131,27 @@ const AddOnSpan = styled.span`
   font-size: 11px;
   color: ${({ theme }) => theme.color.gray};
   margin-right: 10px;
+`;
+
+const DropdownLists = styled.ul`
+  width: 100%;
+  height: 100%;
+  font-size: '13px';
+`;
+
+const DropdownList = styled.li`
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  line-height: 34px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(127, 127, 127, 0.1);
+  }
+`;
+
+const DropdownLink = styled(Link)`
+  width: 100%;
+  height: 100%;
+  display: inline-block;
 `;

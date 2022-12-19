@@ -1,15 +1,15 @@
 import { PostOwnerData } from './postTypes';
 
 export interface CommentData {
-  children: Array<string>;
-  complain_count: number;
-  createAt: string;
-  like_count: number;
-  like_users: Array<string>;
-  parent_id: string | null;
-  post_id: string;
   text: string;
   writer: PostOwnerData;
+  post_id: string;
+  createAt: string;
+  parent_id: string | null;
+  children: Array<string>;
+  like_count: number;
+  like_users: Array<string>;
+  block: boolean;
   __v: number;
   _id: string;
 }

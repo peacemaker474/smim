@@ -40,10 +40,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     expires: 0,
   },
-  reports: {
-    post: [{ type: String }], // 신고된 게시글
-    comment: [{ type: String }], // 신고된 댓글
-  },
 });
 
 userSchema.pre('save', async function (next) {

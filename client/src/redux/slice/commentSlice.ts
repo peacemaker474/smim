@@ -32,6 +32,10 @@ const commentSlice = createSlice({
       state.commentId = action.payload;
       state.check = 'pinned';
     },
+    getReportCommentId(state, action) {
+      state.commentId = action.payload;
+      state.check = 'report';
+    },
     getUnpinnedCommentId(state, action) {
       state.commentId = action.payload;
       state.check = 'unpinned';
@@ -66,6 +70,7 @@ export const {
   getDeleteCommentId,
   getUnpinnedCommentId,
   getPinnedCommentId,
+  getReportCommentId,
   deleteCommentId,
   initPinnedComment,
   initDeletedComment,
