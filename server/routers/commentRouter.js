@@ -6,8 +6,14 @@ import {
   getCommentUnpinned,
   getComment,
 } from '../controllers/commentController.js';
-import { getCommentLike, getCommentUnlike } from '../controllers/likeController.js';
-import { verifyToken, verifyRefreshToken } from '../controllers/tokenControllers.js';
+import {
+  getCommentLike,
+  getCommentUnlike,
+} from '../controllers/likeController.js';
+import {
+  verifyToken,
+  verifyRefreshToken,
+} from '../controllers/tokenControllers.js';
 import {
   checkCommentUndefined,
   checkPostExistAndContent,
@@ -27,7 +33,12 @@ commentRouter
     checkParamCommentExistAndData,
     putCommentEdit
   )
-  .delete(verifyToken, checkCommentUndefined, checkParamCommentExistAndData, deleteComment);
+  .delete(
+    verifyToken,
+    checkCommentUndefined,
+    checkParamCommentExistAndData,
+    deleteComment
+  );
 commentRouter.get(
   '/:id/pinned',
   verifyToken,

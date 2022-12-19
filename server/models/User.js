@@ -39,10 +39,6 @@ const userSchema = new mongoose.Schema({
   expiredAt: {
     type: Date,
     expires: 0,
-  }
-  reports: {
-    post: [{ type: String }], // 신고된 게시글
-    comment: [{ type: String }], // 신고된 댓글
   },
 });
 

@@ -7,18 +7,23 @@ export const postLogin = async (req, res) => {
   try {
     const user = await User.findOne({ userId });
     if (!user)
-      return res.status(401).json({ success: false, message: '아이디가 존재하지 않습니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '아이디가 존재하지 않습니다.' });
 
     const match = await bcrypt.compare(password, user.password);
     if (!match)
-      return res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
+      return res
+        .status(401)
+        .json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
 
-    if (expiredAt)
-      return res.status(401).json({ success: false, message: '이미 탈퇴한 회원입니다.'})
+    if (user.expiredAt)
+      return res
+        .status(401)
+        .json({ success: false, message: '이미 탈퇴한 회원입니다.' });
 
     const accessToken = createAccessToken(user._id);
     const refreshToekn = createRefreshToken(user._id);
-
 
     res.cookie('users', refreshToekn, {
       httpOnly: true,

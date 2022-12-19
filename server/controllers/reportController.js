@@ -1,27 +1,20 @@
 import Report from '../models/Report.js';
-
-export const getReportTargets = async (req, res) => {
-  const { target } = req.params;
-
-  const reportData = await Report.find({
-    target: target,
-  });
-
-  return res.status(200).send({
-    success: true,
-    data: reportData,
-  });
-};
+import Comment from '../models/Comment.js';
+import Post from '../models/Post.js';
 
 export const postReportTarget = async (req, res) => {
   const { target, id } = req.params;
-  const { type } = req.body;
+  const { type, user } = req.body;
+  let { report } = req.body;
 
-  const report = await Report.create({
-    targetId: id,
-    target: target,
-  });
+  if (!report) {
+    report = await Report.create({
+      targetId: id,
+      target: target,
+    });
+  }
   report.typeCount[type].count += 1;
+  report.reporter.push(user._id);
   await report.save();
 
   return res.status(200).send({
@@ -30,12 +23,33 @@ export const postReportTarget = async (req, res) => {
   });
 };
 
-export const deleteReportTarget = async (req, res) => {
-  const { id } = req.params;
-  await Report.deleteOne({ targetId: id });
+export const getTargetBlind = async (req, res) => {
+  const { target, id } = req.params;
+
+  if (target === 'post') {
+    await Post.findByIdAndUpdate(id, { block: true });
+  } else {
+    await Comment.findByIdAndUpdate(id, { block: true });
+  }
 
   return res.status(200).send({
     success: true,
-    message: '신고가 해제되었습니다',
+    message: '게시물이 차단되었습니다.',
+  });
+};
+
+export const deleteReportTarget = async (req, res) => {
+  const { target, id } = req.params;
+  await Report.deleteOne({ targetId: id });
+
+  if (target === 'post') {
+    await Post.findByIdAndUpdate(id, { block: false });
+  } else {
+    await Comment.findByIdAndUpdate(id, { block: false });
+  }
+
+  return res.status(200).send({
+    success: true,
+    message: '신고가 취소되었고 게시물 차단이 해제되었습니다',
   });
 };

@@ -1,5 +1,6 @@
 import Post from './models/Post.js';
 import Comment from './models/Comment.js';
+import Report from './models/Report.js';
 
 // Post Middleware
 
@@ -228,10 +229,69 @@ export const addAgeGroup = (req, res, next) => {
   } else {
     ageGroup = 50;
   }
-  
+
   req.body = {
     ...req.body,
     ageGroup,
   };
   next();
-}
+};
+
+//Report Middleware
+export const checkReportExist = async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req.body;
+
+  try {
+    const existingReport = await Report.findOne({
+      targetId: id,
+    });
+
+    if (existingReport) {
+      req.body.report = existingReport;
+    }
+
+    if (existingReport && existingReport.reporter.includes(user._id)) {
+      return res.status(200).send({
+        success: true,
+        message: '이미 신고한 게시물 또는 댓글입니다',
+      });
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const checkPostAndCommentExist = async (req, res, next) => {
+  const { id, target } = req.params;
+  let exist = false;
+
+  try {
+    if (target === 'post') {
+      exist = await Post.exists({ _id: id });
+    } else {
+      exist = await Comment.exists({ _id: id });
+    }
+
+    if (!exist) {
+      return res.status(200).send({
+        success: true,
+        message: '존재하지 않는 게시물 또는 댓글입니다',
+      });
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
