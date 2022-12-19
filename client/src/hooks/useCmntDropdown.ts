@@ -1,7 +1,12 @@
 import { useCallback } from 'react';
 import { useAppSelectorTyped, useAppDispatch } from '../redux/hooks';
-import { getDeleteCommentId, getPinnedCommentId, getUnpinnedCommentId } from '../redux/slice/commentSlice';
-import { commentModalToggle, isLoginCheckToggle } from '../redux/slice/toggleSlice';
+import {
+  getDeleteCommentId,
+  getPinnedCommentId,
+  getUnpinnedCommentId,
+  getReportCommentId,
+} from '../redux/slice/commentSlice';
+import { commentModalToggle, isLoginCheckToggle, postUploadToggle } from '../redux/slice/toggleSlice';
 
 function useCmntDropdown(commentId: string) {
   const { pinnedId, accessToken } = useAppSelectorTyped((state) => ({
@@ -33,7 +38,9 @@ function useCmntDropdown(commentId: string) {
     if (!accessToken) {
       dispatch(isLoginCheckToggle());
     }
-  }, [accessToken, dispatch]);
+    dispatch(getReportCommentId(commentId));
+    dispatch(postUploadToggle());
+  }, [accessToken, dispatch, commentId]);
 
   return [pinnedText, handleCommentDel, handleCommentPinned, handleCommentDeclaration] as const;
 }

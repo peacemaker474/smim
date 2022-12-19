@@ -6,12 +6,12 @@ export default function PostLoadingPage() {
     <LoadingBody>
       <LoadingContent>
         <MailIcon src={mail} />
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
-        <MailSpan></MailSpan>
+        <MailSpan />
+        <MailSpan />
+        <MailSpan />
+        <MailSpan />
+        <MailSpan />
+        <MailSpan />
         <MailIcon src={mail} />
       </LoadingContent>
       <MailTitle>질문을 다른 세대에게 전달 중...</MailTitle>

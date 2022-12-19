@@ -11,7 +11,7 @@ interface CreatedItem {
   createAt: string;
   like_count: number;
   children: Array<string>;
-  complain_count: number;
+  block: boolean;
   like_users: Array<string>;
   like: boolean;
   __v: number;
@@ -52,7 +52,7 @@ const commentCreateSlice = createSlice({
           like: false,
           like_count: 0,
           children: [],
-          complain_count: 0,
+          block: false,
           like_users: [],
           __v: 0,
         },
