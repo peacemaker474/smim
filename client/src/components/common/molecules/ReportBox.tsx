@@ -44,26 +44,26 @@ export default function ReportBox() {
         <SelectTitle>{check === 'report' ? '댓글' : '게시글'} 신고</SelectTitle>
         <ReportForm id="test" method="post" onSubmit={actionFunc}>
           <SelectDiv>
-            <label htmlFor="1">
-              <input type="radio" id="1" name="type" value="1" onChange={clickValue} />
+            <label htmlFor="sexual">
+              <input type="radio" id="sexual" name="type" value="sexual" onChange={clickValue} />
               음란물
             </label>
           </SelectDiv>
           <SelectDiv>
-            <label htmlFor="2">
-              <input type="radio" id="2" name="type" value="2" onChange={clickValue} />
+            <label htmlFor="abuse">
+              <input type="radio" id="abuse" name="type" value="abuse" onChange={clickValue} />
               증오심 표현 또는 노골적인 폭력
             </label>
           </SelectDiv>
           <SelectDiv>
-            <label htmlFor="3">
-              <input type="radio" id="3" name="type" value="3" onChange={clickValue} />
+            <label htmlFor="malicious">
+              <input type="radio" id="malicious" name="type" value="malicious" onChange={clickValue} />
               테러 조장
             </label>
           </SelectDiv>
           <SelectDiv>
-            <label htmlFor="4">
-              <input type="radio" id="4" name="type" value="4" onChange={clickValue} />
+            <label htmlFor="spam">
+              <input type="radio" id="spam" name="type" value="spam" onChange={clickValue} />
               원치않는 상업성 콘텐츠 또는 스팸
             </label>
           </SelectDiv>
