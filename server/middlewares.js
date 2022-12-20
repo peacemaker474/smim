@@ -110,7 +110,7 @@ export const checkCommentUndefined = async (req, res, next) => {
 };
 
 export const checkPostExistAndContent = async (req, res, next) => {
-  const { post_id: postId } = req.body;
+  const { postId: postId } = req.body;
   const { content } = req.body;
 
   if (!postId) {
@@ -180,10 +180,10 @@ export const checkCommentPinned = async (req, res, next) => {
   try {
     const comment = await Comment.findOne({
       _id: commentId,
-      parent_id: null,
+      parentId: null,
     });
 
-    const post = await Post.findOne({ _id: comment.post_id, owner: _id });
+    const post = await Post.findOne({ _id: comment.postId, owner: _id });
 
     if (!comment) {
       return res.status(400).send({

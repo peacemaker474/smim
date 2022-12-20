@@ -4,7 +4,7 @@ import User from '../models/User.js';
 
 // 댓글 생성(Comment Create)
 export const postCommentCreate = async (req, res) => {
-  const { post_id: postId, content, parent_id: parentId } = req.body;
+  const { postId: postId, content, parentId: parentId } = req.body;
   const {
     user: { _id },
   } = req.body;
@@ -31,8 +31,8 @@ export const postCommentCreate = async (req, res) => {
     const comment = await Comment.create({
       text: content,
       writer: _id,
-      post_id: postId,
-      parent_id: parentId,
+      postId: postId,
+      parentId: parentId,
     });
 
     if (parentId !== null) {
@@ -95,8 +95,8 @@ export const getCommentList = async (req, res) => {
     }
 
     const commentList = await Comment.find({
-      post_id: postId,
-      parent_id: null,
+      postId: postId,
+      parentId: null,
     });
 
     const DATA = [];
@@ -108,8 +108,8 @@ export const getCommentList = async (req, res) => {
       const commentDataList = await Promise.all(
         comment.map(async (el) => {
           const children = await Comment.find({
-            parent_id: el._id,
-            post_id: el.post_id,
+            parentId: el._id,
+            postId: el.postId,
           });
           const writer = await User.findOne({ _id: el.writer });
 
@@ -125,7 +125,7 @@ export const getCommentList = async (req, res) => {
                 imageUrl: writer.imageUrl,
                 ageGroup: writer.ageGroup,
               },
-              like: el._doc.like_users.includes(userData._id),
+              like: el._doc.likeUsers.includes(userData._id),
             };
           } else {
             // 로그인 안했을 때
@@ -145,7 +145,7 @@ export const getCommentList = async (req, res) => {
       );
 
       for (let i = 0; i < commentDataList.length; i++) {
-        if (commentDataList[i].parent_id === null) {
+        if (commentDataList[i].parentId === null) {
           check = i;
           DATA[check] = [];
         }
@@ -203,7 +203,7 @@ export const getComment = async (req, res) => {
           imageUrl: parentWriter.imageUrl,
           ageGroup: parentWriter.ageGroup,
         },
-        like: comment.like_users.includes(userData._id),
+        like: comment.likeUsers.includes(userData._id),
       });
     } else {
       // 로그인 안했을 때
@@ -240,7 +240,7 @@ export const getComment = async (req, res) => {
                 imageUrl: writer.imageUrl,
                 ageGroup: writer.ageGroup,
               },
-              like: child.like_users.includes(userData._id),
+              like: child.likeUsers.includes(userData._id),
             });
           } else {
             // 로그인 안했을 때
@@ -350,9 +350,9 @@ export const deleteComment = async (req, res) => {
       _id: commentId,
     });
 
-    if (comment.parent_id !== null) {
+    if (comment.parentId !== null) {
       const parentComment = await Comment.findOne({
-        _id: comment.parent_id,
+        _id: comment.parentId,
       });
       const childrenCmnts = parentComment.children.filter(
         (el) => el !== commentId
