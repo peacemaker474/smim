@@ -6,7 +6,7 @@ import {
   getUnpinnedCommentId,
   getReportCommentId,
 } from '../redux/slice/commentSlice';
-import { commentModalToggle, isLoginCheckToggle, postUploadToggle } from '../redux/slice/toggleSlice';
+import { commentModalToggle, isLoginCheckToggle, postToggle } from '../redux/slice/toggleSlice';
 
 function useCmntDropdown(commentId: string) {
   const { pinnedId, accessToken } = useAppSelectorTyped((state) => ({
@@ -37,9 +37,10 @@ function useCmntDropdown(commentId: string) {
   const handleCommentDeclaration = useCallback(() => {
     if (!accessToken) {
       dispatch(isLoginCheckToggle());
+      return;
     }
     dispatch(getReportCommentId(commentId));
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   }, [accessToken, dispatch, commentId]);
 
   return [pinnedText, handleCommentDel, handleCommentPinned, handleCommentDeclaration] as const;

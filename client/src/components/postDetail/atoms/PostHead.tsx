@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
-import { isLoginCheckToggle, modalToggle, postUploadToggle } from '../../../redux/slice/toggleSlice';
+import { isLoginCheckToggle, modalToggle, postToggle } from '../../../redux/slice/toggleSlice';
 import { getPostView } from '../../../networks/post/http';
 import { PostDetailData } from '../../../type/postTypes';
 import Profile from '../../common/atoms/Profile';
@@ -44,8 +44,9 @@ function PostHead({ postDetail }: PostHeadProps) {
   const handleCommentDeclaration = () => {
     if (!accessToken) {
       dispatch(isLoginCheckToggle());
+      return;
     }
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   };
 
   return (

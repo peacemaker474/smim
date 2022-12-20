@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { UseFormGetValues, UseFormWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { postUploadToggle, modalToggle } from '../../../redux/slice/toggleSlice';
+import { postToggle, modalToggle } from '../../../redux/slice/toggleSlice';
 import { useAppDispatch, useAppSelectorTyped } from '../../../redux/hooks';
 import { postCreateAndEditPost, deletePostImg } from '../../../networks/post/http';
 import Modal from '../../common/molecules/Modal';
@@ -18,9 +18,9 @@ interface ModalsProps {
 function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { modalToggled, postUploadToggled, accessToken } = useAppSelectorTyped((state) => ({
+  const { modalToggled, postToggled, accessToken } = useAppSelectorTyped((state) => ({
     modalToggled: state.toggle.modalToggled,
-    postUploadToggled: state.toggle.postUploadToggled,
+    postToggled: state.toggle.postToggled,
     accessToken: state.auth.accessToken,
   }));
 
@@ -44,7 +44,7 @@ function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
   const uploadActionFunc = () => {
     setView(false);
     uploadPost(accessToken);
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   };
 
   const postCancelActionFunc = useCallback(() => {
@@ -60,12 +60,12 @@ function Modals({ postId, pathValue, watch, getValues, setView }: ModalsProps) {
   };
 
   const uploadCancelFunc = useCallback(() => {
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   }, [dispatch]);
 
   return (
     <>
-      {postUploadToggled && (
+      {postToggled && (
         <Modal actionFunc={uploadActionFunc} cancelFunc={uploadCancelFunc}>
           {pathValue === 'create' ? '게시물을 등록하겠습니까?' : ' 게시물을 수정하겠습니까?'}
         </Modal>

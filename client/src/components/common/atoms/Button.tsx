@@ -7,7 +7,6 @@ interface ButtonProps {
   children: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: 'button' | 'submit' | 'reset';
-  form?: string;
 }
 
 const CommonBtn = styled.button<{ width: string; height: string; border?: string }>`
@@ -20,15 +19,11 @@ const CommonBtn = styled.button<{ width: string; height: string; border?: string
   color: rgb(255, 255, 255);
   line-height: ${({ height }) => height};
   text-align: center;
-
-  &:hover {
-    color: black;
-  }
 `;
 
-function Button({ width, height, border, children, type, onClick, form }: ButtonProps) {
+function Button({ width, height, border, children, type, onClick }: ButtonProps) {
   return (
-    <CommonBtn width={width} height={height} border={border} onClick={onClick} type={type} form={form}>
+    <CommonBtn width={width} height={height} border={border} onClick={onClick} type={type}>
       {children}
     </CommonBtn>
   );
