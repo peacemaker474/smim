@@ -51,7 +51,7 @@ function CmntForm({
 
   const handleCommentEdit = async (data: string) => {
     // 댓글 수정 함수
-    const response = await putCommentEdit(id, { postId: postId, content: data }, accessToken);
+    const response = await putCommentEdit(id, { postId, content: data }, accessToken);
     if (response.data.success) {
       if (onTextChange) {
         onTextChange(data.replace('<br>', '\n'));
@@ -62,7 +62,7 @@ function CmntForm({
 
   const handleCommentCreate = async (data: string) => {
     // 댓글 생성 함수
-    const response = await postCommentCreate({ postId: postId, content: data, parentId: parentId }, accessToken);
+    const response = await postCommentCreate({ postId, content: data, parentId }, accessToken);
     if (response.data.success) {
       dispatch(
         createComment({
@@ -73,9 +73,9 @@ function CmntForm({
             imageUrl: loginState.imgUrl,
             ageGroup: loginState.ageGroup,
           },
-          parentId: parentId,
+          parentId,
           group_id: groupId,
-          postId: postId,
+          postId,
           text: data,
         }),
       );
