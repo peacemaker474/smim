@@ -4,7 +4,7 @@ import User from '../models/User.js';
 
 // 댓글 생성(Comment Create)
 export const postCommentCreate = async (req, res) => {
-  const { postId: postId, content, parentId: parentId } = req.body;
+  const { postId, content, parentId } = req.body;
   const {
     user: { _id },
   } = req.body;
@@ -31,8 +31,8 @@ export const postCommentCreate = async (req, res) => {
     const comment = await Comment.create({
       text: content,
       writer: _id,
-      postId: postId,
-      parentId: parentId,
+      postId,
+      parentId,
     });
 
     if (parentId !== null) {
@@ -95,7 +95,7 @@ export const getCommentList = async (req, res) => {
     }
 
     const commentList = await Comment.find({
-      postId: postId,
+      postId,
       parentId: null,
     });
 

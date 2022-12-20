@@ -110,7 +110,7 @@ export const checkCommentUndefined = async (req, res, next) => {
 };
 
 export const checkPostExistAndContent = async (req, res, next) => {
-  const { postId: postId } = req.body;
+  const { postId } = req.body;
   const { content } = req.body;
 
   if (!postId) {

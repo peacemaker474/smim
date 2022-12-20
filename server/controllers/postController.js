@@ -56,7 +56,7 @@ export const putPostEdit = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
-      postId: postId,
+      postId,
     });
   } catch (error) {
     console.log(error);
@@ -73,7 +73,7 @@ export const getPostDetail = async (req, res) => {
 
   try {
     const owner = await User.findById(String(post.owner));
-    const like = await Like.findOne({ postId: postId });
+    const like = await Like.findOne({ postId });
 
     const age = String(post._doc.targetAge);
 
