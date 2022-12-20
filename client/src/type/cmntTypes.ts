@@ -3,12 +3,12 @@ import { PostOwnerData } from './postTypes';
 export interface CommentData {
   text: string;
   writer: PostOwnerData;
-  post_id: string;
+  postId: string;
   createAt: string;
-  parent_id: string | null;
+  parentId: string | null;
   children: Array<string>;
-  like_count: number;
-  like_users: Array<string>;
+  likeCount: number;
+  likeUsers: Array<string>;
   block: boolean;
   __v: number;
   _id: string;

@@ -3,13 +3,13 @@ import axios from 'axios';
 const http = process.env.REACT_APP_SERVER_URL;
 
 interface CreateProps {
-  post_id: string | undefined;
+  postId: string | undefined;
   content: string;
-  parent_id: string | null;
+  parentId: string | null;
 }
 
 interface EditProps {
-  post_id: string | undefined;
+  postId: string | undefined;
   content: string;
 }
 

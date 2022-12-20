@@ -8,7 +8,7 @@ export default function CommentCreated() {
   }));
 
   const uploadingComments = commentArray
-    .filter((el) => !el.parent_id) // 최상위 댓글인지 확인
+    .filter((el) => !el.parentId) // 최상위 댓글인지 확인
     .filter((el) => String(el._id) !== pinnedId) // 고정댓글인지 확인
     .sort((a, b) => {
       if (a?.createAt > b?.createAt) return -1;

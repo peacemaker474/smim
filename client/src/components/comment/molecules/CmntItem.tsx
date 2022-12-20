@@ -33,8 +33,8 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
         <div>
           {isTargetVisible ? (
             <CmntForm
-              postId={cmntData.post_id}
-              parentId={cmntData.parent_id}
+              postId={cmntData.postId}
+              parentId={cmntData.parentId}
               groupId={groupId}
               isTargetVisible={isTargetVisible}
               onFormInputCancel={handleClickShow}
@@ -66,7 +66,7 @@ export default function CmntItem({ cmntData, groupId }: CmntItemProps) {
                       writer={cmntData.writer.nickname}
                       onClickShow={handleClickShow}
                       commentId={cmntData._id}
-                      parentId={cmntData.parent_id}
+                      parentId={cmntData.parentId}
                     />
                   )}
                 </PostDropdownBtnDiv>
