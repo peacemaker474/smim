@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { postUploadToggle } from '../../../redux/slice/toggleSlice';
+import { postToggle } from '../../../redux/slice/toggleSlice';
 import { postReport } from '../../../networks/post/http';
 import Button from '../atoms/Button';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -18,21 +18,24 @@ export default function ReportBox() {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState('');
   const cancleFunc = () => {
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   };
 
   const clickValue = (e: any) => {
     setValue(e.target.value);
   };
 
-  const actionFunc = (e: React.FormEvent<HTMLFormElement>) => {
+  const actionFunc = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let result = null;
+
     if (check === 'report') {
-      commentReport(commentId, { type: value }, accessToken);
+      result = await commentReport(commentId, { type: value }, accessToken);
     } else {
-      postReport(postId, { type: value }, accessToken);
+      result = await postReport(postId, { type: value }, accessToken);
     }
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
+    alert(result.data.message);
   };
   return (
     <ReportContainer>
@@ -41,30 +44,38 @@ export default function ReportBox() {
         <SelectTitle>{check === 'report' ? '댓글' : '게시글'} 신고</SelectTitle>
         <ReportForm id="test" method="post" onSubmit={actionFunc}>
           <SelectDiv>
-            <input type="radio" id="1" name="type" value="1" onChange={clickValue} />
-            <label htmlFor="1">음란물</label>
+            <label htmlFor="sexual">
+              <input type="radio" id="sexual" name="type" value="sexual" onChange={clickValue} />
+              음란물
+            </label>
           </SelectDiv>
           <SelectDiv>
-            <input type="radio" id="2" name="type" value="2" onChange={clickValue} />
-            <label htmlFor="2">증오심 표현 또는 노골적인 폭력</label>
+            <label htmlFor="abuse">
+              <input type="radio" id="abuse" name="type" value="abuse" onChange={clickValue} />
+              증오심 표현 또는 노골적인 폭력
+            </label>
           </SelectDiv>
           <SelectDiv>
-            <input type="radio" id="3" name="type" value="3" onChange={clickValue} />
-            <label htmlFor="3">테러 조장</label>
+            <label htmlFor="malicious">
+              <input type="radio" id="malicious" name="type" value="malicious" onChange={clickValue} />
+              테러 조장
+            </label>
           </SelectDiv>
           <SelectDiv>
-            <input type="radio" id="4" name="type" value="4" onChange={clickValue} />
-            <label htmlFor="4">원치않는 상업성 콘텐츠 또는 스팸</label>
+            <label htmlFor="spam">
+              <input type="radio" id="spam" name="type" value="spam" onChange={clickValue} />
+              원치않는 상업성 콘텐츠 또는 스팸
+            </label>
           </SelectDiv>
+          <ButtonDiv>
+            <Button width="48px" height="28px" type="button" onClick={cancleFunc}>
+              취소
+            </Button>
+            <Button width="48px" height="28px" type="submit">
+              신고
+            </Button>
+          </ButtonDiv>
         </ReportForm>
-        <ButtonDiv>
-          <Button width="48px" height="28px" type="button" onClick={cancleFunc}>
-            취소
-          </Button>
-          <Button width="48px" height="28px" type="submit" form="test">
-            신고
-          </Button>
-        </ButtonDiv>
       </ReportBoxDiv>
     </ReportContainer>
   );
@@ -106,15 +117,18 @@ const SelectTitle = styled.h3`
 `;
 
 const ReportForm = styled.form`
-  margin-bottom: 26px;
-`;
-
-const SelectDiv = styled.div`
-  & + div {
-    margin-top: 9px;
+  & > div:not(:last-child) {
+    margin-bottom: 9px;
+  }
+  & > div:last-child {
+    margin-top: 20px;
   }
 `;
+
+const SelectDiv = styled.div``;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
 `;

@@ -15,8 +15,8 @@ const DropdownWrraper = styled.div`
   background: #ffffff;
   box-shadow: 0 9px 25px rgb(0 0 0 / 15%);
   position: absolute;
-  top: 27px;
-  left: '50%';
+  top: 25px;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   border-radius: 9px;

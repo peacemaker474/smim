@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import useDebounce from '../../../hooks/useDeboucedEffect';
+import { useAppDispatch } from '../../../redux/hooks';
 import { getSearchContent } from '../../../redux/slice/searchKeywordSlice';
 import { SearchFormOption } from '../../../type/postTypes';
 import Search from '../../../asset/icons/icon-search-line.svg';
