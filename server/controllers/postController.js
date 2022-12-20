@@ -25,7 +25,7 @@ export const postPostCreate = async (req, res) => {
       owner: _id,
     });
     await Like.create({
-      post_id: post._id,
+      postId: post._id,
     });
 
     user.posts.push(post._id);
@@ -56,7 +56,7 @@ export const putPostEdit = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
-      postId: postId,
+      postId,
     });
   } catch (error) {
     console.log(error);
@@ -73,7 +73,7 @@ export const getPostDetail = async (req, res) => {
 
   try {
     const owner = await User.findById(String(post.owner));
-    const like = await Like.findOne({ post_id: postId });
+    const like = await Like.findOne({ postId });
 
     const age = String(post._doc.targetAge);
 
@@ -87,7 +87,7 @@ export const getPostDetail = async (req, res) => {
         ...post._doc,
         targetAge: age,
         bookmark: user.bookmarks.includes(postId),
-        like: like.user_array.includes(_id),
+        like: like.userArray.includes(_id),
         owner: {
           _id: owner._id,
           userId: owner.userId,

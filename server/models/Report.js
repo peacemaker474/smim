@@ -6,19 +6,19 @@ const reportSchema = new mongoose.Schema({
   totalCount: { type: Number },
   reporter: [{ type: String }],
   typeCount: {
-    1: {
+    sexual: {
       content: { type: String, default: '성희롱' },
       count: { type: Number, default: 0, required: true },
     },
-    2: {
+    abuse: {
       content: { type: String, default: '욕설' },
       count: { type: Number, default: 0, required: true },
     },
-    3: {
+    malicious: {
       content: { type: String, default: '악의적' },
       count: { type: Number, default: 0, required: true },
     },
-    4: {
+    spam: {
       content: { type: String, default: '스팸(광고)' },
       count: { type: Number, default: 0, required: true },
     },
