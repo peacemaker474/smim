@@ -50,7 +50,7 @@ function PostDetailPage() {
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
 
-  if (!(postId.length === 24 && regExp.test(postId))) {
+  if (!(postId.length === 24 && regExp.test(postId)) && postDetail === '404') {
     return <NotFoundPage />;
   }
 
