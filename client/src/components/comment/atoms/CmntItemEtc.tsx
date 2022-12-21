@@ -10,7 +10,7 @@ import { CommentData } from '../../../type/cmntTypes';
 
 interface CommentItemEtcProps {
   cmntData: CommentData;
-  groupId: string | null;
+  groupId: string;
 }
 
 function CommentItemEtc({ cmntData, groupId }: CommentItemEtcProps) {

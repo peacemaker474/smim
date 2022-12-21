@@ -5,7 +5,7 @@ interface CreatedItem {
   _id: string;
   writer: PostOwnerData;
   parentId: string | null;
-  group_id: string | null | undefined;
+  groupId?: string;
   postId: string;
   text: string;
   createAt: string;
@@ -21,7 +21,7 @@ interface CreatedItemProps {
   _id: string;
   writer: PostOwnerData;
   parentId: string | null;
-  group_id: string | null | undefined;
+  groupId?: string;
   postId: string;
   text: string;
 }
@@ -46,7 +46,7 @@ const commentCreateSlice = createSlice({
           writer: action.payload.writer,
           createAt: String(new Date()),
           parentId: action.payload.parentId,
-          group_id: action.payload.group_id,
+          groupId: action.payload.groupId,
           postId: action.payload.postId,
           text: action.payload.text,
           like: false,
