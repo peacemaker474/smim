@@ -12,6 +12,7 @@ import CommentUploaded from '../components/comment/organisms/CommentUploaded';
 import CommentPinned from '../components/comment/organisms/CommentPinned';
 import CommentCreated from '../components/comment/organisms/CommentCreated';
 import LoadingPage from './LoadingPage';
+import NotFoundPage from './NotFoundPage';
 
 type Params = {
   id: string;
@@ -21,6 +22,7 @@ function PostDetailPage() {
   const { id: postId } = useParams<keyof Params>() as Params;
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const regExp = /[0-9a-f]{24}/g;
 
   const fetchAPI = async () => {
     try {
@@ -47,6 +49,10 @@ function PostDetailPage() {
   };
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
+
+  if (!(postId.length === 24 && regExp.test(postId))) {
+    return <NotFoundPage />;
+  }
 
   if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
 
