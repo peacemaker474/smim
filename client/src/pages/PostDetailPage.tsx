@@ -22,7 +22,6 @@ function PostDetailPage() {
   const { id: postId } = useParams<keyof Params>() as Params;
   const { accessToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const regExp = /[0-9a-f]{24}/g;
 
   const fetchAPI = async () => {
     try {
@@ -50,7 +49,7 @@ function PostDetailPage() {
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
 
-  if (!(postId.length === 24 && regExp.test(postId)) || postDetail === 404) {
+  if (postDetail === 404 || postDetail === 500) {
     return <NotFoundPage />;
   }
 
