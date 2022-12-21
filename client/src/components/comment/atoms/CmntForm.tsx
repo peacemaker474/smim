@@ -14,7 +14,7 @@ interface CmntFormValue {
 interface CmntFormProps {
   parentId?: string | null;
   id?: string;
-  groupId?: string | null;
+  groupId?: string;
   onFormInputCancel?: () => void;
   isTargetVisible: boolean;
   postId: string;
@@ -74,7 +74,7 @@ function CmntForm({
             ageGroup: loginState.ageGroup,
           },
           parentId,
-          group_id: groupId,
+          groupId,
           postId,
           text: data,
         }),
@@ -138,7 +138,7 @@ function CmntForm({
 
 export default CmntForm;
 
-const CmntFormForm = styled.form<{ groupId?: string | null }>`
+const CmntFormForm = styled.form<{ groupId?: string }>`
   width: 100%;
   margin-bottom: ${({ groupId }) => (groupId ? '15px' : '38px')};
   margin-top: ${({ groupId }) => (groupId ? '15px' : '0')};

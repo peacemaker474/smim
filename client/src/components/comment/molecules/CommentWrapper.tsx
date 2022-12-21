@@ -25,7 +25,7 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
   const parentData = cmntData?.find((el: CommentData) => el.parentId === null);
   const delComment = deletedIdArray.includes(parentData?._id || '');
   const childrenData = cmntData?.slice(1);
-  const uploadingReplies = createdComments.filter((el) => el.group_id === parentData?._id);
+  const uploadingReplies = createdComments.filter((el) => el.groupId === parentData?._id);
 
   return (
     <>

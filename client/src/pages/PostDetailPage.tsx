@@ -12,6 +12,7 @@ import CommentUploaded from '../components/comment/organisms/CommentUploaded';
 import CommentPinned from '../components/comment/organisms/CommentPinned';
 import CommentCreated from '../components/comment/organisms/CommentCreated';
 import LoadingPage from './LoadingPage';
+import NotFoundPage from './NotFoundPage';
 
 type Params = {
   id: string;
@@ -47,6 +48,10 @@ function PostDetailPage() {
   };
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
+
+  if (postDetail === 404 || postDetail === 500 || postDetail === 400) {
+    return <NotFoundPage />;
+  }
 
   if (isLoading || isFetching) return <LoadingPage position="absolute" top="50%" left="60%" />;
 
