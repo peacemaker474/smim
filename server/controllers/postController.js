@@ -1,6 +1,7 @@
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Like from '../models/Like.js';
+import Comment from '../models/Comment.js';
 
 // 게시물 생성(Post Create)
 export const postPostCreate = async (req, res) => {
@@ -24,7 +25,7 @@ export const postPostCreate = async (req, res) => {
       owner: _id,
     });
     await Like.create({
-      post_id: post._id,
+      postId: post._id,
     });
 
     user.posts.push(post._id);
@@ -32,6 +33,7 @@ export const postPostCreate = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '새로운 게시글 작성이 완료되었습니다.',
+      postId: post.id,
     });
   } catch (error) {
     console.log(error);
@@ -54,6 +56,7 @@ export const putPostEdit = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: '게시글 수정이 완료되었습니다.',
+      postId,
     });
   } catch (error) {
     console.log(error);
@@ -70,7 +73,7 @@ export const getPostDetail = async (req, res) => {
 
   try {
     const owner = await User.findById(String(post.owner));
-    const like = await Like.findOne({ post_id: postId });
+    const like = await Like.findOne({ postId });
 
     const age = String(post._doc.targetAge);
 
@@ -84,12 +87,13 @@ export const getPostDetail = async (req, res) => {
         ...post._doc,
         targetAge: age,
         bookmark: user.bookmarks.includes(postId),
-        like: like.user_array.includes(_id),
+        like: like.userArray.includes(_id),
         owner: {
           _id: owner._id,
           userId: owner.userId,
           nickname: owner.nickname,
           imageUrl: owner.imageUrl,
+          ageGroup: owner.ageGroup,
         },
       });
     }
@@ -103,6 +107,7 @@ export const getPostDetail = async (req, res) => {
         userId: owner.userId,
         nickname: owner.nickname,
         imageUrl: owner.imageUrl,
+        ageGroup: owner.ageGroup,
       },
     });
   } catch (error) {
@@ -118,7 +123,15 @@ export const getPostDetail = async (req, res) => {
 export const getPostList = async (req, res) => {
   const { age, page, filter, tag, keyword } = req.query;
 
-  if (!(age === '10' || age === '20' || age === '30' || age === '40' || age === '50')) {
+  if (
+    !(
+      age === '10' ||
+      age === '20' ||
+      age === '30' ||
+      age === '40' ||
+      age === '50'
+    )
+  ) {
     return res.status(404).send({
       success: false,
       message: '해당 연령대는 존재하지 않습니다',
@@ -139,11 +152,17 @@ export const getPostList = async (req, res) => {
   }
 
   try {
-    let postDataList = await Post.find({ targetAge: age, [tag]: new RegExp(keyword) })
+    let postDataList = await Post.find({
+      targetAge: age,
+      [tag]: new RegExp(keyword),
+    })
       .sort(filterOption)
       .skip(skipNum)
       .limit(10);
-    let nextPostList = await Post.find({ targetAge: age, [tag]: new RegExp(keyword) })
+    let nextPostList = await Post.find({
+      targetAge: age,
+      [tag]: new RegExp(keyword),
+    })
       .sort(filterOption)
       .skip(nextNum);
 
@@ -157,6 +176,7 @@ export const getPostList = async (req, res) => {
             nickname: user.nickname,
             userId: user.userId,
             imageUrl: user.imageUrl,
+            ageGroup: user.ageGroup,
           },
         };
       })
@@ -202,6 +222,7 @@ export const deletePost = async (req, res) => {
 
     await Post.deleteOne({ _id: postId });
     await Like.deleteOne({ _id: postId });
+    await Comment.deleteMany({ _id: postId });
 
     return res.status(200).send({
       success: true,
@@ -260,21 +281,27 @@ export const getMainPageLists = async (req, res) => {
       })
     );
 
-    const answerNotPosts = newPosts.filter((item) => item.meta.answer === false);
+    const answerNotPosts = newPosts.filter(
+      (item) => item.meta.answer === false
+    );
     const answerPosts = newPosts.filter((item) => item.meta.answer === true);
 
     answerNotPosts.forEach((el) => {
-      if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
+      if (postLists[el.targetAge].length < 5)
+        return postLists[el.targetAge].push(el);
     });
 
     answerPosts.forEach((el) => {
-      if (postLists[el.targetAge].length < 5) return postLists[el.targetAge].push(el);
+      if (postLists[el.targetAge].length < 5)
+        return postLists[el.targetAge].push(el);
     });
 
     return res.status(200).send({ success: true, lists: postLists });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ success: false, message: '다시 시도해주세요.' });
+    return res
+      .status(500)
+      .json({ success: false, message: '다시 시도해주세요.' });
   }
 };
 

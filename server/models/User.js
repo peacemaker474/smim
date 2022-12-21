@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    match: /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
+    match:
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
   },
   nickname: {
     type: String,
@@ -31,9 +32,14 @@ const userSchema = new mongoose.Schema({
   imageUrl: { type: String, default: 'users/default.png' },
   createAt: { type: Date, default: Date.now, required: true },
   birthday: { type: Number, required: true },
+  ageGroup: { type: Number },
   being: { type: Boolean, default: true, require: true }, // 탈퇴유무
   posts: [{ type: String }], // 작성한 게시글
   bookmarks: [{ type: String }], // 즐겨찾기한 게시글
+  expiredAt: {
+    type: Date,
+    expires: 0,
+  },
 });
 
 userSchema.pre('save', async function (next) {

@@ -6,7 +6,8 @@ import User from '../models/User.js';
 */
 
 export const postSignup = async (req, res) => {
-  const { userId, email, nickname, birthday, password } = req.body;
+  const { userId, email, nickname, birthday, password, ageGroup } = req.body;
+
   try {
     await User.create({
       userId,
@@ -14,6 +15,7 @@ export const postSignup = async (req, res) => {
       nickname,
       birthday,
       password,
+      ageGroup,
     });
     return res.status(201).json({ success: true, message: '회원가입에 성공하셨습니다.' });
   } catch (error) {
