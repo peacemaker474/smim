@@ -49,7 +49,7 @@ function PostDetailPage() {
 
   const { data: postDetail, isLoading, isFetching } = useQuery(['postDetail'], () => fetchAPI());
 
-  if (postDetail === 404 || postDetail === 500) {
+  if (postDetail === 404 || postDetail === 500 || postDetail === 400) {
     return <NotFoundPage />;
   }
 
