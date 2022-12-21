@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { postUploadToggle } from '../../../redux/slice/toggleSlice';
+import { postToggle } from '../../../redux/slice/toggleSlice';
 import { useAppDispatch } from '../../../redux/hooks';
 import Title from '../atoms/Title';
 import TargetAge from '../atoms/TargetAge';
@@ -70,7 +70,7 @@ function CreateForm({ postData, pathValue, postId }: PostCreateFormProps) {
   }, [postData, setValue]);
 
   const openPostFormModal = useCallback(() => {
-    dispatch(postUploadToggle());
+    dispatch(postToggle());
   }, [dispatch]);
 
   return (

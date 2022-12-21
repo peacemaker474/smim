@@ -7,6 +7,7 @@ import { PostDetailData } from '../../../type/postTypes';
 import PostHead from '../atoms/PostHead';
 import PostBody from '../atoms/PostBody';
 import Modal from '../../common/molecules/Modal';
+import ReportBox from '../../common/molecules/ReportBox';
 
 interface PostContentProps {
   postDetail: PostDetailData;
@@ -18,8 +19,9 @@ type Params = {
 
 function PostContent({ postDetail }: PostContentProps) {
   const { id: postId } = useParams<keyof Params>() as Params;
-  const { modalToggled, accessToken } = useAppSelectorTyped((state) => ({
+  const { modalToggled, postToggled, accessToken } = useAppSelectorTyped((state) => ({
     modalToggled: state.toggle.modalToggled,
+    postToggled: state.toggle.postToggled,
     accessToken: state.auth.accessToken,
   }));
   const dispatch = useAppDispatch();
@@ -46,6 +48,7 @@ function PostContent({ postDetail }: PostContentProps) {
           게시물을 삭제하시겠습니까?
         </Modal>
       )}
+      {postToggled && <ReportBox />}
       <PostHead postDetail={postDetail} />
       <PostBody postDetail={postDetail} />
     </PostBox>

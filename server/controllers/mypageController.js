@@ -130,3 +130,32 @@ export const putChangePassword = async (req, res) => {
   await user.save();
   return res.status(201).json({ success: true, message: '성공적으로 비밀번호를 변경하였습니다.' });
 };
+
+export const deleteUser = async (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: '탈퇴하고자 하는 아이디가 올바르지 않습니다.',
+    })
+  }
+
+  const user = await User.findOne({ userId });
+
+  if (user.expiredAt) {
+    return res.status(400).json({
+      success: false,
+      message: '이미 탈퇴를 요청한 아이디입니다.',
+    })
+  }
+
+  const updateUser = await User.findByIdAndUpdate(user._id, {
+    expiredAt: new Date(Date.now() + (24 * 3600 * 1000 * 7)),
+  }, { new: true });
+
+  return res.status(200).json({
+    success: true,
+    message: '회원 탈퇴가 완료되었으며, 7일 뒤 삭제될 예정입니다.',
+  })
+}

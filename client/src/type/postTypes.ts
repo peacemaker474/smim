@@ -47,6 +47,7 @@ export interface PostDetailData {
   targetAge: number;
   title: string;
   updateAt: string;
+  block: boolean;
   __v: number;
   _id: string;
 }

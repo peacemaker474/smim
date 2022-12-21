@@ -4,15 +4,15 @@ import { PostOwnerData } from '../../type/postTypes';
 interface CreatedItem {
   _id: string;
   writer: PostOwnerData;
-  parent_id: string | null;
+  parentId: string | null;
   group_id: string | null | undefined;
-  post_id: string;
+  postId: string;
   text: string;
   createAt: string;
-  like_count: number;
+  likeCount: number;
   children: Array<string>;
-  complain_count: number;
-  like_users: Array<string>;
+  block: boolean;
+  likeUsers: Array<string>;
   like: boolean;
   __v: number;
 }
@@ -20,9 +20,9 @@ interface CreatedItem {
 interface CreatedItemProps {
   _id: string;
   writer: PostOwnerData;
-  parent_id: string | null;
+  parentId: string | null;
   group_id: string | null | undefined;
-  post_id: string;
+  postId: string;
   text: string;
 }
 
@@ -45,15 +45,15 @@ const commentCreateSlice = createSlice({
           _id: action.payload._id,
           writer: action.payload.writer,
           createAt: String(new Date()),
-          parent_id: action.payload.parent_id,
+          parentId: action.payload.parentId,
           group_id: action.payload.group_id,
-          post_id: action.payload.post_id,
+          postId: action.payload.postId,
           text: action.payload.text,
           like: false,
-          like_count: 0,
+          likeCount: 0,
           children: [],
-          complain_count: 0,
-          like_users: [],
+          block: false,
+          likeUsers: [],
           __v: 0,
         },
       ];

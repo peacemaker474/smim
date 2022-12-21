@@ -44,9 +44,7 @@ export default function CommentUploaded() {
 
   return (
     <>
-      {loadedComments.map((el: Array<CommentData>) => (
-        <CommentWrapper key={el[0]._id} cmntData={el} />
-      ))}
+      {loadedComments.map((el: Array<CommentData>) => !el[0].block && <CommentWrapper key={el[0]._id} cmntData={el} />)}
     </>
   );
 }

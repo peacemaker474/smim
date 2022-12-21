@@ -3,13 +3,13 @@ import axios from 'axios';
 const http = process.env.REACT_APP_SERVER_URL;
 
 interface CreateProps {
-  post_id: string | undefined;
+  postId: string | undefined;
   content: string;
-  parent_id: string | null;
+  parentId: string | null;
 }
 
 interface EditProps {
-  post_id: string | undefined;
+  postId: string | undefined;
   content: string;
 }
 
@@ -71,6 +71,15 @@ export const getCommentPinned = (id: string | null, accessToken: string | null) 
 
 export const getCommentUnpinned = (id: string | null, accessToken: string | null) => {
   return axios.get(`${http}/comment/${id}/unpinned`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
+
+export const commentReport = (id: string | null, data: { type: string }, accessToken: string | null) => {
+  return axios.post(`${http}/report/comment/${id}`, data, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,

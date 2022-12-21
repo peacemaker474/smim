@@ -9,6 +9,11 @@ interface UpdatePasswordData {
   accessToken: string | null;
 }
 
+interface DeleteUserProps {
+  userId: string;
+  accessToken: string | null;
+}
+
 const http = process.env.REACT_APP_SERVER_URL;
 
 export const getMyWriteLists = async (userId: string) => {
@@ -62,3 +67,12 @@ export const putChangePassWord = (data: UpdatePasswordData) => {
     }
   });
 };
+
+export const deleteUser = (data: DeleteUserProps) => {
+  return axios.delete(`${http}/my/user-delete`, {
+    data,
+    headers: {
+      Authorization: `Bearer ${data.accessToken}`,
+    }
+  });
+}

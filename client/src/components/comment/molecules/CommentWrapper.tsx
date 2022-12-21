@@ -22,7 +22,7 @@ export default function CommentWrapper({ cmntData }: CommentWrapperProps) {
     commentToggled: state.toggle.commentToggled,
     deletedIdArray: state.comment.deletedIdArray,
   }));
-  const parentData = cmntData?.find((el: CommentData) => el.parent_id === null);
+  const parentData = cmntData?.find((el: CommentData) => el.parentId === null);
   const delComment = deletedIdArray.includes(parentData?._id || '');
   const childrenData = cmntData?.slice(1);
   const uploadingReplies = createdComments.filter((el) => el.group_id === parentData?._id);

@@ -53,7 +53,7 @@ function InventoryList() {
           <>
             {postData.pages[0].data.length === 0 && <PostEmptyItem>게시물이 없습니다😢</PostEmptyItem>}
             {postData.pages.map((item) => {
-              return item.data.map((el: PostDetailData) => <InventoryItem key={el._id} postData={el} />);
+              return item.data.map((el: PostDetailData) => !el.block && <InventoryItem key={el._id} postData={el} />);
             })}
           </>
         )}
